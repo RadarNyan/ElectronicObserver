@@ -405,7 +405,6 @@ namespace ElectronicObserver.Window {
             MainDockPanel.CanHidePane =
             MainDockPanel.AllowEndUserDocking =
             MainDockPanel.AllowSplitterDrag = !c.Life.IsLocked;
-            StripMenu_File_Layout_Lock.Checked = c.Life.IsLocked;
 
 			// color theme
 			foreach ( var f in SubForms ) {
@@ -418,7 +417,7 @@ namespace ElectronicObserver.Window {
 				}
 			}
 
-			if ( c.Life.LockLayout ) {
+			if ( c.Life.IsLocked ) {
 				//MainDockPanel.AllowChangeLayout = false;
 				FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
 			} else {
@@ -426,7 +425,7 @@ namespace ElectronicObserver.Window {
 				FormBorderStyle = System.Windows.Forms.FormBorderStyle.Sizable;
 			}
 
-			StripMenu_File_Layout_LockLayout.Checked = c.Life.LockLayout;
+			StripMenu_File_Layout_Lock.Checked = c.Life.IsLocked;
 			//MainDockPanel.CanCloseFloatWindowInLock = c.Life.CanCloseFloatWindowInLock;
 		}
 
@@ -1004,7 +1003,7 @@ namespace ElectronicObserver.Window {
 
 		private void StripMenu_File_Layout_LockLayout_Click( object sender, EventArgs e ) {
 
-			Utility.Configuration.Config.Life.LockLayout = StripMenu_File_Layout_LockLayout.Checked;
+			Utility.Configuration.Config.Life.IsLocked = StripMenu_File_Layout_Lock.Checked;
 			ConfigurationChanged();
 
 		}
