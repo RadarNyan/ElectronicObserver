@@ -43,7 +43,7 @@ namespace ElectronicObserver.Window {
 		public FormWindowCapture WindowCapture { get { return fWindowCapture; } }
 
 		private int ClockFormat;
-		
+
 		/// <summary>
 		/// 音量設定用フラグ
 		/// -1 = 無効, そうでなければ現在の試行回数
@@ -387,6 +387,10 @@ namespace ElectronicObserver.Window {
 		}
 
 
+		//private void FormMain_Shown( object sender, EventArgs e ) {
+			//Load で設定すると無視されるかバグる(タスクバーに出なくなる)のでここで設定
+			//TopMost = Utility.Configuration.Config.Life.TopMost;	
+		//}
 
 		private void ConfigurationChanged() {
 
@@ -397,7 +401,9 @@ namespace ElectronicObserver.Window {
 			if ( !c.Log.AutoSave )
 				nowSeconds = 0;
 
-			TopMost = c.Life.TopMost;
+			// Load で TopMost を変更するとバグるため(前述)
+			if ( UIUpdateTimer.Enabled )
+				TopMost = c.Life.TopMost;
 
 			ClockFormat = c.Life.ClockFormat;
 
@@ -496,11 +502,20 @@ namespace ElectronicObserver.Window {
 			// 10回試行してダメなら諦める(例外によるラグを防ぐため)
 			// 起動直後にやらないのはちょっと待たないと音量設定が有効にならないから
 			if ( _volumeUpdateState != -1 && _volumeUpdateState < 10 && Utility.Configuration.Config.Control.UseSystemVolume ) {
-				
+
 				try {
 					uint id = (uint)System.Diagnostics.Process.GetCurrentProcess().Id;
-					BrowserLib.VolumeManager.SetApplicationVolume( id, Utility.Configuration.Config.Control.LastVolume );
-					BrowserLib.VolumeManager.SetApplicationMute( id, Utility.Configuration.Config.Control.LastIsMute );
+					float volume =  Utility.Configuration.Config.Control.LastVolume;
+					bool mute = Utility.Configuration.Config.Control.LastIsMute;
+
+					BrowserLib.VolumeManager.SetApplicationVolume( id, volume );
+					BrowserLib.VolumeManager.SetApplicationMute( id, mute );
+
+					SyncBGMPlayer.Instance.SetInitialVolume( (int)( volume * 100 ) );
+                    /* no NotifierManager
+					foreach ( var not in NotifierManager.Instance.GetNotifiers() )
+						not.SetInitialVolume( (int)( volume * 100 ) );
+                    //*/
 
 					_volumeUpdateState = -1;
 
@@ -509,7 +524,7 @@ namespace ElectronicObserver.Window {
 					_volumeUpdateState++;
 				}
 			}
-			
+
 		}
 
 
@@ -546,6 +561,7 @@ namespace ElectronicObserver.Window {
 			SystemEvents.OnSystemShuttingDown();
 
 
+
 			// 音量の保存
 			{
 				try {
@@ -556,7 +572,7 @@ namespace ElectronicObserver.Window {
 				} catch ( Exception ) {
 					/* ぷちっ */
 				}
-				
+
 			}
 		}
 
