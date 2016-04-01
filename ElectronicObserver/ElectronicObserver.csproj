@@ -71,6 +71,7 @@
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Windows.Forms.DataVisualization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -152,6 +153,7 @@
     <Compile Include="Data\UseItemMaster.cs" />
     <Compile Include="Notifier\NotifierDialogData.cs" />
     <Compile Include="Observer\APIGraphicList.cs" />
+    <Compile Include="Observer\kcsapi\api_get_member\require_info.cs" />
     <Compile Include="Observer\kcsapi\api_get_member\material.cs" />
     <Compile Include="Observer\kcsapi\api_get_member\payitem.cs" />
     <Compile Include="Observer\kcsapi\api_get_member\record.cs" />
@@ -252,6 +254,7 @@
     <Compile Include="Window\Control\ColorPicker.Designer.cs">
       <DependentUpon>ColorPicker.cs</DependentUpon>
     </Compile>
+    <Compile Include="Window\Control\DataGridViewEnableButtonColumn.cs" />
     <Compile Include="Window\Control\ImageLabel.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -354,6 +357,12 @@
     </Compile>
     <Compile Include="Window\Dialog\DialogPlugins.Designer.cs">
       <DependentUpon>DialogPlugins.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Window\Dialog\DialogPluginUpdate.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Window\Dialog\DialogPluginUpdate.Designer.cs">
+      <DependentUpon>DialogPluginUpdate.cs</DependentUpon>
     </Compile>
     <Compile Include="Window\Dialog\DialogResourceChart.cs">
       <SubType>Form</SubType>
@@ -460,6 +469,8 @@
     <Compile Include="Window\Integrate\FormIntegrated.Designer.cs">
       <DependentUpon>FormIntegrated.cs</DependentUpon>
     </Compile>
+    <Compile Include="Window\Plugins\ElectronicPlugin.cs" />
+    <Compile Include="Window\Plugins\PluginManager.cs" />
     <Compile Include="Window\Plugins\PluginSettingControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -518,6 +529,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Window\Dialog\DialogHalloween.resx">
       <DependentUpon>DialogHalloween.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Window\Dialog\DialogPlugins.resx">
+      <DependentUpon>DialogPlugins.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Window\Dialog\DialogPluginUpdate.resx">
+      <DependentUpon>DialogPluginUpdate.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Window\Dialog\DialogResourceChart.resx">
       <DependentUpon>DialogResourceChart.cs</DependentUpon>
@@ -593,6 +610,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="Window\Plugins\UpdateFileFormat.json" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
