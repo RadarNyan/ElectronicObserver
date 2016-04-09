@@ -75,16 +75,95 @@ namespace ElectronicObserver.Window {
 		private const string LAYOUT_FILE2 = @"Settings\WindowLayout2.zip";
 		internal const string START2_FILE = @"Record\api_start2.json";
 
-		public FormMain() {
+        public static Utility.MediaPlayer MediaPlayer;
+
+        public FormMain() {
 			this.SuspendLayoutForDpiScale();
 			this.BackColor = Utility.Configuration.Config.UI.BackColor.ColorData;
 			this.ForeColor = Utility.Configuration.Config.UI.ForeColor.ColorData;
 
 			InitializeComponent();
 			this.ResumeLayoutForDpiScale();
-		}
 
-		private void FormMain_Load( object sender, EventArgs e ) {
+            MediaPlayer = new MediaPlayer();
+            InsertBGMPlayerMenu();
+
+        }
+
+        void InsertBGMPlayerMenu()
+        {
+            var BgmCachePath = Utility.Configuration.Config.CacheSettings.CacheFolder + @"\kcs\resources\bgm_p";
+            if (Directory.Exists(BgmCachePath))
+            {
+                ToolStripMenuItem Menu = new ToolStripMenuItem("BGM播放器");
+                Menu.DropDownItems.Add("-");
+                Menu.DropDownOpened += BGMPlayerMenu_DropDownOpened;
+                StripMenu_Tool.DropDownItems.Insert(0, Menu);
+            }
+        }
+
+        private void BGMPlayerMenu_DropDownOpened(object sender, EventArgs e)
+        {
+            //StringBuilder builder = new StringBuilder();
+            //builder.Append("{");
+            //bool First = true;
+            //foreach (var ship in KCDatabase.Instance.MasterShips.Values)
+            //{
+            //    if (ship.IsAbyssalShip)
+            //        continue;
+            //    if (!First)
+            //        builder.AppendFormat(",");
+            //    builder.AppendFormat("\"{0}\":[\"{1}\",\"{2}\"]", ship.ShipID, ship.Name, ship.ResourceName);
+            //    First = false;
+            //}
+            //builder.Append("}");
+            //File.WriteAllText("d:\\1.json", builder.ToString(), Encoding.UTF8);
+            //return;
+            ToolStripMenuItem Menu = sender as ToolStripMenuItem;
+            Menu.DropDownItems.Clear();
+            Menu.DropDownItems.Add("停止(&S)").Click += StopBGM_Click;
+            Menu.DropDownItems.Add("-");
+
+
+            foreach (var bgm in KCDatabase.Instance.BGM_List)
+            {
+                var item = Menu.DropDownItems.Add(bgm.Value);
+                item.Tag = bgm.Key;
+                item.Click += PlayBGM_Click;
+            }
+        }
+
+        private void PlayBGM_Click(object sender, EventArgs e)
+        {
+            var item = sender as ToolStripMenuItem;
+            if (item.Tag == null)
+                return;
+            int bgmid = (int)item.Tag;
+            string shortname = bgmid.ToString();
+            var BgmCachePath = Utility.Configuration.Config.CacheSettings.CacheFolder + @"\kcs\resources\bgm_p";
+            var files = Directory.GetFiles(BgmCachePath, shortname + "?.swf");
+            if (files.Length > 0)
+            {
+                string bgm_name = KCDatabase.Instance.BGM_List[bgmid];
+                var mp3 = Utility.SwfDecompiler.GetSoundFile(files[0], bgm_name);
+                MediaPlayer.Stop();
+                MediaPlayer.IsLoop = true;
+                MediaPlayer.SourcePath = mp3;
+                MediaPlayer.Play();
+                Utility.Logger.Add(2, "正在播放BGM: " + KCDatabase.Instance.BGM_List[bgmid]);
+            }
+            else
+            {
+                Utility.Logger.Add(2, "找不到BGM文件: " + KCDatabase.Instance.BGM_List[bgmid]);
+            }
+        }
+
+        private void StopBGM_Click(object sender, EventArgs e)
+        {
+            MediaPlayer.Stop();
+        }
+
+        private void FormMain_Load( object sender, EventArgs e ) {
 
 			if ( !Directory.Exists( "Settings" ) )
 				Directory.CreateDirectory( "Settings" );
@@ -430,7 +509,9 @@ namespace ElectronicObserver.Window {
 			Font = c.UI.MainFont;
 			//StripMenu.Font = Font;
 			StripStatus.Font = Font;
-			MainDockPanel.Skin.AutoHideStripSkin.TextFont = Font;
+            StripStatus.ForeColor = c.UI.ForeColor;
+
+            MainDockPanel.Skin.AutoHideStripSkin.TextFont = Font;
 			MainDockPanel.Skin.DockPaneStripSkin.TextFont = Font;
 
             MainDockPanel.CanClosePane =

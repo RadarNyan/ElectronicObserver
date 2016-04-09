@@ -28,7 +28,6 @@ namespace ElectronicObserver.Window.Dialog
 
         bool ShowVoice = false;
         string VoiceCachePath = "";
-        Utility.MediaPlayer MediaPlayer;
 
         public DialogAlbumMasterShip()
         {
@@ -135,6 +134,8 @@ namespace ElectronicObserver.Window.Dialog
             this.ResumeLayoutForDpiScale();
 
             VoiceCachePath = Utility.Configuration.Config.CacheSettings.CacheFolder + "\\kcs\\sound";
+
+            this.ResourceName.DoubleClick += new EventHandler(this.ResourceName_DoubleClick);
         }
 
         private void LoadShips(string filter)
@@ -1117,17 +1118,31 @@ namespace ElectronicObserver.Window.Dialog
                 string text = Utility.KanVoice.GetVoiceText(_shipID, (int)(dataGridView1.Rows[e.RowIndex].Cells[0].Tag));
                 if (text != null)
                     Description.Text = text;
-                if (MediaPlayer == null)
-                    MediaPlayer = new Utility.MediaPlayer();
+
+                var MediaPlayer = FormMain.MediaPlayer;
+                   
                 if (MediaPlayer.PlayState > 0)
                     MediaPlayer.Stop();
                 MediaPlayer.SourcePath = dataGridView1.Rows[e.RowIndex].Tag.ToString();
                 MediaPlayer.IsLoop = false;
                 MediaPlayer.Play();
             }
-            if (e.ColumnIndex ==VoiceColPath.Index)
+            if (e.ColumnIndex == VoiceColPath.Index)
             {
-                System.Diagnostics.Process.Start("Explorer.exe", "/e,/select," + dataGridView1.Rows[e.RowIndex].Tag.ToString());
+                System.Diagnostics.Process.Start("Explorer.exe", "/n,/select, " + dataGridView1.Rows[e.RowIndex].Tag.ToString());
+            }
+        }
+
+        private void ResourceName_DoubleClick(object sender, EventArgs e)
+        {
+            var ship = KCDatabase.Instance.MasterShips[_shipID];
+            if (ship != null)
+            {
+                string shipResourceFolder = Utility.Configuration.Config.CacheSettings.CacheFolder + @"\kcs\resources\swf\ships";
+                if (Directory.Exists(shipResourceFolder))
+                {
+                    System.Diagnostics.Process.Start("Explorer.exe", "/n,/select, " + shipResourceFolder + "\\" + ship.ResourceName + ".swf");
+                }
             }
         }
     }
