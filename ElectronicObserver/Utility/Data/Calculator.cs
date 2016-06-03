@@ -406,17 +406,6 @@ namespace ElectronicObserver.Utility.Data {
 		}
 
 		/// <summary>
-		/// 熟练度制空补正值
-		/// </summary>
-		private static readonly Dictionary<int, int[]> ProficiencyArray = new Dictionary<int, int[]>
-		{
-			{ 6, new [] { 0, 1, 4, 6, 11, 16, 17, 25 } },
-			{ 7, new [] { 0, 1, 1, 1, 2, 2, 2, 3 } },
-			{ 8, new [] { 0, 1, 1, 1, 2, 2, 2, 3 } },
-			{ 11, new [] { 0, 1, 2, 2, 4, 4, 4, 9 } }
-		};
-
-		/// <summary>
 		/// 获取一些装备的综合制空值
 		/// </summary>
 		/// <param name="slot">装备实体</param>
@@ -453,7 +442,7 @@ namespace ElectronicObserver.Utility.Data {
 					case 11:
 						air += (int)( eq.AA * Math.Sqrt( aircraft[s] ) );
 						if ( equip.AircraftLevel > 0 && equip.AircraftLevel <= 7 )
-							air += ProficiencyArray[eq.EquipmentType[2]][equip.AircraftLevel];
+							air += Calculator.AircraftLevelBonus[eq.EquipmentType[2]][equip.AircraftLevel];
 						break;
 				}
 			}
@@ -842,7 +831,7 @@ namespace ElectronicObserver.Utility.Data {
 		/// <summary>
 		/// 各装備カテゴリにおける制空値の熟練度ボーナス
 		/// </summary>
-		private static readonly Dictionary<int, int[]> AircraftLevelBonus = new Dictionary<int, int[]>() {
+		public static readonly Dictionary<int, int[]> AircraftLevelBonus = new Dictionary<int, int[]>() {
 			{ 6, new int[] { 0, 0, 2, 5, 9, 14, 14, 22, 22 } },	//艦上戦闘機
 			{ 7, new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0 } },		//艦上爆撃機
 			{ 8, new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0 } },		//艦上攻撃機
@@ -1063,7 +1052,8 @@ namespace ElectronicObserver.Utility.Data {
 						continue;
 
 					if ( eqs[i].CategoryType == 9 ||	// 艦上偵察機
-						eqs[i].CategoryType == 10 ) {	// 水上偵察機
+						eqs[i].CategoryType == 10 ||	// 水上偵察機
+						eqs[i].CategoryType == 41 ) {	// 大型飛行艇
 
 						successProb += 0.04 * eqs[i].LOS * Math.Sqrt( ship.Aircraft[i] );
 					}
@@ -1094,7 +1084,7 @@ namespace ElectronicObserver.Utility.Data {
 						case 8:		// 艦上攻撃機
 						case 9:		// 艦上偵察機
 						case 10:	// 水上偵察機
-
+						case 41:	// 大型飛行艇
 							if ( !probs.ContainsKey( eq.Accuracy ) )
 								probs.Add( eq.Accuracy, 1.0 );
 
@@ -1410,8 +1400,8 @@ namespace ElectronicObserver.Utility.Data {
 				if ( eq == null ) continue;
 
 				if ( eq.IconType == 16 ) {	//高角砲
-					// 10cm連装高角砲+高射装置 or 12.7cm高角砲+高射装置 or 90mm単装高角砲
-					if ( eq.EquipmentID == 122 || eq.EquipmentID == 130 || eq.EquipmentID == 135 ) {
+					// 10cm連装高角砲+高射装置 or 12.7cm高角砲+高射装置 or 90mm単装高角砲 or 5inch連装砲 Mk.28 mod.2
+					if ( eq.EquipmentID == 122 || eq.EquipmentID == 130 || eq.EquipmentID == 135 || eq.EquipmentID == 172 ) {
 						highangle_director++;
 					}
 					highangle++;
