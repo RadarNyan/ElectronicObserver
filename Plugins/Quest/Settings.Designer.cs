@@ -31,6 +31,7 @@
 			this.components = new System.ComponentModel.Container();
 			this.tabControl1 = new System.Windows.Forms.TabControl();
 			this.tabPage10 = new System.Windows.Forms.TabPage();
+			this.FormQuest_ShowOther = new System.Windows.Forms.CheckBox();
 			this.FormQuest_AllowUserToSortRows = new System.Windows.Forms.CheckBox();
 			this.FormQuest_ProgressAutoSaving = new System.Windows.Forms.ComboBox();
 			this.label27 = new System.Windows.Forms.Label();
@@ -103,15 +104,26 @@
 			this.label27.TabIndex = 4;
 			this.label27.Text = "任務進捗の自動保存：";
 			// 
+			// FormQuest_ShowOther
+			// 
+			this.FormQuest_ShowOther.AutoSize = true;
+			this.FormQuest_ShowOther.Location = new System.Drawing.Point(6, 122);
+			this.FormQuest_ShowOther.Name = "FormQuest_ShowOther";
+			this.FormQuest_ShowOther.Size = new System.Drawing.Size(57, 19);
+			this.FormQuest_ShowOther.TabIndex = 5;
+			this.FormQuest_ShowOther.Text = "その他";
+			this.FormQuest_ShowOther.UseVisualStyleBackColor = true;
+			// 
 			// groupBox1
 			// 
+			this.groupBox1.Controls.Add(this.FormQuest_ShowOther);
 			this.groupBox1.Controls.Add(this.FormQuest_ShowMonthly);
 			this.groupBox1.Controls.Add(this.FormQuest_ShowWeekly);
 			this.groupBox1.Controls.Add(this.FormQuest_ShowDaily);
 			this.groupBox1.Controls.Add(this.FormQuest_ShowOnce);
 			this.groupBox1.Location = new System.Drawing.Point(6, 31);
 			this.groupBox1.Name = "groupBox1";
-			this.groupBox1.Size = new System.Drawing.Size(126, 123);
+			this.groupBox1.Size = new System.Drawing.Size(126, 152);
 			this.groupBox1.TabIndex = 1;
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "フィルタ";
@@ -151,9 +163,9 @@
 			this.FormQuest_ShowOnce.AutoSize = true;
 			this.FormQuest_ShowOnce.Location = new System.Drawing.Point(6, 22);
 			this.FormQuest_ShowOnce.Name = "FormQuest_ShowOnce";
-			this.FormQuest_ShowOnce.Size = new System.Drawing.Size(107, 19);
+			this.FormQuest_ShowOnce.Size = new System.Drawing.Size(50, 19);
 			this.FormQuest_ShowOnce.TabIndex = 1;
-			this.FormQuest_ShowOnce.Text = "一回限り・その他";
+			this.FormQuest_ShowOnce.Text = "単発";
 			this.FormQuest_ShowOnce.UseVisualStyleBackColor = true;
 			// 
 			// FormQuest_ShowRunningOnly
@@ -195,5 +207,6 @@
 		private System.Windows.Forms.ComboBox FormQuest_ProgressAutoSaving;
 		private System.Windows.Forms.Label label27;
 		private System.Windows.Forms.CheckBox FormQuest_AllowUserToSortRows;
+		private System.Windows.Forms.CheckBox FormQuest_ShowOther;
 	}
 }

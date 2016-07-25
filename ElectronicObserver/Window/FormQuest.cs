@@ -159,6 +159,7 @@ namespace ElectronicObserver.Window {
 			MenuMain_ShowDaily.Checked = c.FormQuest.ShowDaily;
 			MenuMain_ShowWeekly.Checked = c.FormQuest.ShowWeekly;
 			MenuMain_ShowMonthly.Checked = c.FormQuest.ShowMonthly;
+			MenuMain_ShowOther.Checked = c.FormQuest.ShowOther;
 
 			if ( CSDefaultCenter != null && CSDefaultLeft != null ) {
 				CSDefaultCenter.BackColor =
@@ -230,7 +231,6 @@ namespace ElectronicObserver.Window {
 
 				switch ( q.Type ) {
 					case 1:
-					case 5:
 						if ( !MenuMain_ShowDaily.Checked ) continue;
 						break;
 					case 2:
@@ -239,8 +239,16 @@ namespace ElectronicObserver.Window {
 					case 3:
 						if ( !MenuMain_ShowMonthly.Checked ) continue;
 						break;
+					case 4:
 					default:
 						if ( !MenuMain_ShowOnce.Checked ) continue;
+						break;
+					case 5:
+						if ( q.QuestID == 211 || q.QuestID == 212 ) {	// 空母3か輸送5
+							if ( !MenuMain_ShowDaily.Checked ) continue;
+						} else {
+							if ( !MenuMain_ShowOther.Checked ) continue;
+						}
 						break;
 				}
 
@@ -456,6 +464,11 @@ namespace ElectronicObserver.Window {
 			Updated();
 		}
 
+		private void MenuMain_ShowOther_Click( object sender, EventArgs e ) {
+			Utility.Configuration.Config.FormQuest.ShowOther = MenuMain_ShowOther.Checked;
+			Updated();
+		}
+
 
 
 		private void MenuMain_Initialize_Click( object sender, EventArgs e ) {
@@ -579,5 +592,6 @@ namespace ElectronicObserver.Window {
 			return "Quest";
 		}
 
+	
 	}
 }
