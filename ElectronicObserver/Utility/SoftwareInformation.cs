@@ -54,14 +54,14 @@ namespace ElectronicObserver.Utility {
 		/// </summary>
 		public static DateTime UpdateTime {
 			get {
-				return DateTimeHelper.CSVStringToTime( "2016/10/22 01:00:00" );
+				return DateTimeHelper.CSVStringToTime( "2016/10/23 16:01:55" );
 			}
 		}
 
 
 
 		private static System.Net.WebClient client;
-		private static readonly Uri uri = new Uri( "https://www.dropbox.com/s/vk073iw1wvktq4d/version.txt?dl=1" );
+		private static readonly Uri uri = new Uri( "https://raw.githubusercontent.com/RadarNyan/ElectronicObserver/master/VERSION" );
 
 		public static void CheckUpdate() {
 
@@ -116,7 +116,7 @@ namespace ElectronicObserver.Utility {
 
 						if ( result == System.Windows.Forms.DialogResult.Yes ) {
 
-							System.Diagnostics.Process.Start( "http://electronicobserver.blog.fc2.com/" );
+							System.Diagnostics.Process.Start( "https://ci.appveyor.com/project/RadarNyan/electronicobserver-icfh9/build/artifacts" );
 
 						} else if ( result == System.Windows.Forms.DialogResult.Cancel ) {
 
