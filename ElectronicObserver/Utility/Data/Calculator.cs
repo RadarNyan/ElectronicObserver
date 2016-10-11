@@ -410,10 +410,7 @@ namespace ElectronicObserver.Utility.Data {
 			double ret = 0.0;
 
 			foreach ( var ship in fleet.MembersWithoutEscaped ) {
-				if ( ship == null ) {
-					ret += 2.0;
-					continue;
-				}
+				if ( ship == null ) continue;
 
 				//equipments
 				foreach ( var slot in ship.SlotInstance ) {
@@ -456,6 +453,8 @@ namespace ElectronicObserver.Utility.Data {
 			}
 
 			ret -= Math.Ceiling( 0.4 * KCDatabase.Instance.Admiral.Level );
+
+			ret += 2.0 * ( 6 - fleet.MembersWithoutEscaped.Count( s => s != null ) );
 
 			return ret;
 		}
