@@ -27,7 +27,7 @@ namespace ElectronicObserver.Notifier {
 
 
 		private void Initialize() {
-			DialogData.Title = "入渠完了";
+			DialogData.Title = "入渠结束";
 			processedFlags = new Dictionary<int, bool>();
 		}
 

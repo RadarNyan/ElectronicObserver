@@ -46,7 +46,7 @@
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(38, 15);
 			this.label1.TabIndex = 0;
-			this.label1.Text = "パス：";
+			this.label1.Text = "文件 :";
 			// 
 			// FilePath
 			// 
@@ -78,13 +78,13 @@
 			this.IsLoop.Name = "IsLoop";
 			this.IsLoop.Size = new System.Drawing.Size(55, 19);
 			this.IsLoop.TabIndex = 3;
-			this.IsLoop.Text = "ループ";
+			this.IsLoop.Text = "循环";
 			this.IsLoop.UseVisualStyleBackColor = true;
 			// 
 			// LoopHeadPosition
 			// 
 			this.LoopHeadPosition.DecimalPlaces = 3;
-			this.LoopHeadPosition.Location = new System.Drawing.Point(122, 41);
+			this.LoopHeadPosition.Location = new System.Drawing.Point(142, 41);
 			this.LoopHeadPosition.Maximum = new decimal(new int[] {
             99999999,
             0,
@@ -102,12 +102,12 @@
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(43, 15);
 			this.label2.TabIndex = 5;
-			this.label2.Text = "先頭：";
+			this.label2.Text = "循环起点 :";
 			// 
 			// label3
 			// 
 			this.label3.AutoSize = true;
-			this.label3.Location = new System.Drawing.Point(228, 43);
+			this.label3.Location = new System.Drawing.Point(248, 43);
 			this.label3.Name = "label3";
 			this.label3.Size = new System.Drawing.Size(19, 15);
 			this.label3.TabIndex = 6;
@@ -128,7 +128,7 @@
 			this.label4.Name = "label4";
 			this.label4.Size = new System.Drawing.Size(43, 15);
 			this.label4.TabIndex = 8;
-			this.label4.Text = "音量：";
+			this.label4.Text = "音量 :";
 			// 
 			// ButtonCancel
 			// 
@@ -138,7 +138,7 @@
 			this.ButtonCancel.Name = "ButtonCancel";
 			this.ButtonCancel.Size = new System.Drawing.Size(75, 23);
 			this.ButtonCancel.TabIndex = 9;
-			this.ButtonCancel.Text = "キャンセル";
+			this.ButtonCancel.Text = "取消";
 			this.ButtonCancel.UseVisualStyleBackColor = true;
 			this.ButtonCancel.Click += new System.EventHandler(this.ButtonCancel_Click);
 			// 
@@ -149,7 +149,7 @@
 			this.ButtonAccept.Name = "ButtonAccept";
 			this.ButtonAccept.Size = new System.Drawing.Size(75, 23);
 			this.ButtonAccept.TabIndex = 10;
-			this.ButtonAccept.Text = "OK";
+			this.ButtonAccept.Text = "确定";
 			this.ButtonAccept.UseVisualStyleBackColor = true;
 			this.ButtonAccept.Click += new System.EventHandler(this.ButtonAccept_Click);
 			// 
@@ -174,7 +174,7 @@
 			this.Controls.Add(this.FilePathSearch);
 			this.Controls.Add(this.FilePath);
 			this.Controls.Add(this.label1);
-			this.Font = new System.Drawing.Font("Meiryo UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+			this.Font = new System.Drawing.Font("Microsoft YaHei", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
 			this.Name = "DialogConfigurationBGMPlayer";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;

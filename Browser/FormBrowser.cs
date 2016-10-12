@@ -129,7 +129,7 @@ namespace Browser {
 				control.Image = new Bitmap( (int)( KanColleSize.Width * zoomrate ), (int)( KanColleSize.Height * zoomrate ), PixelFormat.Format24bppRgb );
 				using ( var g = Graphics.FromImage( control.Image ) ) {
 					g.Clear( SystemColors.Control );
-					g.DrawString( "スクリーンショットをまだ撮影していません。\r\n", Font, Brushes.Black, new Point( 4, 4 ) );
+					g.DrawString( "还没有截过图。\r\n", Font, Brushes.Black, new Point( 4, 4 ) );
 				}
 
 				var host = new ToolStripControlHost( control, "ToolMenu_Other_LastScreenShot_ImageHost" );
@@ -210,8 +210,8 @@ namespace Browser {
 			BrowserHost.AsyncRemoteRun( () => BrowserHost.Proxy.ConfigurationUpdated( Configuration ) );
 		}
 
-		private void AddLog( int priority, string message ) {
-			BrowserHost.AsyncRemoteRun( () => BrowserHost.Proxy.AddLog( priority, message ) );
+		private void AddLog( int priority, string message, string msgchs1="", string msgjap2="", string msgchs2="", string msgjap3="", string msgchs3="" ) {
+			BrowserHost.AsyncRemoteRun( () => BrowserHost.Proxy.AddLog( priority, message, msgchs1, msgjap2, msgchs2, msgjap3, msgchs3 ) );
 		}
 
 
@@ -371,14 +371,14 @@ namespace Browser {
 				}
 
 				if ( fit ) {
-					ToolMenu_Other_Zoom_Current.Text = string.Format( "現在: ぴったり" );
+					ToolMenu_Other_Zoom_Current.Text = string.Format( "当前 : 自适应" );
 				} else {
-					ToolMenu_Other_Zoom_Current.Text = string.Format( "現在: {0}%", zoomRate );
+					ToolMenu_Other_Zoom_Current.Text = string.Format( "当前: {0}%", zoomRate );
 				}
 
 
 			} catch ( Exception ex ) {
-				AddLog( 3, "ズームの適用に失敗しました。" + ex.Message );
+				AddLog( 3, "", "调整缩放比例失败。" + ex.Message );
 			}
 
 		}
@@ -457,7 +457,7 @@ namespace Browser {
 			var wb = Browser;
 
 			if ( !IsKanColleLoaded ) {
-				AddLog( 3, string.Format( "艦これが読み込まれていないため、スクリーンショットを撮ることはできません。" ) );
+				AddLog( 3, "", "因为", "『艦これ』", "还没有载入，无法截图。" );
 				System.Media.SystemSounds.Beep.Play();
 				return;
 			}
@@ -518,7 +518,7 @@ namespace Browser {
 				}
 
 				_lastScreenShotPath = path;
-				AddLog( 2, string.Format( "スクリーンショットを {0} に保存しました。", path ) );
+				AddLog( 2, "", "已保存截图到 : " + path );
 
 			} catch ( Exception ex ) {
 
@@ -796,7 +796,7 @@ namespace Browser {
 		private void ToolMenu_Other_Refresh_Click( object sender, EventArgs e ) {
 
 			if ( !Configuration.ConfirmAtRefresh ||
-				MessageBox.Show( "再読み込みします。\r\nよろしいですか？", "確認",
+				MessageBox.Show( "即将刷新浏览器。\r\n确认刷新吗？", "要求确认",
 				MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button2 )
 				== System.Windows.Forms.DialogResult.OK ) {
 
@@ -806,7 +806,7 @@ namespace Browser {
 
 		private void ToolMenu_Other_NavigateToLogInPage_Click( object sender, EventArgs e ) {
 
-			if ( MessageBox.Show( "ログインページへ移動します。\r\nよろしいですか？", "確認",
+			if ( MessageBox.Show( "即将转到登录页。\r\n确认跳转吗？", "要求确认",
 				MessageBoxButtons.OKCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2 )
 				== System.Windows.Forms.DialogResult.OK ) {
 

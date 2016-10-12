@@ -62,23 +62,23 @@ namespace ElectronicObserver.Data.Battle {
 			string shelling3 = Shelling3.GetBattleDetail( index );
 
 			if ( baseair != null )
-				sb.AppendLine( "《基地航空隊攻撃》" ).Append( baseair );
+				sb.AppendLine( "《基地航空队攻击》" ).Append( baseair );
 			if ( airbattle != null )
-				sb.AppendLine( "《航空戦》" ).Append( airbattle );
+				sb.AppendLine( "《航空战》" ).Append( airbattle );
 			if ( support != null )
-				sb.AppendLine( "《支援攻撃》" ).Append( support );
+				sb.AppendLine( "《支援攻击》" ).Append( support );
 			if ( asw != null )
-				sb.AppendLine( "《開幕対潜》" ).Append( asw );
+				sb.AppendLine( "《开幕对潜》" ).Append( asw );
 			if ( openingTorpedo != null )
-				sb.AppendLine( "《開幕雷撃》" ).Append( openingTorpedo );
+				sb.AppendLine( "《开幕雷击》" ).Append( openingTorpedo );
 			if ( shelling1 != null )
-				sb.AppendLine( "《第一次砲撃戦》" ).Append( shelling1 );
+				sb.AppendLine( "《第一次炮击战》" ).Append( shelling1 );
 			if ( torpedo != null )
-				sb.AppendLine( "《雷撃戦》" ).Append( torpedo );
+				sb.AppendLine( "《雷击战》" ).Append( torpedo );
 			if ( shelling2 != null )
-				sb.AppendLine( "《第二次砲撃戦》" ).Append( shelling2 );
+				sb.AppendLine( "《第二次炮击战》" ).Append( shelling2 );
 			if ( shelling3 != null )
-				sb.AppendLine( "《第三次砲撃戦》" ).Append( shelling3 );
+				sb.AppendLine( "《第三次炮击战》" ).Append( shelling3 );
 
 			return sb.ToString();
 		}

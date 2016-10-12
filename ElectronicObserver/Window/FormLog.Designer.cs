@@ -59,7 +59,7 @@
 			// 
 			this.ContextMenuLog_Clear.Name = "ContextMenuLog_Clear";
 			this.ContextMenuLog_Clear.Size = new System.Drawing.Size(152, 22);
-			this.ContextMenuLog_Clear.Text = "クリア(&C)";
+			this.ContextMenuLog_Clear.Text = "清空(&C)";
 			this.ContextMenuLog_Clear.Click += new System.EventHandler(this.ContextMenuLog_Clear_Click);
 			// 
 			// FormLog
@@ -69,11 +69,11 @@
 			this.ClientSize = new System.Drawing.Size(300, 200);
 			this.Controls.Add(this.LogList);
 			this.DoubleBuffered = true;
-			this.Font = new System.Drawing.Font("Meiryo UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+			this.Font = new System.Drawing.Font("Microsoft YaHei", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
 			this.HideOnClose = true;
 			this.Name = "FormLog";
-			this.Text = "ログ";
+			this.Text = "日志";
 			this.Load += new System.EventHandler(this.FormLog_Load);
 			this.ContextMenuLog.ResumeLayout(false);
 			this.ResumeLayout(false);

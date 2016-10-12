@@ -1381,8 +1381,8 @@ namespace ElectronicObserver.Utility {
 				CheckUpdate( mainForm );
 				OnConfigurationChanged();
 			} else {
-				MessageBox.Show( SoftwareInformation.SoftwareNameJapanese + " をご利用いただきありがとうございます。\r\n設定や使用方法については「ヘルプ」→「オンラインヘルプ」を参照してください。\r\nご使用の前に必ずご一読ください。",
-					"初回起動メッセージ", MessageBoxButtons.OK, MessageBoxIcon.Information );
+				MessageBox.Show( "欢迎使用" + SoftwareInformation.SoftwareNameJapanese + " 。\r\n\r\n设置和使用方法请参考 [帮助] - [在线帮助]\r\n使用前敬请阅读。",
+					"初次启动信息", MessageBoxButtons.OK, MessageBoxIcon.Information );
 
 
 				// そのままだと正常に動作しなくなった(らしい)ので、ブラウザバージョンの書き込み
@@ -1396,7 +1396,7 @@ namespace ElectronicObserver.Utility {
 					reg = Microsoft.Win32.Registry.CurrentUser.CreateSubKey( DialogConfiguration.RegistryPathMaster + DialogConfiguration.RegistryPathGPURendering );
 					reg.SetValue( Window.FormBrowserHost.BrowserExeName, DialogConfiguration.DefaultGPURendering ? 1 : 0, Microsoft.Win32.RegistryValueKind.DWord );
 
-					Utility.Logger.Add( 2, "ブラウザバージョンをレジストリに書き込みました。削除したい場合は「設定→サブウィンドウ→ブラウザ2→削除」を押してください。" );
+					Utility.Logger.Add(2, "", "已将浏览器版本写入注册表。想要清除的话点击 [设置]-[子窗口]-[浏览器2] 里的 [清除] 按钮。");
 
 
 				} catch ( Exception ex ) {

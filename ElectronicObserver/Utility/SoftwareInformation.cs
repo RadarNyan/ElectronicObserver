@@ -17,7 +17,7 @@ namespace ElectronicObserver.Utility {
 		/// </summary>
 		public static string SoftwareNameJapanese {
 			get {
-				return "七四式電子観測儀";
+				return "七四式电子观测仪";
 			}
 		}
 
@@ -105,12 +105,12 @@ namespace ElectronicObserver.Utility {
 
 					if ( UpdateTime < date ) {
 
-						Utility.Logger.Add( 3, "新しいバージョンがリリースされています！ : " + version );
+						Utility.Logger.Add(3, "", "发现新版本 : " + version);
 
 						var result = System.Windows.Forms.MessageBox.Show(
-							string.Format( "新しいバージョンがリリースされています！ : {0}\r\n更新内容 : \r\n{1}\r\nダウンロードページを開きますか？\r\n(キャンセルすると以降表示しません)",
+							string.Format( "更新版本 : {0}\r\n\r\n更新内容 :\r\n{1}\r\n要打开下载页吗？\r\n( 选择「取消」将不再自动检查更新 )",
 							version, description ),
-							"アップデート情報", System.Windows.Forms.MessageBoxButtons.YesNoCancel, System.Windows.Forms.MessageBoxIcon.Information,
+							"更新信息", System.Windows.Forms.MessageBoxButtons.YesNoCancel, System.Windows.Forms.MessageBoxIcon.Information,
 							System.Windows.Forms.MessageBoxDefaultButton.Button1 );
 
 
@@ -126,7 +126,7 @@ namespace ElectronicObserver.Utility {
 
 					} else {
 
-						Utility.Logger.Add( 1, "お使いのバージョンは最新です。" );
+						Utility.Logger.Add(1, "", "检查更新 : 已经是最新版。");
 
 					}
 

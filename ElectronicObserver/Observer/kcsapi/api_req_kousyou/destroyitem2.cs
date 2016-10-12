@@ -21,7 +21,7 @@ namespace ElectronicObserver.Observer.kcsapi.api_req_kousyou {
 			foreach ( string sid in data["api_slotitem_ids"].Split( ",".ToCharArray() ) ) {
 
 				int id = int.Parse( sid );
-				Utility.Logger.Add( 2, KCDatabase.Instance.Equipments[id].NameWithLevel + " を廃棄しました。" );
+				Utility.Logger.Add(2, "", "已废弃装备 : ", KCDatabase.Instance.Equipments[id].NameWithLevel);
 				db.Equipments.Remove( id );
 			}
 			

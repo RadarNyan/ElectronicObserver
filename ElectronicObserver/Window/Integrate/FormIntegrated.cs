@@ -91,9 +91,9 @@ namespace ElectronicObserver.Window.Integrate {
 
 		private static String[] MATCH_COMBO_ITEMS = new String[] {
 				  "完全一致",
-				  "含む",
-				  "前方後方一致",
-				  "条件を無視"
+				  "包含",
+				  "首尾一致",
+				  "无视此条件"
 		};
 
 		private FormMain parent;

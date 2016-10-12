@@ -18,7 +18,7 @@ namespace ElectronicObserver.Window.Dialog {
 
 		private ConstructionRecord _record;
 
-		private const string NameAny = "(全て)";
+		private const string NameAny = "( 全部 )";
 
 
 		private class SearchArgument {
@@ -246,7 +246,7 @@ namespace ElectronicObserver.Window.Dialog {
 		private void ButtonRun_Click( object sender, EventArgs e ) {
 
 			if ( Searcher.IsBusy ) {
-				if ( MessageBox.Show( "検索を中止しますか?", "検索中です", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button2 )
+				if ( MessageBox.Show( "要中断搜索吗？", "正在搜索中", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button2 )
 					== System.Windows.Forms.DialogResult.Yes ) {
 					Searcher.CancelAsync();
 				}
@@ -254,6 +254,7 @@ namespace ElectronicObserver.Window.Dialog {
 			}
 
 			RecordView.Rows.Clear();
+			RecordView.Font = Utility.Configuration.Config.UI.JapFont;
 
 			var row = new DataGridViewRow();
 			row.CreateCells( RecordView );
@@ -283,16 +284,16 @@ namespace ElectronicObserver.Window.Dialog {
 				RecordView_Header.HeaderText = "";
 				RecordView_Name.DisplayIndex = 1;
 				RecordView_Name.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-				RecordView_Name.HeaderText = "艦名";
+				RecordView_Name.HeaderText = "舰名";
 				RecordView_Name.Visible = true;
 				RecordView_Date.DisplayIndex = 2;
 				RecordView_Date.Width = 140;
-				RecordView_Date.HeaderText = "日付";
+				RecordView_Date.HeaderText = "日期";
 				RecordView_Date.Visible = true;
 				RecordView_Recipe.DisplayIndex = 3;
 				RecordView_Recipe.AutoSizeMode = DataGridViewAutoSizeColumnMode.NotSet;
 				RecordView_Recipe.Width = 200;
-				RecordView_Recipe.HeaderText = "レシピ";
+				RecordView_Recipe.HeaderText = "公式";
 				RecordView_Recipe.Visible = true;
 				RecordView_SecretaryShip.DisplayIndex = 4;
 				RecordView_SecretaryShip.Width = 60;
@@ -306,28 +307,28 @@ namespace ElectronicObserver.Window.Dialog {
 				if ( args.ShipName != NameAny ) {
 					RecordView_Recipe.DisplayIndex = 0;
 					RecordView_Recipe.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-					RecordView_Recipe.HeaderText = "レシピ";
+					RecordView_Recipe.HeaderText = "公式";
 					RecordView_Recipe.Visible = true;
 					RecordView_Name.Visible = false;
 				} else {
 					RecordView_Name.DisplayIndex = 0;
 					RecordView_Name.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-					RecordView_Name.HeaderText = "艦名";
+					RecordView_Name.HeaderText = "舰名";
 					RecordView_Name.Visible = true;
 					RecordView_Recipe.Visible = false;
 				}
 				RecordView_Header.DisplayIndex = 1;
 				RecordView_Header.Width = 120;
-				RecordView_Header.HeaderText = "回数";
+				RecordView_Header.HeaderText = "次数";
 				RecordView_Material100.DisplayIndex = 2;
 				RecordView_Material100.Width = 120;
-				RecordView_Material100.HeaderText = "開発資材x100";
+				RecordView_Material100.HeaderText = "100 资材";
 				RecordView_Material20.DisplayIndex = 3;
 				RecordView_Material20.Width = 120;
-				RecordView_Material20.HeaderText = "開発資材x20";
+				RecordView_Material20.HeaderText = "20 资材";
 				RecordView_Material1.DisplayIndex = 4;
 				RecordView_Material1.Width = 120;
-				RecordView_Material1.HeaderText = "開発資材x1";
+				RecordView_Material1.HeaderText = "1 资材";
 				if ( args.IsLargeConstruction == CheckState.Unchecked ||
 					( args.Recipe != NameAny && args.Recipe.IndexOf( "/" ) < 4 ) ||
 					args.DevelopmentMaterial != -1 ) {
@@ -345,7 +346,7 @@ namespace ElectronicObserver.Window.Dialog {
 			RecordView.ColumnHeadersVisible = true;
 
 
-			StatusInfo.Text = "検索中です...";
+			StatusInfo.Text = "搜索中 ...";
 			StatusInfo.Tag = DateTime.Now;
 
 			Searcher.RunWorkerAsync( args );
@@ -626,11 +627,11 @@ namespace ElectronicObserver.Window.Dialog {
 				RecordView.Sort( RecordView.SortedColumn ?? RecordView_Header,
 					RecordView.SortOrder == SortOrder.Ascending ? ListSortDirection.Ascending : ListSortDirection.Descending );
 
-				StatusInfo.Text = "検索が完了しました。(" + (int)( DateTime.Now - (DateTime)StatusInfo.Tag ).TotalMilliseconds + " ms)";
+				StatusInfo.Text = "搜索完成。(" + (int)( DateTime.Now - (DateTime)StatusInfo.Tag ).TotalMilliseconds + " ms)";
 
 			} else {
 
-				StatusInfo.Text = "検索がキャンセルされました。";
+				StatusInfo.Text = "搜索已被取消。";
 			}
 
 		}

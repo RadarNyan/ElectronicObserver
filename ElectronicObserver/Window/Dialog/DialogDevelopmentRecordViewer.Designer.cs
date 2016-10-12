@@ -103,7 +103,7 @@
 			this.ButtonRun.Name = "ButtonRun";
 			this.ButtonRun.Size = new System.Drawing.Size(75, 23);
 			this.ButtonRun.TabIndex = 22;
-			this.ButtonRun.Text = "検索";
+			this.ButtonRun.Text = "搜索";
 			this.ButtonRun.UseVisualStyleBackColor = true;
 			this.ButtonRun.Click += new System.EventHandler(this.ButtonRun_Click);
 			// 
@@ -115,7 +115,7 @@
 			this.MergeRows.Name = "MergeRows";
 			this.MergeRows.Size = new System.Drawing.Size(62, 19);
 			this.MergeRows.TabIndex = 21;
-			this.MergeRows.Text = "まとめる";
+			this.MergeRows.Text = "统计";
 			this.MergeRows.UseVisualStyleBackColor = true;
 			// 
 			// label6
@@ -125,7 +125,7 @@
 			this.label6.Name = "label6";
 			this.label6.Size = new System.Drawing.Size(35, 15);
 			this.label6.TabIndex = 20;
-			this.label6.Text = "レシピ";
+			this.label6.Text = "公式";
 			// 
 			// Recipe
 			// 
@@ -165,7 +165,7 @@
 			this.label5.Name = "label5";
 			this.label5.Size = new System.Drawing.Size(43, 15);
 			this.label5.TabIndex = 16;
-			this.label5.Text = "秘書艦";
+			this.label5.Text = "秘书舰";
 			// 
 			// DateEnd
 			// 
@@ -188,7 +188,7 @@
 			this.label4.Name = "label4";
 			this.label4.Size = new System.Drawing.Size(31, 15);
 			this.label4.TabIndex = 13;
-			this.label4.Text = "終了";
+			this.label4.Text = "到";
 			// 
 			// label3
 			// 
@@ -197,7 +197,7 @@
 			this.label3.Name = "label3";
 			this.label3.Size = new System.Drawing.Size(31, 15);
 			this.label3.TabIndex = 12;
-			this.label3.Text = "開始";
+			this.label3.Text = "从";
 			// 
 			// label2
 			// 
@@ -206,7 +206,7 @@
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(41, 15);
 			this.label2.TabIndex = 3;
-			this.label2.Text = "カテゴリ";
+			this.label2.Text = "类别";
 			// 
 			// EquipmentCategory
 			// 
@@ -225,7 +225,7 @@
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(43, 15);
 			this.label1.TabIndex = 1;
-			this.label1.Text = "装備名";
+			this.label1.Text = "装备名";
 			// 
 			// EquipmentName
 			// 
@@ -244,7 +244,7 @@
 			this.RecordView.AllowUserToResizeRows = false;
 			dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
 			dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-			dataGridViewCellStyle1.Font = new System.Drawing.Font("Meiryo UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+			dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft YaHei", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
 			dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
 			dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
 			dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
@@ -326,26 +326,26 @@
 			// 
 			// RecordView_Date
 			// 
-			this.RecordView_Date.HeaderText = "日付";
+			this.RecordView_Date.HeaderText = "日期";
 			this.RecordView_Date.Name = "RecordView_Date";
 			this.RecordView_Date.ReadOnly = true;
 			// 
 			// RecordView_Recipe
 			// 
-			this.RecordView_Recipe.HeaderText = "レシピ";
+			this.RecordView_Recipe.HeaderText = "公式";
 			this.RecordView_Recipe.Name = "RecordView_Recipe";
 			this.RecordView_Recipe.ReadOnly = true;
 			this.RecordView_Recipe.Width = 200;
 			// 
 			// RecordView_FlagshipType
 			// 
-			this.RecordView_FlagshipType.HeaderText = "艦種";
+			this.RecordView_FlagshipType.HeaderText = "舰种";
 			this.RecordView_FlagshipType.Name = "RecordView_FlagshipType";
 			this.RecordView_FlagshipType.ReadOnly = true;
 			// 
 			// RecordView_Flagship
 			// 
-			this.RecordView_Flagship.HeaderText = "秘書艦";
+			this.RecordView_Flagship.HeaderText = "秘书舰";
 			this.RecordView_Flagship.Name = "RecordView_Flagship";
 			this.RecordView_Flagship.ReadOnly = true;
 			// 
@@ -362,10 +362,10 @@
 			this.ClientSize = new System.Drawing.Size(624, 441);
 			this.Controls.Add(this.splitContainer1);
 			this.Controls.Add(this.statusStrip1);
-			this.Font = new System.Drawing.Font("Meiryo UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+			this.Font = new System.Drawing.Font("Microsoft YaHei", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
 			this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.Name = "DialogDevelopmentRecordViewer";
-			this.Text = "開発記録";
+			this.Text = "开发记录";
 			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.DialogDevelopmentRecordViewer_FormClosed);
 			this.Load += new System.EventHandler(this.DialogDevelopmentRecordViewer_Load);
 			this.splitContainer1.Panel1.ResumeLayout(false);

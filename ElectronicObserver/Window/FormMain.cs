@@ -107,7 +107,7 @@ namespace ElectronicObserver.Window {
 			} );
 			Utility.Configuration.Instance.ConfigurationChanged += ConfigurationChanged;
 
-			Utility.Logger.Add( 2, SoftwareInformation.SoftwareNameJapanese + " を起動しています…" );
+			Utility.Logger.Add( 2, "", SoftwareInformation.SoftwareNameJapanese + " 启动中 ..." );
 
 
 			this.Text = SoftwareInformation.VersionJapanese;
@@ -198,7 +198,7 @@ namespace ElectronicObserver.Window {
 
 				} catch ( Exception ex ) {
 
-					Utility.Logger.Add( 3, "API読み込みに失敗しました。" + ex.Message );
+					Utility.Logger.Add(3, "", "载入 API 列表失败。" + ex.Message);
 				}
 			}
 
@@ -216,7 +216,7 @@ namespace ElectronicObserver.Window {
 			UIUpdateTimer.Start();
 
 
-			Utility.Logger.Add( 3, "起動処理が完了しました。" );
+			Utility.Logger.Add(3, "", "启动处理已完成。");
 
 		}
 
@@ -250,6 +250,7 @@ namespace ElectronicObserver.Window {
 			Font = c.UI.MainFont;
 			//StripMenu.Font = Font;
 			StripStatus.Font = Font;
+			StripStatus_Information.Font = StripStatus_InformationJap2.Font = StripStatus_InformationJap3.Font = c.UI.JapFont;
 			MainDockPanel.Skin.AutoHideStripSkin.TextFont = Font;
 			MainDockPanel.Skin.DockPaneStripSkin.TextFont = Font;
 
@@ -259,6 +260,9 @@ namespace ElectronicObserver.Window {
 				f.BackColor = this.BackColor;
 				f.ForeColor = this.ForeColor;
 			}
+
+			StripStatus_Information.BackColor = StripStatus_InformationJap2.BackColor = StripStatus_InformationJap3.BackColor = StripStatus_InformationChs1.BackColor = StripStatus_InformationChs2.BackColor = StripStatus_InformationChs3.BackColor = System.Drawing.Color.Transparent;
+			StripStatus_Information.Margin = StripStatus_InformationJap2.Margin = StripStatus_InformationJap3.Margin = StripStatus_InformationChs1.Margin = StripStatus_InformationChs2.Margin = StripStatus_InformationChs3.Margin = new Padding(-1,1,-1,0);
 
 			if ( c.Life.LockLayout ) {
 				MainDockPanel.AllowChangeLayout = false;
@@ -379,7 +383,7 @@ namespace ElectronicObserver.Window {
 		private void FormMain_FormClosing( object sender, FormClosingEventArgs e ) {
 
 			if ( Utility.Configuration.Config.Life.ConfirmOnClosing ) {
-				if ( MessageBox.Show( SoftwareInformation.SoftwareNameJapanese + " を終了しますか？", "確認", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2 )
+				if ( MessageBox.Show( "要退出 " + SoftwareInformation.SoftwareNameJapanese + " 吗？", "要求确认", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2 )
 					== System.Windows.Forms.DialogResult.No ) {
 					e.Cancel = true;
 					return;
@@ -387,7 +391,7 @@ namespace ElectronicObserver.Window {
 			}
 
 
-			Utility.Logger.Add( 2, SoftwareInformation.SoftwareNameJapanese + " を終了しています…" );
+			Utility.Logger.Add(2, "", SoftwareInformation.SoftwareNameJapanese + " 正在退出 ...");
 
 			UIUpdateTimer.Stop();
 
@@ -425,7 +429,7 @@ namespace ElectronicObserver.Window {
 			KCDatabase.Instance.Save();
 
 
-			Utility.Logger.Add( 2, "終了処理が完了しました。" );
+			Utility.Logger.Add(2, "", "退出前处理已完成。");
 
 			if ( Utility.Configuration.Config.Log.SaveLogFlag )
 				Utility.Logger.Save( @"eolog.log" );
@@ -557,20 +561,20 @@ namespace ElectronicObserver.Window {
 				}
 
 
-				Utility.Logger.Add( 2, path + " からウィンドウ レイアウトを復元しました。" );
+				Utility.Logger.Add(2, "", "已从 " + path + " 载入窗口布局。");
 
 			} catch ( FileNotFoundException ) {
 
-				Utility.Logger.Add( 3, string.Format( "ウィンドウ レイアウト ファイルは存在しません。" ) );
-				MessageBox.Show( "レイアウトが初期化されました。\r\n「表示」メニューからお好みのウィンドウを追加してください。", "ウィンドウ レイアウト ファイルが存在しません",
+				Utility.Logger.Add(3, "", "找不到窗口布局文件。");
+				MessageBox.Show( "窗口布局已初始化。\r\n请从 [视图] 菜单中添加自己喜欢的窗口", "找不到窗口布局文件",
 					MessageBoxButtons.OK, MessageBoxIcon.Information );
 
 				fBrowser.Show( MainDockPanel );
 
 			} catch ( DirectoryNotFoundException ) {
 
-				Utility.Logger.Add( 3, string.Format( "ウィンドウ レイアウト ファイルは存在しません。" ) );
-				MessageBox.Show( "レイアウトが初期化されました。\r\n「表示」メニューからお好みのウィンドウを追加してください。", "ウィンドウ レイアウト ファイルが存在しません",
+				Utility.Logger.Add(3, "", "找不到窗口布局文件。");
+				MessageBox.Show( "窗口布局已初始化。\r\n请从 [视图] 菜单中添加自己喜欢的窗口", "找不到窗口布局文件",
 					MessageBoxButtons.OK, MessageBoxIcon.Information );
 
 				fBrowser.Show( MainDockPanel );
@@ -604,7 +608,7 @@ namespace ElectronicObserver.Window {
 				}
 
 
-				Utility.Logger.Add( 2, path + " へウィンドウ レイアウトを保存しました。" );
+				Utility.Logger.Add(2, "", "已保存窗口布局到 : " + path);
 
 			} catch ( Exception ex ) {
 
@@ -624,11 +628,27 @@ namespace ElectronicObserver.Window {
 		}
 
 
+		private Size GetMsgSize( ToolStripStatusLabel label) {
+			Size Size0 = TextRenderer.MeasureText(" ", label.Font);
+			Size Size1 = TextRenderer.MeasureText(label.Text + " ", label.Font);
+			return new Size(Size1.Width - Size0.Width + 2, Size1.Height);
+		}
 
 		void Logger_LogAdded( Utility.Logger.LogData data ) {
 
 			StripStatus_Information.Text = data.Message;
+			StripStatus_InformationChs1.Text = data.MsgChs1;
+			StripStatus_InformationJap2.Text = data.MsgJap2;
+			StripStatus_InformationChs2.Text = data.MsgChs2;
+			StripStatus_InformationJap3.Text = data.MsgJap3;
+			StripStatus_InformationChs3.Text = data.MsgChs3;
 
+			StripStatus_Information.Size = GetMsgSize(StripStatus_Information);
+			StripStatus_InformationChs1.Size = GetMsgSize(StripStatus_InformationChs1);
+			StripStatus_InformationJap2.Size = GetMsgSize(StripStatus_InformationJap2);
+			StripStatus_InformationChs2.Size = GetMsgSize(StripStatus_InformationChs2);
+			StripStatus_InformationJap3.Size = GetMsgSize(StripStatus_InformationJap3);
+			StripStatus_InformationChs3.Size = GetMsgSize(StripStatus_InformationChs3);
 		}
 
 
@@ -666,7 +686,7 @@ namespace ElectronicObserver.Window {
 
 		private void StripMenu_File_SaveData_Load_Click( object sender, EventArgs e ) {
 
-			if ( MessageBox.Show( "セーブしていないレコードが失われる可能性があります。\r\nロードしますか？", "確認",
+			if ( MessageBox.Show( "可能会丢失尚未保存的记录。\r\n确认读取记录吗？", "要求确认",
 					MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2 )
 				== System.Windows.Forms.DialogResult.Yes ) {
 
@@ -681,7 +701,7 @@ namespace ElectronicObserver.Window {
 
 			using ( OpenFileDialog ofd = new OpenFileDialog() ) {
 
-				ofd.Title = "APIリストをロード";
+				ofd.Title = "载入 API 列表";
 				ofd.Filter = "API List|*.txt|File|*";
 				ofd.InitialDirectory = Utility.Configuration.Config.Connection.SaveDataPath;
 
@@ -693,7 +713,7 @@ namespace ElectronicObserver.Window {
 
 					} catch ( Exception ex ) {
 
-						MessageBox.Show( "API読み込みに失敗しました。\r\n" + ex.Message, "エラー",
+						MessageBox.Show( "API 读取失败。\r\n" + ex.Message, "错误",
 							MessageBoxButtons.OK, MessageBoxIcon.Error );
 
 					}
@@ -1059,7 +1079,7 @@ namespace ElectronicObserver.Window {
 				MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1 )
 				== System.Windows.Forms.DialogResult.Yes ) {
 
-				System.Diagnostics.Process.Start( "https://github.com/andanteyk/ElectronicObserver/wiki" );
+				System.Diagnostics.Process.Start( "https://github.com/radarnyan/ElectronicObserver/wiki" );
 			}
 
 		}
@@ -1088,7 +1108,7 @@ namespace ElectronicObserver.Window {
 			using ( var dialog = new OpenFileDialog() ) {
 
 				dialog.Filter = "Layout Archive|*.zip|File|*";
-				dialog.Title = "レイアウト ファイルを開く";
+				dialog.Title = "打开布局文件";
 
 
 				PathHelper.InitOpenFileDialog( Utility.Configuration.Config.Life.LayoutFilePath, dialog );
@@ -1109,7 +1129,7 @@ namespace ElectronicObserver.Window {
 			using ( var dialog = new SaveFileDialog() ) {
 
 				dialog.Filter = "Layout Archive|*.zip|File|*";
-				dialog.Title = "レイアウト ファイルの保存";
+				dialog.Title = "保存布局文件";
 
 
 				PathHelper.InitSaveFileDialog( Utility.Configuration.Config.Life.LayoutFilePath, dialog );
@@ -1134,12 +1154,12 @@ namespace ElectronicObserver.Window {
 		private void StripMenu_Tool_DropRecord_Click( object sender, EventArgs e ) {
 
 			if ( KCDatabase.Instance.MasterShips.Count == 0 ) {
-				MessageBox.Show( "艦これを読み込んでから開いてください。", "マスターデータがありません", MessageBoxButtons.OK, MessageBoxIcon.Error );
+				MessageBox.Show( "请进入『艦これ』之后再查看记录。", "尚无主数据", MessageBoxButtons.OK, MessageBoxIcon.Error );
 				return;
 			}
 
 			if ( RecordManager.Instance.ShipDrop.Record.Count == 0 ) {
-				MessageBox.Show( "ドロップレコードがありません。", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error );
+				MessageBox.Show( "尚无掉落记录。", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error );
 				return;
 			}
 
@@ -1151,12 +1171,12 @@ namespace ElectronicObserver.Window {
 		private void StripMenu_Tool_DevelopmentRecord_Click( object sender, EventArgs e ) {
 
 			if ( KCDatabase.Instance.MasterShips.Count == 0 ) {
-				MessageBox.Show( "艦これを読み込んでから開いてください。", "マスターデータがありません", MessageBoxButtons.OK, MessageBoxIcon.Error );
+				MessageBox.Show( "请进入『艦これ』之后再查看记录。", "尚无主数据", MessageBoxButtons.OK, MessageBoxIcon.Error );
 				return;
 			}
 
 			if ( RecordManager.Instance.Development.Record.Count == 0 ) {
-				MessageBox.Show( "開発レコードがありません。", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error );
+				MessageBox.Show( "尚无开发记录。", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error );
 				return;
 			}
 
@@ -1167,12 +1187,12 @@ namespace ElectronicObserver.Window {
 		private void StripMenu_Tool_ConstructionRecord_Click( object sender, EventArgs e ) {
 
 			if ( KCDatabase.Instance.MasterShips.Count == 0 ) {
-				MessageBox.Show( "艦これを読み込んでから開いてください。", "マスターデータがありません", MessageBoxButtons.OK, MessageBoxIcon.Error );
+				MessageBox.Show( "请进入『艦これ』之后再查看记录。", "尚无主数据", MessageBoxButtons.OK, MessageBoxIcon.Error );
 				return;
 			}
 
 			if ( RecordManager.Instance.Construction.Record.Count == 0 ) {
-				MessageBox.Show( "建造レコードがありません。", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error );
+				MessageBox.Show( "尚无建造记录。", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error );
 				return;
 			}
 
