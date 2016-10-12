@@ -107,7 +107,7 @@
 			// 
 			this.ContextMenuFleet_Capture.Name = "ContextMenuFleet_Capture";
 			this.ContextMenuFleet_Capture.Size = new System.Drawing.Size(227, 22);
-			this.ContextMenuFleet_Capture.Text = "截图本区域(&S)";
+			this.ContextMenuFleet_Capture.Text = "截图本区域到剪贴板(&S)";
 			this.ContextMenuFleet_Capture.Click += new System.EventHandler(this.ContextMenuFleet_Capture_Click);
 			// 
 			// toolStripSeparator1
