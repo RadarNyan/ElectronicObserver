@@ -114,7 +114,7 @@ namespace ElectronicObserver.Window {
 					ToolTipInfo.SetToolTip( ShipName, db.Ships[dock.ShipID].NameWithLevel );
 					RepairTime.Text = DateTimeHelper.ToTimeRemainString( dock.CompletionTime );
 					RepairTime.Tag = dock.CompletionTime;
-					ToolTipInfo.SetToolTip( RepairTime, "完了日時 : " + dock.CompletionTime );
+					ToolTipInfo.SetToolTip( RepairTime, "完成时间 : " + dock.CompletionTime );
 
 				}
 
@@ -217,7 +217,7 @@ namespace ElectronicObserver.Window {
 
 		void ConfigurationChanged() {
 
-			Font = Utility.Configuration.Config.UI.MainFont;
+			Font = Utility.Configuration.Config.UI.JapFont;
 
 			if ( ControlDock != null ) {
 				foreach ( var c in ControlDock )
