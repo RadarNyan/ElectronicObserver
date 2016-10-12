@@ -86,6 +86,7 @@ namespace ElectronicObserver.Window {
 			QuestView.DefaultCellStyle = CSDefaultCenter;
 			QuestView_Category.DefaultCellStyle = CSCategories[CSCategories.Length - 1];
 			QuestView_Name.DefaultCellStyle = CSDefaultLeft;
+			QuestView_Name.DefaultCellStyle.Font = Utility.Configuration.Config.UI.JapFont;
 			QuestView_Progress.DefaultCellStyle = CSDefaultLeft;
 
 			#endregion
@@ -242,7 +243,7 @@ namespace ElectronicObserver.Window {
 					double tag;
 
 					if ( q.State == 3 ) {
-						value = "達成！";
+						value = "完成！";
 						tag = 1.0;
 
 					} else {
@@ -261,11 +262,11 @@ namespace ElectronicObserver.Window {
 									tag = 0.0;
 									break;
 								case 1:
-									value = "50%以上";
+									value = "50% 以上";
 									tag = 0.5;
 									break;
 								case 2:
-									value = "80%以上";
+									value = "80% 以上";
 									tag = 0.8;
 									break;
 								default:
@@ -287,13 +288,13 @@ namespace ElectronicObserver.Window {
 			if ( KCDatabase.Instance.Quest.Quests.Count < KCDatabase.Instance.Quest.Count ) {
 				int index = QuestView.Rows.Add();
 				QuestView.Rows[index].Cells[QuestView_State.Index].Value = null;
-				QuestView.Rows[index].Cells[QuestView_Name.Index].Value = string.Format( "(未取得の任務 x {0})", ( KCDatabase.Instance.Quest.Count - KCDatabase.Instance.Quest.Quests.Count ) );
+				QuestView.Rows[index].Cells[QuestView_Name.Index].Value = string.Format( "( 未获取的任务 x {0})", ( KCDatabase.Instance.Quest.Count - KCDatabase.Instance.Quest.Quests.Count ) );
 			}
 
 			if ( KCDatabase.Instance.Quest.Quests.Count == 0 ) {
 				int index = QuestView.Rows.Add();
 				QuestView.Rows[index].Cells[QuestView_State.Index].Value = null;
-				QuestView.Rows[index].Cells[QuestView_Name.Index].Value = "(任務完遂！)";
+				QuestView.Rows[index].Cells[QuestView_Name.Index].Value = "( 任务完成！ )";
 			}
 
 			//更新時にソートする
@@ -432,7 +433,7 @@ namespace ElectronicObserver.Window {
 
 		private void MenuMain_Initialize_Click( object sender, EventArgs e ) {
 
-			if ( MessageBox.Show( "任務データを初期化します。\r\nデータに齟齬が生じている場合以外での使用は推奨しません。\r\nよろしいですか？", "任務初期化の確認",
+			if ( MessageBox.Show( "初始化任务列表\r\n不推荐在数据混乱以外的情况下使用。\r\n确认初始化吗？", "任务初始化确认",
 				MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button2 ) == System.Windows.Forms.DialogResult.Yes ) {
 
 				KCDatabase.Instance.Quest.Clear();
@@ -450,7 +451,7 @@ namespace ElectronicObserver.Window {
 			{
 				DataGridViewRow row = new DataGridViewRow();
 				row.CreateCells( QuestView );
-				row.SetValues( null, null, null, "(未取得)", null );
+				row.SetValues( null, null, null, "( 未获取 )", null );
 				QuestView.Rows.Add( row );
 			}
 
@@ -559,7 +560,7 @@ namespace ElectronicObserver.Window {
 
 				if ( id != -1 && ( quest != null || progress != null ) ) {
 
-					if ( MessageBox.Show( "任務" + ( quest != null ? ( "『" + quest.Name + "』" ) : ( "ID: " + id.ToString() + " " ) ) + "を一覧から削除し、進捗をリセットします。\r\nよろしいですか？\r\n(艦これ本体の任務画面を開くと正しく更新されます。)", "任務削除の確認",
+					if ( MessageBox.Show( "将任务" + ( quest != null ? ( "『" + quest.Name + "』" ) : ( "ID: " + id.ToString() + " " ) ) + "从列表中删除，并重置进度。\r\n确认删除吗？\r\n( 在『艦これ』游戏里打开任务画面可以重新读取。 )", "任务删除确认",
 						MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1 ) == System.Windows.Forms.DialogResult.Yes ) {
 
 						if ( quest != null )
