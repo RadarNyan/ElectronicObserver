@@ -736,11 +736,11 @@ namespace ElectronicObserver.Data {
 				case 1:		//デイリー
 					return "日";
 				case 2:		//ウィークリー
-					return "週";
+					return "周";
 				case 3:		//マンスリー
 					return "月";
 				case 4:		//単発
-					return "単";
+					return "单";
 				case 5:		//その他(輸送5/空母3)
 					return "他";
 				default:
@@ -756,25 +756,25 @@ namespace ElectronicObserver.Data {
 		public static string GetQuestCategory( int id ) {
 			switch ( id ) {
 				case 1:
-					return "編成";
+					return "编成";
 				case 2:
-					return "出撃";
+					return "出击";
 				case 3:
-					return "演習";
+					return "演习";
 				case 4:
-					return "遠征";
+					return "远征";
 				case 5:
-					return "補給";		//入渠も含むが、文字数の関係
+					return "补给";		//入渠も含むが、文字数の関係
 				case 6:
-					return "工廠";
+					return "工厂";
 				case 7:
 					return "改装";
 				case 8:
-					return "出撃";
+					return "出击";
 				case 9:
-					return "他";
+					return "其他";
 				default:
-					return "不明";
+					return "未知";
 			}
 		}
 

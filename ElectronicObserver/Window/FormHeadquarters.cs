@@ -109,9 +109,9 @@ namespace ElectronicObserver.Window {
 
 		void ConfigurationChanged() {
 
-			Font = FlowPanelMaster.Font = Utility.Configuration.Config.UI.MainFont;
-			HQLevel.MainFont = Utility.Configuration.Config.UI.MainFont;
-			HQLevel.SubFont = Utility.Configuration.Config.UI.SubFont;
+			Font = FlowPanelMaster.Font = Utility.Configuration.Config.UI.JapFont;
+			HQLevel.MainFont = Utility.Configuration.Config.UI.JapFont;
+			HQLevel.SubFont = Utility.Configuration.Config.UI.JapFont2;
 
 			// 点滅しない設定にしたときに消灯状態で固定されるのを防ぐ
 			if ( !Utility.Configuration.Config.FormHeadquarters.BlinkAtMaximum ) {
@@ -168,19 +168,19 @@ namespace ElectronicObserver.Window {
 		/// </summary>
 		public static IEnumerable<string> GetItemNames() {
 			yield return "提督名";
-			yield return "提督コメント";
-			yield return "司令部Lv";
-			yield return "艦船数";
-			yield return "装備数";
-			yield return "高速修復材";
+			yield return "提督签名";
+			yield return "司令部等级";
+			yield return "舰船数";
+			yield return "装备数";
+			yield return "高速修复材";
 			yield return "高速建造材";
-			yield return "開発資材";
-			yield return "改修資材";
-			yield return "家具コイン";
+			yield return "开发资材";
+			yield return "改修资材";
+			yield return "家具币";
 			yield return "燃料";
-			yield return "弾薬";
-			yield return "鋼材";
-			yield return "ボーキサイト";
+			yield return "弹药";
+			yield return "钢材";
+			yield return "铝土";
 		}
 
 
@@ -220,21 +220,21 @@ namespace ElectronicObserver.Window {
 					var res = RecordManager.Instance.Resource.GetRecordPrevious();
 					if ( res != null ) {
 						int diff = db.Admiral.Exp - res.HQExp;
-						tooltip.AppendFormat( "今回: +{0} exp. / 戦果 {1:n2}\r\n", diff, diff * 7 / 10000.0 );
+						tooltip.AppendFormat( "本次 : +{0} exp. / 战果 {1:n2}\r\n", diff, diff * 7 / 10000.0 );
 					}
 				}
 				{
 					var res = RecordManager.Instance.Resource.GetRecordDay();
 					if ( res != null ) {
 						int diff = db.Admiral.Exp - res.HQExp;
-						tooltip.AppendFormat( "今日: +{0} exp. / 戦果 {1:n2}\r\n", diff, diff * 7 / 10000.0 );
+						tooltip.AppendFormat( "今日 : +{0} exp. / 战果 {1:n2}\r\n", diff, diff * 7 / 10000.0 );
 					}
 				}
 				{
 					var res = RecordManager.Instance.Resource.GetRecordMonth();
 					if ( res != null ) {
 						int diff = db.Admiral.Exp - res.HQExp;
-						tooltip.AppendFormat( "今月: +{0} exp. / 戦果 {1:n2}\r\n", diff, diff * 7 / 10000.0 );
+						tooltip.AppendFormat( "本月 : +{0} exp. / 战果 {1:n2}\r\n", diff, diff * 7 / 10000.0 );
 					}
 				}
 
@@ -275,25 +275,25 @@ namespace ElectronicObserver.Window {
 			FlowPanelUseItem.SuspendLayout();
 
 			InstantRepair.Text = db.Material.InstantRepair.ToString();
-			ToolTipInfo.SetToolTip( InstantRepair, string.Format( "今日: {0:+##;-##;±0}\n今週: {1:+##;-##;±0}\n今月: {2:+##;-##;±0}",
+			ToolTipInfo.SetToolTip( InstantRepair, string.Format( "今日 : {0:+##;-##;±0}\n本周 : {1:+##;-##;±0}\n本月: {2:+##;-##;±0}",
 					resday == null ? 0 : ( db.Material.InstantRepair - resday.InstantRepair ),
 					resweek == null ? 0 : ( db.Material.InstantRepair - resweek.InstantRepair ),
 					resmonth == null ? 0 : ( db.Material.InstantRepair - resmonth.InstantRepair ) ) );
 
 			InstantConstruction.Text = db.Material.InstantConstruction.ToString();
-			ToolTipInfo.SetToolTip( InstantConstruction, string.Format( "今日: {0:+##;-##;±0}\n今週: {1:+##;-##;±0}\n今月: {2:+##;-##;±0}",
+			ToolTipInfo.SetToolTip( InstantConstruction, string.Format( "今日 : {0:+##;-##;±0}\n本周 : {1:+##;-##;±0}\n本月: {2:+##;-##;±0}",
 					resday == null ? 0 : ( db.Material.InstantConstruction - resday.InstantConstruction ),
 					resweek == null ? 0 : ( db.Material.InstantConstruction - resweek.InstantConstruction ),
 					resmonth == null ? 0 : ( db.Material.InstantConstruction - resmonth.InstantConstruction ) ) );
 
 			DevelopmentMaterial.Text = db.Material.DevelopmentMaterial.ToString();
-			ToolTipInfo.SetToolTip( DevelopmentMaterial, string.Format( "今日: {0:+##;-##;±0}\n今週: {1:+##;-##;±0}\n今月: {2:+##;-##;±0}",
+			ToolTipInfo.SetToolTip( DevelopmentMaterial, string.Format( "今日 : {0:+##;-##;±0}\n本周 : {1:+##;-##;±0}\n本月: {2:+##;-##;±0}",
 					resday == null ? 0 : ( db.Material.DevelopmentMaterial - resday.DevelopmentMaterial ),
 					resweek == null ? 0 : ( db.Material.DevelopmentMaterial - resweek.DevelopmentMaterial ),
 					resmonth == null ? 0 : ( db.Material.DevelopmentMaterial - resmonth.DevelopmentMaterial ) ) );
 
 			ModdingMaterial.Text = db.Material.ModdingMaterial.ToString();
-			ToolTipInfo.SetToolTip( ModdingMaterial, string.Format( "今日: {0:+##;-##;±0}\n今週: {1:+##;-##;±0}\n今月: {2:+##;-##;±0}",
+			ToolTipInfo.SetToolTip( ModdingMaterial, string.Format( "今日 : {0:+##;-##;±0}\n本周 : {1:+##;-##;±0}\n本月: {2:+##;-##;±0}",
 					resday == null ? 0 : ( db.Material.ModdingMaterial - resday.ModdingMaterial ),
 					resweek == null ? 0 : ( db.Material.ModdingMaterial - resweek.ModdingMaterial ),
 					resmonth == null ? 0 : ( db.Material.ModdingMaterial - resmonth.ModdingMaterial ) ) );
@@ -305,7 +305,7 @@ namespace ElectronicObserver.Window {
 				int large = db.UseItems[12] != null ? db.UseItems[12].Count : 0;
 
 				ToolTipInfo.SetToolTip( FurnitureCoin,
-						string.Format( "(小) x {0} ( +{1} )\r\n(中) x {2} ( +{3} )\r\n(大) x {4} ( +{5} )\r\n",
+						string.Format( "( 小 ) x {0} ( +{1} )\r\n( 中 ) x {2} ( +{3} )\r\n( 大 ) x {4} ( +{5} )\r\n",
 							small, small * 200,
 							medium, medium * 400,
 							large, large * 700 ) );
@@ -320,28 +320,28 @@ namespace ElectronicObserver.Window {
 
 				Fuel.Text = db.Material.Fuel.ToString();
 				Fuel.BackColor = db.Material.Fuel < db.Admiral.MaxResourceRegenerationAmount ? Color.Transparent : overcolor;
-				ToolTipInfo.SetToolTip( Fuel, string.Format( "今日: {0:+##;-##;±0}\n今週: {1:+##;-##;±0}\n今月: {2:+##;-##;±0}",
+				ToolTipInfo.SetToolTip( Fuel, string.Format( "今日 : {0:+##;-##;±0}\n本周 : {1:+##;-##;±0}\n本月 : {2:+##;-##;±0}",
 					resday == null ? 0 : ( db.Material.Fuel - resday.Fuel ),
 					resweek == null ? 0 : ( db.Material.Fuel - resweek.Fuel ),
 					resmonth == null ? 0 : ( db.Material.Fuel - resmonth.Fuel ) ) );
 
 				Ammo.Text = db.Material.Ammo.ToString();
 				Ammo.BackColor = db.Material.Ammo < db.Admiral.MaxResourceRegenerationAmount ? Color.Transparent : overcolor;
-				ToolTipInfo.SetToolTip( Ammo, string.Format( "今日: {0:+##;-##;±0}\n今週: {1:+##;-##;±0}\n今月: {2:+##;-##;±0}",
+				ToolTipInfo.SetToolTip( Ammo, string.Format( "今日 : {0:+##;-##;±0}\n本周 : {1:+##;-##;±0}\n本月 : {2:+##;-##;±0}",
 					resday == null ? 0 : ( db.Material.Ammo - resday.Ammo ),
 					resweek == null ? 0 : ( db.Material.Ammo - resweek.Ammo ),
 					resmonth == null ? 0 : ( db.Material.Ammo - resmonth.Ammo ) ) );
 
 				Steel.Text = db.Material.Steel.ToString();
 				Steel.BackColor = db.Material.Steel < db.Admiral.MaxResourceRegenerationAmount ? Color.Transparent : overcolor;
-				ToolTipInfo.SetToolTip( Steel, string.Format( "今日: {0:+##;-##;±0}\n今週: {1:+##;-##;±0}\n今月: {2:+##;-##;±0}",
+				ToolTipInfo.SetToolTip( Steel, string.Format( "今日 : {0:+##;-##;±0}\n本周 : {1:+##;-##;±0}\n本月 : {2:+##;-##;±0}",
 					resday == null ? 0 : ( db.Material.Steel - resday.Steel ),
 					resweek == null ? 0 : ( db.Material.Steel - resweek.Steel ),
 					resmonth == null ? 0 : ( db.Material.Steel - resmonth.Steel ) ) );
 
 				Bauxite.Text = db.Material.Bauxite.ToString();
 				Bauxite.BackColor = db.Material.Bauxite < db.Admiral.MaxResourceRegenerationAmount ? Color.Transparent : overcolor;
-				ToolTipInfo.SetToolTip( Bauxite, string.Format( "今日: {0:+##;-##;±0}\n今週: {1:+##;-##;±0}\n今月: {2:+##;-##;±0}",
+				ToolTipInfo.SetToolTip( Bauxite, string.Format( "今日 : {0:+##;-##;±0}\n本周 : {1:+##;-##;±0}\n本月 : {2:+##;-##;±0}",
 					resday == null ? 0 : ( db.Material.Bauxite - resday.Bauxite ),
 					resweek == null ? 0 : ( db.Material.Bauxite - resweek.Bauxite ),
 					resmonth == null ? 0 : ( db.Material.Bauxite - resmonth.Bauxite ) ) );
