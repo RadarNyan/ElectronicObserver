@@ -560,7 +560,7 @@ namespace ElectronicObserver.Data {
 
 			//所属艦なし
 			if ( fleet == null || fleet.Members.Count( id => id != -1 ) == 0 ) {
-				label.Text = "所属艦なし";
+				label.Text = "无所属舰";
 				label.ImageIndex = (int)ResourceManager.IconContent.FleetNoShip;
 
 				return FleetStates.NoShip;
@@ -581,7 +581,7 @@ namespace ElectronicObserver.Data {
 					label.Text = "入渠中 " + DateTimeHelper.ToTimeRemainString( timer );
 					label.ImageIndex = (int)ResourceManager.IconContent.FleetDocking;
 
-					tooltip.SetToolTip( label, "完了日時 : " + DateTimeHelper.TimeToCSVString( timer ) );
+					tooltip.SetToolTip( label, "完成时间 : " + DateTimeHelper.TimeToCSVString( timer ) );
 
 					return FleetStates.Docking;
 				}
@@ -596,14 +596,14 @@ namespace ElectronicObserver.Data {
 						( s != null && !fleet.EscapedShipList.Contains( s.MasterID ) && (double)s.HPCurrent / s.HPMax <= 0.25 )
 					 ) > 0 ) {
 
-					label.Text = "！！大破進撃中！！";
+					label.Text = "！！大破进击中！！";
 					label.ImageIndex = (int)ResourceManager.IconContent.FleetSortieDamaged;
 
 					return FleetStates.SortieDamaged;
 
 				} else {	//出撃中
 
-					label.Text = "出撃中";
+					label.Text = "出击中";
 					label.ImageIndex = (int)ResourceManager.IconContent.FleetSortie;
 
 					return FleetStates.Sortie;
@@ -616,10 +616,10 @@ namespace ElectronicObserver.Data {
 			if ( fleet.ExpeditionState != 0 ) {
 
 				timer = fleet.ExpeditionTime;
-				label.Text = "遠征中 " + DateTimeHelper.ToTimeRemainString( timer );
+				label.Text = "远征中 " + DateTimeHelper.ToTimeRemainString( timer );
 				label.ImageIndex = (int)ResourceManager.IconContent.FleetExpedition;
 
-				tooltip.SetToolTip( label, string.Format( "{0} : {1}\r\n完了日時 : {2}",
+				tooltip.SetToolTip( label, string.Format( "{0} : {1}\r\n完成时间 : {2}",
 					KCDatabase.Instance.Mission[fleet.ExpeditionDestination].ID,
 					KCDatabase.Instance.Mission[fleet.ExpeditionDestination].Name,
 					DateTimeHelper.TimeToCSVString( timer ) ) );
@@ -632,7 +632,7 @@ namespace ElectronicObserver.Data {
 				( s != null && !fleet.EscapedShipList.Contains( s.MasterID ) && (double)s.HPCurrent / s.HPMax <= 0.25 )
 			 ) > 0 ) {
 
-				label.Text = "大破艦あり！";
+				label.Text = "有舰娘大破！";
 				label.ImageIndex = (int)ResourceManager.IconContent.FleetDamaged;
 				//label.BackColor = Color.LightCoral;
 
@@ -649,7 +649,7 @@ namespace ElectronicObserver.Data {
 					label.ImageIndex = (int)ResourceManager.IconContent.FleetAnchorageRepairing;
 
 					StringBuilder sb = new StringBuilder();
-					sb.AppendFormat( "開始日時 : {0}\r\n修理時間 :\r\n",
+					sb.AppendFormat( "开始时间 : {0}\r\n修理时间 :\r\n",
 						DateTimeHelper.TimeToCSVString( KCDatabase.Instance.Fleet.AnchorageRepairingTimer ) );
 
 					for ( int i = 0; i < fleet.Members.Count; i++ ) {
@@ -697,10 +697,10 @@ namespace ElectronicObserver.Data {
 
 				if ( fuel > 0 || ammo > 0 || bauxite > 0 ) {
 
-					label.Text = "未補給";
+					label.Text = "未补给";
 					label.ImageIndex = (int)ResourceManager.IconContent.FleetNotReplenished;
 
-					tooltip.SetToolTip( label, string.Format( "燃 : {0}\r\n弾 : {1}\r\nボ : {2} ({3}機)", fuel, ammo, bauxite, aircraft ) );
+					tooltip.SetToolTip( label, string.Format( "油 : {0}\r\n弹 : {1}\r\n铝 : {2} ( {3} 架 )", fuel, ammo, bauxite, aircraft ) );
 
 					return FleetStates.NotReplenished;
 				}
@@ -715,7 +715,7 @@ namespace ElectronicObserver.Data {
 					timer = (DateTime)fleet.ConditionTime;
 
 
-					label.Text = "疲労 " + DateTimeHelper.ToTimeRemainString( timer );
+					label.Text = "疲劳 " + DateTimeHelper.ToTimeRemainString( timer );
 
 					if ( cond < 20 )
 						label.ImageIndex = (int)ResourceManager.IconContent.ConditionVeryTired;
@@ -725,16 +725,16 @@ namespace ElectronicObserver.Data {
 						label.ImageIndex = (int)ResourceManager.IconContent.ConditionLittleTired;
 
 
-					tooltip.SetToolTip( label, string.Format( "回復目安日時: {0}", DateTimeHelper.TimeToCSVString( timer ) ) );
+					tooltip.SetToolTip( label, string.Format( "预计恢复时间 : {0}", DateTimeHelper.TimeToCSVString( timer ) ) );
 
 					return FleetStates.Tired;
 
 
 				} else if ( cond >= 50 ) {		//戦意高揚
 
-					label.Text = "戦意高揚！";
+					label.Text = "战意高扬！";
 					label.ImageIndex = (int)ResourceManager.IconContent.ConditionSparkle;
-					tooltip.SetToolTip( label, string.Format( "最低cond: {0}\r\nあと {1} 回遠征可能", cond, Math.Ceiling( ( cond - 49 ) / 3.0 ) ) );
+					tooltip.SetToolTip( label, string.Format( "最低 cond: {0}\r\n还可以远征 {1} 次", cond, Math.Ceiling( ( cond - 49 ) / 3.0 ) ) );
 					return FleetStates.Sparkled;
 
 				}
@@ -743,7 +743,7 @@ namespace ElectronicObserver.Data {
 
 			//出撃可能！
 			{
-				label.Text = "出撃可能！";
+				label.Text = "可以出击！";
 				label.ImageIndex = (int)ResourceManager.IconContent.FleetReady;
 
 				return FleetStates.Ready;
@@ -771,12 +771,12 @@ namespace ElectronicObserver.Data {
 						label.BackColor = DateTime.Now.Second % 2 == 0 ? Color.LightGreen : Color.Transparent;
 					break;
 				case FleetStates.Expedition:
-					label.Text = "遠征中 " + DateTimeHelper.ToTimeRemainString( timer );
+					label.Text = "远征中 " + DateTimeHelper.ToTimeRemainString( timer );
 					if ( Utility.Configuration.Config.FormFleet.BlinkAtCompletion && ( timer - DateTime.Now ).TotalMilliseconds <= Utility.Configuration.Config.NotifierExpedition.AccelInterval )
 						label.BackColor = DateTime.Now.Second % 2 == 0 ? Color.LightGreen : Color.Transparent;
 					break;
 				case FleetStates.Tired:
-					label.Text = "疲労 " + DateTimeHelper.ToTimeRemainString( timer );
+					label.Text = "疲劳 " + DateTimeHelper.ToTimeRemainString( timer );
 					if ( Utility.Configuration.Config.FormFleet.BlinkAtCompletion && ( timer - DateTime.Now ).TotalMilliseconds <= 0 )
 						label.BackColor = DateTime.Now.Second % 2 == 0 ? Color.LightGreen : Color.Transparent;
 					break;
