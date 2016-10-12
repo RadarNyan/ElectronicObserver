@@ -170,6 +170,16 @@ namespace ElectronicObserver.Utility {
 				/// </summary>
 				public SerializableFont SubFont { get; set; }
 
+				/// <summary>
+				/// Japanese Main Font ( Hard-coded to Meiryo UI, 12px )
+				/// </summary>
+				public SerializableFont JapFont { get; set; }
+
+				/// <summary>
+				/// Japanese Sub Font ( Hard-coded to Meiryo UI, 10px )
+				/// </summary>
+				public SerializableFont JapFont2 { get; set; }
+
 				[IgnoreDataMember]
 				private bool _barColorMorphing;
 
@@ -244,8 +254,10 @@ namespace ElectronicObserver.Utility {
 				};
 
 				public ConfigUI() {
-					MainFont = new Font( "Meiryo UI", 12, FontStyle.Regular, GraphicsUnit.Pixel );
-					SubFont = new Font( "Meiryo UI", 10, FontStyle.Regular, GraphicsUnit.Pixel );
+					MainFont = new Font( "Microsoft YaHei", 12, FontStyle.Regular, GraphicsUnit.Pixel );
+					SubFont  = new Font( "Microsoft YaHei", 10, FontStyle.Regular, GraphicsUnit.Pixel );
+					JapFont  = new Font( "Meiryo UI", 12, FontStyle.Regular, GraphicsUnit.Pixel );
+					JapFont2 = new Font( "Meiryo UI", 10, FontStyle.Regular, GraphicsUnit.Pixel );
 					BarColorMorphing = false;
 				}
 			}
@@ -312,7 +324,7 @@ namespace ElectronicObserver.Utility {
 					LogLevel = 2;
 					SaveLogFlag = true;
 					SaveErrorReport = true;
-					FileEncodingID = 4;
+					FileEncodingID = 1;
 					ShowSpoiler = true;
 				}
 
@@ -459,7 +471,7 @@ namespace ElectronicObserver.Utility {
 					ConfirmOnClosing = true;
 					TopMost = false;
 					LayoutFilePath = @"Settings\WindowLayout.zip";
-					CheckUpdateInformation = true;
+					CheckUpdateInformation = false;
 					ShowStatusBar = true;
 					ClockFormat = 0;
 					LockLayout = false;
@@ -811,7 +823,7 @@ namespace ElectronicObserver.Utility {
 					ZoomRate = 100;
 					ZoomFit = false;
 					LogInPageURL = @"http://www.dmm.com/netgame_s/kancolle/";
-					IsEnabled = true;
+					IsEnabled = false;
 					ScreenShotPath = "ScreenShot";
 					ScreenShotFormat = 2;
 					StyleSheet = "\r\nbody {\r\n	margin:0;\r\n	overflow:hidden\r\n}\r\n\r\n#game_frame {\r\n	position:fixed;\r\n	left:50%;\r\n	top:-16px;\r\n	margin-left:-450px;\r\n	z-index:1\r\n}\r\n";

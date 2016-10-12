@@ -96,7 +96,7 @@ namespace ElectronicObserver.Data.ShipGroup {
 
 		public override string ToString() {
 			var exp = Expressions.Where( p => p.Enabled );
-			return string.Format( "({0}){1}", exp.Count() == 0 ? "なし" : string.Join( InternalAnd ? " かつ " : " または ", exp ), Inverse ? " を満たさない" : "" );
+			return string.Format( "{1}({0})", exp.Count() == 0 ? " 无 " : string.Join( InternalAnd ? " 而且 " : " 或者 ", exp ), Inverse ? "不满足 " : "" );
 		}
 
 
