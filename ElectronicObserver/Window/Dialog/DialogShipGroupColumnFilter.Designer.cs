@@ -45,7 +45,7 @@
 			this.ButtonOK.Name = "ButtonOK";
 			this.ButtonOK.Size = new System.Drawing.Size(75, 23);
 			this.ButtonOK.TabIndex = 2;
-			this.ButtonOK.Text = "OK";
+			this.ButtonOK.Text = "确定";
 			this.ButtonOK.UseVisualStyleBackColor = true;
 			this.ButtonOK.Click += new System.EventHandler(this.ButtonOK_Click);
 			// 
@@ -57,7 +57,7 @@
 			this.ButtonCancel.Name = "ButtonCancel";
 			this.ButtonCancel.Size = new System.Drawing.Size(75, 23);
 			this.ButtonCancel.TabIndex = 3;
-			this.ButtonCancel.Text = "キャンセル";
+			this.ButtonCancel.Text = "取消";
 			this.ButtonCancel.UseVisualStyleBackColor = true;
 			this.ButtonCancel.Click += new System.EventHandler(this.ButtonCancel_Click);
 			// 
@@ -94,7 +94,7 @@
 			// ColumnView_Name
 			// 
 			this.ColumnView_Name.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-			this.ColumnView_Name.HeaderText = "列名";
+			this.ColumnView_Name.HeaderText = "列明";
 			this.ColumnView_Name.Name = "ColumnView_Name";
 			this.ColumnView_Name.ReadOnly = true;
 			this.ColumnView_Name.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
@@ -102,20 +102,20 @@
 			// ColumnView_Visible
 			// 
 			this.ColumnView_Visible.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-			this.ColumnView_Visible.HeaderText = "表示";
+			this.ColumnView_Visible.HeaderText = "显示";
 			this.ColumnView_Visible.Name = "ColumnView_Visible";
 			this.ColumnView_Visible.Width = 37;
 			// 
 			// ColumnView_AutoSize
 			// 
 			this.ColumnView_AutoSize.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-			this.ColumnView_AutoSize.HeaderText = "自動サイズ";
+			this.ColumnView_AutoSize.HeaderText = "自动调整";
 			this.ColumnView_AutoSize.Name = "ColumnView_AutoSize";
 			this.ColumnView_AutoSize.Width = 66;
 			// 
 			// ColumnView_Width
 			// 
-			this.ColumnView_Width.HeaderText = "幅";
+			this.ColumnView_Width.HeaderText = "宽度";
 			this.ColumnView_Width.Name = "ColumnView_Width";
 			this.ColumnView_Width.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
 			// 
@@ -139,7 +139,7 @@
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(62, 15);
 			this.label1.TabIndex = 5;
-			this.label1.Text = "列の固定: ";
+			this.label1.Text = "固定列数 :";
 			// 
 			// ScrLkColumnCount
 			// 
@@ -161,13 +161,13 @@
 			this.Controls.Add(this.ColumnView);
 			this.Controls.Add(this.ButtonCancel);
 			this.Controls.Add(this.ButtonOK);
-			this.Font = new System.Drawing.Font("Meiryo UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+			this.Font = new System.Drawing.Font("Microsoft YaHei", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
 			this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
 			this.Name = "DialogShipGroupColumnFilter";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-			this.Text = "列の表示設定";
+			this.Text = "显示列设置";
 			this.Load += new System.EventHandler(this.DialogShipGroupColumnFilter_Load);
 			((System.ComponentModel.ISupportInitialize)(this.ColumnView)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.ScrLkColumnCount)).EndInit();

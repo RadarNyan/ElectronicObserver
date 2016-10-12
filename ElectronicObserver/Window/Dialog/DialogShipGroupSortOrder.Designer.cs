@@ -58,7 +58,7 @@
 			this.AutoSortFlag.Name = "AutoSortFlag";
 			this.AutoSortFlag.Size = new System.Drawing.Size(96, 19);
 			this.AutoSortFlag.TabIndex = 0;
-			this.AutoSortFlag.Text = "自動ソートする";
+			this.AutoSortFlag.Text = "启用自动排序";
 			this.AutoSortFlag.UseVisualStyleBackColor = true;
 			// 
 			// EnabledView
@@ -98,7 +98,7 @@
 			// 
 			// EnabledView_SortDirection
 			// 
-			this.EnabledView_SortDirection.HeaderText = "順";
+			this.EnabledView_SortDirection.HeaderText = "升降";
 			this.EnabledView_SortDirection.Name = "EnabledView_SortDirection";
 			this.EnabledView_SortDirection.Width = 40;
 			// 
@@ -225,7 +225,7 @@
 			this.ButtonRightAll.Name = "ButtonRightAll";
 			this.ButtonRightAll.Size = new System.Drawing.Size(74, 23);
 			this.ButtonRightAll.TabIndex = 6;
-			this.ButtonRightAll.Text = "全て >>";
+			this.ButtonRightAll.Text = "所有 >>";
 			this.ButtonRightAll.UseVisualStyleBackColor = true;
 			this.ButtonRightAll.Click += new System.EventHandler(this.ButtonRightAll_Click);
 			// 
@@ -236,7 +236,7 @@
 			this.ButtonLeftAll.Name = "ButtonLeftAll";
 			this.ButtonLeftAll.Size = new System.Drawing.Size(74, 23);
 			this.ButtonLeftAll.TabIndex = 5;
-			this.ButtonLeftAll.Text = "<< 全て";
+			this.ButtonLeftAll.Text = "<< 所有";
 			this.ButtonLeftAll.UseVisualStyleBackColor = true;
 			this.ButtonLeftAll.Click += new System.EventHandler(this.ButtonLeftAll_Click);
 			// 
@@ -277,7 +277,7 @@
 			this.ButtonOK.Name = "ButtonOK";
 			this.ButtonOK.Size = new System.Drawing.Size(75, 23);
 			this.ButtonOK.TabIndex = 3;
-			this.ButtonOK.Text = "OK";
+			this.ButtonOK.Text = "确定";
 			this.ButtonOK.UseVisualStyleBackColor = true;
 			this.ButtonOK.Click += new System.EventHandler(this.ButtonOK_Click);
 			// 
@@ -288,7 +288,7 @@
 			this.ButtonCancel.Name = "ButtonCancel";
 			this.ButtonCancel.Size = new System.Drawing.Size(75, 23);
 			this.ButtonCancel.TabIndex = 4;
-			this.ButtonCancel.Text = "キャンセル";
+			this.ButtonCancel.Text = "取消";
 			this.ButtonCancel.UseVisualStyleBackColor = true;
 			this.ButtonCancel.Click += new System.EventHandler(this.ButtonCancel_Click);
 			// 
@@ -300,12 +300,12 @@
 			this.Controls.Add(this.ButtonOK);
 			this.Controls.Add(this.tableLayoutPanel1);
 			this.Controls.Add(this.AutoSortFlag);
-			this.Font = new System.Drawing.Font("Meiryo UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+			this.Font = new System.Drawing.Font("Microsoft YaHei", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
 			this.Name = "DialogShipGroupSortOrder";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-			this.Text = "自動ソート順";
+			this.Text = "自动排序";
 			this.Load += new System.EventHandler(this.DialogShipGroupSortOrder_Load);
 			((System.ComponentModel.ISupportInitialize)(this.EnabledView)).EndInit();
 			this.tableLayoutPanel1.ResumeLayout(false);
