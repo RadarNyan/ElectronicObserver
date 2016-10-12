@@ -415,9 +415,9 @@ namespace ElectronicObserver.Data {
 		public static string GetEngagementForm( int id ) {
 			switch ( id ) {
 				case 1:
-					return "同航戦";
+					return "同航战";
 				case 2:
-					return "反航戦";
+					return "反航战";
 				case 3:
 					return "T字有利";
 				case 4:
@@ -459,13 +459,13 @@ namespace ElectronicObserver.Data {
 				case 2:
 					return "成功△";
 				case 3:
-					return "未帰還";
+					return "未归还";
 				case 4:
-					return "失敗";
+					return "失败";
 				case 5:
 					return "成功";
 				case 6:
-					return "失敗";
+					return "失败";
 				default:
 					return "不明";
 			}
