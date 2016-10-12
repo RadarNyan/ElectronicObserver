@@ -129,7 +129,7 @@ namespace Browser {
 				control.Image = new Bitmap( (int)( KanColleSize.Width * zoomrate ), (int)( KanColleSize.Height * zoomrate ), PixelFormat.Format24bppRgb );
 				using ( var g = Graphics.FromImage( control.Image ) ) {
 					g.Clear( SystemColors.Control );
-					g.DrawString( "スクリーンショットをまだ撮影していません。\r\n", Font, Brushes.Black, new Point( 4, 4 ) );
+					g.DrawString( "还没有截过图。\r\n", Font, Brushes.Black, new Point( 4, 4 ) );
 				}
 
 				var host = new ToolStripControlHost( control, "ToolMenu_Other_LastScreenShot_ImageHost" );
@@ -369,9 +369,9 @@ namespace Browser {
 				}
 
 				if ( fit ) {
-					ToolMenu_Other_Zoom_Current.Text = string.Format( "現在: ぴったり" );
+					ToolMenu_Other_Zoom_Current.Text = string.Format( "当前 : 自适应" );
 				} else {
-					ToolMenu_Other_Zoom_Current.Text = string.Format( "現在: {0}%", zoomRate );
+					ToolMenu_Other_Zoom_Current.Text = string.Format( "当前: {0}%", zoomRate );
 				}
 
 

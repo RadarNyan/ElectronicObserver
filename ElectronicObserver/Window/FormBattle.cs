@@ -303,7 +303,7 @@ namespace ElectronicObserver.Window {
 
 			if ( pd != null && pd.IsAvailable ) {
 
-				Searching.Text = "基地航空隊";
+				Searching.Text = "基地航空队";
 				Searching.ImageAlign = ContentAlignment.MiddleLeft;
 				Searching.ImageIndex = (int)ResourceManager.EquipmentContent.LandAttacker;
 
@@ -312,17 +312,17 @@ namespace ElectronicObserver.Window {
 
 				foreach ( var phase in pd.AirAttackUnits ) {
 
-					sb.AppendFormat( "{0} 回目 - #{1} :\r\n",
+					sb.AppendFormat( "第 {0} 次 - #{1} :\r\n",
 						index, phase.AirUnitID );
 
 					if ( phase.IsStage1Available ) {
-						sb.AppendFormat( "　St1: 自軍 -{0}/{1} | 敵軍 -{2}/{3} | {4}\r\n",
+						sb.AppendFormat( "　St1: 自军 -{0}/{1} | 敌军 -{2}/{3} | {4}\r\n",
 							phase.AircraftLostStage1Friend, phase.AircraftTotalStage1Friend,
 							phase.AircraftLostStage1Enemy, phase.AircraftTotalStage1Enemy,
 							Constants.GetAirSuperiority( phase.AirSuperiority ) );
 					}
 					if ( phase.IsStage2Available ) {
-						sb.AppendFormat( "　St2: 自軍 -{0}/{1} | 敵軍 -{2}/{3}\r\n",
+						sb.AppendFormat( "　St2: 自军 -{0}/{1} | 敌军 -{2}/{3}\r\n",
 							phase.AircraftLostStage2Friend, phase.AircraftTotalStage2Friend,
 							phase.AircraftLostStage2Enemy, phase.AircraftTotalStage2Enemy );
 					}
@@ -343,7 +343,7 @@ namespace ElectronicObserver.Window {
 		/// 基地航空隊フェーズの結果をクリアします。
 		/// </summary>
 		private void ClearBaseAirAttack() {
-			Searching.Text = "索敵";
+			Searching.Text = "索敌";
 			Searching.ImageAlign = ContentAlignment.MiddleCenter;
 			Searching.ImageIndex = -1;
 			ToolTipInfo.SetToolTip( Searching, null );
@@ -382,7 +382,7 @@ namespace ElectronicObserver.Window {
 				if ( touchFriend != -1 ) {
 					AirStage1Friend.ImageAlign = ContentAlignment.MiddleLeft;
 					AirStage1Friend.ImageIndex = (int)ResourceManager.EquipmentContent.Seaplane;
-					ToolTipInfo.SetToolTip( AirStage1Friend, "触接中: " + KCDatabase.Instance.MasterEquipments[touchFriend].Name );
+					ToolTipInfo.SetToolTip( AirStage1Friend, "接触中 : " + KCDatabase.Instance.MasterEquipments[touchFriend].Name );
 				} else {
 					AirStage1Friend.ImageAlign = ContentAlignment.MiddleCenter;
 					AirStage1Friend.ImageIndex = -1;
@@ -393,7 +393,7 @@ namespace ElectronicObserver.Window {
 				if ( touchEnemy != -1 ) {
 					AirStage1Enemy.ImageAlign = ContentAlignment.MiddleLeft;
 					AirStage1Enemy.ImageIndex = (int)ResourceManager.EquipmentContent.Seaplane;
-					ToolTipInfo.SetToolTip( AirStage1Enemy, "触接中: " + KCDatabase.Instance.MasterEquipments[touchEnemy].Name );
+					ToolTipInfo.SetToolTip( AirStage1Enemy, "接触中 : " + KCDatabase.Instance.MasterEquipments[touchEnemy].Name );
 				} else {
 					AirStage1Enemy.ImageAlign = ContentAlignment.MiddleCenter;
 					AirStage1Enemy.ImageIndex = -1;
@@ -446,13 +446,13 @@ namespace ElectronicObserver.Window {
 					AACutin.ImageAlign = ContentAlignment.MiddleLeft;
 					AACutin.ImageIndex = (int)ResourceManager.EquipmentContent.HighAngleGun;
 					ToolTipInfo.SetToolTip( AACutin, string.Format(
-						"対空カットイン: {0}\r\nカットイン種別: {1} ({2})",
+						"对空 CI : {0}\r\nCI 类型 : {1} ({2})",
 						pd.AACutInShip.NameWithLevel,
 						cutinID,
 						Constants.GetAACutinKind( cutinID ) ) );
 
 				} else {
-					AACutin.Text = "対空砲火";
+					AACutin.Text = "对空炮火";
 					AACutin.ImageAlign = ContentAlignment.MiddleCenter;
 					AACutin.ImageIndex = -1;
 					ToolTipInfo.SetToolTip( AACutin, null );
@@ -463,7 +463,7 @@ namespace ElectronicObserver.Window {
 				AirStage2Friend.ForeColor = SystemColors.ControlText;
 				AirStage2Enemy.Text = "-";
 				AirStage2Enemy.ForeColor = SystemColors.ControlText;
-				AACutin.Text = "対空砲火";
+				AACutin.Text = "对空炮火";
 				AACutin.ImageAlign = ContentAlignment.MiddleCenter;
 				AACutin.ImageIndex = -1;
 				ToolTipInfo.SetToolTip( AACutin, null );
@@ -494,7 +494,7 @@ namespace ElectronicObserver.Window {
 
 				AirSuperiority.Text = Constants.GetAirSuperiority( pd1.AirSuperiority );
 				if ( isBattle2Enabled ) {
-					ToolTipInfo.SetToolTip( AirSuperiority, "第2次: " + Constants.GetAirSuperiority( pd2.AirSuperiority ) );
+					ToolTipInfo.SetToolTip( AirSuperiority, "第 2 次 : " + Constants.GetAirSuperiority( pd2.AirSuperiority ) );
 				} else {
 					ToolTipInfo.SetToolTip( AirSuperiority, null );
 				}
@@ -507,7 +507,7 @@ namespace ElectronicObserver.Window {
 					( isBattle2Enabled ? pd2.AircraftTotalStage1Friend : 0 ),
 				};
 				AirStage1Friend.Text = string.Format( "-{0}/{1}", planeFriend[0] + planeFriend[2], planeFriend[1] );
-				ToolTipInfo.SetToolTip( AirStage1Friend, string.Format( "第1次: -{0}/{1}\r\n第2次: -{2}/{3}\r\n",
+				ToolTipInfo.SetToolTip( AirStage1Friend, string.Format( "第 1 次 : -{0}/{1}\r\n第 2 次 : -{2}/{3}\r\n",
 					planeFriend[0], planeFriend[1], planeFriend[2], planeFriend[3] ) );
 
 				if ( ( planeFriend[1] > 0 && planeFriend[0] == planeFriend[1] ) ||
@@ -524,7 +524,7 @@ namespace ElectronicObserver.Window {
 					( isBattle2Enabled ? pd2.AircraftTotalStage1Enemy : 0 ),
 				};
 				AirStage1Enemy.Text = string.Format( "-{0}/{1}", planeEnemy[0] + planeEnemy[2], planeEnemy[1] );
-				ToolTipInfo.SetToolTip( AirStage1Enemy, string.Format( "第1次: -{0}/{1}\r\n第2次: -{2}/{3}\r\n",
+				ToolTipInfo.SetToolTip( AirStage1Enemy, string.Format( "第 1 次 : -{0}/{1}\r\n第 2 次 : -{2}/{3}\r\n",
 					planeEnemy[0], planeEnemy[1], planeEnemy[2], planeEnemy[3] ) );
 
 				if ( ( planeEnemy[1] > 0 && planeEnemy[0] == planeEnemy[1] ) ||
@@ -545,10 +545,10 @@ namespace ElectronicObserver.Window {
 
 					EquipmentDataMaster[] planes = { KCDatabase.Instance.MasterEquipments[touchFriend[0]], KCDatabase.Instance.MasterEquipments[touchFriend[1]] };
 					ToolTipInfo.SetToolTip( AirStage1Friend, string.Format(
-						"{0}触接中\r\n第1次: {1}\r\n第2次: {2}",
+						"{0} 接触中\r\n第 1 次 : {1}\r\n第 2 次 : {2}",
 						ToolTipInfo.GetToolTip( AirStage1Friend ) ?? "",
-						planes[0] != null ? planes[0].Name : "(なし)",
-						planes[1] != null ? planes[1].Name : "(なし)"
+						planes[0] != null ? planes[0].Name : "( 无 )",
+						planes[1] != null ? planes[1].Name : "( 无 )"
 						) );
 				} else {
 					AirStage1Friend.ImageAlign = ContentAlignment.MiddleCenter;
@@ -566,10 +566,10 @@ namespace ElectronicObserver.Window {
 
 					EquipmentDataMaster[] planes = { KCDatabase.Instance.MasterEquipments[touchEnemy[0]], KCDatabase.Instance.MasterEquipments[touchEnemy[1]] };
 					ToolTipInfo.SetToolTip( AirStage1Enemy, string.Format(
-						"{0}触接中\r\n第1次: {1}\r\n第2次: {2}",
+						"{0} 接触中\r\n第 1 次 : {1}\r\n第 2 次 : {2}",
 						ToolTipInfo.GetToolTip( AirStage1Enemy ) ?? "",
-						planes[0] != null ? planes[0].Name : "(なし)",
-						planes[1] != null ? planes[1].Name : "(なし)"
+						planes[0] != null ? planes[0].Name : "( 无 )",
+						planes[1] != null ? planes[1].Name : "( 无 )"
 						) );
 				} else {
 					AirStage1Enemy.ImageAlign = ContentAlignment.MiddleCenter;
@@ -602,7 +602,7 @@ namespace ElectronicObserver.Window {
 					( isBattle2Enabled ? pd2.AircraftTotalStage2Friend : 0 ),
 				};
 				AirStage2Friend.Text = string.Format( "-{0}/{1}", planeFriend[0] + planeFriend[2], planeFriend[1] );
-				ToolTipInfo.SetToolTip( AirStage2Friend, string.Format( "第1次: -{0}/{1}\r\n第2次: -{2}/{3}\r\n",
+				ToolTipInfo.SetToolTip( AirStage2Friend, string.Format( "第 1 次 : -{0}/{1}\r\n第 2 次 : -{2}/{3}\r\n",
 					planeFriend[0], planeFriend[1], planeFriend[2], planeFriend[3] ) );
 
 				if ( ( planeFriend[1] > 0 && planeFriend[0] == planeFriend[1] ) ||
@@ -619,7 +619,7 @@ namespace ElectronicObserver.Window {
 					( isBattle2Enabled ? pd2.AircraftTotalStage2Enemy : 0 ),
 				};
 				AirStage2Enemy.Text = string.Format( "-{0}/{1}", planeEnemy[0] + planeEnemy[2], planeEnemy[1] );
-				ToolTipInfo.SetToolTip( AirStage2Enemy, string.Format( "第1次: -{0}/{1}\r\n第2次: -{2}/{3}\r\n{4}",
+				ToolTipInfo.SetToolTip( AirStage2Enemy, string.Format( "第 1 次 : -{0}/{1}\r\n第 2 次 : -{2}/{3}\r\n{4}",
 					planeEnemy[0], planeEnemy[1], planeEnemy[2], planeEnemy[3],
 					isBattle2Enabled ? "" : "(第二次戦発生せず)" ) );			//DEBUG
 
@@ -649,23 +649,23 @@ namespace ElectronicObserver.Window {
 						AACutin.ImageIndex = (int)ResourceManager.EquipmentContent.HighAngleGun;
 
 						StringBuilder sb = new StringBuilder();
-						sb.AppendLine( "対空カットイン" );
+						sb.AppendLine( "对空 CI" );
 						for ( int i = 0; i < 2; i++ ) {
 							if ( fire[i] ) {
-								sb.AppendFormat( "第{0}次: {1}\r\nカットイン種別: {2} ({3})\r\n",
+								sb.AppendFormat( "第 {0} 次 : {1}\r\nCI 类型 : {2} ({3})\r\n",
 									i + 1,
 									( i == 0 ? pd1 : pd2 ).AACutInShip.NameWithLevel,
 									cutinID[i],
 									Constants.GetAACutinKind( cutinID[i] ) );
 							} else {
-								sb.AppendFormat( "第{0}次: (発動せず)\r\n",
+								sb.AppendFormat( "第 {0} 次 : ( 未发动 )\r\n",
 									i + 1 );
 							}
 						}
 						ToolTipInfo.SetToolTip( AACutin, sb.ToString() );
 
 					} else {
-						AACutin.Text = "対空砲火";
+						AACutin.Text = "对空炮火";
 						AACutin.ImageAlign = ContentAlignment.MiddleCenter;
 						AACutin.ImageIndex = -1;
 						ToolTipInfo.SetToolTip( AACutin, null );
@@ -679,7 +679,7 @@ namespace ElectronicObserver.Window {
 				AirStage2Enemy.Text = "-";
 				AirStage2Enemy.ForeColor = SystemColors.ControlText;
 				ToolTipInfo.SetToolTip( AirStage2Enemy, null );
-				AACutin.Text = "対空砲火";
+				AACutin.Text = "对空炮火";
 				AACutin.ImageAlign = ContentAlignment.MiddleCenter;
 				AACutin.ImageIndex = -1;
 				ToolTipInfo.SetToolTip( AACutin, null );
@@ -764,7 +764,7 @@ namespace ElectronicObserver.Window {
 
 					StringBuilder builder = new StringBuilder();
 					builder.AppendFormat(
-						"{0} {1} Lv. {2}\r\nHP: ({3} → {4})/{5} ({6}) [{7}]\r\n与ダメージ: {8}\r\n\r\n",
+						"{0} {1} Lv. {2}\r\nHP: ({3} → {4})/{5} ({6}) [{7}]\r\n造成伤害 : {8}\r\n\r\n",
 						ship.MasterShip.ShipTypeName,
 						ship.MasterShip.NameWithClass,
 						ship.Level,
@@ -787,31 +787,31 @@ namespace ElectronicObserver.Window {
 						var shipTorpedoDetail = SelectBattleDetail( ( (BattleDay)bd ).Torpedo.BattleDetails, i );
 
 						if ( shipAirBattleDetail.Any() ) {
-							builder.AppendLine( "《航空戦》" );
+							builder.AppendLine( "《航空战》" );
 							builder.Append( FriendShipBattleDetail( bd, shipAirBattleDetail ) );
 						}
 						if ( shipOpeningASWDetail.Any() ) {
-							builder.AppendLine( "《開幕対潜》" );
+							builder.AppendLine( "《开幕对潜》" );
 							builder.Append( FriendShipBattleDetail( bd, shipOpeningASWDetail ) );
 						}
 						if ( shipOpeningTorpedoDetail.Any() ) {
-							builder.AppendLine( "《開幕雷撃》" );
+							builder.AppendLine( "《开幕雷击》" );
 							builder.Append( FriendShipBattleDetail( bd, shipOpeningTorpedoDetail ) );
 						}
 						if ( shipShelling1Detail.Any() ) {
-							builder.AppendLine( "《第一次砲撃戦》" );
+							builder.AppendLine( "《第一次炮击战》" );
 							builder.Append( FriendShipBattleDetail( bd, shipShelling1Detail ) );
 						}
 						if ( shipShelling2Detail.Any() ) {
-							builder.AppendLine( "《第二次砲撃戦》" );
+							builder.AppendLine( "《第二次炮击战》" );
 							builder.Append( FriendShipBattleDetail( bd, shipShelling2Detail ) );
 						}
 						if ( shipShelling3Detail.Any() ) {
-							builder.AppendLine( "《第三次砲撃戦》" );
+							builder.AppendLine( "《第三次炮击战》" );
 							builder.Append( FriendShipBattleDetail( bd, shipShelling3Detail ) );
 						}
 						if ( shipTorpedoDetail.Any() ) {
-							builder.AppendLine( "《雷撃戦》" );
+							builder.AppendLine( "《雷击战》" );
 							builder.AppendLine( FriendShipBattleDetail( bd, shipTorpedoDetail ) );
 						}
 
@@ -820,7 +820,7 @@ namespace ElectronicObserver.Window {
 						var shipNightBattleDetail = SelectBattleDetail( ( (BattleNight)bd ).NightBattle.BattleDetails, i );
 
 						if ( shipNightBattleDetail.Any() ) {
-							builder.AppendLine( "《夜戦》" );
+							builder.AppendLine( "《夜战》" );
 							builder.Append( FriendShipBattleDetail( bd, shipNightBattleDetail ) );
 						}
 
@@ -939,11 +939,11 @@ namespace ElectronicObserver.Window {
 						var shipShelling2Detail = SelectBattleDetail( ( (BattleDay)bd ).Shelling2.BattleDetails, i );
 
 						if ( shipShelling1Detail.Any() ) {
-							builder.AppendLine( "《第一次砲撃戦》" );
+							builder.AppendLine( "《第一次炮击战》" );
 							builder.Append( FriendShipBattleDetail( bd, shipShelling1Detail ) );
 						}
 						if ( shipShelling2Detail.Any() ) {
-							builder.AppendLine( "《第二次砲撃戦》" );
+							builder.AppendLine( "《第二次炮击战》" );
 							builder.Append( FriendShipBattleDetail( bd, shipShelling2Detail ) );
 						}
 
@@ -953,11 +953,11 @@ namespace ElectronicObserver.Window {
 						var shipShelling3Detail = SelectBattleDetail( ( (BattleDay)bd ).Shelling3.BattleDetails, i );
 
 						if ( shipShelling2Detail.Any() ) {
-							builder.AppendLine( "《第二次砲撃戦》" );
+							builder.AppendLine( "《第二次炮击战》" );
 							builder.Append( FriendShipBattleDetail( bd, shipShelling2Detail ) );
 						}
 						if ( shipShelling3Detail.Any() ) {
-							builder.AppendLine( "《第三次砲撃戦》" );
+							builder.AppendLine( "《第三次炮击战》" );
 							builder.AppendLine( FriendShipBattleDetail( bd, shipShelling3Detail ) );
 						}
 
@@ -980,7 +980,7 @@ namespace ElectronicObserver.Window {
 						var shipAirBattleDetail = SelectBattleDetail( ( (BattleDay)bd ).AirBattle.BattleDetails, i );
 
 						if ( shipAirBattleDetail.Any() ) {
-							builder.AppendLine( "《空襲戦》" );
+							builder.AppendLine( "《空袭战》" );
 							builder.Append( FriendShipBattleDetail( bd, shipAirBattleDetail ) );
 						}
 
@@ -1021,7 +1021,7 @@ namespace ElectronicObserver.Window {
 
 
 					StringBuilder builder = new StringBuilder();
-					builder.AppendFormat( "{0} Lv. {1}\r\nHP: ({2} → {3})/{4} ({5}) [{6}]\r\n与ダメージ: {7}\r\n\r\n",
+					builder.AppendFormat( "{0} Lv. {1}\r\nHP: ({2} → {3})/{4} ({5}) [{6}]\r\n造成伤害 : {7}\r\n\r\n",
 						ship.MasterShip.NameWithClass,
 						ship.Level,
 						Math.Max( HPBars[i + 12].PrevValue, 0 ),
@@ -1041,19 +1041,19 @@ namespace ElectronicObserver.Window {
 
 
 						if ( shipOpeningASWDetail.Any() ) {
-							builder.AppendLine( "《開幕対潜》" );
+							builder.AppendLine( "《开幕对潜》" );
 							builder.Append( FriendShipBattleDetail( bd, shipOpeningASWDetail ) );
 						}
 						if ( shipOpeningTorpedoDetail.Any() ) {
-							builder.AppendLine( "《開幕雷撃》" );
+							builder.AppendLine( "《开幕雷击》" );
 							builder.Append( FriendShipBattleDetail( bd, shipOpeningTorpedoDetail ) );
 						}
 						if ( shipShelling1Detail.Any() ) {
-							builder.AppendLine( "《第一次砲撃戦》" );
+							builder.AppendLine( "《第一次炮击战》" );
 							builder.Append( FriendShipBattleDetail( bd, shipShelling1Detail ) );
 						}
 						if ( shipTorpedoDetail.Any() ) {
-							builder.AppendLine( "《雷撃戦》" );
+							builder.AppendLine( "《雷击战》" );
 							builder.Append( FriendShipBattleDetail( bd, shipTorpedoDetail ) );
 						}
 
@@ -1066,19 +1066,19 @@ namespace ElectronicObserver.Window {
 
 
 						if ( shipOpeningASWDetail.Any() ) {
-							builder.AppendLine( "《開幕対潜》" );
+							builder.AppendLine( "《开幕对潜》" );
 							builder.Append( FriendShipBattleDetail( bd, shipOpeningASWDetail ) );
 						}
 						if ( shipOpeningTorpedoDetail.Any() ) {
-							builder.AppendLine( "《開幕雷撃》" );
+							builder.AppendLine( "《开幕雷击》" );
 							builder.Append( FriendShipBattleDetail( bd, shipOpeningTorpedoDetail ) );
 						}
 						if ( shipShelling3Detail.Any() ) {
-							builder.AppendLine( "《第三次砲撃戦》" );
+							builder.AppendLine( "《第三次炮击战》" );
 							builder.Append( FriendShipBattleDetail( bd, shipShelling3Detail ) );
 						}
 						if ( shipTorpedoDetail.Any() ) {
-							builder.AppendLine( "《雷撃戦》" );
+							builder.AppendLine( "《雷击战》" );
 							builder.Append( FriendShipBattleDetail( bd, shipTorpedoDetail ) );
 						}
 
@@ -1088,7 +1088,7 @@ namespace ElectronicObserver.Window {
 
 
 						if ( shipNightBattleDetail.Any() ) {
-							builder.AppendLine( "《夜戦》" );
+							builder.AppendLine( "《夜战》" );
 							builder.Append( FriendShipBattleDetail( bd, shipNightBattleDetail ) );
 						}
 
@@ -1098,11 +1098,11 @@ namespace ElectronicObserver.Window {
 						var shipAirBattle2Detail = SelectBattleDetail( ( (BattleCombinedAirBattle)bd ).AirBattle2.BattleDetails, i + 12 );
 
 						if ( shipAirBattle1Detail.Any() ) {
-							builder.AppendLine( "《第一次航空戦》" );
+							builder.AppendLine( "《第一次航空战》" );
 							builder.Append( FriendShipBattleDetail( bd, shipAirBattle1Detail ) );
 						}
 						if ( shipAirBattle2Detail.Any() ) {
-							builder.AppendLine( "《第二次航空戦》" );
+							builder.AppendLine( "《第二次航空战》" );
 							builder.Append( FriendShipBattleDetail( bd, shipAirBattle2Detail ) );
 						}
 
@@ -1111,7 +1111,7 @@ namespace ElectronicObserver.Window {
 						var shipAirBattleDetail = SelectBattleDetail( ( (BattleDay)bd ).AirBattle.BattleDetails, i + 12 );
 
 						if ( shipAirBattleDetail.Any() ) {
-							builder.AppendLine( "《空襲戦》" );
+							builder.AppendLine( "《空袭战》" );
 							builder.Append( FriendShipBattleDetail( bd, shipAirBattleDetail ) );
 						}
 
@@ -1361,7 +1361,7 @@ namespace ElectronicObserver.Window {
 					AirStage1Friend.ForeColor = SystemColors.ControlText;
 					AirStage1Friend.ImageAlign = ContentAlignment.MiddleLeft;
 					AirStage1Friend.ImageIndex = (int)ResourceManager.EquipmentContent.Searchlight;
-					ToolTipInfo.SetToolTip( AirStage1Friend, "探照灯照射: " + ship.NameWithLevel );
+					ToolTipInfo.SetToolTip( AirStage1Friend, "探照灯照射 : " + ship.NameWithLevel );
 				} else {
 					ToolTipInfo.SetToolTip( AirStage1Friend, null );
 				}
@@ -1375,7 +1375,7 @@ namespace ElectronicObserver.Window {
 					AirStage1Enemy.ForeColor = SystemColors.ControlText;
 					AirStage1Enemy.ImageAlign = ContentAlignment.MiddleLeft;
 					AirStage1Enemy.ImageIndex = (int)ResourceManager.EquipmentContent.Searchlight;
-					ToolTipInfo.SetToolTip( AirStage1Enemy, "探照灯照射: " + pd.SearchlightEnemyInstance.NameWithClass );
+					ToolTipInfo.SetToolTip( AirStage1Enemy, "探照灯照射 : " + pd.SearchlightEnemyInstance.NameWithClass );
 				} else {
 					ToolTipInfo.SetToolTip( AirStage1Enemy, null );
 				}
@@ -1384,19 +1384,19 @@ namespace ElectronicObserver.Window {
 
 			//夜間触接判定
 			if ( pd.TouchAircraftFriend != -1 ) {
-				SearchingFriend.Text = "夜間触接";
+				SearchingFriend.Text = "夜间接触";
 				SearchingFriend.ImageIndex = (int)ResourceManager.EquipmentContent.Seaplane;
 				SearchingFriend.ImageAlign = ContentAlignment.MiddleLeft;
-				ToolTipInfo.SetToolTip( SearchingFriend, "夜間触接中: " + KCDatabase.Instance.MasterEquipments[pd.TouchAircraftFriend].Name );
+				ToolTipInfo.SetToolTip( SearchingFriend, "夜间接触中 : " + KCDatabase.Instance.MasterEquipments[pd.TouchAircraftFriend].Name );
 			} else {
 				ToolTipInfo.SetToolTip( SearchingFriend, null );
 			}
 
 			if ( pd.TouchAircraftEnemy != -1 ) {
-				SearchingEnemy.Text = "夜間触接";
+				SearchingEnemy.Text = "夜间接触";
 				SearchingEnemy.ImageIndex = (int)ResourceManager.EquipmentContent.Seaplane;
 				SearchingFriend.ImageAlign = ContentAlignment.MiddleLeft;
-				ToolTipInfo.SetToolTip( SearchingEnemy, "夜間触接中: " + KCDatabase.Instance.MasterEquipments[pd.TouchAircraftEnemy].Name );
+				ToolTipInfo.SetToolTip( SearchingEnemy, "夜间接触中 : " + KCDatabase.Instance.MasterEquipments[pd.TouchAircraftEnemy].Name );
 			} else {
 				ToolTipInfo.SetToolTip( SearchingEnemy, null );
 			}
@@ -1410,7 +1410,7 @@ namespace ElectronicObserver.Window {
 					AirStage2Friend.ForeColor = SystemColors.ControlText;
 					AirStage2Friend.ImageAlign = ContentAlignment.MiddleLeft;
 					AirStage2Friend.ImageIndex = (int)ResourceManager.EquipmentContent.Flare;
-					ToolTipInfo.SetToolTip( AirStage2Friend, "照明弾投射: " + fleet.MembersInstance[index].NameWithLevel );
+					ToolTipInfo.SetToolTip( AirStage2Friend, "照明弹投射 : " + fleet.MembersInstance[index].NameWithLevel );
 
 				} else {
 					ToolTipInfo.SetToolTip( AirStage2Friend, null );
@@ -1425,7 +1425,7 @@ namespace ElectronicObserver.Window {
 					AirStage2Enemy.ForeColor = SystemColors.ControlText;
 					AirStage2Enemy.ImageAlign = ContentAlignment.MiddleLeft;
 					AirStage2Enemy.ImageIndex = (int)ResourceManager.EquipmentContent.Flare;
-					ToolTipInfo.SetToolTip( AirStage2Enemy, "照明弾投射: " + pd.FlareEnemyInstance.NameWithClass );
+					ToolTipInfo.SetToolTip( AirStage2Enemy, "照明弹投射 : " + pd.FlareEnemyInstance.NameWithClass );
 				} else {
 					ToolTipInfo.SetToolTip( AirStage2Enemy, null );
 				}
@@ -1511,8 +1511,9 @@ namespace ElectronicObserver.Window {
 
 			var config = Utility.Configuration.Config;
 
-			MainFont = TableTop.Font = TableBottom.Font = Font = config.UI.MainFont;
-			SubFont = config.UI.SubFont;
+			MainFont = config.UI.JapFont;
+			TableTop.Font = TableBottom.Font = Font = config.UI.MainFont;
+			SubFont = config.UI.JapFont2;
 
 			BaseLayoutPanel.AutoScroll = config.FormBattle.IsScrollable;
 
