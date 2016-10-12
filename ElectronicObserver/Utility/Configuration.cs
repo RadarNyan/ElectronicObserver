@@ -170,6 +170,16 @@ namespace ElectronicObserver.Utility {
 				/// </summary>
 				public SerializableFont SubFont { get; set; }
 
+				/// <summary>
+				/// Japanese Main Font ( Hard-coded to Meiryo UI, 12px )
+				/// </summary>
+				public SerializableFont JapFont { get; set; }
+
+				/// <summary>
+				/// Japanese Sub Font ( Hard-coded to Meiryo UI, 10px )
+				/// </summary>
+				public SerializableFont JapFont2 { get; set; }
+
 				[IgnoreDataMember]
 				private bool _barColorMorphing;
 
@@ -244,8 +254,10 @@ namespace ElectronicObserver.Utility {
 				};
 
 				public ConfigUI() {
-					MainFont = new Font( "Meiryo UI", 12, FontStyle.Regular, GraphicsUnit.Pixel );
-					SubFont = new Font( "Meiryo UI", 10, FontStyle.Regular, GraphicsUnit.Pixel );
+					MainFont = new Font( "Microsoft YaHei", 12, FontStyle.Regular, GraphicsUnit.Pixel );
+					SubFont  = new Font( "Microsoft YaHei", 10, FontStyle.Regular, GraphicsUnit.Pixel );
+					JapFont  = new Font( "Meiryo UI", 12, FontStyle.Regular, GraphicsUnit.Pixel );
+					JapFont2 = new Font( "Meiryo UI", 10, FontStyle.Regular, GraphicsUnit.Pixel );
 					BarColorMorphing = false;
 				}
 			}
