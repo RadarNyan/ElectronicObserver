@@ -16,7 +16,7 @@ namespace ElectronicObserver.Data {
 		public static string GetSpeed( int value ) {
 			switch ( value ) {
 				case 0:
-					return "陸上";
+					return "陆基";
 				case 5:
 					return "低速";
 				case 10:
@@ -32,15 +32,15 @@ namespace ElectronicObserver.Data {
 		public static string GetRange( int value ) {
 			switch ( value ) {
 				case 0:
-					return "無";
+					return "无";
 				case 1:
 					return "短";
 				case 2:
 					return "中";
 				case 3:
-					return "長";
+					return "长";
 				case 4:
-					return "超長";
+					return "超长";
 				default:
 					return "不明";
 			}
@@ -185,9 +185,9 @@ namespace ElectronicObserver.Data {
 		public static string GetBaseAirCorpsActionKind( int value ) {
 			switch ( value ) {
 				case 0:
-					return "待機";
+					return "待机";
 				case 1:
-					return "出撃";
+					return "出击";
 				case 2:
 					return "防空";
 				case 3:
@@ -212,25 +212,25 @@ namespace ElectronicObserver.Data {
 			switch ( value ) {
 
 				case 0:
-					return "初期位置";
+					return "起始位置";
 				case 1:
-					return "なし";
+					return "无";
 				case 2:
-					return "資源";
+					return "资源";
 				case 3:
-					return "渦潮";
+					return "旋窝";
 				case 4:
-					return "通常戦闘";
+					return "普通战斗";
 				case 5:
-					return "ボス戦闘";
+					return "BOSS 战";
 				case 6:
 					return "気のせいだった";
 				case 7:
-					return "航空戦";
+					return "航空战";
 				case 8:
 					return "船団護衛成功";
 				case 9:
-					return "揚陸地点";
+					return "登陆地点";
 				default:
 					return "不明";
 			}
@@ -243,17 +243,17 @@ namespace ElectronicObserver.Data {
 
 			switch ( value ) {
 				case 0:
-					return "非戦闘";
+					return "非战斗";
 				case 1:
-					return "昼夜戦";
+					return "昼夜战";
 				case 2:
-					return "夜戦";
+					return "夜战";
 				case 3:
-					return "夜昼戦";
+					return "夜昼战";
 				case 4:
-					return "航空戦";
+					return "航空战";
 				case 6:
-					return "空襲戦";
+					return "空袭战";
 				default:
 					return "不明";
 			}
@@ -267,9 +267,9 @@ namespace ElectronicObserver.Data {
 
 			switch ( value ) {
 				case -1:
-					return "なし";
+					return "无";
 				case 0:
-					return "未選択";
+					return "未选择";
 				case 1:
 					return "丙";
 				case 2:
@@ -307,15 +307,15 @@ namespace ElectronicObserver.Data {
 		public static string GetAirRaidDamage( int value ) {
 			switch ( value ) {
 				case 1:
-					return "空襲発生 - 資源に損害";
+					return "遭到空袭 - 资源受损";
 				case 2:
-					return "空襲発生 - 資源・航空隊に損害";
+					return "遭到空袭 - 资源、航空队受损";
 				case 3:
-					return "空襲発生 - 航空隊に損害";
+					return "遭到空袭 - 航空队受损";
 				case 4:
-					return "空襲発生 - 被害なし";
+					return "遭到空袭 - 没有受损";
 				default:
-					return "空襲発生せず";
+					return "未被空袭";
 			}
 		}
 
@@ -387,15 +387,15 @@ namespace ElectronicObserver.Data {
 		public static string GetFormationShort( int id ) {
 			switch ( id ) {
 				case 1:
-					return "単縦陣";
+					return "单纵阵";
 				case 2:
-					return "複縦陣";
+					return "复纵阵";
 				case 3:
-					return "輪形陣";
+					return "轮形阵";
 				case 4:
-					return "梯形陣";
+					return "梯形阵";
 				case 5:
-					return "単横陣";
+					return "单横阵";
 				case 11:
 					return "第一警戒";
 				case 12:
@@ -415,9 +415,9 @@ namespace ElectronicObserver.Data {
 		public static string GetEngagementForm( int id ) {
 			switch ( id ) {
 				case 1:
-					return "同航戦";
+					return "同航战";
 				case 2:
-					return "反航戦";
+					return "反航战";
 				case 3:
 					return "T字有利";
 				case 4:
@@ -459,13 +459,13 @@ namespace ElectronicObserver.Data {
 				case 2:
 					return "成功△";
 				case 3:
-					return "未帰還";
+					return "未归还";
 				case 4:
-					return "失敗";
+					return "失败";
 				case 5:
 					return "成功";
 				case 6:
-					return "失敗";
+					return "失败";
 				default:
 					return "不明";
 			}
@@ -479,13 +479,13 @@ namespace ElectronicObserver.Data {
 				case 0:
 					return "航空均衡";
 				case 1:
-					return "制空権確保";
+					return "制空权确保";
 				case 2:
-					return "航空優勢";
+					return "航空优势";
 				case 3:
-					return "航空劣勢";
+					return "航空劣势";
 				case 4:
-					return "制空権喪失";
+					return "制空权丧失";
 				default:
 					return "不明";
 			}
@@ -499,31 +499,31 @@ namespace ElectronicObserver.Data {
 		public static string GetDayAttackKind( int id ) {
 			switch ( id ) {
 				case 0:
-					return "砲撃";
+					return "炮击";
 				case 1:
 					return "レーザー攻撃";
 				case 2:
-					return "連続射撃";
+					return "连续射击";
 				case 3:
-					return "カットイン(主砲/副砲)";
+					return "CI ( 主炮 / 副炮 )";
 				case 4:
-					return "カットイン(主砲/電探)";
+					return "CI ( 主炮 / 电探 )";
 				case 5:
-					return "カットイン(主砲/徹甲)";
+					return "CI ( 主炮 / 穿甲弹 )";
 				case 6:
-					return "カットイン(主砲/主砲)";
+					return "CI ( 主炮 / 副炮 )";
 				case 7:
-					return "空撃";
+					return "空袭";
 				case 8:
-					return "爆雷攻撃";
+					return "爆雷攻击";
 				case 9:
-					return "雷撃";
+					return "雷击";
 				case 10:
-					return "ロケット砲撃";
+					return "火箭炮炮击";
 				case 11:
-					return "揚陸攻撃(大発動艇)";
+					return "登陆攻击 ( 大发动艇 )";
 				case 12:
-					return "揚陸攻撃(内火艇)";
+					return "登陆攻击 ( 内火艇 )";
 				default:
 					return "不明";
 			}
@@ -536,31 +536,31 @@ namespace ElectronicObserver.Data {
 		public static string GetNightAttackKind( int id ) {
 			switch ( id ) {
 				case 0:
-					return "砲撃";
+					return "炮击";
 				case 1:
-					return "連続射撃";
+					return "连续射击";
 				case 2:
-					return "カットイン(主砲/魚雷)";
+					return "CI ( 主炮 / 鱼雷 )";
 				case 3:
-					return "カットイン(魚雷x2)";
+					return "CI ( 鱼雷 x 2 )";
 				case 4:
-					return "カットイン(主砲x2/副砲)";
+					return "CI ( 主炮 x 2 / 副炮 )";
 				case 5:
-					return "カットイン(主砲x3)";
+					return "CI ( 主炮 x 3 )";
 				case 6:
 					return "不明";
 				case 7:
-					return "空撃";
+					return "空袭";
 				case 8:
-					return "爆雷攻撃";
+					return "爆雷攻击";
 				case 9:
-					return "雷撃";
+					return "雷击";
 				case 10:
-					return "ロケット砲撃";
+					return "火箭炮炮击";
 				case 11:
-					return "揚陸攻撃(大発動艇)";
+					return "登陆攻击 ( 大发动艇 )";
 				case 12:
-					return "揚陸攻撃(内火艇)";
+					return "登陆攻击 ( 内火艇 )";
 				default:
 					return "不明";
 			}
@@ -573,41 +573,41 @@ namespace ElectronicObserver.Data {
 		public static string GetAACutinKind( int id ) {
 			switch ( id ) {
 				case 0:
-					return "なし";
+					return "无";
 				case 1:
-					return "高角砲x2/電探";
+					return "高角炮 x 2 / 电探";
 				case 2:
-					return "高角砲/電探";
+					return "高角炮 / 电探";
 				case 3:
-					return "高角砲x2";
+					return "高角炮 x 2";
 				case 4:
-					return "大口径主砲/三式弾/高射装置/電探";
+					return "大口径主炮 / 三式弹 / 高射装置 / 电探";
 				case 5:
-					return "高角砲+高射装置x2/電探";
+					return "高角炮 + 高射装置 x 2 / 电探";
 				case 6:
-					return "大口径主砲/三式弾/高射装置";
+					return "大口径主炮 / 三式弹 / 高射装置";
 				case 7:
-					return "高角砲/高射装置/電探";
+					return "高角炮 / 高射装置 / 电探";
 				case 8:
-					return "高角砲+高射装置/電探";
+					return "高角炮 + 高射装置 / 电探";
 				case 9:
-					return "高角砲/高射装置";
+					return "高角炮 / 高射装置";
 				case 10:
-					return "高角砲/集中機銃/電探";
+					return "高角炮 / 集中机枪 / 电探";
 				case 11:
-					return "高角砲/集中機銃";
+					return "高角炮 / 集中机枪";
 				case 12:
-					return "集中機銃/機銃/電探";
+					return "集中机枪 / 机枪 / 电探";
 				case 14:
-					return "高角砲/機銃/電探";
+					return "高角炮 / 机枪 / 电探";
 				case 15:
-					return "高角砲/機銃";
+					return "高角炮 / 机枪";
 				case 16:
-					return "高角砲/機銃/電探";
+					return "高角炮 / 机枪 / 电探";
 				case 17:
-					return "高角砲/機銃";
+					return "高角炮 / 机枪";
 				case 18:
-					return "集中機銃";
+					return "集中机枪";
 				default:
 					return "不明";
 			}
@@ -678,19 +678,19 @@ namespace ElectronicObserver.Data {
 				case 1:
 					return "燃料";
 				case 2:
-					return "弾薬";
+					return "弹药";
 				case 3:
-					return "鋼材";
+					return "钢材";
 				case 4:
-					return "ボーキサイト";
+					return "铝土";
 				case 5:
 					return "高速建造材";
 				case 6:
-					return "高速修復材";
+					return "高速修复材";
 				case 7:
-					return "開発資材";
+					return "开发资材";
 				case 8:
-					return "改修資材";
+					return "改修资材";
 				default:
 					return "不明";
 			}
@@ -703,7 +703,7 @@ namespace ElectronicObserver.Data {
 		public static string GetAdmiralRank( int id ) {
 			switch ( id ) {
 				case 1:
-					return "元帥";
+					return "元帅";
 				case 2:
 					return "大将";
 				case 3:
@@ -719,7 +719,7 @@ namespace ElectronicObserver.Data {
 				case 8:
 					return "少佐";
 				case 9:
-					return "中堅少佐";
+					return "中坚少佐";
 				case 10:
 					return "新米少佐";
 				default:

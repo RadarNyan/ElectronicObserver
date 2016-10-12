@@ -92,7 +92,7 @@
 			this.FleetFriend.Name = "FleetFriend";
 			this.FleetFriend.Size = new System.Drawing.Size(78, 15);
 			this.FleetFriend.TabIndex = 0;
-			this.FleetFriend.Text = "自軍艦隊";
+			this.FleetFriend.Text = "自军舰队";
 			this.FleetFriend.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
 			// DamageFriend
@@ -105,6 +105,7 @@
 			this.DamageFriend.TabIndex = 3;
 			this.DamageFriend.Text = "損害率";
 			this.DamageFriend.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.DamageFriend.Font = Utility.Configuration.Config.UI.JapFont;
 			// 
 			// WinRank
 			// 
@@ -116,6 +117,7 @@
 			this.WinRank.TabIndex = 4;
 			this.WinRank.Text = "戦績判定";
 			this.WinRank.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.WinRank.Font = Utility.Configuration.Config.UI.JapFont;
 			// 
 			// DamageEnemy
 			// 
@@ -127,6 +129,7 @@
 			this.DamageEnemy.TabIndex = 5;
 			this.DamageEnemy.Text = "損害率";
 			this.DamageEnemy.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.DamageEnemy.Font = Utility.Configuration.Config.UI.JapFont;
 			// 
 			// FleetCombined
 			// 
@@ -136,7 +139,7 @@
 			this.FleetCombined.Name = "FleetCombined";
 			this.FleetCombined.Size = new System.Drawing.Size(78, 15);
 			this.FleetCombined.TabIndex = 1;
-			this.FleetCombined.Text = "随伴艦隊";
+			this.FleetCombined.Text = "随伴舰队";
 			this.FleetCombined.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
 			// FleetEnemy
@@ -147,7 +150,7 @@
 			this.FleetEnemy.Name = "FleetEnemy";
 			this.FleetEnemy.Size = new System.Drawing.Size(78, 15);
 			this.FleetEnemy.TabIndex = 2;
-			this.FleetEnemy.Text = "敵軍艦隊";
+			this.FleetEnemy.Text = "敌军舰队";
 			this.FleetEnemy.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
 			// ToolTipInfo
@@ -252,6 +255,7 @@
 			this.AirStage2Friend.TabIndex = 9;
 			this.AirStage2Friend.Text = "撃墜";
 			this.AirStage2Friend.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.AirStage2Friend.Font = Utility.Configuration.Config.UI.JapFont;
 			// 
 			// AACutin
 			// 
@@ -274,6 +278,7 @@
 			this.AirStage2Enemy.TabIndex = 11;
 			this.AirStage2Enemy.Text = "撃墜";
 			this.AirStage2Enemy.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.AirStage2Enemy.Font = Utility.Configuration.Config.UI.JapFont;
 			// 
 			// AirStage1Enemy
 			// 
@@ -285,6 +290,7 @@
 			this.AirStage1Enemy.TabIndex = 8;
 			this.AirStage1Enemy.Text = "撃墜";
 			this.AirStage1Enemy.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.AirStage1Enemy.Font = Utility.Configuration.Config.UI.JapFont;
 			// 
 			// SearchingFriend
 			// 
@@ -318,6 +324,7 @@
 			this.AirStage1Friend.TabIndex = 6;
 			this.AirStage1Friend.Text = "撃墜";
 			this.AirStage1Friend.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.AirStage1Friend.Font = Utility.Configuration.Config.UI.JapFont;
 			// 
 			// SearchingEnemy
 			// 
@@ -347,11 +354,11 @@
 			this.ClientSize = new System.Drawing.Size(300, 300);
 			this.Controls.Add(this.BaseLayoutPanel);
 			this.DoubleBuffered = true;
-			this.Font = new System.Drawing.Font("Meiryo UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+			this.Font = new System.Drawing.Font("Microsoft YaHei", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
 			this.HideOnClose = true;
 			this.Name = "FormBattle";
-			this.Text = "戦闘";
+			this.Text = "战斗";
 			this.Load += new System.EventHandler(this.FormBattle_Load);
 			this.TableBottom.ResumeLayout(false);
 			this.TableBottom.PerformLayout();
