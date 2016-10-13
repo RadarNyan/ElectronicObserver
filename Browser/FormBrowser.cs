@@ -794,7 +794,7 @@ namespace Browser {
 		private void ToolMenu_Other_Refresh_Click( object sender, EventArgs e ) {
 
 			if ( !Configuration.ConfirmAtRefresh ||
-				MessageBox.Show( "再読み込みします。\r\nよろしいですか？", "確認",
+				MessageBox.Show( "即将刷新浏览器。\r\n确认刷新吗？", "要求确认",
 				MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button2 )
 				== System.Windows.Forms.DialogResult.OK ) {
 
@@ -804,7 +804,7 @@ namespace Browser {
 
 		private void ToolMenu_Other_NavigateToLogInPage_Click( object sender, EventArgs e ) {
 
-			if ( MessageBox.Show( "ログインページへ移動します。\r\nよろしいですか？", "確認",
+			if ( MessageBox.Show( "即将转到登录页。\r\n确认跳转吗？", "要求确认",
 				MessageBoxButtons.OKCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2 )
 				== System.Windows.Forms.DialogResult.OK ) {
 
