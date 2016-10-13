@@ -1009,7 +1009,7 @@
 			this.Life_CheckUpdateInformation.Name = "Life_CheckUpdateInformation";
 			this.Life_CheckUpdateInformation.Size = new System.Drawing.Size(131, 19);
 			this.Life_CheckUpdateInformation.TabIndex = 5;
-			this.Life_CheckUpdateInformation.Text = "启动时检查更新 ( 暂未实现，启用会检查原版更新 )";
+			this.Life_CheckUpdateInformation.Text = "启动时检查更新";
 			this.Life_CheckUpdateInformation.UseVisualStyleBackColor = true;
 			// 
 			// Life_LayoutFilePathSearch
