@@ -354,7 +354,7 @@ namespace ElectronicObserver.Window {
 		private void FormMain_FormClosing( object sender, FormClosingEventArgs e ) {
 
 			if ( Utility.Configuration.Config.Life.ConfirmOnClosing ) {
-				if ( MessageBox.Show( SoftwareInformation.SoftwareNameJapanese + " を終了しますか？", "確認", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2 )
+				if ( MessageBox.Show( "要退出 " + SoftwareInformation.SoftwareNameJapanese + " 吗？", "要求确认", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2 )
 					== System.Windows.Forms.DialogResult.No ) {
 					e.Cancel = true;
 					return;
@@ -534,16 +534,16 @@ namespace ElectronicObserver.Window {
 
 			} catch ( FileNotFoundException ) {
 
-				Utility.Logger.Add( 3, string.Format( "ウィンドウ レイアウト ファイルは存在しません。" ) );
-				MessageBox.Show( "レイアウトが初期化されました。\r\n「表示」メニューからお好みのウィンドウを追加してください。", "ウィンドウ レイアウト ファイルが存在しません",
+				Utility.Logger.Add( 3, string.Format( "窗口布局文件不存在" ) );
+				MessageBox.Show( "窗口布局已初始化。\r\n请从 [视图] 菜单中添加自己喜欢的窗口", "找不到窗口布局文件",
 					MessageBoxButtons.OK, MessageBoxIcon.Information );
 
 				fBrowser.Show( MainDockPanel );
 
 			} catch ( DirectoryNotFoundException ) {
 
-				Utility.Logger.Add( 3, string.Format( "ウィンドウ レイアウト ファイルは存在しません。" ) );
-				MessageBox.Show( "レイアウトが初期化されました。\r\n「表示」メニューからお好みのウィンドウを追加してください。", "ウィンドウ レイアウト ファイルが存在しません",
+				Utility.Logger.Add( 3, string.Format( "窗口布局文件不存在" ) );
+				MessageBox.Show( "窗口布局已初始化。\r\n请从 [视图] 菜单中添加自己喜欢的窗口", "找不到窗口布局文件",
 					MessageBoxButtons.OK, MessageBoxIcon.Information );
 
 				fBrowser.Show( MainDockPanel );
@@ -637,7 +637,7 @@ namespace ElectronicObserver.Window {
 
 		private void StripMenu_File_SaveData_Load_Click( object sender, EventArgs e ) {
 
-			if ( MessageBox.Show( "セーブしていないレコードが失われる可能性があります。\r\nロードしますか？", "確認",
+			if ( MessageBox.Show( "可能会丢失尚未保存的记录。\r\n确认读取记录吗？", "要求确认",
 					MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2 )
 				== System.Windows.Forms.DialogResult.Yes ) {
 
@@ -652,7 +652,7 @@ namespace ElectronicObserver.Window {
 
 			using ( OpenFileDialog ofd = new OpenFileDialog() ) {
 
-				ofd.Title = "APIリストをロード";
+				ofd.Title = "载入 API 列表";
 				ofd.Filter = "API List|*.txt|File|*";
 				ofd.InitialDirectory = Utility.Configuration.Config.Connection.SaveDataPath;
 
@@ -664,7 +664,7 @@ namespace ElectronicObserver.Window {
 
 					} catch ( Exception ex ) {
 
-						MessageBox.Show( "API読み込みに失敗しました。\r\n" + ex.Message, "エラー",
+						MessageBox.Show( "API 读取失败。\r\n" + ex.Message, "错误",
 							MessageBoxButtons.OK, MessageBoxIcon.Error );
 
 					}
@@ -1059,7 +1059,7 @@ namespace ElectronicObserver.Window {
 			using ( var dialog = new OpenFileDialog() ) {
 
 				dialog.Filter = "Layout Archive|*.zip|File|*";
-				dialog.Title = "レイアウト ファイルを開く";
+				dialog.Title = "打开布局文件";
 
 
 				PathHelper.InitOpenFileDialog( Utility.Configuration.Config.Life.LayoutFilePath, dialog );
@@ -1080,7 +1080,7 @@ namespace ElectronicObserver.Window {
 			using ( var dialog = new SaveFileDialog() ) {
 
 				dialog.Filter = "Layout Archive|*.zip|File|*";
-				dialog.Title = "レイアウト ファイルの保存";
+				dialog.Title = "保存布局文件";
 
 
 				PathHelper.InitSaveFileDialog( Utility.Configuration.Config.Life.LayoutFilePath, dialog );

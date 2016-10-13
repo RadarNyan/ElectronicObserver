@@ -732,7 +732,7 @@ namespace ElectronicObserver.Window.Dialog {
 
 		private void BGMPlayer_SetVolumeAll_Click( object sender, EventArgs e ) {
 
-			if ( MessageBox.Show( "すべてのBGMに対して音量 " + (int)BGMPlayer_VolumeAll.Value + " を適用します。\r\nよろしいですか？\r\n", "音量一括設定の確認",
+			if ( MessageBox.Show( "将所有 BGM 的音量设为 " + (int)BGMPlayer_VolumeAll.Value + "\r\n确认设置吗？\r\n", "确认批量设置音量",
 				MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1 ) == System.Windows.Forms.DialogResult.Yes ) {
 
 				foreach ( var h in BGMHandles.Values ) {

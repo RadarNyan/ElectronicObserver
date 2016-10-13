@@ -54,14 +54,14 @@ namespace ElectronicObserver.Utility {
 		/// </summary>
 		public static DateTime UpdateTime {
 			get {
-				return DateTimeHelper.CSVStringToTime( "2016/10/05 21:00:00" );
+				return DateTimeHelper.CSVStringToTime( "2016/10/14 08:10:04" );
 			}
 		}
 
 
 
 		private static System.Net.WebClient client;
-		private static readonly Uri uri = new Uri( "https://www.dropbox.com/s/vk073iw1wvktq4d/version.txt?dl=1" );
+		private static readonly Uri uri = new Uri( "https://raw.githubusercontent.com/RadarNyan/ElectronicObserver/master/VERSION" );
 
 		public static void CheckUpdate() {
 
@@ -105,18 +105,18 @@ namespace ElectronicObserver.Utility {
 
 					if ( UpdateTime < date ) {
 
-						Utility.Logger.Add( 3, "新しいバージョンがリリースされています！ : " + version );
+						Utility.Logger.Add( 3, "发现新版本 : " + version );
 
 						var result = System.Windows.Forms.MessageBox.Show(
-							string.Format( "新しいバージョンがリリースされています！ : {0}\r\n更新内容 : \r\n{1}\r\nダウンロードページを開きますか？\r\n(キャンセルすると以降表示しません)",
+							string.Format( "更新版本 : {0}\r\n\r\n更新内容 : {1}\r\n要打开下载页吗？\r\n( 选择「取消」将不再自动检查更新 )",
 							version, description ),
-							"アップデート情報", System.Windows.Forms.MessageBoxButtons.YesNoCancel, System.Windows.Forms.MessageBoxIcon.Information,
+							"更新信息", System.Windows.Forms.MessageBoxButtons.YesNoCancel, System.Windows.Forms.MessageBoxIcon.Information,
 							System.Windows.Forms.MessageBoxDefaultButton.Button1 );
 
 
 						if ( result == System.Windows.Forms.DialogResult.Yes ) {
 
-							System.Diagnostics.Process.Start( "http://electronicobserver.blog.fc2.com/" );
+							System.Diagnostics.Process.Start( "https://ci.appveyor.com/project/RadarNyan/electronicobserver-icfh9/build/artifacts" );
 
 						} else if ( result == System.Windows.Forms.DialogResult.Cancel ) {
 
@@ -126,7 +126,7 @@ namespace ElectronicObserver.Utility {
 
 					} else {
 
-						Utility.Logger.Add( 1, "お使いのバージョンは最新です。" );
+						Utility.Logger.Add( 1, "检查更新 : 已经是最新版。" );
 
 					}
 
