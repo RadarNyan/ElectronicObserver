@@ -867,7 +867,7 @@
 			this.Debug_AlertOnError.Name = "Debug_AlertOnError";
 			this.Debug_AlertOnError.Size = new System.Drawing.Size(104, 19);
 			this.Debug_AlertOnError.TabIndex = 2;
-			this.Debug_AlertOnError.Text = "エラー音を鳴らす";
+			this.Debug_AlertOnError.Text = "播放报错音";
 			this.Debug_AlertOnError.UseVisualStyleBackColor = true;
 			// 
 			// Debug_SealingPanel
@@ -900,8 +900,8 @@
 			this.Debug_LoadAPIListOnLoad.Name = "Debug_LoadAPIListOnLoad";
 			this.Debug_LoadAPIListOnLoad.Size = new System.Drawing.Size(151, 19);
 			this.Debug_LoadAPIListOnLoad.TabIndex = 0;
-			this.Debug_LoadAPIListOnLoad.Text = "起動時にAPIリストをロード";
-			this.ToolTipInfo.SetToolTip(this.Debug_LoadAPIListOnLoad, "起動時に、下記テキストボックスで指定されるAPIリストを自動的に読み込みます。\r\nAPIリストの書式や用法はオンラインヘルプを参照してください。");
+			this.Debug_LoadAPIListOnLoad.Text = "启动时载入 API 列表";
+			this.ToolTipInfo.SetToolTip(this.Debug_LoadAPIListOnLoad, "启动时自动加载下面文本框中设定的 API 列表。\r\nAPI 列表的格式和使用方法，请参考原项目 Wiki。");
 			this.Debug_LoadAPIListOnLoad.UseVisualStyleBackColor = true;
 			// 
 			// Debug_APIListPathSearch
@@ -922,9 +922,8 @@
 			this.Debug_EnableDebugMenu.Name = "Debug_EnableDebugMenu";
 			this.Debug_EnableDebugMenu.Size = new System.Drawing.Size(162, 19);
 			this.Debug_EnableDebugMenu.TabIndex = 0;
-			this.Debug_EnableDebugMenu.Text = "デバッグ メニューを有効にする";
-			this.ToolTipInfo.SetToolTip(this.Debug_EnableDebugMenu, "メインウィンドウの[デバッグ]メニューを有効にします。\r\nデバッグ用の機能であるため、通常ユーザーの操作は推奨されません。\r\n使用時の動作は保証されないので、＊自" +
-        "己責任で＊使用してください。");
+			this.Debug_EnableDebugMenu.Text = "显示 DEBUG 菜单";
+			this.ToolTipInfo.SetToolTip(this.Debug_EnableDebugMenu, "在主菜单上显示「DEBUG」菜单\r\n因为是调试用的功能，不推荐普通用户使用。\r\n不保证使用时功能正常，*后果自负* 。");
 			this.Debug_EnableDebugMenu.UseVisualStyleBackColor = true;
 			this.Debug_EnableDebugMenu.CheckedChanged += new System.EventHandler(this.Debug_EnableDebugMenu_CheckedChanged);
 			// 
@@ -1010,7 +1009,7 @@
 			this.Life_CheckUpdateInformation.Name = "Life_CheckUpdateInformation";
 			this.Life_CheckUpdateInformation.Size = new System.Drawing.Size(131, 19);
 			this.Life_CheckUpdateInformation.TabIndex = 5;
-			this.Life_CheckUpdateInformation.Text = "启动时检查更新 ( 暂未实现，启用会检查原版更新 )";
+			this.Life_CheckUpdateInformation.Text = "启动时检查更新";
 			this.Life_CheckUpdateInformation.UseVisualStyleBackColor = true;
 			// 
 			// Life_LayoutFilePathSearch
@@ -1173,7 +1172,7 @@
             "考虑熟练度 ( 暂定 )"});
 			this.FormFleet_AirSuperiorityMethod.Location = new System.Drawing.Point(115, 59);
 			this.FormFleet_AirSuperiorityMethod.Name = "FormFleet_AirSuperiorityMethod";
-			this.FormFleet_AirSuperiorityMethod.Size = new System.Drawing.Size(121, 23);
+			this.FormFleet_AirSuperiorityMethod.Size = new System.Drawing.Size(127, 23);
 			this.FormFleet_AirSuperiorityMethod.TabIndex = 4;
 			// 
 			// label23
@@ -1234,13 +1233,13 @@
 			this.FormFleet_SearchingAbilityMethod.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.FormFleet_SearchingAbilityMethod.FormattingEnabled = true;
 			this.FormFleet_SearchingAbilityMethod.Items.AddRange(new object[] {
-            "(旧)2-5式",
-            "2-5式(秋)",
-            "2-5新秋簡易式",
-            "判定式(33)"});
+            "2-5 式 ( 旧 )",
+            "2-5 式 ( 秋 )",
+            "2-5 新秋简易式",
+            "判定式 (33)"});
 			this.FormFleet_SearchingAbilityMethod.Location = new System.Drawing.Point(115, 31);
 			this.FormFleet_SearchingAbilityMethod.Name = "FormFleet_SearchingAbilityMethod";
-			this.FormFleet_SearchingAbilityMethod.Size = new System.Drawing.Size(121, 23);
+			this.FormFleet_SearchingAbilityMethod.Size = new System.Drawing.Size(127, 31);
 			this.FormFleet_SearchingAbilityMethod.TabIndex = 2;
 			// 
 			// label13
@@ -1421,7 +1420,7 @@
 			// FormQuest_AllowUserToSortRows
 			// 
 			this.FormQuest_AllowUserToSortRows.AutoSize = true;
-			this.FormQuest_AllowUserToSortRows.Location = new System.Drawing.Point(141, 35);
+			this.FormQuest_AllowUserToSortRows.Location = new System.Drawing.Point(141, 53);
 			this.FormQuest_AllowUserToSortRows.Name = "FormQuest_AllowUserToSortRows";
 			this.FormQuest_AllowUserToSortRows.Size = new System.Drawing.Size(150, 19);
 			this.FormQuest_AllowUserToSortRows.TabIndex = 6;
@@ -1436,7 +1435,7 @@
             "不自动保存",
             "每小时",
             "每天"});
-			this.FormQuest_ProgressAutoSaving.Location = new System.Drawing.Point(269, 6);
+			this.FormQuest_ProgressAutoSaving.Location = new System.Drawing.Point(269, 27);
 			this.FormQuest_ProgressAutoSaving.Name = "FormQuest_ProgressAutoSaving";
 			this.FormQuest_ProgressAutoSaving.Size = new System.Drawing.Size(121, 23);
 			this.FormQuest_ProgressAutoSaving.TabIndex = 5;
@@ -1444,7 +1443,7 @@
 			// label27
 			// 
 			this.label27.AutoSize = true;
-			this.label27.Location = new System.Drawing.Point(138, 9);
+			this.label27.Location = new System.Drawing.Point(138, 31);
 			this.label27.Name = "label27";
 			this.label27.Size = new System.Drawing.Size(125, 15);
 			this.label27.TabIndex = 4;
@@ -2175,7 +2174,7 @@
 			this.tabPage15.Padding = new System.Windows.Forms.Padding(3);
 			this.tabPage15.Size = new System.Drawing.Size(576, 292);
 			this.tabPage15.TabIndex = 8;
-			this.tabPage15.Text = "数据库";
+			this.tabPage15.Text = "发送数据";
 			this.tabPage15.UseVisualStyleBackColor = true;
 			// 
 			// groupBox5
@@ -2274,7 +2273,7 @@
 			this.BGMPlayer_SetVolumeAll.Name = "BGMPlayer_SetVolumeAll";
 			this.BGMPlayer_SetVolumeAll.Size = new System.Drawing.Size(100, 23);
 			this.BGMPlayer_SetVolumeAll.TabIndex = 3;
-			this.BGMPlayer_SetVolumeAll.Text = "批量设定音量";
+			this.BGMPlayer_SetVolumeAll.Text = "批量设置音量";
 			this.BGMPlayer_SetVolumeAll.UseVisualStyleBackColor = true;
 			this.BGMPlayer_SetVolumeAll.Click += new System.EventHandler(this.BGMPlayer_SetVolumeAll_Click);
 			// 
@@ -2331,7 +2330,7 @@
 			this.BGMPlayer_ControlGrid.RowHeadersVisible = false;
 			this.BGMPlayer_ControlGrid.RowTemplate.Height = 21;
 			this.BGMPlayer_ControlGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-			this.BGMPlayer_ControlGrid.Size = new System.Drawing.Size(564, 275);
+			this.BGMPlayer_ControlGrid.Size = new System.Drawing.Size(564, 247);
 			this.BGMPlayer_ControlGrid.TabIndex = 0;
 			this.BGMPlayer_ControlGrid.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.BGMPlayer_ControlGrid_CellContentClick);
 			this.BGMPlayer_ControlGrid.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.BGMPlayer_ControlGrid_CellFormatting);
