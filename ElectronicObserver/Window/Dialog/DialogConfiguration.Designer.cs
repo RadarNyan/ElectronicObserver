@@ -2273,7 +2273,7 @@
 			this.BGMPlayer_SetVolumeAll.Name = "BGMPlayer_SetVolumeAll";
 			this.BGMPlayer_SetVolumeAll.Size = new System.Drawing.Size(100, 23);
 			this.BGMPlayer_SetVolumeAll.TabIndex = 3;
-			this.BGMPlayer_SetVolumeAll.Text = "批量设定音量";
+			this.BGMPlayer_SetVolumeAll.Text = "批量设置音量";
 			this.BGMPlayer_SetVolumeAll.UseVisualStyleBackColor = true;
 			this.BGMPlayer_SetVolumeAll.Click += new System.EventHandler(this.BGMPlayer_SetVolumeAll_Click);
 			// 

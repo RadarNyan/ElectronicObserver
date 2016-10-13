@@ -301,35 +301,35 @@ namespace ElectronicObserver.Utility {
 				case SoundHandleID.Port:
 					return "母港";
 				case SoundHandleID.Sortie:
-					return "出撃中";
+					return "出击中";
 				case SoundHandleID.BattleDay:
-					return "昼戦";
+					return "昼战";
 				case SoundHandleID.BattleNight:
-					return "夜戦";
+					return "夜战";
 				case SoundHandleID.BattleAir:
-					return "航空戦";
+					return "航空战";
 				case SoundHandleID.BattleBoss:
-					return "ボス戦";
+					return "BOSS 战";
 				case SoundHandleID.BattlePracticeDay:
-					return "演習昼戦";
+					return "演习昼战";
 				case SoundHandleID.BattlePracticeNight:
-					return "演習夜戦";
+					return "演习夜战";
 				case SoundHandleID.ResultWin:
-					return "勝利";
+					return "胜利";
 				case SoundHandleID.ResultLose:
-					return "敗北";
+					return "败北";
 				case SoundHandleID.ResultBossWin:
-					return "ボス勝利";
+					return "BOSS 胜利";
 				case SoundHandleID.Record:
-					return "戦績";
+					return "战绩";
 				case SoundHandleID.Item:
-					return "アイテム";
+					return "物品";
 				case SoundHandleID.Quest:
-					return "任務";
+					return "任务";
 				case SoundHandleID.Album:
-					return "図鑑";
+					return "图鉴";
 				case SoundHandleID.ImprovementArsenal:
-					return "改修工廠";
+					return "改修工厂";
 				default:
 					return "不明";
 			}
