@@ -471,7 +471,7 @@ namespace ElectronicObserver.Utility {
 					ConfirmOnClosing = true;
 					TopMost = false;
 					LayoutFilePath = @"Settings\WindowLayout.zip";
-					CheckUpdateInformation = false;
+					CheckUpdateInformation = true;
 					ShowStatusBar = true;
 					ClockFormat = 0;
 					LockLayout = false;
