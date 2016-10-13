@@ -354,7 +354,7 @@ namespace ElectronicObserver.Window {
 		private void FormMain_FormClosing( object sender, FormClosingEventArgs e ) {
 
 			if ( Utility.Configuration.Config.Life.ConfirmOnClosing ) {
-				if ( MessageBox.Show( SoftwareInformation.SoftwareNameJapanese + " を終了しますか？", "確認", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2 )
+				if ( MessageBox.Show( "要退出 " + SoftwareInformation.SoftwareNameJapanese + " 吗？", "要求确认", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2 )
 					== System.Windows.Forms.DialogResult.No ) {
 					e.Cancel = true;
 					return;
@@ -534,16 +534,16 @@ namespace ElectronicObserver.Window {
 
 			} catch ( FileNotFoundException ) {
 
-				Utility.Logger.Add( 3, string.Format( "ウィンドウ レイアウト ファイルは存在しません。" ) );
-				MessageBox.Show( "レイアウトが初期化されました。\r\n「表示」メニューからお好みのウィンドウを追加してください。", "ウィンドウ レイアウト ファイルが存在しません",
+				Utility.Logger.Add( 3, string.Format( "窗口布局文件不存在" ) );
+				MessageBox.Show( "窗口布局已初始化。\r\n请从 [视图] 菜单中添加自己喜欢的窗口", "找不到窗口布局文件",
 					MessageBoxButtons.OK, MessageBoxIcon.Information );
 
 				fBrowser.Show( MainDockPanel );
 
 			} catch ( DirectoryNotFoundException ) {
 
-				Utility.Logger.Add( 3, string.Format( "ウィンドウ レイアウト ファイルは存在しません。" ) );
-				MessageBox.Show( "レイアウトが初期化されました。\r\n「表示」メニューからお好みのウィンドウを追加してください。", "ウィンドウ レイアウト ファイルが存在しません",
+				Utility.Logger.Add( 3, string.Format( "窗口布局文件不存在" ) );
+				MessageBox.Show( "窗口布局已初始化。\r\n请从 [视图] 菜单中添加自己喜欢的窗口", "找不到窗口布局文件",
 					MessageBoxButtons.OK, MessageBoxIcon.Information );
 
 				fBrowser.Show( MainDockPanel );

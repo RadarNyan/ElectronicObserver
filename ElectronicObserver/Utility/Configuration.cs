@@ -1182,8 +1182,8 @@ namespace ElectronicObserver.Utility {
 				CheckUpdate( mainForm );
 				OnConfigurationChanged();
 			} else {
-				MessageBox.Show( SoftwareInformation.SoftwareNameJapanese + " をご利用いただきありがとうございます。\r\n設定や使用方法については「ヘルプ」→「オンラインヘルプ」を参照してください。\r\nご使用の前に必ずご一読ください。",
-					"初回起動メッセージ", MessageBoxButtons.OK, MessageBoxIcon.Information );
+				MessageBox.Show( "欢迎使用" + SoftwareInformation.SoftwareNameJapanese + " 。\r\n\r\n设置和使用方法请参考 [帮助] - [在线帮助]\r\n使用前敬请阅读。",
+					"初次启动信息", MessageBoxButtons.OK, MessageBoxIcon.Information );
 
 
 				// そのままだと正常に動作しなくなった(らしい)ので、ブラウザバージョンの書き込み
