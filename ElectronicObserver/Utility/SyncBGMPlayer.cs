@@ -98,6 +98,8 @@ namespace ElectronicObserver.Utility {
 
 		private MediaPlayer _mp;
 		private bool _isBoss;
+		private bool _playWhiteFleet;
+		private static int[] TargetShips = { 24, 25, 114 };
 
 
 		public SyncBGMPlayer() {
@@ -111,6 +113,7 @@ namespace ElectronicObserver.Utility {
 
 			_isBoss = false;
 
+			_playWhiteFleet = false;
 
 			Enabled = false;
 			Handles = new IDDictionary<SoundHandle>();
@@ -178,7 +181,8 @@ namespace ElectronicObserver.Utility {
 				IsMute = false;
 
 			// 設定変更を適用するためいったん閉じる
-			_mp.Close();
+			if (!(_mp.SourcePath.EndsWith("WhiteFleet.mp3"))) // Only if not Playing WhiteFleet XD
+				_mp.Close();
 		}
 
 		void SystemEvents_SystemShuttingDown() {
@@ -197,6 +201,22 @@ namespace ElectronicObserver.Utility {
 
 		void PlayPort( string apiname, dynamic data ) {
 			_isBoss = false;
+
+			_playWhiteFleet = false;
+			HashSet<int> shipIds = new HashSet<int>();
+			foreach (int startId in TargetShips)
+			{
+				shipIds.Add(startId);
+				ShipDataMaster ship = KCDatabase.Instance.MasterShips[startId];
+				while (ship.RemodelAfterShip != null && !shipIds.Contains(ship.RemodelAfterShipID))
+				{
+					ship = ship.RemodelAfterShip;
+					shipIds.Add(ship.ShipID);
+				}
+			}
+			var e = KCDatabase.Instance.Fleet.Fleets[1].MembersInstance.Where(i => i != null);
+			_playWhiteFleet = (e.Count() == TargetShips.Count() && e.All(i => shipIds.Contains(i.ShipID)));
+
 			Play( Handles[(int)SoundHandleID.Port] );
 		}
 
@@ -274,6 +294,19 @@ namespace ElectronicObserver.Utility {
 
 
 		private bool Play( SoundHandle sh ) {
+			if (_playWhiteFleet && !(_mp.SourcePath.EndsWith("WhiteFleet.mp3")))
+			{
+				_mp.Close();
+				_mp.SourcePath = "WhiteFleet.mp3";
+				_mp.IsLoop = true;
+				_mp.LoopHeadPosition = 0.0;
+				if ( !Utility.Configuration.Config.Control.UseSystemVolume )
+					_mp.Volume = 100;
+				_mp.Play();
+
+				return true;
+			}
+
 			if ( Enabled &&
 				sh != null &&
 				sh.Enabled &&
