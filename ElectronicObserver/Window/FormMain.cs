@@ -231,9 +231,14 @@ namespace ElectronicObserver.Window {
 			Font = c.UI.MainFont;
 			//StripMenu.Font = Font;
 			StripStatus.Font = Font;
+			StripStatus_Information.Font = StripStatus_InformationJap2.Font = StripStatus_InformationJap3.Font = c.UI.JapFont;
 			MainDockPanel.Skin.AutoHideStripSkin.TextFont = Font;
 			MainDockPanel.Skin.DockPaneStripSkin.TextFont = Font;
 
+			int ChsGap = (int) Math.Floor((c.UI.MainFont.Size / 2)) * (-1);
+			int JapGap = (int) Math.Floor((c.UI.JapFont.Size / 2)) * (-1);
+			StripStatus_Information.Margin = StripStatus_InformationJap2.Margin = StripStatus_InformationJap3.Margin = new Padding(0,1,JapGap,0);
+			StripStatus_InformationChs1.Margin = StripStatus_InformationChs2.Margin = StripStatus_InformationChs3.Margin = new Padding(0,1,ChsGap,0);
 
 			if ( c.Life.LockLayout ) {
 				MainDockPanel.AllowChangeLayout = false;
@@ -601,6 +606,11 @@ namespace ElectronicObserver.Window {
 		void Logger_LogAdded( Utility.Logger.LogData data ) {
 
 			StripStatus_Information.Text = data.Message;
+			StripStatus_InformationChs1.Text = data.MsgChs1;
+			StripStatus_InformationJap2.Text = data.MsgJap2;
+			StripStatus_InformationChs2.Text = data.MsgChs2;
+			StripStatus_InformationJap3.Text = data.MsgJap3;
+			StripStatus_InformationChs3.Text = data.MsgChs3;
 
 		}
 
