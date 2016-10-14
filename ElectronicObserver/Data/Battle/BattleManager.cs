@@ -258,13 +258,30 @@ namespace ElectronicObserver.Data.Battle {
 
 			// ロギング
 			if ( IsPractice ) {
-				Utility.Logger.Add( 2,
-					string.Format( "演習 で「{0}」{1}の「{2}」と交戦しました。( ランク: {3}, 提督Exp+{4}, 艦娘Exp+{5} )",
-						EnemyAdmiralName, EnemyAdmiralRank, Result.EnemyFleetName, Result.Rank, Result.AdmiralExp, Result.BaseExp ) );
+				Utility.Logger.Add(2, "", "同",
+					string.Format("「{0}」",
+						EnemyAdmiralName),
+					string.Format("{0}的",
+						EnemyAdmiralRank),
+					string.Format("「{0}」",
+						Result.EnemyFleetName),
+					string.Format("进行了演习。( 结果 : {0}, 提督经验 + {1}, 舰娘经验 + {2} )",
+						Result.Rank,
+						Result.AdmiralExp,
+						Result.BaseExp)
+					);
 			} else {
-				Utility.Logger.Add( 2,
-					string.Format( "{0}-{1}-{2} で「{3}」と交戦しました。( ランク: {4}, 提督Exp+{5}, 艦娘Exp+{6} )",
-						Compass.MapAreaID, Compass.MapInfoID, Compass.Destination, Result.EnemyFleetName, Result.Rank, Result.AdmiralExp, Result.BaseExp ) );
+				Utility.Logger.Add(2, "", string.Format("在 {0}-{1}-{2} 海域与",
+						Compass.MapAreaID,
+						Compass.MapInfoID,
+						Compass.Destination),
+					string.Format("「{0}」",
+						Result.EnemyFleetName),
+					string.Format("发生了战斗。( 结果 : {0}, 提督经验 + {1}, 舰娘经验 + {2} )",
+						Result.Rank,
+						Result.AdmiralExp,
+						Result.BaseExp)
+				);
 			}
 
 
@@ -289,7 +306,7 @@ namespace ElectronicObserver.Data.Battle {
 						DroppedEquipmentCount += defaultSlot.Count( id => id != -1 );
 
 					if ( showLog )
-						Utility.Logger.Add( 2, string.Format( "{0}「{1}」が戦列に加わりました。", ship.ShipTypeName, ship.NameWithClass ) );
+						Utility.Logger.Add(2, string.Format("{0}「{1}」", ship.ShipTypeName, ship.NameWithClass), "加入了队伍。");
 				}
 
 				if ( itemID != -1 ) {
@@ -301,7 +318,11 @@ namespace ElectronicObserver.Data.Battle {
 					if ( showLog ) {
 						var item = KCDatabase.Instance.UseItems[itemID];
 						var itemmaster = KCDatabase.Instance.MasterUseItems[itemID];
-						Utility.Logger.Add( 2, string.Format( "アイテム「{0}」を入手しました。( 合計: {1}個 )", itemmaster != null ? itemmaster.Name : ( "不明なアイテム - ID:" + itemID ), ( item != null ? item.Count : 0 ) + DroppedItemCount[itemID] ) );
+						Utility.Logger.Add(2, "", "获得了", string.Format("「{0}」。",
+							itemmaster != null ? itemmaster.Name : ("Unknown Item - ID:" + itemID)),
+							string.Format(" ( 合计 : {0} 个 )",
+								(item != null ? item.Count : 0) + DroppedItemCount[itemID])
+						);
 					}
 				}
 
@@ -311,7 +332,7 @@ namespace ElectronicObserver.Data.Battle {
 					DroppedEquipmentCount++;
 
 					if ( showLog ) {
-						Utility.Logger.Add( 2, string.Format( "{0}「{1}」を入手しました。", eq.CategoryTypeInstance.Name, eq.Name ) );
+						Utility.Logger.Add(2, "", "获得了 ", string.Format("{0}「{1}」。", eq.CategoryTypeInstance.Name, eq.Name ));
 					}
 				}
 
