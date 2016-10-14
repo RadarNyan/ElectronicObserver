@@ -41,17 +41,17 @@ namespace ElectronicObserver.Observer.kcsapi.api_req_hokyu {
 			material[3] -= db.Material.Bauxite;
 
 			{
-				var sb = new StringBuilder( "補給を行いました。消費: " );
+				var sb = new StringBuilder( "补给完成。消耗 : " );
 
 				for ( int i = 0; i < 4; i++ ) {
 					if ( material[i] > 0 ) {
-						sb.Append( Constants.GetMaterialName( i + 1 ) ).Append( "x" ).Append( material[i] ).Append( ", " );
+						sb.Append( Constants.GetMaterialName( i + 1 ) ).Append( " x " ).Append( material[i] ).Append( ", " );
 					}
 				}
 
 
 				sb.Remove( sb.Length - 2, 2 );
-				Utility.Logger.Add( 2, sb.ToString() );
+				Utility.Logger.Add(2, "", sb.ToString());
 			}
 
 

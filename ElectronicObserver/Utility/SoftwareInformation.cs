@@ -105,7 +105,7 @@ namespace ElectronicObserver.Utility {
 
 					if ( UpdateTime < date ) {
 
-						Utility.Logger.Add( 3, "发现新版本 : " + version );
+						Utility.Logger.Add(3, "", "发现新版本 : " + version);
 
 						var result = System.Windows.Forms.MessageBox.Show(
 							string.Format( "更新版本 : {0}\r\n\r\n更新内容 : {1}\r\n要打开下载页吗？\r\n( 选择「取消」将不再自动检查更新 )",
@@ -126,7 +126,7 @@ namespace ElectronicObserver.Utility {
 
 					} else {
 
-						Utility.Logger.Add( 1, "检查更新 : 已经是最新版。" );
+						Utility.Logger.Add(1, "", "检查更新 : 已经是最新版。");
 
 					}
 

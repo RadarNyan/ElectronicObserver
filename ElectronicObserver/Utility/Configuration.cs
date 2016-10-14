@@ -1197,7 +1197,7 @@ namespace ElectronicObserver.Utility {
 					reg = Microsoft.Win32.Registry.CurrentUser.CreateSubKey( DialogConfiguration.RegistryPathMaster + DialogConfiguration.RegistryPathGPURendering );
 					reg.SetValue( Window.FormBrowserHost.BrowserExeName, DialogConfiguration.DefaultGPURendering ? 1 : 0, Microsoft.Win32.RegistryValueKind.DWord );
 
-					Utility.Logger.Add( 2, "ブラウザバージョンをレジストリに書き込みました。削除したい場合は「設定→サブウィンドウ→ブラウザ2→削除」を押してください。" );
+					Utility.Logger.Add(2, "", "已将浏览器版本写入注册表。想要清除的话点击 [设置]-[子窗口]-[浏览器2] 里的 [清除] 按钮。");
 
 
 				} catch ( Exception ex ) {

@@ -208,8 +208,8 @@ namespace Browser {
 			BrowserHost.AsyncRemoteRun( () => BrowserHost.Proxy.ConfigurationUpdated( Configuration ) );
 		}
 
-		private void AddLog( int priority, string message ) {
-			BrowserHost.AsyncRemoteRun( () => BrowserHost.Proxy.AddLog( priority, message ) );
+		private void AddLog( int priority, string message, string msgchs1="", string msgjap2="", string msgchs2="", string msgjap3="", string msgchs3="" ) {
+			BrowserHost.AsyncRemoteRun( () => BrowserHost.Proxy.AddLog( priority, message, msgchs1, msgjap2, msgchs2, msgjap3, msgchs3 ) );
 		}
 
 
@@ -376,7 +376,7 @@ namespace Browser {
 
 
 			} catch ( Exception ex ) {
-				AddLog( 3, "ズームの適用に失敗しました。" + ex.Message );
+				AddLog( 3, "", "调整缩放比例失败。" + ex.Message );
 			}
 
 		}
@@ -455,7 +455,7 @@ namespace Browser {
 			var wb = Browser;
 
 			if ( !IsKanColleLoaded ) {
-				AddLog( 3, string.Format( "艦これが読み込まれていないため、スクリーンショットを撮ることはできません。" ) );
+				AddLog( 3, "", "因为", "『艦これ』", "还没有载入，无法截图。" );
 				System.Media.SystemSounds.Beep.Play();
 				return;
 			}
@@ -516,7 +516,7 @@ namespace Browser {
 				}
 
 				_lastScreenShotPath = path;
-				AddLog( 2, string.Format( "スクリーンショットを {0} に保存しました。", path ) );
+				AddLog( 2, "", "已保存截图到 : " + path );
 
 			} catch ( Exception ex ) {
 

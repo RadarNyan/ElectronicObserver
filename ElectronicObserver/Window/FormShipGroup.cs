@@ -1473,7 +1473,7 @@ namespace ElectronicObserver.Window {
 
 						}
 
-						Utility.Logger.Add( 2, "艦船グループ CSVを " + dialog.OutputPath + " に保存しました。" );
+						Utility.Logger.Add(2, "", "已将舰船分组保存为 : " + dialog.OutputPath);
 
 					} catch ( Exception ex ) {
 
