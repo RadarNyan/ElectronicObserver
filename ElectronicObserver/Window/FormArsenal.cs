@@ -211,21 +211,26 @@ namespace ElectronicObserver.Window {
 
 					name = string.Format( "{0}「{1}」", ship.ShipTypeName, ship.NameWithClass );
 
+					Utility.Logger.Add(2, "", string.Format("工厂船坞 #{0} 开始建造 : ", _buildingID),
+						string.Format("{0}。({1}/{2}/{3}/{4}-{5})",
+							name,
+							arsenal.Fuel,
+							arsenal.Ammo,
+							arsenal.Steel,
+							arsenal.Bauxite,
+							arsenal.DevelopmentMaterial),
+						" 秘书舰 : ", KCDatabase.Instance.Fleet[1].MembersInstance[0].NameWithLevel);
 				} else {
 
-					name = "艦娘";
+					Utility.Logger.Add(2, "", string.Format("工厂船坞 #{0} 开始建造新舰娘。", _buildingID),
+					string.Format("({0}/{1}/{2}/{3}-{4})",
+						arsenal.Fuel,
+						arsenal.Ammo,
+						arsenal.Steel,
+						arsenal.Bauxite,
+						arsenal.DevelopmentMaterial),
+					" 秘书舰 : ", KCDatabase.Instance.Fleet[1].MembersInstance[0].NameWithLevel);
 				}
-
-				Utility.Logger.Add( 2, string.Format( "工廠ドック #{0}で {1}の建造を開始しました。({2}/{3}/{4}/{5}-{6} 秘書艦: {7})",
-					_buildingID,
-					name,
-					arsenal.Fuel,
-					arsenal.Ammo,
-					arsenal.Steel,
-					arsenal.Bauxite,
-					arsenal.DevelopmentMaterial,
-					KCDatabase.Instance.Fleet[1].MembersInstance[0].NameWithLevel
-					) );
 
 				_buildingID = -1;
 			}

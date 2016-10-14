@@ -22,11 +22,11 @@ namespace ElectronicObserver.Observer.kcsapi.api_req_kousyou {
 					eq.LoadFromResponse( APIName, data.api_after_slot );
 
 					if ( Utility.Configuration.Config.Log.ShowSpoiler )
-						Utility.Logger.Add( 2, string.Format( "{0} の改修に成功しました。", eq.NameWithLevel ) );
+						Utility.Logger.Add(2, "", "成功改修 : ", eq.NameWithLevel);
 				}
 
 			} else if ( Utility.Configuration.Config.Log.ShowSpoiler ) {
-				Utility.Logger.Add( 2, string.Format( "{0} の改修に失敗しました。", db.MasterEquipments[(int)data.api_remodel_id[0]].Name ) );
+				Utility.Logger.Add(2, db.MasterEquipments[(int)data.api_remodel_id[0]].Name, " 改修失败。");
 			}
 
 

@@ -515,7 +515,7 @@ namespace ElectronicObserver.Window {
 						Updated();
 
 					} catch ( Exception ) {
-						Utility.Logger.Add( 3, "この任務の進捗を変更することはできません。" );
+						Utility.Logger.Add(3, "", "无法修改此任务的进度。");
 						System.Media.SystemSounds.Hand.Play();
 					}
 				}
@@ -540,7 +540,7 @@ namespace ElectronicObserver.Window {
 						Updated();
 
 					} catch ( Exception ) {
-						Utility.Logger.Add( 3, "この任務の進捗を変更することはできません。" );
+						Utility.Logger.Add(3, "", "无法修改此任务的进度。");
 						System.Media.SystemSounds.Hand.Play();
 					}
 				}
