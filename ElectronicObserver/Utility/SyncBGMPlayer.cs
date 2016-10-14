@@ -307,6 +307,9 @@ namespace ElectronicObserver.Utility {
 				return true;
 			}
 
+			if (_mp.SourcePath.EndsWith("WhiteFleet.mp3") && !_playWhiteFleet)
+				_mp.Close();
+
 			if ( Enabled &&
 				sh != null &&
 				sh.Enabled &&
