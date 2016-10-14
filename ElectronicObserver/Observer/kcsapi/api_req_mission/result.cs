@@ -26,7 +26,7 @@ namespace ElectronicObserver.Observer.kcsapi.api_req_mission {
 			var fleet = KCDatabase.Instance.Fleet[_fleetID];
 
 
-			Utility.Logger.Add(2, string.Format("#{0}「{1}」", fleet.FleetID, fleet.Name), "已结束远征", string.Format("「{0}: {1}」", fleet.ExpeditionDestination, data.api_quest_name));
+			Utility.Logger.Add(2, string.Format("#{0}「{1}」", fleet.FleetID, fleet.Name), "已结束远征", string.Format("「{0}: {1}」。", fleet.ExpeditionDestination, data.api_quest_name));
 
 
 			// 獲得資源表示

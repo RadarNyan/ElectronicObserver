@@ -46,14 +46,14 @@ namespace ElectronicObserver.Observer.kcsapi.api_req_kousyou {
 					int eqid = (int)data.api_slot_item.api_slotitem_id;
 
 					Utility.Logger.Add(2, "", "成功开发 : ",
-						string.Format( "{0}「{1}」。({2}/{3}/{4}/{5}",
+						string.Format( "{0}「{1}」。({2}/{3}/{4}/{5})",
 							db.MasterEquipments[eqid].CategoryTypeInstance.Name,
 							db.MasterEquipments[eqid].Name,
 							materials[0], materials[1], materials[2], materials[3]),
 						" 秘书舰 : ", db.Fleet[1].MembersInstance[0].NameWithLevel);
 				} else {
 					Utility.Logger.Add(2, "", "开发失败。",
-						string.Format("({0}/{1}/{2}/{3}",
+						string.Format("({0}/{1}/{2}/{3})",
 							materials[0], materials[1], materials[2], materials[3]),
 						" 秘书舰 : ", db.Fleet[1].MembersInstance[0].NameWithLevel);
 				}
