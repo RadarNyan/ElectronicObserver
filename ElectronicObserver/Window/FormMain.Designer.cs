@@ -91,6 +91,11 @@
 			this.StripMenu_Help_Version = new System.Windows.Forms.ToolStripMenuItem();
 			this.StripStatus = new System.Windows.Forms.StatusStrip();
 			this.StripStatus_Information = new System.Windows.Forms.ToolStripStatusLabel();
+			this.StripStatus_InformationChs1 = new System.Windows.Forms.ToolStripStatusLabel();
+			this.StripStatus_InformationJap2 = new System.Windows.Forms.ToolStripStatusLabel();
+			this.StripStatus_InformationChs2 = new System.Windows.Forms.ToolStripStatusLabel();
+			this.StripStatus_InformationJap3 = new System.Windows.Forms.ToolStripStatusLabel();
+			this.StripStatus_InformationChs3 = new System.Windows.Forms.ToolStripStatusLabel();
 			this.StripStatus_Padding = new System.Windows.Forms.ToolStripStatusLabel();
 			this.StripStatus_Clock = new System.Windows.Forms.ToolStripStatusLabel();
 			this.UIUpdateTimer = new System.Windows.Forms.Timer(this.components);
@@ -607,9 +612,14 @@
 			// 
 			this.StripStatus.ImageScalingSize = new System.Drawing.Size(32, 32);
 			this.StripStatus.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.StripStatus_Information,
-            this.StripStatus_Padding,
-            this.StripStatus_Clock});
+			this.StripStatus_Information,
+			this.StripStatus_InformationChs1,
+			this.StripStatus_InformationJap2,
+			this.StripStatus_InformationChs2,
+			this.StripStatus_InformationJap3,
+			this.StripStatus_InformationChs3,
+			this.StripStatus_Padding,
+			this.StripStatus_Clock});
 			this.StripStatus.Location = new System.Drawing.Point(0, 458);
 			this.StripStatus.Name = "StripStatus";
 			this.StripStatus.ShowItemToolTips = true;
@@ -621,6 +631,36 @@
 			this.StripStatus_Information.Name = "StripStatus_Information";
 			this.StripStatus_Information.Size = new System.Drawing.Size(104, 17);
 			this.StripStatus_Information.Text = "Now Preparing...";
+			// 
+			// StripStatus_InformationChs1
+			// 
+			this.StripStatus_InformationChs1.Name = "StripStatus_InformationChs1";
+			this.StripStatus_InformationChs1.Size = new System.Drawing.Size(0, 17);
+			this.StripStatus_InformationChs1.Text = "";
+			// 
+			// StripStatus_InformationJap2
+			// 
+			this.StripStatus_InformationJap2.Name = "StripStatus_InformationJap2";
+			this.StripStatus_InformationJap2.Size = new System.Drawing.Size(0, 17);
+			this.StripStatus_InformationJap2.Text = "";
+			// 
+			// StripStatus_InformationChs2
+			// 
+			this.StripStatus_InformationChs2.Name = "StripStatus_InformationChs2";
+			this.StripStatus_InformationChs2.Size = new System.Drawing.Size(0, 17);
+			this.StripStatus_InformationChs2.Text = "";
+			// 
+			// StripStatus_InformationJap3
+			// 
+			this.StripStatus_InformationJap3.Name = "StripStatus_InformationJap3";
+			this.StripStatus_InformationJap3.Size = new System.Drawing.Size(0, 17);
+			this.StripStatus_InformationJap3.Text = "";
+			// 
+			// StripStatus_InformationChs3
+			// 
+			this.StripStatus_InformationChs3.Name = "StripStatus_InformationChs3";
+			this.StripStatus_InformationChs3.Size = new System.Drawing.Size(0, 17);
+			this.StripStatus_InformationChs3.Text = "";
 			// 
 			// StripStatus_Padding
 			// 
@@ -703,6 +743,11 @@
 		private System.Windows.Forms.ToolStripMenuItem StripMenu_Debug_LoadAPIFromFile;
 		private System.Windows.Forms.Timer UIUpdateTimer;
 		private System.Windows.Forms.ToolStripStatusLabel StripStatus_Information;
+		private System.Windows.Forms.ToolStripStatusLabel StripStatus_InformationChs1;
+		private System.Windows.Forms.ToolStripStatusLabel StripStatus_InformationJap2;
+		private System.Windows.Forms.ToolStripStatusLabel StripStatus_InformationChs2;
+		private System.Windows.Forms.ToolStripStatusLabel StripStatus_InformationJap3;
+		private System.Windows.Forms.ToolStripStatusLabel StripStatus_InformationChs3;
 		private System.Windows.Forms.ToolStripStatusLabel StripStatus_Padding;
 		private System.Windows.Forms.ToolStripStatusLabel StripStatus_Clock;
 		private System.Windows.Forms.ToolStripMenuItem StripMenu_View;

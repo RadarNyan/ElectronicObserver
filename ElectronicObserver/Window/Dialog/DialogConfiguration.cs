@@ -405,7 +405,7 @@ namespace ElectronicObserver.Window.Dialog {
 					FormBrowser_BrowserVersion.Text = DefaultBrowserVersion.ToString();
 					FormBrowser_GPURendering.Checked = DefaultGPURendering;
 
-					Utility.Logger.Add( 3, "レジストリからの読み込みに失敗しました。" + ex.Message );
+					Utility.Logger.Add(3, "", "读取注册表信息失败。" + ex.Message);
 
 				} finally {
 					if ( reg != null )

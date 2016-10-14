@@ -90,7 +90,7 @@ namespace ElectronicObserver.Window {
 			} );
 			Utility.Configuration.Instance.ConfigurationChanged += ConfigurationChanged;
 
-			Utility.Logger.Add( 2, SoftwareInformation.SoftwareNameJapanese + " を起動しています…" );
+			Utility.Logger.Add( 2, "", SoftwareInformation.SoftwareNameJapanese + " 启动中 ..." );
 
 
 			this.Text = SoftwareInformation.VersionJapanese;
@@ -181,7 +181,7 @@ namespace ElectronicObserver.Window {
 
 				} catch ( Exception ex ) {
 
-					Utility.Logger.Add( 3, "API読み込みに失敗しました。" + ex.Message );
+					Utility.Logger.Add(3, "", "载入 API 列表失败。" + ex.Message);
 				}
 			}
 
@@ -197,7 +197,7 @@ namespace ElectronicObserver.Window {
 			UIUpdateTimer.Start();
 
 
-			Utility.Logger.Add( 3, "起動処理が完了しました。" );
+			Utility.Logger.Add(3, "", "启动处理已完成。");
 
 		}
 
@@ -231,9 +231,14 @@ namespace ElectronicObserver.Window {
 			Font = c.UI.MainFont;
 			//StripMenu.Font = Font;
 			StripStatus.Font = Font;
+			StripStatus_Information.Font = StripStatus_InformationJap2.Font = StripStatus_InformationJap3.Font = c.UI.JapFont;
 			MainDockPanel.Skin.AutoHideStripSkin.TextFont = Font;
 			MainDockPanel.Skin.DockPaneStripSkin.TextFont = Font;
 
+			int ChsGap = (int) Math.Floor((c.UI.MainFont.Size / 2)) * (-1);
+			int JapGap = (int) Math.Floor((c.UI.JapFont.Size / 2)) * (-1);
+			StripStatus_Information.Margin = StripStatus_InformationJap2.Margin = StripStatus_InformationJap3.Margin = new Padding(0,1,JapGap,0);
+			StripStatus_InformationChs1.Margin = StripStatus_InformationChs2.Margin = StripStatus_InformationChs3.Margin = new Padding(0,1,ChsGap,0);
 
 			if ( c.Life.LockLayout ) {
 				MainDockPanel.AllowChangeLayout = false;
@@ -362,7 +367,7 @@ namespace ElectronicObserver.Window {
 			}
 
 
-			Utility.Logger.Add( 2, SoftwareInformation.SoftwareNameJapanese + " を終了しています…" );
+			Utility.Logger.Add(2, "", SoftwareInformation.SoftwareNameJapanese + " 正在退出 ...");
 
 			UIUpdateTimer.Stop();
 
@@ -398,7 +403,7 @@ namespace ElectronicObserver.Window {
 			KCDatabase.Instance.Save();
 
 
-			Utility.Logger.Add( 2, "終了処理が完了しました。" );
+			Utility.Logger.Add(2, "", "退出前处理已完成。");
 
 			if ( Utility.Configuration.Config.Log.SaveLogFlag )
 				Utility.Logger.Save( @"eolog.log" );
@@ -530,11 +535,11 @@ namespace ElectronicObserver.Window {
 				}
 
 
-				Utility.Logger.Add( 2, path + " からウィンドウ レイアウトを復元しました。" );
+				Utility.Logger.Add(2, "", "已从 " + path + " 载入窗口布局。");
 
 			} catch ( FileNotFoundException ) {
 
-				Utility.Logger.Add( 3, string.Format( "窗口布局文件不存在" ) );
+				Utility.Logger.Add(3, "", "找不到窗口布局文件。");
 				MessageBox.Show( "窗口布局已初始化。\r\n请从 [视图] 菜单中添加自己喜欢的窗口", "找不到窗口布局文件",
 					MessageBoxButtons.OK, MessageBoxIcon.Information );
 
@@ -542,7 +547,7 @@ namespace ElectronicObserver.Window {
 
 			} catch ( DirectoryNotFoundException ) {
 
-				Utility.Logger.Add( 3, string.Format( "窗口布局文件不存在" ) );
+				Utility.Logger.Add(3, "", "找不到窗口布局文件。");
 				MessageBox.Show( "窗口布局已初始化。\r\n请从 [视图] 菜单中添加自己喜欢的窗口", "找不到窗口布局文件",
 					MessageBoxButtons.OK, MessageBoxIcon.Information );
 
@@ -577,7 +582,7 @@ namespace ElectronicObserver.Window {
 				}
 
 
-				Utility.Logger.Add( 2, path + " へウィンドウ レイアウトを保存しました。" );
+				Utility.Logger.Add(2, "", "已保存窗口布局到 : " + path);
 
 			} catch ( Exception ex ) {
 
@@ -601,6 +606,11 @@ namespace ElectronicObserver.Window {
 		void Logger_LogAdded( Utility.Logger.LogData data ) {
 
 			StripStatus_Information.Text = data.Message;
+			StripStatus_InformationChs1.Text = data.MsgChs1;
+			StripStatus_InformationJap2.Text = data.MsgJap2;
+			StripStatus_InformationChs2.Text = data.MsgChs2;
+			StripStatus_InformationJap3.Text = data.MsgJap3;
+			StripStatus_InformationChs3.Text = data.MsgChs3;
 
 		}
 

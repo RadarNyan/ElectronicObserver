@@ -785,7 +785,7 @@ namespace ElectronicObserver.Data {
 		public static string GetExpeditionResult( int value ) {
 			switch ( value ) {
 				case 0:
-					return "失敗";
+					return "失败";
 				case 1:
 					return "成功";
 				case 2:

@@ -722,7 +722,7 @@
 			// 
 			this.MenuMember_CSVOutput.Name = "MenuMember_CSVOutput";
 			this.MenuMember_CSVOutput.Size = new System.Drawing.Size(201, 22);
-			this.MenuMember_CSVOutput.Text = "输出 CSV(&O)...";
+			this.MenuMember_CSVOutput.Text = "导出为 CSV 文件(&O)...";
 			this.MenuMember_CSVOutput.Click += new System.EventHandler(this.MenuMember_CSVOutput_Click);
 			// 
 			// MenuGroup

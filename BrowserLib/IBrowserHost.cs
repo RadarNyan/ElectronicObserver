@@ -46,7 +46,7 @@ namespace BrowserLib {
 		/// ログ追加
 		/// </summary>
 		[OperationContract]
-		void AddLog( int priority, string message );
+		void AddLog( int priority, string message, string msgchs1="", string msgjap2="", string msgchs2="", string msgjap3="", string msgchs3="" );
 
 		[OperationContract]
 		void ConfigurationUpdated( BrowserConfiguration config );
