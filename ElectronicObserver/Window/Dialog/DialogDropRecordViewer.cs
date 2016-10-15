@@ -1,6 +1,7 @@
 ﻿using ElectronicObserver.Data;
 using ElectronicObserver.Resource;
 using ElectronicObserver.Resource.Record;
+using ElectronicObserver.Utility;
 using ElectronicObserver.Utility.Mathematics;
 using System;
 using System.Collections.Generic;
@@ -17,10 +18,10 @@ namespace ElectronicObserver.Window.Dialog {
 
 		private ShipDropRecord _record;
 
-		private const string NameAny = "(全て)";
-		private const string NameNotExist = "(なし)";
-		private const string NameFullPort = "(満員)";
-		private const string NameExist = "(ドロップ)";
+		private const string NameAny = "( 全部 )";
+		private const string NameNotExist = "( 无 )";
+		private const string NameFullPort = "( 满员 )";
+		private const string NameExist = "( 掉落 )";
 
 		private const string MapAny = "*";
 
@@ -321,7 +322,7 @@ namespace ElectronicObserver.Window.Dialog {
 				sb.Append( cell );
 			}
 			if ( isboss )
-				sb.Append( " [ボス]" );
+				sb.Append( " [BOSS]" );
 
 			if ( insertEnemyFleetName ) {
 				var enemy = RecordManager.Instance.EnemyFleet.Record.Values.FirstOrDefault( r => r.MapAreaID == maparea && r.MapInfoID == mapinfo && r.CellID == cell && r.Difficulty == difficulty );
@@ -366,7 +367,7 @@ namespace ElectronicObserver.Window.Dialog {
 		private void ButtonRun_Click( object sender, EventArgs e ) {
 
 			if ( Searcher.IsBusy ) {
-				if ( MessageBox.Show( "検索を中止しますか?", "検索中です", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button2 )
+				if ( MessageBox.Show( "要中止搜索吗？", "正在搜索中", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button2 )
 					== System.Windows.Forms.DialogResult.Yes ) {
 					Searcher.CancelAsync();
 				}
@@ -374,6 +375,7 @@ namespace ElectronicObserver.Window.Dialog {
 			}
 
 			RecordView.Rows.Clear();
+			RecordView.Font = Utility.Configuration.Config.UI.JapFont;
 
 			var row = new DataGridViewRow();
 			row.CreateCells( RecordView );
@@ -402,7 +404,7 @@ namespace ElectronicObserver.Window.Dialog {
 			// column initialize
 			if ( MergeRows.Checked ) {
 				RecordView_Name.DisplayIndex = 0;
-				RecordView_Header.HeaderText = "回数";
+				RecordView_Header.HeaderText = "次数";
 				RecordView_Header.Width = 100;
 				RecordView_Header.DisplayIndex = 1;
 				RecordView_RankS.Width = 100;
@@ -435,7 +437,7 @@ namespace ElectronicObserver.Window.Dialog {
 			RecordView.ColumnHeadersVisible = true;
 
 
-			StatusInfo.Text = "検索中です...";
+			StatusInfo.Text = "正在搜索中 ...";
 			StatusInfo.Tag = DateTime.Now;
 
 			Searcher.RunWorkerAsync( args );
@@ -707,11 +709,11 @@ namespace ElectronicObserver.Window.Dialog {
 				RecordView.Sort( RecordView.SortedColumn ?? RecordView_Header,
 					RecordView.SortOrder == SortOrder.Ascending ? ListSortDirection.Ascending : ListSortDirection.Descending );
 
-				StatusInfo.Text = "検索が完了しました。(" + (int)( DateTime.Now - (DateTime)StatusInfo.Tag ).TotalMilliseconds + " ms)";
+				StatusInfo.Text = "搜索完成。(" + (int)( DateTime.Now - (DateTime)StatusInfo.Tag ).TotalMilliseconds + " ms)";
 
 			} else {
 
-				StatusInfo.Text = "検索がキャンセルされました。";
+				StatusInfo.Text = "搜索已被取消。";
 			}
 
 		}
