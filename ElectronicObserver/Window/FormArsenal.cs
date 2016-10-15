@@ -36,7 +36,6 @@ namespace ElectronicObserver.Window {
 				ShipName.Padding = new Padding( 0, 1, 0, 1 );
 				ShipName.Margin = new Padding( 2, 0, 2, 0 );
 				ShipName.MaximumSize = new Size( 60, 20 );
-				ShipName.AutoEllipsis = true;
 				ShipName.AutoSize = true;
 				ShipName.Visible = true;
 
@@ -110,6 +109,14 @@ namespace ElectronicObserver.Window {
 				} else if ( arsenal.State == 2 ) {
 					//building
 					string name = showShipName ? db.MasterShips[arsenal.ShipID].Name : "???";
+					Font shipNameFont = Utility.Configuration.Config.UI.JapFont;
+					if (TextRenderer.MeasureText(name, shipNameFont).Width > 60){
+						name = "..." + name.Substring(0, name.Length-1);
+						while(TextRenderer.MeasureText(name, shipNameFont).Width > 60){
+							name = name.Substring(0, name.Length-1);
+						}
+						name = name.Substring(3) + "...";
+					}
 					ShipName.Text = name;
 					tooltip.SetToolTip( ShipName, name );
 					CompletionTime.Text = DateTimeHelper.ToTimeRemainString( arsenal.CompletionTime );
