@@ -26,7 +26,7 @@ namespace ElectronicObserver.Window.Dialog {
 
 			ControlHelper.SetDoubleBuffered( EquipmentView );
 
-			Font = Utility.Configuration.Config.UI.MainFont;
+			Font = Utility.Configuration.Config.UI.JapFont;
 
 			foreach ( DataGridViewColumn column in EquipmentView.Columns ) {
 				column.MinimumWidth = 2;
