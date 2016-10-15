@@ -36,7 +36,6 @@ namespace ElectronicObserver.Window {
 				ShipName.Padding = new Padding( 0, 1, 0, 1 );
 				ShipName.Margin = new Padding( 2, 0, 2, 0 );
 				ShipName.MaximumSize = new Size( 60, 20 );
-				ShipName.AutoEllipsis = true;
 				ShipName.AutoSize = true;
 				ShipName.Visible = true;
 
@@ -110,7 +109,16 @@ namespace ElectronicObserver.Window {
 
 				} else {
 					//repairing
-					ShipName.Text = db.Ships[dock.ShipID].Name;
+					string shipNameText = db.Ships[dock.ShipID].Name;
+					Font shipNameFont = Utility.Configuration.Config.UI.JapFont;
+					if (TextRenderer.MeasureText(shipNameText, shipNameFont).Width > 60){
+						shipNameText = "..." + shipNameText.Substring(0, shipNameText.Length-1);
+						while(TextRenderer.MeasureText(shipNameText, shipNameFont).Width > 60){
+							shipNameText = shipNameText.Substring(0, shipNameText.Length-1);
+						}
+						shipNameText = shipNameText.Substring(3) + "...";
+					}
+					ShipName.Text = shipNameText;
 					ToolTipInfo.SetToolTip( ShipName, db.Ships[dock.ShipID].NameWithLevel );
 					RepairTime.Text = DateTimeHelper.ToTimeRemainString( dock.CompletionTime );
 					RepairTime.Tag = dock.CompletionTime;
