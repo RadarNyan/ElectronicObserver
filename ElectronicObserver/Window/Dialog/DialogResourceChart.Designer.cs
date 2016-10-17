@@ -86,7 +86,7 @@
 			// 
 			this.Menu_Graph_ResourceDiff.Name = "Menu_Graph_ResourceDiff";
 			this.Menu_Graph_ResourceDiff.Size = new System.Drawing.Size(162, 22);
-			this.Menu_Graph_ResourceDiff.Text = "资源 ( 变化情况 )(&E)";
+			this.Menu_Graph_ResourceDiff.Text = "资源差(&E)";
 			this.Menu_Graph_ResourceDiff.Click += new System.EventHandler(this.Menu_Graph_ResourceDiff_Click);
 			// 
 			// toolStripSeparator1
@@ -105,7 +105,7 @@
 			// 
 			this.Menu_Graph_MaterialDiff.Name = "Menu_Graph_MaterialDiff";
 			this.Menu_Graph_MaterialDiff.Size = new System.Drawing.Size(162, 22);
-			this.Menu_Graph_MaterialDiff.Text = "资材 ( 变化情况 )(&A)";
+			this.Menu_Graph_MaterialDiff.Text = "资材差(&A)";
 			this.Menu_Graph_MaterialDiff.Click += new System.EventHandler(this.Menu_Graph_MaterialDiff_Click);
 			// 
 			// toolStripSeparator2
@@ -124,7 +124,7 @@
 			// 
 			this.Menu_Graph_ExperienceDiff.Name = "Menu_Graph_ExperienceDiff";
 			this.Menu_Graph_ExperienceDiff.Size = new System.Drawing.Size(162, 22);
-			this.Menu_Graph_ExperienceDiff.Text = "经验值 ( 变化情况 )(&X)";
+			this.Menu_Graph_ExperienceDiff.Text = "经验值差(&X)";
 			this.Menu_Graph_ExperienceDiff.Click += new System.EventHandler(this.Menu_Graph_ExperienceDiff_Click);
 			// 
 			// Menu_Span

@@ -393,7 +393,7 @@ namespace ElectronicObserver.Window.Dialog {
 
 			DetailView.ResumeLayout();
 
-			Text = "装備一覧 - " + KCDatabase.Instance.MasterEquipments[equipmentID].Name;
+			Text = "装备一览 - " + KCDatabase.Instance.MasterEquipments[equipmentID].Name;
 		}
 
 

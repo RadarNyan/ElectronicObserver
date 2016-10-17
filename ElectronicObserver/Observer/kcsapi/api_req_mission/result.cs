@@ -26,7 +26,7 @@ namespace ElectronicObserver.Observer.kcsapi.api_req_mission {
 			var fleet = KCDatabase.Instance.Fleet[_fleetID];
 
 
-			Utility.Logger.Add(2, string.Format("#{0}「{1}」", fleet.FleetID, fleet.Name), "已结束远征", string.Format("「{0}: {1}」。", fleet.ExpeditionDestination, data.api_quest_name));
+			Utility.Logger.Add(2, string.Format("#{0}「{1}」", fleet.FleetID, fleet.Name), " 已结束远征 ", string.Format("「{0}: {1}」。", fleet.ExpeditionDestination, data.api_quest_name));
 
 
 			// 獲得資源表示
@@ -84,12 +84,12 @@ namespace ElectronicObserver.Observer.kcsapi.api_req_mission {
 				{
 					int admiralExp = (int)data.api_get_exp;
 					if ( admiralExp > 0 ) {
-						sbe.AddLast( "提督经验 + " + admiralExp );
+						sbe.AddLast( "提督经验 +" + admiralExp );
 					}
 
 					int shipExp = ( (int[])data.api_get_ship_exp ).Min();
 					if ( shipExp > 0 ) {
-						sbe.AddLast( "舰娘经验 + " + shipExp );
+						sbe.AddLast( "舰娘经验 +" + shipExp );
 					}
 				}
 

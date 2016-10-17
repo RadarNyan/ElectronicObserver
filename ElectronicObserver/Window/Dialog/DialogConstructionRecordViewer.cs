@@ -247,7 +247,7 @@ namespace ElectronicObserver.Window.Dialog {
 		private void ButtonRun_Click( object sender, EventArgs e ) {
 
 			if ( Searcher.IsBusy ) {
-				if ( MessageBox.Show( "要中止搜索吗？", "正在搜索中", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button2 )
+				if ( MessageBox.Show( "要中断搜索吗？", "正在搜索中", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button2 )
 					== System.Windows.Forms.DialogResult.Yes ) {
 					Searcher.CancelAsync();
 				}

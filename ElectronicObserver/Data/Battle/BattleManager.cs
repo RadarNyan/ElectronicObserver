@@ -265,7 +265,7 @@ namespace ElectronicObserver.Data.Battle {
 						EnemyAdmiralRank),
 					string.Format("「{0}」",
 						Result.EnemyFleetName),
-					string.Format("进行了演习。( 结果 : {0}, 提督经验 + {1}, 舰娘经验 + {2} )",
+					string.Format("进行了演习。( 结果 : {0}, 提督经验 +{1}, 舰娘经验 +{2} )",
 						Result.Rank,
 						Result.AdmiralExp,
 						Result.BaseExp)
@@ -277,7 +277,7 @@ namespace ElectronicObserver.Data.Battle {
 						Compass.Destination),
 					string.Format("「{0}」",
 						Result.EnemyFleetName),
-					string.Format("发生了战斗。( 结果 : {0}, 提督经验 + {1}, 舰娘经验 + {2} )",
+					string.Format("发生了战斗。( 结果 : {0}, 提督经验 +{1}, 舰娘经验 +{2} )",
 						Result.Rank,
 						Result.AdmiralExp,
 						Result.BaseExp)
@@ -306,7 +306,7 @@ namespace ElectronicObserver.Data.Battle {
 						DroppedEquipmentCount += defaultSlot.Count( id => id != -1 );
 
 					if ( showLog )
-						Utility.Logger.Add(2, string.Format("{0}「{1}」", ship.ShipTypeName, ship.NameWithClass), "加入了队伍。");
+						Utility.Logger.Add(2, string.Format("{0}「{1}」", ship.ShipTypeName, ship.NameWithClass), " 加入了队伍。");
 				}
 
 				if ( itemID != -1 ) {

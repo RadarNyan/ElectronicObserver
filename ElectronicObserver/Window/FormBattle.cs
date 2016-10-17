@@ -830,11 +830,11 @@ namespace ElectronicObserver.Window {
 						var shipAirBattle2Detail = SelectBattleDetail( ( (BattleAirBattle)bd ).AirBattle2.BattleDetails, i );
 
 						if ( shipAirBattle1Detail.Any() ) {
-							builder.AppendLine( "《第一次航空戦》" );
+							builder.AppendLine( "《第一次航空战》" );
 							builder.Append( FriendShipBattleDetail( bd, shipAirBattle1Detail ) );
 						}
 						if ( shipAirBattle2Detail.Any() ) {
-							builder.AppendLine( "《第二次航空戦》" );
+							builder.AppendLine( "《第二次航空战》" );
 							builder.Append( FriendShipBattleDetail( bd, shipAirBattle2Detail ) );
 						}
 
@@ -843,7 +843,7 @@ namespace ElectronicObserver.Window {
 						var shipAirBattleDetail = SelectBattleDetail( ( (BattleDay)bd ).AirBattle.BattleDetails, i );
 
 						if ( shipAirBattleDetail.Any() ) {
-							builder.AppendLine( "《空襲戦》" );
+							builder.AppendLine( "《空袭战》" );
 							builder.Append( FriendShipBattleDetail( bd, shipAirBattleDetail ) );
 						}
 
@@ -922,7 +922,7 @@ namespace ElectronicObserver.Window {
 
 
 					StringBuilder builder = new StringBuilder();
-					builder.AppendFormat( "{0} Lv. {1}\r\nHP: ({2} → {3})/{4} ({5}) [{6}]\r\n与ダメージ: {7}\r\n\r\n",
+					builder.AppendFormat( "{0} Lv. {1}\r\nHP: ({2} → {3})/{4} ({5}) [{6}]\r\n造成伤害 : {7}\r\n\r\n",
 						ship.MasterShip.NameWithClass,
 						ship.Level,
 						Math.Max( HPBars[i].PrevValue, 0 ),
@@ -967,11 +967,11 @@ namespace ElectronicObserver.Window {
 						var shipAirBattle2Detail = SelectBattleDetail( ( (BattleCombinedAirBattle)bd ).AirBattle2.BattleDetails, i );
 
 						if ( shipAirBattle1Detail.Any() ) {
-							builder.AppendLine( "《第一次航空戦》" );
+							builder.AppendLine( "《第一次航空战》" );
 							builder.Append( FriendShipBattleDetail( bd, shipAirBattle1Detail ) );
 						}
 						if ( shipAirBattle2Detail.Any() ) {
-							builder.AppendLine( "《第二次航空戦》" );
+							builder.AppendLine( "《第二次航空战》" );
 							builder.Append( FriendShipBattleDetail( bd, shipAirBattle2Detail ) );
 						}
 
