@@ -561,7 +561,7 @@ namespace ElectronicObserver.Window.Dialog {
 			BasePanelShipGirl.Visible = true;
 
 
-			this.Text = "艦船図鑑 - " + ship.NameWithClass;
+			this.Text = "舰船图鉴 - " + ship.NameWithClass;
 
 		}
 

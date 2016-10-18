@@ -190,20 +190,20 @@
             this.StripMenu_File_OutputCSVData});
 			this.StripMenu_File.Name = "StripMenu_File";
 			this.StripMenu_File.Size = new System.Drawing.Size(70, 20);
-			this.StripMenu_File.Text = "ファイル(&F)";
+			this.StripMenu_File.Text = "文件(&F)";
 			// 
 			// StripMenu_File_OutputCSVUser
 			// 
 			this.StripMenu_File_OutputCSVUser.Name = "StripMenu_File_OutputCSVUser";
 			this.StripMenu_File_OutputCSVUser.Size = new System.Drawing.Size(203, 22);
-			this.StripMenu_File_OutputCSVUser.Text = "CSV出力(閲覧用)(&U)...";
+			this.StripMenu_File_OutputCSVUser.Text = "导出 CSV 文件 ( 阅览用途 )(&U)...";
 			this.StripMenu_File_OutputCSVUser.Click += new System.EventHandler(this.StripMenu_File_OutputCSVUser_Click);
 			// 
 			// StripMenu_File_OutputCSVData
 			// 
 			this.StripMenu_File_OutputCSVData.Name = "StripMenu_File_OutputCSVData";
 			this.StripMenu_File_OutputCSVData.Size = new System.Drawing.Size(203, 22);
-			this.StripMenu_File_OutputCSVData.Text = "CSV出力(データ用)(&D)...";
+			this.StripMenu_File_OutputCSVData.Text = "导出 CSV 文件 ( 数据用途 )(&D)...";
 			this.StripMenu_File_OutputCSVData.Click += new System.EventHandler(this.StripMenu_File_OutputCSVData_Click);
 			// 
 			// StripMenu_Edit
@@ -212,13 +212,13 @@
             this.StripMenu_Edit_EditParameter});
 			this.StripMenu_Edit.Name = "StripMenu_Edit";
 			this.StripMenu_Edit.Size = new System.Drawing.Size(60, 20);
-			this.StripMenu_Edit.Text = "編集(&E)";
+			this.StripMenu_Edit.Text = "编辑(&E)";
 			// 
 			// StripMenu_Edit_EditParameter
 			// 
 			this.StripMenu_Edit_EditParameter.Name = "StripMenu_Edit_EditParameter";
 			this.StripMenu_Edit_EditParameter.Size = new System.Drawing.Size(181, 22);
-			this.StripMenu_Edit_EditParameter.Text = "パラメータの編集(&E)...";
+			this.StripMenu_Edit_EditParameter.Text = "编辑参数(&E)...";
 			this.StripMenu_Edit_EditParameter.Click += new System.EventHandler(this.StripMenu_Edit_EditParameter_Click);
 			// 
 			// splitContainer1
@@ -286,7 +286,7 @@
 			// ShipView_ShipType
 			// 
 			this.ShipView_ShipType.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-			this.ShipView_ShipType.HeaderText = "艦種";
+			this.ShipView_ShipType.HeaderText = "舰种";
 			this.ShipView_ShipType.Name = "ShipView_ShipType";
 			this.ShipView_ShipType.ReadOnly = true;
 			this.ShipView_ShipType.Width = 80;
@@ -294,7 +294,7 @@
 			// ShipView_Name
 			// 
 			this.ShipView_Name.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-			this.ShipView_Name.HeaderText = "艦名";
+			this.ShipView_Name.HeaderText = "舰名";
 			this.ShipView_Name.Name = "ShipView_Name";
 			this.ShipView_Name.ReadOnly = true;
 			// 
@@ -431,7 +431,7 @@
 			this.imageLabel2.Name = "imageLabel2";
 			this.imageLabel2.Size = new System.Drawing.Size(54, 16);
 			this.imageLabel2.TabIndex = 22;
-			this.imageLabel2.Text = "図鑑番号:";
+			this.imageLabel2.Text = "图鉴编号 :";
 			// 
 			// Description
 			// 
@@ -1077,7 +1077,7 @@
 			this.imageLabel45.Name = "imageLabel45";
 			this.imageLabel45.Size = new System.Drawing.Size(44, 16);
 			this.imageLabel45.TabIndex = 6;
-			this.imageLabel45.Text = "艦船ID:";
+			this.imageLabel45.Text = "舰船 ID :";
 			// 
 			// TableParameterMain
 			// 
@@ -1696,12 +1696,12 @@
 			this.Controls.Add(this.splitContainer1);
 			this.Controls.Add(this.menuStrip1);
 			this.DoubleBuffered = true;
-			this.Font = new System.Drawing.Font("Meiryo UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+			this.Font = new System.Drawing.Font("Microsoft YaHei", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
 			this.MainMenuStrip = this.menuStrip1;
 			this.MinimumSize = new System.Drawing.Size(816, 518);
 			this.Name = "DialogAlbumMasterShip";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-			this.Text = "艦船図鑑";
+			this.Text = "舰船图鉴";
 			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.DialogAlbumMasterShip_FormClosed);
 			this.Load += new System.EventHandler(this.DialogAlbumMasterShip_Load);
 			this.menuStrip1.ResumeLayout(false);
