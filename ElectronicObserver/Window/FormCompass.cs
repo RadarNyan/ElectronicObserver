@@ -671,6 +671,7 @@ namespace ElectronicObserver.Window {
 				TextEventKind.ForeColor = getColorFromEventKind( 0 );
 				TextEventKind.ImageAlign = ContentAlignment.MiddleCenter;
 				TextEventKind.ImageIndex = -1;
+				TextEventKind.Font = Utility.Configuration.Config.UI.JapFont;
 				ToolTipInfo.SetToolTip( TextEventKind, null );
 				TextEventDetail.Text = string.Format( "Lv. {0} / {1} exp.", data.api_level, data.api_experience[0] );
 				TextEventDetail.Font = Utility.Configuration.Config.UI.JapFont;
@@ -885,6 +886,7 @@ namespace ElectronicObserver.Window {
 
 					}
 					TextEventKind.Text = eventkind;
+					TextEventKind.Font = Utility.Configuration.Config.UI.MainFont;
 				}
 
 

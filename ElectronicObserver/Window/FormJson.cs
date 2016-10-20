@@ -256,6 +256,7 @@ namespace ElectronicObserver.Window {
 			var c = Utility.Configuration.Config;
 
 			Font = tabControl1.Font = c.UI.MainFont;
+			JsonTreeView.Font = JsonRawData.Font = c.UI.JapFont;
 
 			AutoUpdate.Checked = c.FormJson.AutoUpdate;
 			UpdatesTree.Checked = c.FormJson.UpdatesTree;

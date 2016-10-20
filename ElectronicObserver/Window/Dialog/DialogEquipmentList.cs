@@ -26,7 +26,7 @@ namespace ElectronicObserver.Window.Dialog {
 
 			ControlHelper.SetDoubleBuffered( EquipmentView );
 
-			Font = Utility.Configuration.Config.UI.MainFont;
+			Font = Utility.Configuration.Config.UI.JapFont;
 
 			foreach ( DataGridViewColumn column in EquipmentView.Columns ) {
 				column.MinimumWidth = 2;
@@ -393,7 +393,7 @@ namespace ElectronicObserver.Window.Dialog {
 
 			DetailView.ResumeLayout();
 
-			Text = "装備一覧 - " + KCDatabase.Instance.MasterEquipments[equipmentID].Name;
+			Text = "装备一览 - " + KCDatabase.Instance.MasterEquipments[equipmentID].Name;
 		}
 
 

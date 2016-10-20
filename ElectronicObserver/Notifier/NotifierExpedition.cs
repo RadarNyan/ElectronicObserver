@@ -29,7 +29,7 @@ namespace ElectronicObserver.Notifier {
 
 
 		private void Initialize() {
-			DialogData.Title = "遠征帰投";
+			DialogData.Title = "远征返回";
 			processedFlags = new Dictionary<int, bool>();
 		}
 

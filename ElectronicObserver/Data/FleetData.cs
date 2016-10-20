@@ -154,7 +154,7 @@ namespace ElectronicObserver.Data {
 
 					_escapedShipList.Clear();
 					if ( IsInSortie ) {
-						Utility.Logger.Add( 2, string.Format( "#{0}「{1}」が帰投しました。", FleetID, Name ) );
+						Utility.Logger.Add(2, string.Format( "#{0}「{1}」", FleetID, Name ), " 已回到母港。");
 					}
 					IsInSortie = false;
 
@@ -645,7 +645,7 @@ namespace ElectronicObserver.Data {
 					fleet.MembersInstance.Take( 2 + KCDatabase.Instance.Ships[fleet[0]].SlotInstanceMaster.Count( eq => eq != null && eq.CategoryType == 31 ) )
 					.Any( s => s != null && s.HPRate < 1.0 && s.HPRate > 0.5 && s.RepairingDockID == -1 ) ) {
 
-					label.Text = "泊地修理中 " + DateTimeHelper.ToTimeElapsedString( KCDatabase.Instance.Fleet.AnchorageRepairingTimer );
+					label.Text = "修理中 " + DateTimeHelper.ToTimeElapsedString( KCDatabase.Instance.Fleet.AnchorageRepairingTimer );
 					label.ImageIndex = (int)ResourceManager.IconContent.FleetAnchorageRepairing;
 
 					StringBuilder sb = new StringBuilder();
@@ -781,7 +781,7 @@ namespace ElectronicObserver.Data {
 						label.BackColor = DateTime.Now.Second % 2 == 0 ? Color.LightGreen : Color.Transparent;
 					break;
 				case FleetStates.AnchorageRepairing:
-					label.Text = "泊地修理中 " + DateTimeHelper.ToTimeElapsedString( KCDatabase.Instance.Fleet.AnchorageRepairingTimer );
+					label.Text = "修理中 " + DateTimeHelper.ToTimeElapsedString( KCDatabase.Instance.Fleet.AnchorageRepairingTimer );
 					break;
 			}
 

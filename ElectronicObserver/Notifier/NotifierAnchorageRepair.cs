@@ -34,7 +34,7 @@ namespace ElectronicObserver.Notifier {
 		}
 
 		private void Initialize() {
-			DialogData.Title = "泊地修理発動";
+			DialogData.Title = "泊地修理发动";
 
 
 			APIObserver o = APIObserver.Instance;

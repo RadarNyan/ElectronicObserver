@@ -107,21 +107,21 @@
 			// 
 			this.TreeContextMenu_Expand.Name = "TreeContextMenu_Expand";
 			this.TreeContextMenu_Expand.Size = new System.Drawing.Size(196, 22);
-			this.TreeContextMenu_Expand.Text = "全て展開";
+			this.TreeContextMenu_Expand.Text = "全部展开";
 			this.TreeContextMenu_Expand.Click += new System.EventHandler(this.TreeContextMenu_Expand_Click);
 			// 
 			// TreeContextMenu_Shrink
 			// 
 			this.TreeContextMenu_Shrink.Name = "TreeContextMenu_Shrink";
 			this.TreeContextMenu_Shrink.Size = new System.Drawing.Size(196, 22);
-			this.TreeContextMenu_Shrink.Text = "全て格納";
+			this.TreeContextMenu_Shrink.Text = "全部收起";
 			this.TreeContextMenu_Shrink.Click += new System.EventHandler(this.TreeContextMenu_Shrink_Click);
 			// 
 			// TreeContextMenu_ShrinkParent
 			// 
 			this.TreeContextMenu_ShrinkParent.Name = "TreeContextMenu_ShrinkParent";
 			this.TreeContextMenu_ShrinkParent.Size = new System.Drawing.Size(196, 22);
-			this.TreeContextMenu_ShrinkParent.Text = "親ノードを格納";
+			this.TreeContextMenu_ShrinkParent.Text = "收起上级节点";
 			this.TreeContextMenu_ShrinkParent.Click += new System.EventHandler(this.TreeContextMenu_ShrinkParent_Click);
 			// 
 			// toolStripSeparator1
@@ -133,7 +133,7 @@
 			// 
 			this.TreeContextMenu_OutputCSV.Name = "TreeContextMenu_OutputCSV";
 			this.TreeContextMenu_OutputCSV.Size = new System.Drawing.Size(196, 22);
-			this.TreeContextMenu_OutputCSV.Text = "このノードをCSVに出力...";
+			this.TreeContextMenu_OutputCSV.Text = "将本节点输出为 CSV 文件 ...";
 			this.TreeContextMenu_OutputCSV.Click += new System.EventHandler(this.TreeContextMenu_OutputCSV_Click);
 			// 
 			// tabPage2
@@ -183,7 +183,7 @@
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(144, 44);
 			this.label2.TabIndex = 4;
-			this.label2.Text = "※自動更新を有効にすると、\r\n　重くなる可能性があります";
+			this.label2.Text = "※启用自动更新的话\r\n　可能会导致卡顿。";
 			this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
 			// UpdatesTree
@@ -193,7 +193,7 @@
 			this.UpdatesTree.Name = "UpdatesTree";
 			this.UpdatesTree.Size = new System.Drawing.Size(104, 19);
 			this.UpdatesTree.TabIndex = 3;
-			this.UpdatesTree.Text = "Treeも更新する";
+			this.UpdatesTree.Text = "Tree 标签也自动更新";
 			this.UpdatesTree.UseVisualStyleBackColor = true;
 			this.UpdatesTree.CheckedChanged += new System.EventHandler(this.UpdatesTree_CheckedChanged);
 			// 
@@ -204,15 +204,15 @@
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(52, 15);
 			this.label1.TabIndex = 2;
-			this.label1.Text = "フィルタ：";
+			this.label1.Text = "筛选自动更新 : ";
 			// 
 			// AutoUpdateFilter
 			// 
 			this.AutoUpdateFilter.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.AutoUpdateFilter.Location = new System.Drawing.Point(66, 57);
+			this.AutoUpdateFilter.Location = new System.Drawing.Point(86, 57);
 			this.AutoUpdateFilter.Name = "AutoUpdateFilter";
-			this.AutoUpdateFilter.Size = new System.Drawing.Size(218, 23);
+			this.AutoUpdateFilter.Size = new System.Drawing.Size(198, 23);
 			this.AutoUpdateFilter.TabIndex = 1;
 			this.AutoUpdateFilter.Validated += new System.EventHandler(this.AutoUpdateFilter_Validated);
 			// 
@@ -223,14 +223,14 @@
 			this.AutoUpdate.Name = "AutoUpdate";
 			this.AutoUpdate.Size = new System.Drawing.Size(93, 19);
 			this.AutoUpdate.TabIndex = 0;
-			this.AutoUpdate.Text = "自動更新する";
+			this.AutoUpdate.Text = "自动更新";
 			this.AutoUpdate.UseVisualStyleBackColor = true;
 			this.AutoUpdate.CheckedChanged += new System.EventHandler(this.AutoUpdate_CheckedChanged);
 			// 
 			// CSVSaver
 			// 
 			this.CSVSaver.Filter = "CSV|*.csv|File|*";
-			this.CSVSaver.Title = "ノードを CSV に出力";
+			this.CSVSaver.Title = "将节点输出为 CSV 文件";
 			// 
 			// label3
 			// 
@@ -240,7 +240,7 @@
 			this.label3.Name = "label3";
 			this.label3.Size = new System.Drawing.Size(249, 15);
 			this.label3.TabIndex = 5;
-			this.label3.Text = "◆ D&D で保存した json ファイル を読み込めます";
+			this.label3.Text = "◆ 可以读取 D&D 的 json 文件";
 			this.label3.UseMnemonic = false;
 			// 
 			// FormJson
@@ -249,7 +249,7 @@
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
 			this.ClientSize = new System.Drawing.Size(300, 200);
 			this.Controls.Add(this.tabControl1);
-			this.Font = new System.Drawing.Font("Meiryo UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+			this.Font = new System.Drawing.Font("Microsoft YaHei", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
 			this.HideOnClose = true;
 			this.Name = "FormJson";

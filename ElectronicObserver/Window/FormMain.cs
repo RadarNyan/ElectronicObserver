@@ -1115,12 +1115,12 @@ namespace ElectronicObserver.Window {
 		private void StripMenu_Tool_DropRecord_Click( object sender, EventArgs e ) {
 
 			if ( KCDatabase.Instance.MasterShips.Count == 0 ) {
-				MessageBox.Show( "艦これを読み込んでから開いてください。", "マスターデータがありません", MessageBoxButtons.OK, MessageBoxIcon.Error );
+				MessageBox.Show( "请进入『艦これ』之后再查看记录。", "尚无主数据", MessageBoxButtons.OK, MessageBoxIcon.Error );
 				return;
 			}
 
 			if ( RecordManager.Instance.ShipDrop.Record.Count == 0 ) {
-				MessageBox.Show( "ドロップレコードがありません。", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error );
+				MessageBox.Show( "尚无掉落记录。", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error );
 				return;
 			}
 
@@ -1132,12 +1132,12 @@ namespace ElectronicObserver.Window {
 		private void StripMenu_Tool_DevelopmentRecord_Click( object sender, EventArgs e ) {
 
 			if ( KCDatabase.Instance.MasterShips.Count == 0 ) {
-				MessageBox.Show( "艦これを読み込んでから開いてください。", "マスターデータがありません", MessageBoxButtons.OK, MessageBoxIcon.Error );
+				MessageBox.Show( "请进入『艦これ』之后再查看记录。", "尚无主数据", MessageBoxButtons.OK, MessageBoxIcon.Error );
 				return;
 			}
 
 			if ( RecordManager.Instance.Development.Record.Count == 0 ) {
-				MessageBox.Show( "開発レコードがありません。", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error );
+				MessageBox.Show( "尚无开发记录。", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error );
 				return;
 			}
 
@@ -1148,12 +1148,12 @@ namespace ElectronicObserver.Window {
 		private void StripMenu_Tool_ConstructionRecord_Click( object sender, EventArgs e ) {
 
 			if ( KCDatabase.Instance.MasterShips.Count == 0 ) {
-				MessageBox.Show( "艦これを読み込んでから開いてください。", "マスターデータがありません", MessageBoxButtons.OK, MessageBoxIcon.Error );
+				MessageBox.Show( "请进入『艦これ』之后再查看记录。", "尚无主数据", MessageBoxButtons.OK, MessageBoxIcon.Error );
 				return;
 			}
 
 			if ( RecordManager.Instance.Construction.Record.Count == 0 ) {
-				MessageBox.Show( "建造レコードがありません。", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error );
+				MessageBox.Show( "尚无建造记录。", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error );
 				return;
 			}
 
