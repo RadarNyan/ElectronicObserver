@@ -34,15 +34,16 @@
 			this.ContextMenuTool = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.ContextMenuTool_ShowToolMenu = new System.Windows.Forms.ToolStripMenuItem();
 			this.ToolMenu = new System.Windows.Forms.ToolStrip();
+			this.toolStripLabel0 = new System.Windows.Forms.ToolStripLabel();
 			this.ToolMenu_ScreenShot = new System.Windows.Forms.ToolStripButton();
-			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+			this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
 			this.ToolMenu_Zoom = new System.Windows.Forms.ToolStripDropDownButton();
-			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+			this.toolStripLabel2 = new System.Windows.Forms.ToolStripLabel();
 			this.ToolMenu_Mute = new System.Windows.Forms.ToolStripButton();
-			this.toolStripSeparator13 = new System.Windows.Forms.ToolStripSeparator();
+			this.toolStripLabel3 = new System.Windows.Forms.ToolStripLabel();
 			this.ToolMenu_Refresh = new System.Windows.Forms.ToolStripButton();
 			this.ToolMenu_NavigateToLogInPage = new System.Windows.Forms.ToolStripButton();
-			this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
+			this.toolStripLabel4 = new System.Windows.Forms.ToolStripLabel();
 			this.ToolMenu_Other = new System.Windows.Forms.ToolStripDropDownButton();
 			this.ToolMenu_Other_ScreenShot = new System.Windows.Forms.ToolStripMenuItem();
 			this.ToolMenu_Other_LastScreenShot = new System.Windows.Forms.ToolStripMenuItem();
@@ -134,21 +135,30 @@
 			// ToolMenu
 			// 
 			this.ToolMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripLabel0,
             this.ToolMenu_ScreenShot,
-            this.toolStripSeparator1,
+            this.toolStripLabel1,
             this.ToolMenu_Zoom,
-            this.toolStripSeparator2,
+            this.toolStripLabel2,
             this.ToolMenu_Mute,
-            this.toolStripSeparator13,
+            this.toolStripLabel3,
             this.ToolMenu_Refresh,
             this.ToolMenu_NavigateToLogInPage,
-            this.toolStripSeparator8,
+            this.toolStripLabel4,
             this.ToolMenu_Other});
 			this.ToolMenu.Location = new System.Drawing.Point(0, 0);
 			this.ToolMenu.Name = "ToolMenu";
 			this.ToolMenu.Size = new System.Drawing.Size(284, 25);
 			this.ToolMenu.TabIndex = 1;
 			this.ToolMenu.Text = "toolStrip1";
+			this.ToolMenu.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+			this.ToolMenu.Renderer = new ToolStripOverride();
+			// 
+			// toolStripLabel0
+			// 
+			this.toolStripLabel0.AutoSize = false;
+			this.toolStripLabel0.Name = "toolStripLabel0";
+			this.toolStripLabel0.Size = new System.Drawing.Size(6, 6);
 			// 
 			// ToolMenu_ScreenShot
 			// 
@@ -158,10 +168,11 @@
 			this.ToolMenu_ScreenShot.Text = "スクリーンショット";
 			this.ToolMenu_ScreenShot.Click += new System.EventHandler(this.ToolMenu_ScreenShot_Click);
 			// 
-			// toolStripSeparator1
+			// toolStripLabel1
 			// 
-			this.toolStripSeparator1.Name = "toolStripSeparator1";
-			this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+			this.toolStripLabel1.AutoSize = false;
+			this.toolStripLabel1.Name = "toolStripLabel1";
+			this.toolStripLabel1.Size = new System.Drawing.Size(6, 6);
 			// 
 			// ToolMenu_Zoom
 			// 
@@ -172,10 +183,11 @@
 			this.ToolMenu_Zoom.Text = "ズーム";
 			this.ToolMenu_Zoom.DropDownOpening += new System.EventHandler(this.ToolMenu_Zoom_DropDownOpening);
 			// 
-			// toolStripSeparator2
+			// toolStripLabel2
 			// 
-			this.toolStripSeparator2.Name = "toolStripSeparator2";
-			this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
+			this.toolStripLabel2.AutoSize = false;
+			this.toolStripLabel2.Name = "toolStripLabel2";
+			this.toolStripLabel2.Size = new System.Drawing.Size(6, 6);
 			// 
 			// ToolMenu_Mute
 			// 
@@ -185,10 +197,11 @@
 			this.ToolMenu_Mute.Text = "ミュート";
 			this.ToolMenu_Mute.Click += new System.EventHandler(this.ToolMenu_Mute_Click);
 			// 
-			// toolStripSeparator13
+			// toolStripLabel3
 			// 
-			this.toolStripSeparator13.Name = "toolStripSeparator13";
-			this.toolStripSeparator13.Size = new System.Drawing.Size(6, 25);
+			this.toolStripLabel3.AutoSize = false;
+			this.toolStripLabel3.Name = "toolStripLabel3";
+			this.toolStripLabel3.Size = new System.Drawing.Size(6, 6);
 			// 
 			// ToolMenu_Refresh
 			// 
@@ -206,10 +219,11 @@
 			this.ToolMenu_NavigateToLogInPage.Text = "ログインページへ移動";
 			this.ToolMenu_NavigateToLogInPage.Click += new System.EventHandler(this.ToolMenu_NavigateToLogInPage_Click);
 			// 
-			// toolStripSeparator8
+			// toolStripLabel4
 			// 
-			this.toolStripSeparator8.Name = "toolStripSeparator8";
-			this.toolStripSeparator8.Size = new System.Drawing.Size(6, 25);
+			this.toolStripLabel4.AutoSize = false;
+			this.toolStripLabel4.Name = "toolStripLabel4";
+			this.toolStripLabel4.Size = new System.Drawing.Size(6, 6);
 			// 
 			// ToolMenu_Other
 			// 
@@ -565,10 +579,11 @@
         private System.Windows.Forms.Panel SizeAdjuster;
 		private ExtraWebBrowser Browser;
 		private System.Windows.Forms.ToolStrip ToolMenu;
+		private System.Windows.Forms.ToolStripLabel toolStripLabel0;
 		private System.Windows.Forms.ToolStripButton ToolMenu_ScreenShot;
-		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+		private System.Windows.Forms.ToolStripLabel toolStripLabel1;
 		private System.Windows.Forms.ToolStripDropDownButton ToolMenu_Zoom;
-		private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+		private System.Windows.Forms.ToolStripLabel toolStripLabel2;
 		private System.Windows.Forms.ToolStripButton ToolMenu_Refresh;
 		private System.Windows.Forms.ToolStripButton ToolMenu_NavigateToLogInPage;
 		private System.Windows.Forms.ToolStripDropDownButton ToolMenu_Other;
@@ -589,7 +604,7 @@
 		private System.Windows.Forms.ToolStripMenuItem ToolMenu_Other_Alignment_Right;
 		private System.Windows.Forms.ToolStripMenuItem ToolMenu_Other_Alignment_Invisible;
 		private System.Windows.Forms.ImageList Icons;
-		private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
+		private System.Windows.Forms.ToolStripLabel toolStripLabel4;
 		private System.Windows.Forms.ToolStripMenuItem ToolMenu_Other_Mute;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
 		private System.Windows.Forms.ToolStripMenuItem ToolMenu_Other_Zoom_Current;
@@ -609,7 +624,7 @@
 		private System.Windows.Forms.ToolStripMenuItem ToolMenu_Other_Zoom_300;
 		private System.Windows.Forms.ToolStripMenuItem ToolMenu_Other_Zoom_400;
 		private System.Windows.Forms.ToolStripButton ToolMenu_Mute;
-		private System.Windows.Forms.ToolStripSeparator toolStripSeparator13;
+		private System.Windows.Forms.ToolStripLabel toolStripLabel3;
 		private System.Windows.Forms.ContextMenuStrip ContextMenuTool;
 		private System.Windows.Forms.ToolStripMenuItem ContextMenuTool_ShowToolMenu;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator14;

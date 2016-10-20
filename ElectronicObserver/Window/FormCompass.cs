@@ -105,7 +105,7 @@ namespace ElectronicObserver.Window {
 				if ( shipID == -1 ) {
 					//なし
 					ShipName.Text = "-";
-					ShipName.ForeColor = Color.FromArgb( 0x00, 0x00, 0x00 );
+					ShipName.ForeColor = Utility.Configuration.Config.UI.ForeColor;
 					Equipments.Visible = false;
 					ToolTipInfo.SetToolTip( ShipName, null );
 					ToolTipInfo.SetToolTip( Equipments, null );
@@ -262,7 +262,7 @@ namespace ElectronicObserver.Window {
 					if ( ship == null ) {
 						// nothing
 						ShipNames[i].Text = "-";
-						ShipNames[i].ForeColor = Color.Black;
+						ShipNames[i].ForeColor = Utility.Configuration.Config.UI.ForeColor;
 						ShipNames[i].Tag = -1;
 						ShipNames[i].Cursor = Cursors.Default;
 						ToolTipInfo.SetToolTip( ShipNames[i], null );
@@ -281,12 +281,14 @@ namespace ElectronicObserver.Window {
 				}
 
 				Formation.Text = Constants.GetFormationShort( fleet.Formation );
+				Formation.ForeColor = Utility.Configuration.Config.UI.ForeColor;
 				//Formation.ImageIndex = (int)ResourceManager.IconContent.BattleFormationEnemyLineAhead + fleet.Formation - 1;
 				Formation.Visible = true;
 
 				{
 					int air = Calculator.GetAirSuperiority( fleet.FleetMember );
 					AirSuperiority.Text = air.ToString();
+					AirSuperiority.ForeColor = Utility.Configuration.Config.UI.ForeColor;
 					ToolTipInfo.SetToolTip( AirSuperiority, GetAirSuperiorityString( air ) );
 					AirSuperiority.Visible = true;
 				}
@@ -315,17 +317,17 @@ namespace ElectronicObserver.Window {
 				case 0:
 				case 1:		//normal
 				default:
-					return Color.FromArgb( 0x00, 0x00, 0x00 );
+					return Utility.Configuration.Config.UI.ForeColor;
 				case 2:		//elite
-					return Color.FromArgb( 0xFF, 0x00, 0x00 );
+					return Utility.Configuration.Config.UI.Color_Red;
 				case 3:		//flagship
-					return Color.FromArgb( 0xFF, 0x88, 0x00 );
+					return Utility.Configuration.Config.UI.Compass_ShipNameColor3;
 				case 4:		//latemodel / flagship kai
-					return Color.FromArgb( 0x00, 0x88, 0xFF );
+					return Utility.Configuration.Config.UI.Compass_ShipNameColor4;
 				case 5:		//latemodel elite
-					return Color.FromArgb( 0x88, 0x00, 0x00 );
+					return Utility.Configuration.Config.UI.Compass_ShipNameColor5;
 				case 6:		//latemodel flagship
-					return Color.FromArgb( 0x88, 0x44, 0x00 );
+					return Utility.Configuration.Config.UI.Compass_ShipNameColor6;
 			}
 		}
 
@@ -646,15 +648,15 @@ namespace ElectronicObserver.Window {
 					case 0:
 					case 1:
 					default:	//昼夜戦・その他
-						return SystemColors.ControlText;
+						return Utility.Configuration.Config.UI.ForeColor;
 					case 2:
 					case 3:		//夜戦・夜昼戦
-						return Color.Navy;
+						return Utility.Configuration.Config.UI.Compass_ColorTextEventKind3;
 					case 4:		//航空戦
 					case 6:		//長距離空襲戦
-						return Color.DarkGreen;
+						return Utility.Configuration.Config.UI.Compass_ColorTextEventKind6;
 					case 5:		// 敵連合
-						return Color.DarkRed;
+						return Utility.Configuration.Config.UI.Compass_ColorTextEventKind5;
 				}
 			};
 
@@ -799,7 +801,7 @@ namespace ElectronicObserver.Window {
 							break;
 
 						case 5:		//ボス戦闘
-							TextEventKind.ForeColor = Color.Red;
+							TextEventKind.ForeColor = Utility.Configuration.Config.UI.Color_Red;
 
 							if ( compass.EventKind >= 2 ) {
 								eventkind += "/" + Constants.GetMapEventKind( compass.EventKind );

@@ -32,7 +32,6 @@ namespace ElectronicObserver.Window {
 				ShipName = new ImageLabel();
 				ShipName.Text = "???";
 				ShipName.Anchor = AnchorStyles.Left;
-				ShipName.ForeColor = parent.ForeColor;
 				ShipName.TextAlign = ContentAlignment.MiddleLeft;
 				ShipName.Padding = new Padding( 0, 1, 0, 1 );
 				ShipName.Margin = new Padding( 2, 0, 2, 0 );
@@ -45,7 +44,6 @@ namespace ElectronicObserver.Window {
 				RepairTime = new Label();
 				RepairTime.Text = "";
 				RepairTime.Anchor = AnchorStyles.Left;
-				RepairTime.ForeColor = parent.ForeColor;
 				RepairTime.Tag = null;
 				RepairTime.TextAlign = ContentAlignment.MiddleLeft;
 				RepairTime.Padding = new Padding( 0, 1, 0, 1 );
@@ -142,6 +140,7 @@ namespace ElectronicObserver.Window {
 				ShipName.Font = parent.Font;
 				RepairTime.Font = parent.Font;
 				RepairTime.BackColor = Color.Transparent;
+				ShipName.ForeColor = RepairTime.ForeColor = Utility.Configuration.Config.UI.ForeColor;
 			}
 		}
 

@@ -150,5 +150,7 @@ namespace BrowserLib {
 		[DataMember]
 		public bool IsMute { get; set; }
 
+		[DataMember]
+		public int BackColor { get; set; }
 	}
 }
