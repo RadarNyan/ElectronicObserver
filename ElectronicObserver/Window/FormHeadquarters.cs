@@ -112,6 +112,8 @@ namespace ElectronicObserver.Window {
 			Font = FlowPanelMaster.Font = Utility.Configuration.Config.UI.JapFont;
 			HQLevel.MainFont = Utility.Configuration.Config.UI.JapFont;
 			HQLevel.SubFont = Utility.Configuration.Config.UI.JapFont2;
+			HQLevel.MainFontColor = Utility.Configuration.Config.UI.ForeColor;
+			HQLevel.SubFontColor  = Utility.Configuration.Config.UI.SubForeColor;
 
 			// 点滅しない設定にしたときに消灯状態で固定されるのを防ぐ
 			if ( !Utility.Configuration.Config.FormHeadquarters.BlinkAtMaximum ) {
@@ -316,7 +318,7 @@ namespace ElectronicObserver.Window {
 			//Resources
 			FlowPanelResource.SuspendLayout();
 			{
-				Color overcolor = Color.Moccasin;
+				Color overcolor = this.BackColor;
 
 				Fuel.Text = db.Material.Fuel.ToString();
 				Fuel.BackColor = db.Material.Fuel < db.Admiral.MaxResourceRegenerationAmount ? Color.Transparent : overcolor;

@@ -253,12 +253,127 @@ namespace ElectronicObserver.Utility {
 					//*/
 				};
 
+				#region - UI Colors -
+
+				public int ThemeID { get; set; }
+				public SerializableColor SolarizedBase03 { get; set; }
+				public SerializableColor SolarizedBase02 { get; set; }
+				public SerializableColor SolarizedBase01 { get; set; }
+				public SerializableColor SolarizedBase00 { get; set; }
+				public SerializableColor SolarizedBase0 { get; set; }
+				public SerializableColor SolarizedBase1 { get; set; }
+				public SerializableColor SolarizedBase2 { get; set; }
+				public SerializableColor SolarizedBase3 { get; set; }
+				public SerializableColor SolarizedYellow  { get; set; }
+				public SerializableColor SolarizedOrange  { get; set; }
+				public SerializableColor SolarizedRed     { get; set; }
+				public SerializableColor SolarizedMagenta { get; set; }
+				public SerializableColor SolarizedViolet  { get; set; }
+				public SerializableColor SolarizedBlue    { get; set; }
+				public SerializableColor SolarizedCyan    { get; set; }
+				public SerializableColor SolarizedGreen   { get; set; }
+				// 常用背景色、前景色
+				public Color BackColor { get {
+				switch (ThemeID) {
+					case 0:  return SolarizedBase3.ColorData;
+					case 1:  return SolarizedBase03.ColorData;
+					default: return SystemColors.Control;
+				}}}
+				public Color ForeColor { get {
+				switch (ThemeID) {
+					case 0:  return SolarizedBase01.ColorData;
+					case 1:  return SolarizedBase1.ColorData;
+					default: return SystemColors.ControlText;
+				}}}
+				public Color SubBackColor { get {
+				switch (ThemeID) {
+					case 0:  return SolarizedBase2.ColorData;
+					case 1:  return SolarizedBase02.ColorData;
+					default: return SystemColors.Control;
+				}}}
+				public Color SubForeColor { get {
+				switch (ThemeID) {
+					case 0:  return SolarizedBase00.ColorData;
+					case 1:  return SolarizedBase0.ColorData;
+					default: return SystemColors.ControlText;
+				}}}
+				// 视图 - 舰队：疲劳度
+				public Color Fleet_ColorConditionVeryTired { get {
+				switch (ThemeID) {
+					case 0:  return SolarizedRed.ColorData;
+					case 1:  return SolarizedRed.ColorData;
+					default: return Color.LightCoral;
+				}}}
+				public Color Fleet_ColorConditionTired { get {
+				switch (ThemeID) {
+					case 0:  return SolarizedOrange.ColorData;
+					case 1:  return SolarizedOrange.ColorData;
+					default: return Color.LightSalmon;
+				}}}
+				public Color Fleet_ColorConditionLittleTired { get {
+				switch (ThemeID) {
+					case 0:  return SolarizedYellow.ColorData;
+					case 1:  return SolarizedYellow.ColorData;
+					default: return Color.Moccasin;
+				}}}
+				public Color Fleet_ColorConditionNormal { get {
+				switch (ThemeID) {
+					case 0:  return SolarizedBase3.ColorData;
+					case 1:  return SolarizedBase03.ColorData;
+					default: return SystemColors.Control;
+				}}}
+				public Color Fleet_ColorConditionSparkle { get {
+				switch (ThemeID) {
+					case 0:  return SolarizedBlue.ColorData;
+					case 1:  return SolarizedBlue.ColorData;
+					default: return Color.LightGreen;
+				}}}
+				// 视图 - 舰队：舰载机搭载、装备改修
+				public Color Fleet_aircraftColorFull { get {
+				switch (ThemeID) {
+					case 0:  return SolarizedBase01.ColorData;
+					case 1:  return SolarizedBase1.ColorData;
+					default: return Color.FromArgb( 0x00, 0x00, 0x00 );
+				}}}
+				public Color Fleet_aircraftColorDamaged { get {
+				switch (ThemeID) {
+					case 0:  return SolarizedRed.ColorData;
+					case 1:  return SolarizedRed.ColorData;
+					default: return Color.FromArgb( 0xFF, 0x00, 0x00 );
+				}}}
+				public Color Fleet_equipmentLevelColor { get {
+				switch (ThemeID) {
+					case 0:  return SolarizedCyan.ColorData;
+					case 1:  return SolarizedCyan.ColorData;
+					default: return Color.FromArgb( 0x00, 0x66, 0x66 );
+				}}}
+
+				#endregion
+
 				public ConfigUI() {
 					MainFont = new Font( "Microsoft YaHei", 12, FontStyle.Regular, GraphicsUnit.Pixel );
 					SubFont  = new Font( "Microsoft YaHei", 10, FontStyle.Regular, GraphicsUnit.Pixel );
 					JapFont  = new Font( "Meiryo UI", 12, FontStyle.Regular, GraphicsUnit.Pixel );
 					JapFont2 = new Font( "Meiryo UI", 10, FontStyle.Regular, GraphicsUnit.Pixel );
 					BarColorMorphing = false;
+					ThemeID = 0; // 0 - SolarizedLight; 1 - SolarizedDark; other - VS2012Light
+					// Solarized
+					SolarizedBase03 = new SerializableColor(0xFF002B36);
+					SolarizedBase02 = new SerializableColor(0xFF073642);
+					SolarizedBase01 = new SerializableColor(0xFF586E75);
+					SolarizedBase00 = new SerializableColor(0xFF657B83);
+					SolarizedBase0 = new SerializableColor(0xFF839496);
+					SolarizedBase1 = new SerializableColor(0xFF93A1A1);
+					SolarizedBase2 = new SerializableColor(0xFFEEE8D5);
+					SolarizedBase3 = new SerializableColor(0xFFFDF6E3);
+					SolarizedYellow  = new SerializableColor(0xFFB58900);
+					SolarizedOrange  = new SerializableColor(0xFFCB4B16);
+					SolarizedRed     = new SerializableColor(0xFFDC322F);
+					SolarizedMagenta = new SerializableColor(0xFFD33682); 
+					SolarizedViolet  = new SerializableColor(0xFF6C71C4);
+					SolarizedBlue    = new SerializableColor(0xFF268BD2);
+					SolarizedCyan    = new SerializableColor(0xFF2AA198);
+					SolarizedGreen   = new SerializableColor(0xFF859900);
 				}
 			}
 			/// <summary>UI</summary>

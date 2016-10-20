@@ -342,10 +342,10 @@ namespace ElectronicObserver.Window.Control {
 
 			_aircraftColorDisabled = Color.FromArgb( 0xAA, 0xAA, 0xAA );
 			_aircraftColorLost = Color.FromArgb( 0xFF, 0x00, 0xFF );
-			_aircraftColorDamaged = Color.FromArgb( 0xFF, 0x00, 0x00 );
-			_aircraftColorFull = Color.FromArgb( 0x00, 0x00, 0x00 );
+			_aircraftColorDamaged = Utility.Configuration.Config.UI.Fleet_aircraftColorDamaged;
+			_aircraftColorFull = Utility.Configuration.Config.UI.Fleet_aircraftColorFull;
 
-			_equipmentLevelColor = Color.FromArgb( 0x00, 0x66, 0x66 );
+			_equipmentLevelColor = Utility.Configuration.Config.UI.Fleet_equipmentLevelColor;
 			_aircraftLevelColorLow = Color.FromArgb( 0x66, 0x99, 0xEE );
 			_aircraftLevelColorHigh = Color.FromArgb( 0xFF, 0xAA, 0x00 );
 
