@@ -24,11 +24,8 @@ namespace ElectronicObserver.Utility.Storage {
 			FontData = null;
 		}
 
-		public float Size { get; set; }
-
 		public SerializableFont( Font font ) {
 			FontData = font;
-			Size = font.Size;
 		}
 
 		public SerializableFont( string attribute ) {
