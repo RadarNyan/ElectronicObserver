@@ -2459,7 +2459,7 @@
 			this.label34.Name = "label34";
 			this.label34.Size = new System.Drawing.Size(116, 15);
 			this.label34.TabIndex = 4;
-			this.label34.Text = "自由アイテム表示欄：";
+			this.label34.Text = "自定义物品 :";
 			// 
 			// DialogConfiguration
 			// 

@@ -114,7 +114,7 @@
 			this.FleetEnemyEscort.Name = "FleetEnemyEscort";
 			this.FleetEnemyEscort.Size = new System.Drawing.Size(49, 15);
 			this.FleetEnemyEscort.TabIndex = 19;
-			this.FleetEnemyEscort.Text = "敵軍随伴";
+			this.FleetEnemyEscort.Text = "敌军随伴";
 			this.FleetEnemyEscort.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
 			// WinRank
@@ -151,7 +151,7 @@
 			this.FleetFriendEscort.Name = "FleetFriendEscort";
 			this.FleetFriendEscort.Size = new System.Drawing.Size(49, 15);
 			this.FleetFriendEscort.TabIndex = 1;
-			this.FleetFriendEscort.Text = "自軍随伴";
+			this.FleetFriendEscort.Text = "自军随伴";
 			this.FleetFriendEscort.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
 			// FleetEnemy

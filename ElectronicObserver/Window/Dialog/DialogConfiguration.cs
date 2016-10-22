@@ -794,7 +794,7 @@ namespace ElectronicObserver.Window.Dialog {
 
 		private void UpdatePlayTime() {
 			double elapsed = ( DateTime.Now - _shownTime ).TotalSeconds;
-			Log_PlayTime.Text = "プレイ時間: " + ElectronicObserver.Utility.Mathematics.DateTimeHelper.ToTimeElapsedString( TimeSpan.FromSeconds( _playTimeCache + elapsed ) );
+			Log_PlayTime.Text = "游戏用时 : " + ElectronicObserver.Utility.Mathematics.DateTimeHelper.ToTimeElapsedString( TimeSpan.FromSeconds( _playTimeCache + elapsed ) );
 		}
 
 		private void PlayTimeTimer_Tick( object sender, EventArgs e ) {

@@ -76,7 +76,7 @@ namespace ElectronicObserver.Observer.kcsapi.api_req_kaisou {
 							contents.AddLast( "运 +" + luck );
 
 						sb.AppendFormat( string.Join( ", ", contents ) + " )" );
-						Utility.Logger.Add(2, "", "成功对 ", ship.NameWithLevel, " 进行了近代化改修。 ( " + sb.ToString());
+						Utility.Logger.Add(2, "", "成功对 ", ship.NameWithLevel, "进行了近代化改修。 ( " + sb.ToString());
 					}
 				}
 				ship.LoadFromResponse( APIName, data.api_ship );

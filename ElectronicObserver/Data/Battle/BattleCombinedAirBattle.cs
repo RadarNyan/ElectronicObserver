@@ -49,13 +49,13 @@ namespace ElectronicObserver.Data.Battle {
 			string airbattle2 = AirBattle2.GetBattleDetail( index );
 
 			if ( baseair != null )
-				sb.AppendLine( "《基地航空隊攻撃》" ).Append( baseair );
+				sb.AppendLine( "《基地航空队攻击》" ).Append( baseair );
 			if ( airbattle1 != null )
-				sb.AppendLine( "《第一次航空戦》" ).Append( airbattle1 );
+				sb.AppendLine( "《第一次航空战》" ).Append( airbattle1 );
 			if ( support != null )
-				sb.AppendLine( "《支援攻撃》" ).Append( support );
+				sb.AppendLine( "《支援攻击》" ).Append( support );
 			if ( airbattle2 != null )
-				sb.AppendLine( "《第二次航空戦》" ).Append( airbattle2 );
+				sb.AppendLine( "《第二次航空战》" ).Append( airbattle2 );
 
 			return sb.ToString();
 		}

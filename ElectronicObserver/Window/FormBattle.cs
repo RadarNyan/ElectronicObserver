@@ -774,7 +774,7 @@ namespace ElectronicObserver.Window {
 
 
 					ToolTipInfo.SetToolTip( HPBars[i], string.Format
-						( "{0} Lv. {1}\r\nHP: ({2} → {3})/{4} ({5}) [{6}]\r\n与ダメージ: {7}\r\n\r\n{8}",
+						( "{0} Lv. {1}\r\nHP: ({2} → {3})/{4} ({5}) [{6}]\r\n造成伤害 : {7}\r\n\r\n{8}",
 						ship.MasterShip.NameWithClass,
 						ship.Level,
 						Math.Max( HPBars[i].PrevValue, 0 ),
@@ -823,7 +823,7 @@ namespace ElectronicObserver.Window {
 						bool isEscaped = bd.Initial.FriendFleetEscort.EscapedShipList.Contains( ship.MasterID );
 
 						ToolTipInfo.SetToolTip( HPBars[i + 12], string.Format(
-							"{0} Lv. {1}\r\nHP: ({2} → {3})/{4} ({5}) [{6}]\r\n与ダメージ: {7}\r\n\r\n{8}",
+							"{0} Lv. {1}\r\nHP: ({2} → {3})/{4} ({5}) [{6}]\r\n造成伤害 : {7}\r\n\r\n{8}",
 							ship.MasterShip.NameWithClass,
 							ship.Level,
 							Math.Max( HPBars[i + 12].PrevValue, 0 ),

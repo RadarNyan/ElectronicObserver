@@ -33,7 +33,7 @@ namespace ElectronicObserver.Data.Battle {
 			string night = NightBattle.GetBattleDetail( index );
 
 			if ( night != null )
-				sb.AppendLine( "《夜戦》" ).Append( night );
+				sb.AppendLine( "《夜战》" ).Append( night );
 
 			return sb.ToString();
 		}

@@ -316,7 +316,7 @@ namespace ElectronicObserver.Data.Battle {
 						DroppedEquipmentCount += defaultSlot.Count( id => id != -1 );
 
 					if ( showLog )
-						Utility.Logger.Add(2, string.Format("{0}「{1}」", ship.ShipTypeName, ship.NameWithClass), " 加入了队伍。");
+						Utility.Logger.Add(2, string.Format("{0}「{1}」", ship.ShipTypeName, ship.NameWithClass), "加入了队伍。");
 				}
 
 				if ( itemID != -1 ) {

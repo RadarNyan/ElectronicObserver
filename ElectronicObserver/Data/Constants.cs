@@ -253,7 +253,7 @@ namespace ElectronicObserver.Data {
 				case 4:
 					return "航空战";
 				case 5:
-					return "敵連合";
+					return "敌联合";
 				case 6:
 					return "空袭战";
 				default:
