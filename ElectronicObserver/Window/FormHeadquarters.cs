@@ -187,7 +187,7 @@ namespace ElectronicObserver.Window {
 			yield return "弹药";
 			yield return "钢材";
 			yield return "铝土";
-			yield return "任意のアイテム";
+			yield return "自定义物品";
 		}
 
 
@@ -396,7 +396,7 @@ namespace ElectronicObserver.Window {
 			var db = KCDatabase.Instance;
 			var item = db.UseItems[Utility.Configuration.Config.FormHeadquarters.DisplayUseItemID];
 			var itemMaster = db.MasterUseItems[Utility.Configuration.Config.FormHeadquarters.DisplayUseItemID];
-			string tail = "\r\n(設定から変更可能)";
+			string tail = "\r\n( 可在设置中修改 )";
 
 			if ( item != null ) {
 				DisplayUseItem.Text = item.Count.ToString();

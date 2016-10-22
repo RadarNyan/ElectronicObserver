@@ -38,9 +38,9 @@ namespace ElectronicObserver.Data.Battle {
 			string airbattle = AirBattle.GetBattleDetail( index );
 			
 			if ( baseair != null )
-				sb.AppendLine( "《基地航空隊攻撃》" ).Append( baseair );
+				sb.AppendLine( "《基地航空队攻击》" ).Append( baseair );
 			if ( airbattle != null )
-				sb.AppendLine( "《航空戦》" ).Append( airbattle );
+				sb.AppendLine( "《航空战》" ).Append( airbattle );
 			
 			return sb.ToString();
 		}

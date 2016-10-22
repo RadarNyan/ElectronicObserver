@@ -110,7 +110,7 @@ namespace ElectronicObserver.Data {
 						int id = int.Parse( data["api_quest_id"] );
 						var quest = Quests[id];
 
-						Utility.Logger.Add( 2, string.Format( "任務『{0}』を達成しました。", quest.Name ) );
+						Utility.Logger.Add(2, "", "已完成任务", string.Format("『{0}』。", quest.Name));
 
 						Quests.Remove( id );
 						Count--;
