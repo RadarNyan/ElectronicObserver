@@ -110,16 +110,7 @@ namespace ElectronicObserver.Window {
 
 				} else {
 					//repairing
-					string shipNameText = db.Ships[dock.ShipID].Name;
-					Font shipNameFont = Utility.Configuration.Config.UI.JapFont;
-					if (TextRenderer.MeasureText(shipNameText, shipNameFont).Width > 60){
-						shipNameText = "..." + shipNameText.Substring(0, shipNameText.Length-1);
-						while(TextRenderer.MeasureText(shipNameText, shipNameFont).Width > 60){
-							shipNameText = shipNameText.Substring(0, shipNameText.Length-1);
-						}
-						shipNameText = shipNameText.Substring(3) + "...";
-					}
-					ShipName.Text = shipNameText;
+					ShipName.Text = db.Ships[dock.ShipID].Name;
 					ToolTipInfo.SetToolTip( ShipName, db.Ships[dock.ShipID].NameWithLevel );
 					RepairTime.Text = DateTimeHelper.ToTimeRemainString( dock.CompletionTime );
 					RepairTime.Tag = dock.CompletionTime;
