@@ -106,10 +106,15 @@ namespace ElectronicObserver.Data {
 			base.LoadFromRequest( apiname, data );
 
 			switch ( apiname ) {
-				case "api_req_quest/clearitemget":
-					Quests.Remove( int.Parse( data["api_quest_id"] ) );
-					Count--;
-					break;
+				case "api_req_quest/clearitemget": {
+						int id = int.Parse( data["api_quest_id"] );
+						var quest = Quests[id];
+
+						Utility.Logger.Add(2, "", "已完成任务", string.Format("『{0}』。", quest.Name));
+
+						Quests.Remove( id );
+						Count--;
+					} break;
 				case "api_req_quest/stop":
 					Quests[int.Parse( data["api_quest_id"] )].State = 1;
 					break;

@@ -164,17 +164,17 @@ namespace ElectronicObserver.Data {
 			if ( isEscaped )
 				return "退避";
 			else if ( hprate <= 0.0 )
-				return isPractice ? "離脱" : ( !isLandBase ? "撃沈" : "破壊" );
+				return isPractice ? "脱离" : ( !isLandBase ? "击沉" : "破坏" );
 			else if ( hprate <= 0.25 )
-				return !isLandBase ? "大破" : "損壊";
+				return !isLandBase ? "大破" : "损坏";
 			else if ( hprate <= 0.5 )
-				return !isLandBase ? "中破" : "損害";
+				return !isLandBase ? "中破" : "损害";
 			else if ( hprate <= 0.75 )
 				return !isLandBase ? "小破" : "混乱";
 			else if ( hprate < 1.0 )
 				return "健在";
 			else
-				return "無傷";
+				return "无伤";
 
 		}
 
@@ -252,6 +252,8 @@ namespace ElectronicObserver.Data {
 					return "夜昼战";
 				case 4:
 					return "航空战";
+				case 5:
+					return "敌联合";
 				case 6:
 					return "空袭战";
 				default:

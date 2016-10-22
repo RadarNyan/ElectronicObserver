@@ -213,6 +213,10 @@
 			this.LayoutFileBrowser = new System.Windows.Forms.OpenFileDialog();
 			this.APIListBrowser = new System.Windows.Forms.OpenFileDialog();
 			this.FormFleet_ShowConditionIcon = new System.Windows.Forms.CheckBox();
+			this.Log_PlayTime = new System.Windows.Forms.Label();
+			this.PlayTimeTimer = new System.Windows.Forms.Timer(this.components);
+			this.FormHeadquarters_DisplayUseItemID = new System.Windows.Forms.ComboBox();
+			this.label34 = new System.Windows.Forms.Label();
 			this.tabControl1.SuspendLayout();
 			this.tabPage1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.Connection_UpstreamProxyPort)).BeginInit();
@@ -880,7 +884,7 @@
 			this.Debug_SealingPanel.Controls.Add(this.Debug_APIListPathSearch);
 			this.Debug_SealingPanel.Location = new System.Drawing.Point(0, 56);
 			this.Debug_SealingPanel.Name = "Debug_SealingPanel";
-			this.Debug_SealingPanel.Size = new System.Drawing.Size(576, 257);
+			this.Debug_SealingPanel.Size = new System.Drawing.Size(576, 253);
 			this.Debug_SealingPanel.TabIndex = 1;
 			// 
 			// Debug_APIListPath
@@ -1239,7 +1243,7 @@
             "判定式 (33)"});
 			this.FormFleet_SearchingAbilityMethod.Location = new System.Drawing.Point(115, 31);
 			this.FormFleet_SearchingAbilityMethod.Name = "FormFleet_SearchingAbilityMethod";
-			this.FormFleet_SearchingAbilityMethod.Size = new System.Drawing.Size(127, 31);
+			this.FormFleet_SearchingAbilityMethod.Size = new System.Drawing.Size(127, 23);
 			this.FormFleet_SearchingAbilityMethod.TabIndex = 2;
 			// 
 			// label13
@@ -1316,13 +1320,15 @@
 			// 
 			// tabPage16
 			// 
+			this.tabPage16.Controls.Add(this.label34);
+			this.tabPage16.Controls.Add(this.FormHeadquarters_DisplayUseItemID);
 			this.tabPage16.Controls.Add(this.label26);
 			this.tabPage16.Controls.Add(this.FormHeadquarters_Visibility);
 			this.tabPage16.Controls.Add(this.FormHeadquarters_BlinkAtMaximum);
-			this.tabPage16.Location = new System.Drawing.Point(4, 22);
+			this.tabPage16.Location = new System.Drawing.Point(4, 24);
 			this.tabPage16.Name = "tabPage16";
 			this.tabPage16.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage16.Size = new System.Drawing.Size(562, 260);
+			this.tabPage16.Size = new System.Drawing.Size(562, 258);
 			this.tabPage16.TabIndex = 6;
 			this.tabPage16.Text = "司令部";
 			this.tabPage16.UseVisualStyleBackColor = true;
@@ -1345,7 +1351,7 @@
 			this.FormHeadquarters_Visibility.IntegralHeight = false;
 			this.FormHeadquarters_Visibility.Location = new System.Drawing.Point(6, 46);
 			this.FormHeadquarters_Visibility.Name = "FormHeadquarters_Visibility";
-			this.FormHeadquarters_Visibility.Size = new System.Drawing.Size(150, 208);
+			this.FormHeadquarters_Visibility.Size = new System.Drawing.Size(150, 206);
 			this.FormHeadquarters_Visibility.TabIndex = 1;
 			// 
 			// FormHeadquarters_BlinkAtMaximum
@@ -2110,7 +2116,7 @@
 			// 
 			this.label10.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.label10.AutoSize = true;
-			this.label10.Location = new System.Drawing.Point(3, 298);
+			this.label10.Location = new System.Drawing.Point(3, 294);
 			this.label10.Name = "label10";
 			this.label10.Size = new System.Drawing.Size(238, 15);
 			this.label10.TabIndex = 5;
@@ -2423,12 +2429,45 @@
 			this.ToolTipInfo.SetToolTip(this.FormFleet_ShowConditionIcon, "是否显示疲劳度图标。\r\n不显示的情况，将用背景色来区分。");
 			this.FormFleet_ShowConditionIcon.UseVisualStyleBackColor = true;
 			// 
+			// Log_PlayTime
+			// 
+			this.Log_PlayTime.AutoSize = true;
+			this.Log_PlayTime.Location = new System.Drawing.Point(12, 330);
+			this.Log_PlayTime.Name = "Log_PlayTime";
+			this.Log_PlayTime.Size = new System.Drawing.Size(58, 15);
+			this.Log_PlayTime.TabIndex = 3;
+			this.Log_PlayTime.Text = "プレイ時間";
+			// 
+			// PlayTimeTimer
+			// 
+			this.PlayTimeTimer.Enabled = true;
+			this.PlayTimeTimer.Interval = 1000;
+			this.PlayTimeTimer.Tick += new System.EventHandler(this.PlayTimeTimer_Tick);
+			// 
+			// FormHeadquarters_DisplayUseItemID
+			// 
+			this.FormHeadquarters_DisplayUseItemID.FormattingEnabled = true;
+			this.FormHeadquarters_DisplayUseItemID.Location = new System.Drawing.Point(322, 6);
+			this.FormHeadquarters_DisplayUseItemID.Name = "FormHeadquarters_DisplayUseItemID";
+			this.FormHeadquarters_DisplayUseItemID.Size = new System.Drawing.Size(121, 23);
+			this.FormHeadquarters_DisplayUseItemID.TabIndex = 3;
+			// 
+			// label34
+			// 
+			this.label34.AutoSize = true;
+			this.label34.Location = new System.Drawing.Point(200, 7);
+			this.label34.Name = "label34";
+			this.label34.Size = new System.Drawing.Size(116, 15);
+			this.label34.TabIndex = 4;
+			this.label34.Text = "自定义物品 :";
+			// 
 			// DialogConfiguration
 			// 
 			this.AcceptButton = this.ButtonOK;
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
 			this.CancelButton = this.ButtonCancel;
 			this.ClientSize = new System.Drawing.Size(584, 361);
+			this.Controls.Add(this.Log_PlayTime);
 			this.Controls.Add(this.ButtonCancel);
 			this.Controls.Add(this.ButtonOK);
 			this.Controls.Add(this.tabControl1);
@@ -2508,6 +2547,7 @@
 			((System.ComponentModel.ISupportInitialize)(this.BGMPlayer_VolumeAll)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.BGMPlayer_ControlGrid)).EndInit();
 			this.ResumeLayout(false);
+			this.PerformLayout();
 
 		}
 
@@ -2701,5 +2741,9 @@
 		private System.Windows.Forms.TabPage tabPage20;
 		private System.Windows.Forms.CheckBox FormBattle_IsScrollable;
 		private System.Windows.Forms.CheckBox FormFleet_ShowConditionIcon;
+		private System.Windows.Forms.Label Log_PlayTime;
+		private System.Windows.Forms.Timer PlayTimeTimer;
+		private System.Windows.Forms.Label label34;
+		private System.Windows.Forms.ComboBox FormHeadquarters_DisplayUseItemID;
 	}
 }

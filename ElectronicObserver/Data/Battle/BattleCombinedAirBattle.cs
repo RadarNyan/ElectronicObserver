@@ -40,6 +40,25 @@ namespace ElectronicObserver.Data.Battle {
 			get { return BattleTypeFlag.Day | BattleTypeFlag.Combined; }
 		}
 
+		public override string GetBattleDetail( int index ) {
+			var sb = new StringBuilder();
+
+			string baseair = BaseAirAttack.GetBattleDetail( index );
+			string airbattle1 = AirBattle.GetBattleDetail( index );
+			string support = Support.GetBattleDetail( index );
+			string airbattle2 = AirBattle2.GetBattleDetail( index );
+
+			if ( baseair != null )
+				sb.AppendLine( "《基地航空队攻击》" ).Append( baseair );
+			if ( airbattle1 != null )
+				sb.AppendLine( "《第一次航空战》" ).Append( airbattle1 );
+			if ( support != null )
+				sb.AppendLine( "《支援攻击》" ).Append( support );
+			if ( airbattle2 != null )
+				sb.AppendLine( "《第二次航空战》" ).Append( airbattle2 );
+
+			return sb.ToString();
+		}
 	}
 
 }

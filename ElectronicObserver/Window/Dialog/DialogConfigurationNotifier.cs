@@ -290,7 +290,7 @@ namespace ElectronicObserver.Window.Dialog {
 		private void ButtonTest_Click( object sender, EventArgs e ) {
 
 			if ( !SetConfiguration() ) return;
-			_notifier.DialogData.Message = "テスト 通知です。";
+			_notifier.DialogData.Message = "测试通知。";
 			_notifier.Notify();
 
 		}

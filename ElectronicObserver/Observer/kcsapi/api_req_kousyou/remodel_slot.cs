@@ -9,6 +9,17 @@ namespace ElectronicObserver.Observer.kcsapi.api_req_kousyou {
 
 	public class remodel_slot : APIBase {
 
+		private int _equipmentID;
+
+		public override bool IsRequestSupported { get { return true; } }
+
+		public override void OnRequestReceived( Dictionary<string, string> data ) {
+
+			_equipmentID = int.Parse( data["api_slot_id"] );
+
+			base.OnRequestReceived( data );
+		}
+
 		public override void OnResponseReceived( dynamic data ) {
 
 			KCDatabase db = KCDatabase.Instance;

@@ -691,7 +691,7 @@ namespace ElectronicObserver.Resource.Record {
 				if ( e == null ) {
 					e = new ShipParameterElement();
 					e.ShipID = shipID;
-					Utility.Logger.Add( 2, ship.NameWithClass , "的数据已加入记录。" );
+					Utility.Logger.Add( 2, ship.NameWithClass , " 的数据已加入记录。" );
 				}
 
 
@@ -747,7 +747,7 @@ namespace ElectronicObserver.Resource.Record {
 				if ( param == null ) {
 					param = new ShipParameterElement();
 					param.ShipID = efleet[i];
-					Utility.Logger.Add(2, KCDatabase.Instance.MasterShips[param.ShipID].NameWithClass, "的数据已加入记录。");
+					Utility.Logger.Add(2, KCDatabase.Instance.MasterShips[param.ShipID].NameWithClass, " 的数据已加入记录。");
 				}
 
 				int[] baseparam = (int[])data.api_eParam[i - 1];

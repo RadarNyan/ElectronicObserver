@@ -81,7 +81,7 @@
 			this.ItemName.Name = "ItemName";
 			this.ItemName.Size = new System.Drawing.Size(121, 23);
 			this.ItemName.TabIndex = 3;
-			this.ToolTipInfo.SetToolTip(this.ItemName, "検索するアイテム名を指定します。\r\n(ドロップ) はアイテムのドロップが発生した場合のみ抽出します。 ");
+			this.ToolTipInfo.SetToolTip(this.ItemName, "设置要搜索的物品名。\r\n设为 ( 掉落 ) 会选出所有有物品掉落的记录。 ");
 			// 
 			// ShipName
 			// 
@@ -91,7 +91,7 @@
 			this.ShipName.Name = "ShipName";
 			this.ShipName.Size = new System.Drawing.Size(121, 23);
 			this.ShipName.TabIndex = 1;
-			this.ToolTipInfo.SetToolTip(this.ShipName, "検索する艦船名を指定します。\r\n(ドロップ) は艦娘のドロップが発生した場合のみ抽出します。 ");
+			this.ToolTipInfo.SetToolTip(this.ShipName, "设置要搜索的舰名。\r\n设为 ( 掉落 ) 会选出所有有舰娘掉落的记录。");
 			// 
 			// EquipmentName
 			// 
@@ -113,7 +113,7 @@
 			this.DateBegin.Name = "DateBegin";
 			this.DateBegin.Size = new System.Drawing.Size(140, 23);
 			this.DateBegin.TabIndex = 7;
-			this.ToolTipInfo.SetToolTip(this.DateBegin, "検索する日時の始点を指定します。");
+			this.ToolTipInfo.SetToolTip(this.DateBegin, "设置开始搜索的日期。");
 			// 
 			// label2
 			// 
@@ -122,7 +122,7 @@
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(31, 15);
 			this.label2.TabIndex = 6;
-			this.label2.Text = "開始";
+			this.label2.Text = "从";
 			// 
 			// label3
 			// 
@@ -131,7 +131,7 @@
 			this.label3.Name = "label3";
 			this.label3.Size = new System.Drawing.Size(31, 15);
 			this.label3.TabIndex = 8;
-			this.label3.Text = "終了";
+			this.label3.Text = "到";
 			// 
 			// DateEnd
 			// 
@@ -141,7 +141,7 @@
 			this.DateEnd.Name = "DateEnd";
 			this.DateEnd.Size = new System.Drawing.Size(140, 23);
 			this.DateEnd.TabIndex = 9;
-			this.ToolTipInfo.SetToolTip(this.DateEnd, "検索する日時の終点を指定します。");
+			this.ToolTipInfo.SetToolTip(this.DateEnd, "设置终止搜索的日期。");
 			// 
 			// RankS
 			// 
@@ -153,7 +153,7 @@
 			this.RankS.Size = new System.Drawing.Size(34, 19);
 			this.RankS.TabIndex = 10;
 			this.RankS.Text = "S";
-			this.ToolTipInfo.SetToolTip(this.RankS, "S勝利");
+			this.ToolTipInfo.SetToolTip(this.RankS, "S 胜利");
 			this.RankS.UseVisualStyleBackColor = true;
 			// 
 			// RankA
@@ -166,7 +166,7 @@
 			this.RankA.Size = new System.Drawing.Size(34, 19);
 			this.RankA.TabIndex = 11;
 			this.RankA.Text = "A";
-			this.ToolTipInfo.SetToolTip(this.RankA, "A勝利");
+			this.ToolTipInfo.SetToolTip(this.RankA, "A 胜利");
 			this.RankA.UseVisualStyleBackColor = true;
 			// 
 			// RankB
@@ -179,7 +179,7 @@
 			this.RankB.Size = new System.Drawing.Size(34, 19);
 			this.RankB.TabIndex = 12;
 			this.RankB.Text = "B";
-			this.ToolTipInfo.SetToolTip(this.RankB, "B勝利");
+			this.ToolTipInfo.SetToolTip(this.RankB, "B 胜利");
 			this.RankB.UseVisualStyleBackColor = true;
 			// 
 			// RankX
@@ -192,7 +192,7 @@
 			this.RankX.Size = new System.Drawing.Size(34, 19);
 			this.RankX.TabIndex = 13;
 			this.RankX.Text = "X";
-			this.ToolTipInfo.SetToolTip(this.RankX, "敗北");
+			this.ToolTipInfo.SetToolTip(this.RankX, "战败");
 			this.RankX.UseVisualStyleBackColor = true;
 			// 
 			// label1
@@ -200,19 +200,19 @@
 			this.label1.AutoSize = true;
 			this.label1.Location = new System.Drawing.Point(385, 13);
 			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(57, 15);
+			this.label1.Size = new System.Drawing.Size(67, 15);
 			this.label1.TabIndex = 14;
-			this.label1.Text = "海域・セル";
+			this.label1.Text = "海域/航路";
 			// 
 			// MapDifficulty
 			// 
 			this.MapDifficulty.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.MapDifficulty.FormattingEnabled = true;
-			this.MapDifficulty.Location = new System.Drawing.Point(444, 10);
+			this.MapDifficulty.Location = new System.Drawing.Point(454, 10);
 			this.MapDifficulty.Name = "MapDifficulty";
 			this.MapDifficulty.Size = new System.Drawing.Size(69, 23);
 			this.MapDifficulty.TabIndex = 15;
-			this.ToolTipInfo.SetToolTip(this.MapDifficulty, "難易度を指定します。\r\n* はすべての難易度を抽出します。");
+			this.ToolTipInfo.SetToolTip(this.MapDifficulty, "选择难度。\r\n设为 * 会选出所有难度的记录。");
 			// 
 			// ButtonRun
 			// 
@@ -221,7 +221,7 @@
 			this.ButtonRun.Name = "ButtonRun";
 			this.ButtonRun.Size = new System.Drawing.Size(69, 23);
 			this.ButtonRun.TabIndex = 21;
-			this.ButtonRun.Text = "検索";
+			this.ButtonRun.Text = "搜索";
 			this.ButtonRun.UseVisualStyleBackColor = true;
 			this.ButtonRun.Click += new System.EventHandler(this.ButtonRun_Click);
 			// 
@@ -243,7 +243,7 @@
             this.RecordView_RankB});
 			dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
 			dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
-			dataGridViewCellStyle5.Font = new System.Drawing.Font("Meiryo UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+			dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft YaHei", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
 			dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
 			dataGridViewCellStyle5.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(204)))));
 			dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.ControlText;
@@ -261,13 +261,14 @@
 			this.RecordView.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.RecordView_CellFormatting);
 			this.RecordView.SortCompare += new System.Windows.Forms.DataGridViewSortCompareEventHandler(this.RecordView_SortCompare);
 			this.RecordView.Sorted += new System.EventHandler(this.RecordView_Sorted);
+
 			// 
 			// IsBossOnly
 			// 
 			this.IsBossOnly.AutoSize = true;
 			this.IsBossOnly.Checked = true;
 			this.IsBossOnly.CheckState = System.Windows.Forms.CheckState.Indeterminate;
-			this.IsBossOnly.Location = new System.Drawing.Point(519, 12);
+			this.IsBossOnly.Location = new System.Drawing.Point(529, 12);
 			this.IsBossOnly.Name = "IsBossOnly";
 			this.IsBossOnly.Size = new System.Drawing.Size(53, 19);
 			this.IsBossOnly.TabIndex = 16;
@@ -283,7 +284,7 @@
 			this.MapAreaID.Name = "MapAreaID";
 			this.MapAreaID.Size = new System.Drawing.Size(50, 23);
 			this.MapAreaID.TabIndex = 17;
-			this.ToolTipInfo.SetToolTip(this.MapAreaID, "海域IDを指定します。\r\n* はすべての海域を抽出します。\r\n");
+			this.ToolTipInfo.SetToolTip(this.MapAreaID, "设置海域 ID。\r\n设为 * 会选出所有海域的记录。\r\n");
 			this.MapAreaID.SelectedIndexChanged += new System.EventHandler(this.MapAreaID_SelectedIndexChanged);
 			// 
 			// MapInfoID
@@ -294,7 +295,7 @@
 			this.MapInfoID.Name = "MapInfoID";
 			this.MapInfoID.Size = new System.Drawing.Size(50, 23);
 			this.MapInfoID.TabIndex = 18;
-			this.ToolTipInfo.SetToolTip(this.MapInfoID, "海域IDを指定します。\r\n* はすべての海域を抽出します。\r\n");
+			this.ToolTipInfo.SetToolTip(this.MapInfoID, "设置海域 ID。\r\n设为 * 会选出所有海域的记录。\r\n");
 			this.MapInfoID.SelectedIndexChanged += new System.EventHandler(this.MapAreaID_SelectedIndexChanged);
 			// 
 			// MapCellID
@@ -305,7 +306,7 @@
 			this.MapCellID.Name = "MapCellID";
 			this.MapCellID.Size = new System.Drawing.Size(50, 23);
 			this.MapCellID.TabIndex = 19;
-			this.ToolTipInfo.SetToolTip(this.MapCellID, "セルIDを指定します。\r\n* はすべてのセルを抽出します。\r\n");
+			this.ToolTipInfo.SetToolTip(this.MapCellID, "设置航路 ID。\r\n设为 * 会选出所有航路的记录。\r\n");
 			// 
 			// splitContainer1
 			// 
@@ -356,8 +357,8 @@
 			this.MergeRows.Name = "MergeRows";
 			this.MergeRows.Size = new System.Drawing.Size(62, 19);
 			this.MergeRows.TabIndex = 20;
-			this.MergeRows.Text = "まとめる";
-			this.ToolTipInfo.SetToolTip(this.MergeRows, "チェックすると同じドロップ項目をまとめて表示します。\r\n");
+			this.MergeRows.Text = "统计";
+			this.ToolTipInfo.SetToolTip(this.MergeRows, "选中的话会显示计算掉落比例的统计数据。\r\n");
 			this.MergeRows.UseVisualStyleBackColor = true;
 			// 
 			// LabelShipName
@@ -368,7 +369,7 @@
 			this.LabelShipName.Name = "LabelShipName";
 			this.LabelShipName.Size = new System.Drawing.Size(57, 16);
 			this.LabelShipName.TabIndex = 0;
-			this.LabelShipName.Text = "艦船";
+			this.LabelShipName.Text = "舰船";
 			this.LabelShipName.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			// 
 			// LabelItemName
@@ -379,7 +380,7 @@
 			this.LabelItemName.Name = "LabelItemName";
 			this.LabelItemName.Size = new System.Drawing.Size(57, 16);
 			this.LabelItemName.TabIndex = 2;
-			this.LabelItemName.Text = "アイテム";
+			this.LabelItemName.Text = "物品";
 			this.LabelItemName.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			// 
 			// LabelEquipmentName
@@ -436,13 +437,13 @@
 			// RecordView_Name
 			// 
 			this.RecordView_Name.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-			this.RecordView_Name.HeaderText = "名前";
+			this.RecordView_Name.HeaderText = "舰名";
 			this.RecordView_Name.Name = "RecordView_Name";
 			this.RecordView_Name.ReadOnly = true;
 			// 
 			// RecordView_Date
 			// 
-			this.RecordView_Date.HeaderText = "日付";
+			this.RecordView_Date.HeaderText = "日期";
 			this.RecordView_Date.Name = "RecordView_Date";
 			this.RecordView_Date.ReadOnly = true;
 			this.RecordView_Date.Width = 150;
@@ -456,7 +457,7 @@
 			// 
 			// RecordView_Rank
 			// 
-			this.RecordView_Rank.HeaderText = "ランク";
+			this.RecordView_Rank.HeaderText = "结果";
 			this.RecordView_Rank.Name = "RecordView_Rank";
 			this.RecordView_Rank.ReadOnly = true;
 			this.RecordView_Rank.Width = 40;
@@ -465,7 +466,7 @@
 			// 
 			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
 			this.RecordView_RankS.DefaultCellStyle = dataGridViewCellStyle2;
-			this.RecordView_RankS.HeaderText = "S勝利";
+			this.RecordView_RankS.HeaderText = "S 胜利";
 			this.RecordView_RankS.Name = "RecordView_RankS";
 			this.RecordView_RankS.ReadOnly = true;
 			// 
@@ -473,7 +474,7 @@
 			// 
 			dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
 			this.RecordView_RankA.DefaultCellStyle = dataGridViewCellStyle3;
-			this.RecordView_RankA.HeaderText = "A勝利";
+			this.RecordView_RankA.HeaderText = "A 胜利";
 			this.RecordView_RankA.Name = "RecordView_RankA";
 			this.RecordView_RankA.ReadOnly = true;
 			// 
@@ -481,7 +482,7 @@
 			// 
 			dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
 			this.RecordView_RankB.DefaultCellStyle = dataGridViewCellStyle4;
-			this.RecordView_RankB.HeaderText = "B勝利";
+			this.RecordView_RankB.HeaderText = "B 胜利";
 			this.RecordView_RankB.Name = "RecordView_RankB";
 			this.RecordView_RankB.ReadOnly = true;
 			// 
@@ -491,10 +492,10 @@
 			this.ClientSize = new System.Drawing.Size(624, 441);
 			this.Controls.Add(this.splitContainer1);
 			this.Controls.Add(this.statusStrip1);
-			this.Font = new System.Drawing.Font("Meiryo UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+			this.Font = new System.Drawing.Font("Microsoft YaHei", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
 			this.Name = "DialogDropRecordViewer";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-			this.Text = "ドロップ記録";
+			this.Text = "掉落记录";
 			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.DialogDropRecordViewer_FormClosed);
 			this.Load += new System.EventHandler(this.DialogDropRecordViewer_Load);
 			((System.ComponentModel.ISupportInitialize)(this.RecordView)).EndInit();

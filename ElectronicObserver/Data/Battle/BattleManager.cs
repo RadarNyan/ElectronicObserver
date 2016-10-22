@@ -34,17 +34,18 @@ namespace ElectronicObserver.Data.Battle {
 
 		[Flags]
 		public enum BattleModes {
-			Undefined,						//未定義
-			Normal,							//昼夜戦(通常戦闘)
-			NightOnly,						//夜戦
-			NightDay,						//夜昼戦
-			AirBattle,						//航空戦
-			AirRaid,						//長距離空襲戦
-			Practice,						//演習
-			BattlePhaseMask = 0xFFFF,		//戦闘形態マスク
-			CombinedTaskForce = 0x10000,	//機動部隊
-			CombinedSurface = 0x20000,		//水上部隊
-			CombinedMask = 0x7FFF0000,		//連合艦隊仕様
+			Undefined,						// 未定義
+			Normal,							// 昼夜戦(通常戦闘)
+			NightOnly,						// 夜戦
+			NightDay,						// 夜昼戦
+			AirBattle,						// 航空戦
+			AirRaid,						// 長距離空襲戦
+			Practice,						// 演習
+			BattlePhaseMask = 0xFF,			// 戦闘形態マスク
+			CombinedTaskForce = 0x100,		// 機動部隊
+			CombinedSurface = 0x200,		// 水上部隊
+			CombinedMask = 0xFF00,			// 連合艦隊仕様
+			EnemyCombinedFleet = 0x10000,	// 敵連合艦隊
 		}
 
 		/// <summary>
@@ -56,7 +57,7 @@ namespace ElectronicObserver.Data.Battle {
 		/// <summary>
 		/// 昼戦から開始する戦闘かどうか
 		/// </summary>
-		public bool StartsFromDayBattle { get {	return !StartsFromNightBattle; } }
+		public bool StartsFromDayBattle { get { return !StartsFromNightBattle; } }
 
 		/// <summary>
 		/// 夜戦から開始する戦闘かどうか
@@ -71,20 +72,17 @@ namespace ElectronicObserver.Data.Battle {
 		/// <summary>
 		/// 連合艦隊戦かどうか
 		/// </summary>
-		public bool IsCombinedBattle {
-			get {
-				return ( BattleMode & BattleModes.CombinedMask ) != 0;
-			}
-		}
+		public bool IsCombinedBattle { get { return ( BattleMode & BattleModes.CombinedMask ) != 0; } }
 
 		/// <summary>
 		/// 演習かどうか
 		/// </summary>
-		public bool IsPractice {
-			get {
-				return ( BattleMode & BattleModes.BattlePhaseMask ) == BattleModes.Practice;
-			}
-		}
+		public bool IsPractice { get { return ( BattleMode & BattleModes.BattlePhaseMask ) == BattleModes.Practice; } }
+
+		/// <summary>
+		/// 敵が連合艦隊かどうか
+		/// </summary>
+		public bool IsEnemyCombined { get { return ( BattleMode & BattleModes.EnemyCombinedFleet ) != 0; } }
 
 
 		/// <summary>
@@ -200,6 +198,18 @@ namespace ElectronicObserver.Data.Battle {
 					BattleDay.LoadFromResponse( apiname, data );
 					break;
 
+				case "api_req_combined_battle/ec_battle":
+					BattleMode = BattleModes.Normal | BattleModes.EnemyCombinedFleet;
+					BattleDay = new BattleEnemyCombinedDay();
+					BattleDay.LoadFromResponse( apiname, data );
+					break;
+
+				case "api_req_combined_battle/ec_midnight_battle":
+					BattleNight = new BattleEnemyCombinedNight();
+					//BattleNight.TakeOverParameters( BattleDay );		//undone: これで正しいかは未検証
+					BattleNight.LoadFromResponse( apiname, data );
+					break;
+
 				case "api_req_member/get_practice_enemyinfo":
 					EnemyAdmiralName = data.api_nickname;
 					EnemyAdmiralRank = Constants.GetAdmiralRank( (int)data.api_rank );
@@ -258,13 +268,30 @@ namespace ElectronicObserver.Data.Battle {
 
 			// ロギング
 			if ( IsPractice ) {
-				Utility.Logger.Add( 2,
-					string.Format( "演習 で「{0}」{1}の「{2}」と交戦しました。( ランク: {3}, 提督Exp+{4}, 艦娘Exp+{5} )",
-						EnemyAdmiralName, EnemyAdmiralRank, Result.EnemyFleetName, Result.Rank, Result.AdmiralExp, Result.BaseExp ) );
+				Utility.Logger.Add(2, "", "同",
+					string.Format("「{0}」",
+						EnemyAdmiralName),
+					string.Format("{0}的",
+						EnemyAdmiralRank),
+					string.Format("「{0}」",
+						Result.EnemyFleetName),
+					string.Format("进行了演习。( 结果 : {0}, 提督经验 +{1}, 舰娘经验 +{2} )",
+						Result.Rank,
+						Result.AdmiralExp,
+						Result.BaseExp)
+					);
 			} else {
-				Utility.Logger.Add( 2,
-					string.Format( "{0}-{1}-{2} で「{3}」と交戦しました。( ランク: {4}, 提督Exp+{5}, 艦娘Exp+{6} )",
-						Compass.MapAreaID, Compass.MapInfoID, Compass.Destination, Result.EnemyFleetName, Result.Rank, Result.AdmiralExp, Result.BaseExp ) );
+				Utility.Logger.Add(2, "", string.Format("在 {0}-{1}-{2} 海域与",
+						Compass.MapAreaID,
+						Compass.MapInfoID,
+						Compass.Destination),
+					string.Format("「{0}」",
+						Result.EnemyFleetName),
+					string.Format("发生了战斗。( 结果 : {0}, 提督经验 +{1}, 舰娘经验 +{2} )",
+						Result.Rank,
+						Result.AdmiralExp,
+						Result.BaseExp)
+				);
 			}
 
 
@@ -289,7 +316,7 @@ namespace ElectronicObserver.Data.Battle {
 						DroppedEquipmentCount += defaultSlot.Count( id => id != -1 );
 
 					if ( showLog )
-						Utility.Logger.Add( 2, string.Format( "{0}「{1}」が戦列に加わりました。", ship.ShipTypeName, ship.NameWithClass ) );
+						Utility.Logger.Add(2, string.Format("{0}「{1}」", ship.ShipTypeName, ship.NameWithClass), " 加入了队伍。");
 				}
 
 				if ( itemID != -1 ) {
@@ -301,7 +328,11 @@ namespace ElectronicObserver.Data.Battle {
 					if ( showLog ) {
 						var item = KCDatabase.Instance.UseItems[itemID];
 						var itemmaster = KCDatabase.Instance.MasterUseItems[itemID];
-						Utility.Logger.Add( 2, string.Format( "アイテム「{0}」を入手しました。( 合計: {1}個 )", itemmaster != null ? itemmaster.Name : ( "不明なアイテム - ID:" + itemID ), ( item != null ? item.Count : 0 ) + DroppedItemCount[itemID] ) );
+						Utility.Logger.Add(2, "", "获得了", string.Format("「{0}」。",
+							itemmaster != null ? itemmaster.Name : ("Unknown Item - ID:" + itemID)),
+							string.Format(" ( 合计 : {0} 个 )",
+								(item != null ? item.Count : 0) + DroppedItemCount[itemID])
+						);
 					}
 				}
 
@@ -311,7 +342,7 @@ namespace ElectronicObserver.Data.Battle {
 					DroppedEquipmentCount++;
 
 					if ( showLog ) {
-						Utility.Logger.Add( 2, string.Format( "{0}「{1}」を入手しました。", eq.CategoryTypeInstance.Name, eq.Name ) );
+						Utility.Logger.Add(2, "", "获得了 ", string.Format("{0}「{1}」。", eq.CategoryTypeInstance.Name, eq.Name ));
 					}
 				}
 
@@ -352,6 +383,172 @@ namespace ElectronicObserver.Data.Battle {
 			}
 			//*/
 
+		}
+
+
+
+		/// <summary>
+		/// 勝利ランクを予測します。
+		/// </summary>
+		/// <param name="friendrate">味方の損害率を出力します。</param>
+		/// <param name="enemyrate">敵の損害率を出力します。</param>
+		public int PredictWinRank( out double friendrate, out double enemyrate ) {
+
+			int friendbefore = 0;
+			int friendafter = 0;
+			int friendcount = 0;
+			int friendsunk = 0;
+
+			int enemybefore = 0;
+			int enemyafter = 0;
+			int enemycount = 0;
+			int enemysunk = 0;
+
+			int[] initialHPs;
+			BattleData activeBattle;
+
+			if ( StartsFromDayBattle ) {
+				initialHPs = BattleDay.Initial.InitialHPs;
+				activeBattle = (BattleData)BattleNight ?? BattleDay;
+
+			} else {
+				initialHPs = BattleNight.Initial.InitialHPs;
+				activeBattle = (BattleData)BattleDay ?? BattleNight;
+			}
+
+
+			var friend = activeBattle.Initial.FriendFleet.MembersWithoutEscaped;
+			var friendescort = activeBattle.Initial.FriendFleetEscort == null ? null : activeBattle.Initial.FriendFleetEscort.MembersWithoutEscaped;
+
+			var resultHPs = activeBattle.ResultHPs;
+
+
+			for ( int i = 0; i < 6; i++ ) {
+				if ( friend[i] != null ) {
+					friendbefore += Math.Max( initialHPs[i], 0 );
+					friendafter += Math.Max( resultHPs[i], 0 );
+					friendcount++;
+					if ( resultHPs[i] <= 0 )
+						friendsunk++;
+				}
+				if ( friendescort != null && friendescort[i] != null ) {
+					friendbefore += Math.Max( initialHPs[i + 12], 0 );
+					friendafter += Math.Max( resultHPs[i + 12], 0 );
+					friendcount++;
+					if ( resultHPs[i + 12] <= 0 )
+						friendsunk++;
+				}
+
+				if ( initialHPs[i + 6] >= 0 ) {
+					enemybefore += Math.Max( initialHPs[i + 6], 0 );
+					enemyafter += Math.Max( resultHPs[i + 6], 0 );
+					enemycount++;
+					if ( resultHPs[i + 6] <= 0 )
+						enemysunk++;
+				}
+				if ( initialHPs[i + 18] >= 0 ) {
+					enemybefore += Math.Max( initialHPs[i + 18], 0 );
+					enemyafter += Math.Max( resultHPs[i + 18], 0 );
+					enemycount++;
+					if ( resultHPs[i + 18] <= 0 )
+						enemysunk++;
+				}
+			}
+
+			friendrate = (double)( friendbefore - friendafter ) / friendbefore;
+			enemyrate = (double)( enemybefore - enemyafter ) / enemybefore;
+
+
+			if ( ( BattleMode & BattleModes.BattlePhaseMask ) == BattleModes.AirRaid )
+				return GetWinRankAirRaid( friendcount, friendsunk, friendrate );
+			else
+				return GetWinRank( friendcount, enemycount, friendsunk, enemysunk, friendrate, enemyrate, resultHPs[6] <= 0 );
+
+
+		}
+
+
+		/// <summary>
+		/// 勝利ランクを計算します。連合艦隊は情報が少ないので正確ではありません。
+		/// </summary>
+		/// <param name="countFriend">戦闘に参加した自軍艦数。</param>
+		/// <param name="countEnemy">戦闘に参加した敵軍艦数。</param>
+		/// <param name="sunkFriend">撃沈された自軍艦数。</param>
+		/// <param name="sunkEnemy">撃沈した敵軍艦数。</param>
+		/// <param name="friendrate">自軍損害率。</param>
+		/// <param name="enemyrate">敵軍損害率。</param>
+		/// <param name="defeatFlagship">敵旗艦を撃沈しているか。</param>
+		/// <remarks>thanks: nekopanda</remarks>
+		private static int GetWinRank(
+			int countFriend, int countEnemy,
+			int sunkFriend, int sunkEnemy,
+			double friendrate, double enemyrate,
+			bool defeatFlagship ) {
+
+			int rifriend = (int)( friendrate * 100 );
+			int rienemy = (int)( enemyrate * 100 );
+
+
+			// 轟沈艦なし
+			if ( sunkFriend == 0 ) {
+
+				// 敵艦全撃沈
+				if ( sunkEnemy == countEnemy ) {
+					if ( friendrate <= 0 )
+						return 7;	// SS
+					else
+						return 6;	// S
+
+				} else if ( sunkEnemy > 0 && sunkEnemy >= countEnemy * 2 / 3 )		// 敵の 2/3 以上を撃沈
+					return 5;	// A
+			}
+
+			// 敵旗艦撃沈 かつ 轟沈艦が敵より少ない、もしくはゲージが 2.5 倍以上
+			if ( ( defeatFlagship && sunkFriend < sunkEnemy ) || rienemy > ( 2.5 * rifriend ) )
+				return 4;	// B
+
+			// ゲージが 0.9 倍以上
+			if ( rienemy > ( 0.9 * rifriend ) )
+				return 3;	// C
+
+			// 敵旗艦生存, 轟沈艦あり, 残った艦が１隻のみ
+			if ( !defeatFlagship && ( sunkFriend > 0 ) && ( ( countFriend - sunkFriend ) == 1 ) ) {
+				return 1;	// E
+			}
+
+			// 残りはD
+			return 2;	// D
+		}
+
+
+		/// <summary>
+		/// 空襲戦における勝利ランクを計算します。
+		/// </summary>
+		/// <param name="countFriend">戦闘に参加した自軍艦数。</param>
+		/// <param name="sunkFriend">撃沈された自軍艦数。</param>
+		/// <param name="friendrate">自軍損害率。</param>
+		private static int GetWinRankAirRaid( int countFriend, int sunkFriend, double friendrate ) {
+			int rank;
+
+			if ( friendrate <= 0.0 )
+				rank = 7;	//SS
+			else if ( friendrate < 0.1 )
+				rank = 5;	//A
+			else if ( friendrate < 0.2 )
+				rank = 4;	//B
+			else if ( friendrate < 0.5 )
+				rank = 3;	//C
+			else if ( friendrate < 0.8 )
+				rank = 2;	//D
+			else
+				rank = 1;	//E
+
+			/*/// 撃沈艦があってもランクは変わらない(撃沈ありA勝利が確認されている)
+			if ( sunkFriend > 0 )
+				rank--;
+			//*/
+
+			return rank;
 		}
 
 	}

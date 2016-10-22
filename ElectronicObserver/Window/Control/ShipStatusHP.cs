@@ -258,12 +258,12 @@ namespace ElectronicObserver.Window.Control {
 			_maximumDigit = 999;
 
 			_mainFont = new Font( "Meiryo UI", 12, FontStyle.Regular, GraphicsUnit.Pixel );
-			_mainFontColor = FromArgb( 0xFF000000 );
+			_mainFontColor = Utility.Configuration.Config.UI.ForeColor;
 
 			_subFont = new Font( "Meiryo UI", 10, FontStyle.Regular, GraphicsUnit.Pixel );
-			_subFontColor = FromArgb( 0xFF888888 );
+			_subFontColor = Utility.Configuration.Config.UI.SubForeColor;
 
-			_repairFontColor = FromArgb( 0xFF000088 );
+			_repairFontColor = Utility.Configuration.Config.UI.Battle_ColorHPTextRepair;
 			_text = "HP:";
 
 			_HPBar.UsePrevValue = true;

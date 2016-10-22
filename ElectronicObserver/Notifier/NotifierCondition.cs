@@ -28,7 +28,7 @@ namespace ElectronicObserver.Notifier {
 
 
 		private void Initialize() {
-			DialogData.Title = "疲労回復";
+			DialogData.Title = "疲劳恢复";
 			_processedFlags = new Dictionary<int, bool>();
 
 			for ( int i = 1; i <= 4; i++ )

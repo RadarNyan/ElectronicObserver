@@ -49,6 +49,40 @@ namespace ElectronicObserver.Data.Battle {
 			get { return BattleTypeFlag.Day; }
 		}
 
+		public override string GetBattleDetail( int index ) {
+			var sb = new StringBuilder();
+
+			string baseair = BaseAirAttack.GetBattleDetail( index );
+			string airbattle = AirBattle.GetBattleDetail( index );
+			string support = Support.GetBattleDetail( index );
+			string asw = OpeningASW.GetBattleDetail( index );
+			string openingTorpedo = OpeningTorpedo.GetBattleDetail( index );
+			string shelling1 = Shelling1.GetBattleDetail( index );
+			string shelling2 = Shelling2.GetBattleDetail( index );
+			string shelling3 = Shelling3.GetBattleDetail( index );
+			string torpedo = Torpedo.GetBattleDetail( index );
+			
+			if ( baseair != null )
+				sb.AppendLine( "《基地航空队攻击》" ).Append( baseair );
+			if ( airbattle != null )
+				sb.AppendLine( "《航空战》" ).Append( airbattle );
+			if ( support != null )
+				sb.AppendLine( "《支援攻击》" ).Append( support );
+			if ( asw != null )
+				sb.AppendLine( "《开幕对潜》" ).Append( asw );
+			if ( openingTorpedo != null )
+				sb.AppendLine( "《开幕雷击》" ).Append( openingTorpedo );
+			if ( shelling1 != null )
+				sb.AppendLine( "《第一次炮击战》" ).Append( shelling1 );
+			if ( shelling2 != null )
+				sb.AppendLine( "《第二次炮击战》" ).Append( shelling2 );
+			if ( shelling3 != null )
+				sb.AppendLine( "《第三次炮击战》" ).Append( shelling3 );
+			if ( torpedo != null )
+				sb.AppendLine( "《雷击战》" ).Append( torpedo );
+			
+			return sb.ToString();
+		}
 	}
 
 }

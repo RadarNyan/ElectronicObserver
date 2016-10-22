@@ -61,19 +61,19 @@ namespace ElectronicObserver.Observer.kcsapi.api_req_kaisou {
 
 						int firepower = updated_ship.FirepowerBase - ship.FirepowerBase;
 						if ( firepower > 0 )
-							contents.AddLast( "火力 + " + firepower );
+							contents.AddLast( "火力 +" + firepower );
 						int torpedo = updated_ship.TorpedoBase - ship.TorpedoBase;
 						if ( torpedo > 0 )
-							contents.AddLast( "雷装 + " + torpedo );
+							contents.AddLast( "雷装 +" + torpedo );
 						int aa = updated_ship.AABase - ship.AABase;
 						if ( aa > 0 )
-							contents.AddLast( "对空 + " + aa );
+							contents.AddLast( "对空 +" + aa );
 						int armor = updated_ship.ArmorBase - ship.ArmorBase;
 						if ( armor > 0 )
-							contents.AddLast( "装甲 + " + armor );
+							contents.AddLast( "装甲 +" + armor );
 						int luck = updated_ship.LuckBase - ship.LuckBase;
 						if ( luck > 0 )
-							contents.AddLast( "运 + " + luck );
+							contents.AddLast( "运 +" + luck );
 
 						sb.AppendFormat( string.Join( ", ", contents ) + " )" );
 						Utility.Logger.Add(2, "", "成功对 ", ship.NameWithLevel, "进行了近代化改修。 ( " + sb.ToString());

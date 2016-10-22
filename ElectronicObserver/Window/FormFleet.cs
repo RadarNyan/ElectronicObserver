@@ -416,7 +416,7 @@ namespace ElectronicObserver.Window {
 							tip.AppendFormat( "距离 Lv99 : {0} exp.\r\n", Math.Max( ExpTable.GetExpToLevelShip( ship.ExpTotal, 99 ), 0 ) );
 
 						} else {
-							tip.AppendFormat( "距离 Lv{0}: {1} exp.\r\n", ExpTable.ShipMaximumLevel, Math.Max( ExpTable.GetExpToLevelShip( ship.ExpTotal, ExpTable.ShipMaximumLevel ), 0 ) );
+							tip.AppendFormat( "距离 Lv{0} : {1} exp.\r\n", ExpTable.ShipMaximumLevel, Math.Max( ExpTable.GetExpToLevelShip( ship.ExpTotal, ExpTable.ShipMaximumLevel ), 0 ) );
 
 						}
 
@@ -435,9 +435,9 @@ namespace ElectronicObserver.Window {
 						}
 					}
 					if ( isEscaped ) {
-						HP.BackColor = Color.Silver;
+						HP.BackColor = Utility.Configuration.Config.UI.SubBackColor;
 					} else {
-						HP.BackColor = SystemColors.Control;
+						HP.BackColor = Utility.Configuration.Config.UI.BackColor;
 					}
 					{
 						StringBuilder sb = new StringBuilder();
@@ -592,18 +592,18 @@ namespace ElectronicObserver.Window {
 					Condition.ImageIndex = -1;
 
 					if ( cond < 20 )
-						Condition.BackColor = Color.LightCoral;
+						Condition.BackColor = Utility.Configuration.Config.UI.Fleet_ColorConditionVeryTired;
 					else if ( cond < 30 )
-						Condition.BackColor = Color.LightSalmon;
+						Condition.BackColor = Utility.Configuration.Config.UI.Fleet_ColorConditionTired;
 					else if ( cond < 40 )
-						Condition.BackColor = Color.Moccasin;
+						Condition.BackColor = Utility.Configuration.Config.UI.Fleet_ColorConditionLittleTired;
 					else if ( cond < 50 )
-						Condition.BackColor = SystemColors.Control;
+						Condition.BackColor = Utility.Configuration.Config.UI.BackColor;
 					else
-						Condition.BackColor = Color.LightGreen;
+						Condition.BackColor = Utility.Configuration.Config.UI.Fleet_ColorConditionSparkle;
 
 				} else {
-					Condition.BackColor = SystemColors.Control;
+					Condition.BackColor = Utility.Configuration.Config.UI.BackColor;
 
 					if ( cond < 20 )
 						Condition.ImageIndex = (int)ResourceManager.IconContent.ConditionVeryTired;
@@ -656,8 +656,8 @@ namespace ElectronicObserver.Window {
 
 			ConfigurationChanged();
 
-			MainFontColor = Color.FromArgb( 0x00, 0x00, 0x00 );
-			SubFontColor = Color.FromArgb( 0x88, 0x88, 0x88 );
+			MainFontColor = Utility.Configuration.Config.UI.ForeColor;
+			SubFontColor = Utility.Configuration.Config.UI.SubForeColor;
 
 
 			//ui init
@@ -874,7 +874,7 @@ namespace ElectronicObserver.Window {
 			sb.Append( @"{""version"":4," );
 
 			foreach ( var fleet in db.Fleet.Fleets.Values ) {
-				if ( fleet == null ) continue;
+				if ( fleet == null || fleet.MembersInstance.All( m => m == null ) ) continue;
 
 				sb.AppendFormat( @"""f{0}"":{{", fleet.FleetID );
 

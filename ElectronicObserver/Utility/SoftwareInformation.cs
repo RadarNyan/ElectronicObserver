@@ -35,7 +35,7 @@ namespace ElectronicObserver.Utility {
 		/// </summary>
 		public static string VersionJapanese {
 			get {
-				return SoftwareNameJapanese + "二四型改三甲"; // "甲" stands for 1st MOD version, usually being the L11N one.
+				return SoftwareNameJapanese + "二四型改四甲"; // "甲" stands for 1st MOD version, usually being the L11N one.
 			}
 		}
 
@@ -44,7 +44,7 @@ namespace ElectronicObserver.Utility {
 		/// </summary>
 		public static string VersionEnglish {
 			get {
-				return "2.4.3";
+				return "2.4.4";
 			}
 		}
 
@@ -54,7 +54,7 @@ namespace ElectronicObserver.Utility {
 		/// </summary>
 		public static DateTime UpdateTime {
 			get {
-				return DateTimeHelper.CSVStringToTime( "2016/10/14 23:37:55" );
+				return DateTimeHelper.CSVStringToTime( "2016/10/22 20:42:58" );
 			}
 		}
 

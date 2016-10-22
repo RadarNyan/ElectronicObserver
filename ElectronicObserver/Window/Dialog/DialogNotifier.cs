@@ -35,7 +35,7 @@ namespace ElectronicObserver.Window.Dialog {
 			DialogData = data.Clone();
 
 			Text = DialogData.Title;
-			Font = Utility.Configuration.Config.UI.MainFont;
+			Font = Utility.Configuration.Config.UI.JapFont;
 			Icon = Resource.ResourceManager.Instance.AppIcon;
 			Padding = new Padding( 4 );
 
