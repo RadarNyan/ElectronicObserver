@@ -31,7 +31,6 @@ namespace ElectronicObserver.Window {
 				ShipName = new Label();
 				ShipName.Text = "???";
 				ShipName.Anchor = AnchorStyles.Left;
-				ShipName.ForeColor = parent.ForeColor;
 				ShipName.TextAlign = ContentAlignment.MiddleLeft;
 				ShipName.Padding = new Padding( 0, 1, 0, 1 );
 				ShipName.Margin = new Padding( 2, 0, 2, 0 );
@@ -42,7 +41,6 @@ namespace ElectronicObserver.Window {
 				CompletionTime = new Label();
 				CompletionTime.Text = "";
 				CompletionTime.Anchor = AnchorStyles.Left;
-				CompletionTime.ForeColor = parent.ForeColor;
 				CompletionTime.Tag = null;
 				CompletionTime.TextAlign = ContentAlignment.MiddleLeft;
 				CompletionTime.Padding = new Padding( 0, 1, 0, 1 );
@@ -159,6 +157,7 @@ namespace ElectronicObserver.Window {
 				ShipName.Font = parent.Font;
 				CompletionTime.Font = parent.Font;
 				CompletionTime.BackColor = Color.Transparent;
+				ShipName.ForeColor = CompletionTime.ForeColor = Utility.Configuration.Config.UI.ForeColor;
 			}
 
 		}

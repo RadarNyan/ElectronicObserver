@@ -59,6 +59,8 @@ namespace ElectronicObserver.Window {
 
 			Font = TextInformation.Font = Utility.Configuration.Config.UI.JapFont;
 			TextInformation.LanguageOption = RichTextBoxLanguageOptions.UIFonts;
+			TextInformation.ForeColor = Utility.Configuration.Config.UI.ForeColor;
+			TextInformation.BackColor = Utility.Configuration.Config.UI.BackColor;
 		}
 
 

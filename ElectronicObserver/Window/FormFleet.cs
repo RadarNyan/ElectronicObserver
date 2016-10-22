@@ -598,7 +598,7 @@ namespace ElectronicObserver.Window {
 					else if ( cond < 40 )
 						Condition.BackColor = Utility.Configuration.Config.UI.Fleet_ColorConditionLittleTired;
 					else if ( cond < 50 )
-						Condition.BackColor = Utility.Configuration.Config.UI.Fleet_ColorConditionNormal;
+						Condition.BackColor = Utility.Configuration.Config.UI.BackColor;
 					else
 						Condition.BackColor = Utility.Configuration.Config.UI.Fleet_ColorConditionSparkle;
 

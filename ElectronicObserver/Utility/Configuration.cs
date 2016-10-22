@@ -295,7 +295,13 @@ namespace ElectronicObserver.Utility {
 				switch (ThemeID) {
 					case 0:  return SolarizedBase00.ColorData;
 					case 1:  return SolarizedBase0.ColorData;
-					default: return SystemColors.ControlText;
+					default: return Color.FromArgb(0x88, 0x88, 0x88);
+				}}}
+				public Color Color_Red { get {
+				switch (ThemeID) {
+					case 0:  return SolarizedRed.ColorData;
+					case 1:  return SolarizedRed.ColorData;
+					default: return Color.Red;
 				}}}
 				// 视图 - 舰队：疲劳度
 				public Color Fleet_ColorConditionVeryTired { get {
@@ -316,36 +322,86 @@ namespace ElectronicObserver.Utility {
 					case 1:  return SolarizedYellow.ColorData;
 					default: return Color.Moccasin;
 				}}}
-				public Color Fleet_ColorConditionNormal { get {
-				switch (ThemeID) {
-					case 0:  return SolarizedBase3.ColorData;
-					case 1:  return SolarizedBase03.ColorData;
-					default: return SystemColors.Control;
-				}}}
 				public Color Fleet_ColorConditionSparkle { get {
 				switch (ThemeID) {
 					case 0:  return SolarizedBlue.ColorData;
 					case 1:  return SolarizedBlue.ColorData;
 					default: return Color.LightGreen;
 				}}}
-				// 视图 - 舰队：舰载机搭载、装备改修
-				public Color Fleet_aircraftColorFull { get {
-				switch (ThemeID) {
-					case 0:  return SolarizedBase01.ColorData;
-					case 1:  return SolarizedBase1.ColorData;
-					default: return Color.FromArgb( 0x00, 0x00, 0x00 );
-				}}}
-				public Color Fleet_aircraftColorDamaged { get {
-				switch (ThemeID) {
-					case 0:  return SolarizedRed.ColorData;
-					case 1:  return SolarizedRed.ColorData;
-					default: return Color.FromArgb( 0xFF, 0x00, 0x00 );
-				}}}
+				// 视图 - 舰队：装备改修
 				public Color Fleet_equipmentLevelColor { get {
 				switch (ThemeID) {
 					case 0:  return SolarizedCyan.ColorData;
 					case 1:  return SolarizedCyan.ColorData;
-					default: return Color.FromArgb( 0x00, 0x66, 0x66 );
+					default: return Color.FromArgb(0x00, 0x66, 0x66);
+				}}}
+				// 视图 - 罗盘：敌舰名、事件名
+				public Color Compass_ShipNameColor3 { get { // Flagship
+				switch (ThemeID) {
+					case 0:  return SolarizedOrange.ColorData;
+					case 1:  return SolarizedOrange.ColorData;
+					default: return Color.FromArgb(0xFF, 0x88, 0x00);
+				}}}
+				public Color Compass_ShipNameColor4 { get { // Latemodel, Flagship kai
+				switch (ThemeID) {
+					case 0:  return SolarizedBlue.ColorData;
+					case 1:  return SolarizedBlue.ColorData;
+					default: return Color.FromArgb(0x00, 0x88, 0xFF);
+				}}}
+				public Color Compass_ShipNameColor5 { get { // Latemodel Elite
+				switch (ThemeID) {
+					case 0:  return SolarizedMagenta.ColorData;
+					case 1:  return SolarizedMagenta.ColorData;
+					default: return Color.FromArgb(0x88, 0x00, 0x00);
+				}}}
+				public Color Compass_ShipNameColor6 { get { // Latemodel Flagship
+				switch (ThemeID) {
+					case 0:  return SolarizedYellow.ColorData;
+					case 1:  return SolarizedYellow.ColorData;
+					default: return Color.FromArgb(0x88, 0x44, 0x00);
+				}}}
+				public Color Compass_ColorTextEventKind3 { get { // Night Battle
+				switch (ThemeID) {
+					case 0:  return SolarizedViolet.ColorData;
+					case 1:  return SolarizedViolet.ColorData;
+					default: return Color.Navy;
+				}}}
+				public Color Compass_ColorTextEventKind6 { get { // Air Battle
+				switch (ThemeID) {
+					case 0:  return SolarizedGreen.ColorData;
+					case 1:  return SolarizedGreen.ColorData;
+					default: return Color.DarkGreen;
+				}}}
+				public Color Compass_ColoroverlayBrush { get { // 当舰载机数量叠加到飞机图标上时背景填充的色块
+				switch (ThemeID) {
+					case 0:  return Color.FromArgb(0xC0, 0xFD, 0xF6, 0xE3);
+					case 1:  return Color.FromArgb(0xC0, 0x00, 0x2B, 0x36);
+					default: return Color.FromArgb(0xC0, 0xF0, 0xF0, 0xF0);
+				}}}
+				// 视图 - 战斗：血条背景色、血条文字色
+				public Color Battle_ColorHPBarsBossDamaged { get {
+				switch (ThemeID) {
+					case 0:  return SolarizedOrange.ColorData;
+					case 1:  return SolarizedOrange.ColorData;
+					default: return Color.MistyRose;
+				}}}
+				public Color Battle_ColorHPBarsMVP { get {
+				switch (ThemeID) {
+					case 0:  return SolarizedYellow.ColorData;
+					case 1:  return SolarizedYellow.ColorData;
+					default: return Color.Moccasin;
+				}}}
+				public Color Battle_ColorHPBarsEscaped { get {
+				switch (ThemeID) {
+					case 0:  return SolarizedBase1.ColorData;
+					case 1:  return SolarizedBase01.ColorData;
+					default: return Color.Silver;
+				}}}
+				public Color Battle_ColorHPTextRepair { get {
+				switch (ThemeID) {
+					case 0:  return SolarizedBase1.ColorData;
+					case 1:  return SolarizedBase01.ColorData;
+					default: return Color.FromArgb(0x00, 0x00, 0x88);
 				}}}
 
 				#endregion
