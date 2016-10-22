@@ -37,6 +37,8 @@ namespace ElectronicObserver.Window {
 		/// </summary>
 		private int _volumeUpdateState = 0;
 
+		private DateTime _prevPlayTimeRecorded = DateTime.MinValue;
+
 		#endregion
 
 
@@ -77,6 +79,21 @@ namespace ElectronicObserver.Window {
 
 			Utility.Configuration.Instance.Load( this );
 
+			switch (Utility.Configuration.Config.UI.ThemeID) {
+			case 0:
+				this.MainDockPanel.Theme = new WeifenLuo.WinFormsUI.Docking.SolarizedLightTheme();
+				break;
+			case 1:
+				this.MainDockPanel.Theme = new WeifenLuo.WinFormsUI.Docking.SolarizedDarkTheme();
+				break;
+			default:
+				this.MainDockPanel.Theme = new WeifenLuo.WinFormsUI.Docking.VS2012LightTheme();
+				break;
+			}
+			this.BackColor = this.StripMenu.BackColor = Utility.Configuration.Config.UI.BackColor;
+			this.ForeColor = this.StripMenu.ForeColor = Utility.Configuration.Config.UI.ForeColor;
+			this.StripStatus.BackColor = Utility.Configuration.Config.UI.SubBackColor;
+			this.StripStatus.ForeColor = Utility.Configuration.Config.UI.SubForeColor;
 
 			Utility.Logger.Instance.LogAdded += new Utility.LogAddedEventHandler( ( Utility.Logger.LogData data ) => {
 				if ( InvokeRequired ) {
@@ -185,6 +202,8 @@ namespace ElectronicObserver.Window {
 				}
 			}
 
+			APIObserver.Instance.ResponseReceived += ( a, b ) => UpdatePlayTime();
+
 
 			// 🎃
 			if ( DateTime.Now.Month == 10 && DateTime.Now.Day == 31 ) {
@@ -235,10 +254,14 @@ namespace ElectronicObserver.Window {
 			MainDockPanel.Skin.AutoHideStripSkin.TextFont = Font;
 			MainDockPanel.Skin.DockPaneStripSkin.TextFont = Font;
 
-			int ChsGap = (int) Math.Floor((c.UI.MainFont.Size / 2)) * (-1);
-			int JapGap = (int) Math.Floor((c.UI.JapFont.Size / 2)) * (-1);
-			StripStatus_Information.Margin = StripStatus_InformationJap2.Margin = StripStatus_InformationJap3.Margin = new Padding(0,1,JapGap,0);
-			StripStatus_InformationChs1.Margin = StripStatus_InformationChs2.Margin = StripStatus_InformationChs3.Margin = new Padding(0,1,ChsGap,0);
+			foreach (var f in SubForms)
+			{
+				f.BackColor = this.BackColor;
+				f.ForeColor = this.ForeColor;
+			}
+
+			StripStatus_Information.BackColor = StripStatus_InformationJap2.BackColor = StripStatus_InformationJap3.BackColor = StripStatus_InformationChs1.BackColor = StripStatus_InformationChs2.BackColor = StripStatus_InformationChs3.BackColor = System.Drawing.Color.Transparent;
+			StripStatus_Information.Margin = StripStatus_InformationJap2.Margin = StripStatus_InformationJap3.Margin = StripStatus_InformationChs1.Margin = StripStatus_InformationChs2.Margin = StripStatus_InformationChs3.Margin = new Padding(-1,1,-1,0);
 
 			if ( c.Life.LockLayout ) {
 				MainDockPanel.AllowChangeLayout = false;
@@ -372,6 +395,8 @@ namespace ElectronicObserver.Window {
 			UIUpdateTimer.Stop();
 
 			fBrowser.CloseBrowser();
+
+			UpdatePlayTime();
 
 
 			SystemEvents.OnSystemShuttingDown();
@@ -602,6 +627,11 @@ namespace ElectronicObserver.Window {
 		}
 
 
+		private Size GetMsgSize( ToolStripStatusLabel label) {
+			Size Size0 = TextRenderer.MeasureText(" ", label.Font);
+			Size Size1 = TextRenderer.MeasureText(label.Text + " ", label.Font);
+			return new Size(Size1.Width - Size0.Width + 2, Size1.Height);
+		}
 
 		void Logger_LogAdded( Utility.Logger.LogData data ) {
 
@@ -612,6 +642,12 @@ namespace ElectronicObserver.Window {
 			StripStatus_InformationJap3.Text = data.MsgJap3;
 			StripStatus_InformationChs3.Text = data.MsgChs3;
 
+			StripStatus_Information.Size = GetMsgSize(StripStatus_Information);
+			StripStatus_InformationChs1.Size = GetMsgSize(StripStatus_InformationChs1);
+			StripStatus_InformationJap2.Size = GetMsgSize(StripStatus_InformationJap2);
+			StripStatus_InformationChs2.Size = GetMsgSize(StripStatus_InformationChs2);
+			StripStatus_InformationJap3.Size = GetMsgSize(StripStatus_InformationJap3);
+			StripStatus_InformationChs3.Size = GetMsgSize(StripStatus_InformationChs3);
 		}
 
 
@@ -624,6 +660,8 @@ namespace ElectronicObserver.Window {
 		}
 
 		private void StripMenu_File_Configuration_Click( object sender, EventArgs e ) {
+
+			UpdatePlayTime();
 
 			using ( var dialog = new DialogConfiguration( Utility.Configuration.Config ) ) {
 				if ( dialog.ShowDialog( this ) == System.Windows.Forms.DialogResult.OK ) {
@@ -1194,6 +1232,22 @@ namespace ElectronicObserver.Window {
 		private void StripMenu_WindowCapture_DetachAll_Click( object sender, EventArgs e ) {
 			fWindowCapture.DetachAll();
 		}
+
+
+
+		private void UpdatePlayTime() {
+			var c =  Utility.Configuration.Config.Log;
+			DateTime now = DateTime.Now;
+
+			double span = ( now - _prevPlayTimeRecorded ).TotalSeconds;
+			if ( span < c.PlayTimeIgnoreInterval ) {
+				c.PlayTime += span;
+			}
+
+			_prevPlayTimeRecorded = now;
+		}
+
+
 
 
 		#region フォーム表示

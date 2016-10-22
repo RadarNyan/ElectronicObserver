@@ -2,6 +2,7 @@
 using ElectronicObserver.Observer;
 using ElectronicObserver.Resource;
 using ElectronicObserver.Utility.Mathematics;
+using ElectronicObserver.Window.Control;
 using ElectronicObserver.Window.Support;
 using System;
 using System.Collections.Generic;
@@ -28,21 +29,21 @@ namespace ElectronicObserver.Window {
 
 				#region Initialize
 
-				ShipName = new Label();
+				ShipName = new ImageLabel();
 				ShipName.Text = "???";
 				ShipName.Anchor = AnchorStyles.Left;
-				ShipName.ForeColor = parent.ForeColor;
 				ShipName.TextAlign = ContentAlignment.MiddleLeft;
 				ShipName.Padding = new Padding( 0, 1, 0, 1 );
 				ShipName.Margin = new Padding( 2, 0, 2, 0 );
 				ShipName.MaximumSize = new Size( 60, 20 );
+				//ShipName.AutoEllipsis = true;
+				ShipName.ImageAlign = ContentAlignment.MiddleCenter;
 				ShipName.AutoSize = true;
 				ShipName.Visible = true;
 
 				RepairTime = new Label();
 				RepairTime.Text = "";
 				RepairTime.Anchor = AnchorStyles.Left;
-				RepairTime.ForeColor = parent.ForeColor;
 				RepairTime.Tag = null;
 				RepairTime.TextAlign = ContentAlignment.MiddleLeft;
 				RepairTime.Padding = new Padding( 0, 1, 0, 1 );
@@ -148,6 +149,7 @@ namespace ElectronicObserver.Window {
 				ShipName.Font = parent.Font;
 				RepairTime.Font = parent.Font;
 				RepairTime.BackColor = Color.Transparent;
+				ShipName.ForeColor = RepairTime.ForeColor = Utility.Configuration.Config.UI.ForeColor;
 			}
 		}
 

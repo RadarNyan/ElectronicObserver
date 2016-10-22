@@ -90,6 +90,7 @@
 			this.SeparatorWhitecap = new System.Windows.Forms.ToolStripSeparator();
 			this.StripMenu_Help_Version = new System.Windows.Forms.ToolStripMenuItem();
 			this.StripStatus = new System.Windows.Forms.StatusStrip();
+			this.StripStatus_InfoPadding = new System.Windows.Forms.ToolStripStatusLabel();
 			this.StripStatus_Information = new System.Windows.Forms.ToolStripStatusLabel();
 			this.StripStatus_InformationChs1 = new System.Windows.Forms.ToolStripStatusLabel();
 			this.StripStatus_InformationJap2 = new System.Windows.Forms.ToolStripStatusLabel();
@@ -529,7 +530,7 @@
             this.StripMenu_Debug_LoadDataFromOld});
 			this.StripMenu_Debug.Name = "StripMenu_Debug";
 			this.StripMenu_Debug.Size = new System.Drawing.Size(74, 20);
-			this.StripMenu_Debug.Text = "DEBUG(&D)"; // DEBUG 菜单未翻译
+			this.StripMenu_Debug.Text = "DEBUG(&D)";
 			// 
 			// StripMenu_Debug_LoadAPIFromFile
 			// 
@@ -612,6 +613,7 @@
 			// 
 			this.StripStatus.ImageScalingSize = new System.Drawing.Size(32, 32);
 			this.StripStatus.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+			this.StripStatus_InfoPadding,
 			this.StripStatus_Information,
 			this.StripStatus_InformationChs1,
 			this.StripStatus_InformationJap2,
@@ -626,11 +628,41 @@
 			this.StripStatus.Size = new System.Drawing.Size(640, 22);
 			this.StripStatus.TabIndex = 3;
 			// 
+			// StripStatus_InfoPadding
+			// 
+			this.StripStatus_InfoPadding.Name = "StripStatus_InfoPadding";
+			this.StripStatus_InfoPadding.Size = new System.Drawing.Size(6, 22);
+			this.StripStatus_InfoPadding.AutoSize = false;
+			// 
 			// StripStatus_Information
 			// 
 			this.StripStatus_Information.Name = "StripStatus_Information";
-			this.StripStatus_Information.Size = new System.Drawing.Size(104, 17);
-			this.StripStatus_Information.Text = "Now Preparing...";
+			this.StripStatus_Information.AutoSize = false;
+			// 
+			// StripStatus_InformationChs1
+			// 
+			this.StripStatus_InformationChs1.Name = "StripStatus_InformationChs1";
+			this.StripStatus_InformationChs1.AutoSize = false;
+			// 
+			// StripStatus_InformationJap2
+			// 
+			this.StripStatus_InformationJap2.Name = "StripStatus_InformationJap2";
+			this.StripStatus_InformationJap2.AutoSize = false;
+			// 
+			// StripStatus_InformationChs2
+			// 
+			this.StripStatus_InformationChs2.Name = "StripStatus_InformationChs2";
+			this.StripStatus_InformationChs2.AutoSize = false;
+			// 
+			// StripStatus_InformationJap3
+			// 
+			this.StripStatus_InformationJap3.Name = "StripStatus_InformationJap3";
+			this.StripStatus_InformationJap3.AutoSize = false;
+			// 
+			// StripStatus_InformationChs3
+			// 
+			this.StripStatus_InformationChs3.Name = "StripStatus_InformationChs3";
+			this.StripStatus_InformationChs3.AutoSize = false;
 			// 
 			// StripStatus_InformationChs1
 			// 
@@ -693,7 +725,6 @@
 			this.MainDockPanel.ShowDocumentIcon = true;
 			this.MainDockPanel.Size = new System.Drawing.Size(640, 434);
 			this.MainDockPanel.TabIndex = 0;
-			this.MainDockPanel.Theme = new WeifenLuo.WinFormsUI.Docking.VS2012LightTheme();
 			// 
 			// StripMenu_View_BaseAirCorps
 			// 
@@ -742,6 +773,7 @@
 		private System.Windows.Forms.ToolStripMenuItem StripMenu_Debug;
 		private System.Windows.Forms.ToolStripMenuItem StripMenu_Debug_LoadAPIFromFile;
 		private System.Windows.Forms.Timer UIUpdateTimer;
+		private System.Windows.Forms.ToolStripStatusLabel StripStatus_InfoPadding;
 		private System.Windows.Forms.ToolStripStatusLabel StripStatus_Information;
 		private System.Windows.Forms.ToolStripStatusLabel StripStatus_InformationChs1;
 		private System.Windows.Forms.ToolStripStatusLabel StripStatus_InformationJap2;

@@ -59,6 +59,8 @@ namespace ElectronicObserver.Window {
 
 			Font = TextInformation.Font = Utility.Configuration.Config.UI.JapFont;
 			TextInformation.LanguageOption = RichTextBoxLanguageOptions.UIFonts;
+			TextInformation.ForeColor = Utility.Configuration.Config.UI.ForeColor;
+			TextInformation.BackColor = Utility.Configuration.Config.UI.BackColor;
 		}
 
 
@@ -310,7 +312,9 @@ namespace ElectronicObserver.Window {
 			StringBuilder sb = new StringBuilder();
 			sb.AppendLine( "[海域ゲージ]" );
 
-			foreach ( dynamic elem in data.api_map_info ) {
+			var list = data.api_map_info() ? data.api_map_info : data;
+
+			foreach ( dynamic elem in list ) {
 
 				int mapID = (int)elem.api_id;
 				MapInfoData map = KCDatabase.Instance.MapInfo[mapID];
