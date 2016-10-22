@@ -372,6 +372,12 @@ namespace ElectronicObserver.Utility {
 					case 1:  return SolarizedGreen.ColorData;
 					default: return Color.DarkGreen;
 				}}}
+				public Color Compass_ColorTextEventKind5 { get { // Enemy Combined
+				switch (ThemeID) {
+					case 0:  return SolarizedRed.ColorData;
+					case 1:  return SolarizedRed.ColorData;
+					default: return Color.DarkRed;
+				}}}
 				public Color Compass_ColoroverlayBrush { get { // 当舰载机数量叠加到飞机图标上时背景填充的色块
 				switch (ThemeID) {
 					case 0:  return Color.FromArgb(0xC0, 0xFD, 0xF6, 0xE3);
@@ -491,12 +497,25 @@ namespace ElectronicObserver.Utility {
 				/// </summary>
 				public bool ShowSpoiler { get; set; }
 
+				/// <summary>
+				/// プレイ時間
+				/// </summary>
+				public double PlayTime { get; set; }
+
+				/// <summary>
+				/// これ以上の無通信時間があったときプレイ時間にカウントしない
+				/// </summary>
+				public double PlayTimeIgnoreInterval { get; set; }
+
+
 				public ConfigLog() {
 					LogLevel = 2;
 					SaveLogFlag = true;
 					SaveErrorReport = true;
 					FileEncodingID = 1;
 					ShowSpoiler = true;
+					PlayTime = 0;
+					PlayTimeIgnoreInterval = 10 * 60;
 				}
 
 			}
@@ -709,11 +728,20 @@ namespace ElectronicObserver.Utility {
 				public bool BlinkAtMaximum { get; set; }
 
 
+				/// <summary>
+				/// 項目の可視/不可視設定
+				/// </summary>
 				public SerializableList<bool> Visibility { get; set; }
+
+				/// <summary>
+				/// 任意アイテム表示のアイテムID
+				/// </summary>
+				public int DisplayUseItemID { get; set; }
 
 				public ConfigFormHeadquarters() {
 					BlinkAtMaximum = true;
 					Visibility = null;		// フォーム側で設定します
+					DisplayUseItemID = 68;	// 秋刀魚
 				}
 			}
 			/// <summary>[司令部]ウィンドウ</summary>

@@ -51,6 +51,8 @@ namespace ElectronicObserver.Window {
 			Steel.ImageIndex = (int)ResourceManager.IconContent.ResourceSteel;
 			Bauxite.ImageList = icons;
 			Bauxite.ImageIndex = (int)ResourceManager.IconContent.ResourceBauxite;
+			DisplayUseItem.ImageList = icons;
+			DisplayUseItem.ImageIndex = (int)ResourceManager.IconContent.ItemPresentBox;
 
 
 			ControlHelper.SetDoubleBuffered( FlowPanelMaster );
@@ -144,8 +146,10 @@ namespace ElectronicObserver.Window {
 				Ammo.Visible = visibility[11];
 				Steel.Visible = visibility[12];
 				Bauxite.Visible = visibility[13];
+				DisplayUseItem.Visible = visibility[14];
 			}
 
+			UpdateDisplayUseItem();
 		}
 
 
@@ -153,7 +157,7 @@ namespace ElectronicObserver.Window {
 		/// VisibleFlags 設定をチェックし、不正な値だった場合は初期値に戻します。
 		/// </summary>
 		public static void CheckVisibilityConfiguration() {
-			const int count = 14;
+			const int count = 15;
 			var config = Utility.Configuration.Config.FormHeadquarters;
 
 			if ( config.Visibility == null )
@@ -183,6 +187,7 @@ namespace ElectronicObserver.Window {
 			yield return "弹药";
 			yield return "钢材";
 			yield return "铝土";
+			yield return "任意のアイテム";
 		}
 
 
@@ -283,19 +288,19 @@ namespace ElectronicObserver.Window {
 					resmonth == null ? 0 : ( db.Material.InstantRepair - resmonth.InstantRepair ) ) );
 
 			InstantConstruction.Text = db.Material.InstantConstruction.ToString();
-			ToolTipInfo.SetToolTip( InstantConstruction, string.Format( "今日 : {0:+##;-##;±0}\n本周 : {1:+##;-##;±0}\n本月: {2:+##;-##;±0}",
+			ToolTipInfo.SetToolTip( InstantConstruction, string.Format( "今日 : {0:+##;-##;±0}\n本周 : {1:+##;-##;±0}\n本月 : {2:+##;-##;±0}",
 					resday == null ? 0 : ( db.Material.InstantConstruction - resday.InstantConstruction ),
 					resweek == null ? 0 : ( db.Material.InstantConstruction - resweek.InstantConstruction ),
 					resmonth == null ? 0 : ( db.Material.InstantConstruction - resmonth.InstantConstruction ) ) );
 
 			DevelopmentMaterial.Text = db.Material.DevelopmentMaterial.ToString();
-			ToolTipInfo.SetToolTip( DevelopmentMaterial, string.Format( "今日 : {0:+##;-##;±0}\n本周 : {1:+##;-##;±0}\n本月: {2:+##;-##;±0}",
+			ToolTipInfo.SetToolTip( DevelopmentMaterial, string.Format( "今日 : {0:+##;-##;±0}\n本周 : {1:+##;-##;±0}\n本月 : {2:+##;-##;±0}",
 					resday == null ? 0 : ( db.Material.DevelopmentMaterial - resday.DevelopmentMaterial ),
 					resweek == null ? 0 : ( db.Material.DevelopmentMaterial - resweek.DevelopmentMaterial ),
 					resmonth == null ? 0 : ( db.Material.DevelopmentMaterial - resmonth.DevelopmentMaterial ) ) );
 
 			ModdingMaterial.Text = db.Material.ModdingMaterial.ToString();
-			ToolTipInfo.SetToolTip( ModdingMaterial, string.Format( "今日 : {0:+##;-##;±0}\n本周 : {1:+##;-##;±0}\n本月: {2:+##;-##;±0}",
+			ToolTipInfo.SetToolTip( ModdingMaterial, string.Format( "今日 : {0:+##;-##;±0}\n本周 : {1:+##;-##;±0}\n本月 : {2:+##;-##;±0}",
 					resday == null ? 0 : ( db.Material.ModdingMaterial - resday.ModdingMaterial ),
 					resweek == null ? 0 : ( db.Material.ModdingMaterial - resweek.ModdingMaterial ),
 					resmonth == null ? 0 : ( db.Material.ModdingMaterial - resmonth.ModdingMaterial ) ) );
@@ -312,6 +317,7 @@ namespace ElectronicObserver.Window {
 							medium, medium * 400,
 							large, large * 700 ) );
 			}
+			UpdateDisplayUseItem();
 			FlowPanelUseItem.ResumeLayout();
 
 
@@ -385,6 +391,26 @@ namespace ElectronicObserver.Window {
 
 		}
 
+
+		private void UpdateDisplayUseItem() {
+			var db = KCDatabase.Instance;
+			var item = db.UseItems[Utility.Configuration.Config.FormHeadquarters.DisplayUseItemID];
+			var itemMaster = db.MasterUseItems[Utility.Configuration.Config.FormHeadquarters.DisplayUseItemID];
+			string tail = "\r\n(設定から変更可能)";
+
+			if ( item != null ) {
+				DisplayUseItem.Text = item.Count.ToString();
+				ToolTipInfo.SetToolTip( DisplayUseItem, itemMaster.Name + tail );
+
+			} else if ( itemMaster != null ) {
+				DisplayUseItem.Text = "0";
+				ToolTipInfo.SetToolTip( DisplayUseItem, itemMaster.Name + tail );
+
+			} else {
+				DisplayUseItem.Text = "???";
+				ToolTipInfo.SetToolTip( DisplayUseItem, "不明なアイテム (ID: " + Utility.Configuration.Config.FormHeadquarters.DisplayUseItemID + ")" + tail );
+			}
+		}
 
 		private int RealShipCount {
 			get {

@@ -416,7 +416,7 @@ namespace ElectronicObserver.Window {
 							tip.AppendFormat( "距离 Lv99 : {0} exp.\r\n", Math.Max( ExpTable.GetExpToLevelShip( ship.ExpTotal, 99 ), 0 ) );
 
 						} else {
-							tip.AppendFormat( "距离 Lv{0}: {1} exp.\r\n", ExpTable.ShipMaximumLevel, Math.Max( ExpTable.GetExpToLevelShip( ship.ExpTotal, ExpTable.ShipMaximumLevel ), 0 ) );
+							tip.AppendFormat( "距离 Lv{0} : {1} exp.\r\n", ExpTable.ShipMaximumLevel, Math.Max( ExpTable.GetExpToLevelShip( ship.ExpTotal, ExpTable.ShipMaximumLevel ), 0 ) );
 
 						}
 
@@ -874,7 +874,7 @@ namespace ElectronicObserver.Window {
 			sb.Append( @"{""version"":4," );
 
 			foreach ( var fleet in db.Fleet.Fleets.Values ) {
-				if ( fleet == null ) continue;
+				if ( fleet == null || fleet.MembersInstance.All( m => m == null ) ) continue;
 
 				sb.AppendFormat( @"""f{0}"":{{", fleet.FleetID );
 

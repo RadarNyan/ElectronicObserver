@@ -633,6 +633,7 @@ namespace ElectronicObserver.Window {
 			o.APIList["api_req_combined_battle/airbattle"].ResponseReceived += BattleStarted;
 			o.APIList["api_req_combined_battle/battle_water"].ResponseReceived += BattleStarted;
 			o.APIList["api_req_combined_battle/ld_airbattle"].ResponseReceived += BattleStarted;
+			o.APIList["api_req_combined_battle/ec_battle"].ResponseReceived += BattleStarted;
 			o.APIList["api_req_practice/battle"].ResponseReceived += BattleStarted;
 
 
@@ -654,6 +655,8 @@ namespace ElectronicObserver.Window {
 					case 4:		//航空戦
 					case 6:		//長距離空襲戦
 						return Utility.Configuration.Config.UI.Compass_ColorTextEventKind6;
+					case 5:		// 敵連合
+						return Utility.Configuration.Config.UI.Compass_ColorTextEventKind5;
 				}
 			};
 
@@ -722,16 +725,16 @@ namespace ElectronicObserver.Window {
 					string tiptext;
 					switch ( compass.CommentID ) {
 						case 1:
-							tiptext = "发现敌舰队！";
+							tiptext = "敵艦隊発見！";
 							break;
 						case 2:
-							tiptext = "发现攻击目标！";
+							tiptext = "攻撃目標発見！";
 							break;
 						case 3:
 							tiptext = "針路哨戒！";
 							break;
 						default:
-							tiptext = "索敌机离舰！";
+							tiptext = "索敵機発艦！";
 							break;
 					}
 					ToolTipInfo.SetToolTip( TextDestination, tiptext );
@@ -803,7 +806,12 @@ namespace ElectronicObserver.Window {
 
 						case 5:		//ボス戦闘
 							TextEventKind.ForeColor = Utility.Configuration.Config.UI.Color_Red;
-							goto case 4;
+
+							if ( compass.EventKind >= 2 ) {
+								eventkind += "/" + Constants.GetMapEventKind( compass.EventKind );
+							}
+							UpdateEnemyFleet();
+							break;
 
 						case 6:		//気のせいだった
 							switch ( compass.EventKind ) {

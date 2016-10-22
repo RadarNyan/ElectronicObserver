@@ -288,13 +288,13 @@ namespace ElectronicObserver.Window {
 			if ( KCDatabase.Instance.Quest.Quests.Count < KCDatabase.Instance.Quest.Count ) {
 				int index = QuestView.Rows.Add();
 				QuestView.Rows[index].Cells[QuestView_State.Index].Value = null;
-				QuestView.Rows[index].Cells[QuestView_Name.Index].Value = string.Format( "( Unknown x {0} )", ( KCDatabase.Instance.Quest.Count - KCDatabase.Instance.Quest.Quests.Count ) );
+				QuestView.Rows[index].Cells[QuestView_Name.Index].Value = string.Format( "(Unknown x {0})", ( KCDatabase.Instance.Quest.Count - KCDatabase.Instance.Quest.Quests.Count ) );
 			}
 
 			if ( KCDatabase.Instance.Quest.Quests.Count == 0 ) {
 				int index = QuestView.Rows.Add();
 				QuestView.Rows[index].Cells[QuestView_State.Index].Value = null;
-				QuestView.Rows[index].Cells[QuestView_Name.Index].Value = "( All Clear! )";
+				QuestView.Rows[index].Cells[QuestView_Name.Index].Value = "(All Clear!)";
 			}
 
 			//更新時にソートする
@@ -451,7 +451,7 @@ namespace ElectronicObserver.Window {
 			{
 				DataGridViewRow row = new DataGridViewRow();
 				row.CreateCells( QuestView );
-				row.SetValues( null, null, null, "( Unknown )", null );
+				row.SetValues( null, null, null, "(Unknown)", null );
 				QuestView.Rows.Add( row );
 			}
 

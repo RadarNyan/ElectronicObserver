@@ -530,7 +530,7 @@
             this.StripMenu_Debug_LoadDataFromOld});
 			this.StripMenu_Debug.Name = "StripMenu_Debug";
 			this.StripMenu_Debug.Size = new System.Drawing.Size(74, 20);
-			this.StripMenu_Debug.Text = "DEBUG(&D)"; // DEBUG 菜单未翻译
+			this.StripMenu_Debug.Text = "DEBUG(&D)";
 			// 
 			// StripMenu_Debug_LoadAPIFromFile
 			// 
