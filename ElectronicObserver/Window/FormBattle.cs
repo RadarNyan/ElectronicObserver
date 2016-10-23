@@ -388,7 +388,7 @@ namespace ElectronicObserver.Window {
 				if ( touchFriend != -1 ) {
 					AirStage1Friend.ImageAlign = ContentAlignment.MiddleLeft;
 					AirStage1Friend.ImageIndex = (int)ResourceManager.EquipmentContent.Seaplane;
-					ToolTipInfo.SetToolTip( AirStage1Friend, "接触中 : " + KCDatabase.Instance.MasterEquipments[touchFriend].Name );
+					ToolTipInfo.SetToolTip( AirStage1Friend, "触接中 : " + KCDatabase.Instance.MasterEquipments[touchFriend].Name );
 				} else {
 					AirStage1Friend.ImageAlign = ContentAlignment.MiddleCenter;
 					AirStage1Friend.ImageIndex = -1;
@@ -399,7 +399,7 @@ namespace ElectronicObserver.Window {
 				if ( touchEnemy != -1 ) {
 					AirStage1Enemy.ImageAlign = ContentAlignment.MiddleLeft;
 					AirStage1Enemy.ImageIndex = (int)ResourceManager.EquipmentContent.Seaplane;
-					ToolTipInfo.SetToolTip( AirStage1Enemy, "接触中 : " + KCDatabase.Instance.MasterEquipments[touchEnemy].Name );
+					ToolTipInfo.SetToolTip( AirStage1Enemy, "触接中 : " + KCDatabase.Instance.MasterEquipments[touchEnemy].Name );
 				} else {
 					AirStage1Enemy.ImageAlign = ContentAlignment.MiddleCenter;
 					AirStage1Enemy.ImageIndex = -1;
@@ -551,7 +551,7 @@ namespace ElectronicObserver.Window {
 
 					EquipmentDataMaster[] planes = { KCDatabase.Instance.MasterEquipments[touchFriend[0]], KCDatabase.Instance.MasterEquipments[touchFriend[1]] };
 					ToolTipInfo.SetToolTip( AirStage1Friend, string.Format(
-						"{0} 接触中\r\n第 1 次 : {1}\r\n第 2 次 : {2}",
+						"{0} 触接中\r\n第 1 次 : {1}\r\n第 2 次 : {2}",
 						ToolTipInfo.GetToolTip( AirStage1Friend ) ?? "",
 						planes[0] != null ? planes[0].Name : "( 无 )",
 						planes[1] != null ? planes[1].Name : "( 无 )"
@@ -572,7 +572,7 @@ namespace ElectronicObserver.Window {
 
 					EquipmentDataMaster[] planes = { KCDatabase.Instance.MasterEquipments[touchEnemy[0]], KCDatabase.Instance.MasterEquipments[touchEnemy[1]] };
 					ToolTipInfo.SetToolTip( AirStage1Enemy, string.Format(
-						"{0} 接触中\r\n第 1 次 : {1}\r\n第 2 次 : {2}",
+						"{0} 触接中\r\n第 1 次 : {1}\r\n第 2 次 : {2}",
 						ToolTipInfo.GetToolTip( AirStage1Enemy ) ?? "",
 						planes[0] != null ? planes[0].Name : "( 无 )",
 						planes[1] != null ? planes[1].Name : "( 无 )"
@@ -962,19 +962,19 @@ namespace ElectronicObserver.Window {
 
 			//夜間触接判定
 			if ( pd.TouchAircraftFriend != -1 ) {
-				SearchingFriend.Text = "夜间接触";
+				SearchingFriend.Text = "夜间触接";
 				SearchingFriend.ImageIndex = (int)ResourceManager.EquipmentContent.Seaplane;
 				SearchingFriend.ImageAlign = ContentAlignment.MiddleLeft;
-				ToolTipInfo.SetToolTip( SearchingFriend, "夜间接触中 : " + KCDatabase.Instance.MasterEquipments[pd.TouchAircraftFriend].Name );
+				ToolTipInfo.SetToolTip( SearchingFriend, "夜间触接中 : " + KCDatabase.Instance.MasterEquipments[pd.TouchAircraftFriend].Name );
 			} else {
 				ToolTipInfo.SetToolTip( SearchingFriend, null );
 			}
 
 			if ( pd.TouchAircraftEnemy != -1 ) {
-				SearchingEnemy.Text = "夜间接触";
+				SearchingEnemy.Text = "夜间触接";
 				SearchingEnemy.ImageIndex = (int)ResourceManager.EquipmentContent.Seaplane;
 				SearchingFriend.ImageAlign = ContentAlignment.MiddleLeft;
-				ToolTipInfo.SetToolTip( SearchingEnemy, "夜间接触中 : " + KCDatabase.Instance.MasterEquipments[pd.TouchAircraftEnemy].Name );
+				ToolTipInfo.SetToolTip( SearchingEnemy, "夜间触接中 : " + KCDatabase.Instance.MasterEquipments[pd.TouchAircraftEnemy].Name );
 			} else {
 				ToolTipInfo.SetToolTip( SearchingEnemy, null );
 			}

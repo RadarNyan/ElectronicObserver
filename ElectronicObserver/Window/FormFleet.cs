@@ -188,7 +188,7 @@ namespace ElectronicObserver.Window {
 					double probStart = fleet.GetContactProbability();
 					var probSelect = fleet.GetContactSelectionProbability();
 
-					sb.AppendFormat( "2-5 式 ( 旧 ) : {0}\r\n2-5 式 ( 秋 ) : {1}\r\n2-5 新秋简易式 : {2}\r\n判定式 (33) : {3}\r\n\r\n接触开始率 : \r\n　确保 {4:p1} / 优势 {5:p1}\r\n",
+					sb.AppendFormat( "2-5 式 ( 旧 ) : {0}\r\n2-5 式 ( 秋 ) : {1}\r\n2-5 新秋简易式 : {2}\r\n判定式 (33) : {3}\r\n\r\n触接开始率 : \r\n　确保 {4:p1} / 优势 {5:p1}\r\n",
 						fleet.GetSearchingAbilityString( 0 ),
 						fleet.GetSearchingAbilityString( 1 ),
 						fleet.GetSearchingAbilityString( 2 ),
@@ -197,7 +197,7 @@ namespace ElectronicObserver.Window {
 						probStart * 0.6 );
 
 					if ( probSelect.Count > 0 ) {
-						sb.AppendLine( "接触选择率 : " );
+						sb.AppendLine( "触接选择率 : " );
 
 						foreach ( var p in probSelect.OrderBy( p => p.Key ) ) {
 							sb.AppendFormat( "　命中 {0} : {1:p1}\r\n", p.Key, p.Value );
