@@ -48,16 +48,26 @@ namespace ElectronicObserver.Utility {
 			/// ログ内容
 			/// </summary>
 			public readonly string Message;
+			public readonly string MsgChs1;
+			public readonly string MsgJap2;
+			public readonly string MsgChs2;
+			public readonly string MsgJap3;
+			public readonly string MsgChs3;
 
-			public LogData( DateTime time, int priority, string message ) {
+			public LogData( DateTime time, int priority, string message, string msgchs1, string msgjap2, string msgchs2, string msgjap3, string msgchs3 ) {
 				Time = time;
 				Priority = priority;
 				Message = message;
+				MsgChs1 = msgchs1;
+				MsgJap2 = msgjap2;
+				MsgChs2 = msgchs2;
+				MsgJap3 = msgjap3;
+				MsgChs3 = msgchs3;
 			}
 
 
 			public override string ToString() {
-				return string.Format( "[{0}][{1}] : {2}", DateTimeHelper.TimeToCSVString( Time ), Priority, Message );
+				return string.Format( "[{0}][{1}] : {2}{3}{4}{5}{6}{7}", DateTimeHelper.TimeToCSVString( Time ), Priority, Message, MsgChs1, MsgJap2, MsgChs2, MsgJap3, MsgChs3 );
 			}
 
 		}
@@ -88,9 +98,10 @@ namespace ElectronicObserver.Utility {
 		/// </summary>
 		/// <param name="priority">優先度。</param>
 		/// <param name="message">ログ内容。</param>
-		public static void Add( int priority, string message ) {
+		public static void Add( int priority, string message, string msgchs1="", string msgjap2="", string msgchs2="", string msgjap3="", string msgchs3="" )
+		{
 
-			LogData data = new LogData( DateTime.Now, priority, message );
+			LogData data = new LogData( DateTime.Now, priority, message, msgchs1, msgjap2, msgchs2, msgjap3, msgchs3 );
 
 			lock ( Logger.Instance ) {
 				Logger.Instance.log.Add( data );

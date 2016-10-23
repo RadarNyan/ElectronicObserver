@@ -194,11 +194,11 @@ namespace ElectronicObserver.Window {
 
 
 			public void ConfigurationChanged( FormBaseAirCorps parent ) {
-				var mainfont = Utility.Configuration.Config.UI.MainFont;
-				var subfont = Utility.Configuration.Config.UI.SubFont;
+				var mainfont = Utility.Configuration.Config.UI.JapFont;
+				var subfont = Utility.Configuration.Config.UI.JapFont2;
 
 				Name.Font = mainfont;
-				ActionKind.Font = mainfont;
+				ActionKind.Font = Utility.Configuration.Config.UI.MainFont;
 				AirSuperiority.Font = mainfont;
 				Distance.Font = mainfont;
 				Squadrons.Font = subfont;

@@ -52,7 +52,7 @@
 			this.labelTitle.Name = "labelTitle";
 			this.labelTitle.Size = new System.Drawing.Size(42, 15);
 			this.labelTitle.TabIndex = 0;
-			this.labelTitle.Text = "タイトル";
+			this.labelTitle.Text = "标题";
 			// 
 			// labelClassName
 			// 
@@ -61,7 +61,7 @@
 			this.labelClassName.Name = "labelClassName";
 			this.labelClassName.Size = new System.Drawing.Size(44, 15);
 			this.labelClassName.TabIndex = 3;
-			this.labelClassName.Text = "クラス名";
+			this.labelClassName.Text = "类名";
 			// 
 			// labelFileName
 			// 
@@ -70,7 +70,7 @@
 			this.labelFileName.Name = "labelFileName";
 			this.labelFileName.Size = new System.Drawing.Size(41, 15);
 			this.labelFileName.TabIndex = 6;
-			this.labelFileName.Text = "EXE名";
+			this.labelFileName.Text = "EXE 名";
 			// 
 			// titleTextBox
 			// 
@@ -159,7 +159,7 @@
 			this.groupBox1.Size = new System.Drawing.Size(260, 119);
 			this.groupBox1.TabIndex = 3;
 			this.groupBox1.TabStop = false;
-			this.groupBox1.Text = "ウィンドウ検索設定";
+			this.groupBox1.Text = "窗口搜索设置";
 			// 
 			// windowCaptureButton
 			// 
@@ -187,7 +187,7 @@
 			this.integrateButton.Name = "integrateButton";
 			this.integrateButton.Size = new System.Drawing.Size(75, 23);
 			this.integrateButton.TabIndex = 0;
-			this.integrateButton.Text = "取り込む";
+			this.integrateButton.Text = "捕获";
 			this.integrateButton.UseVisualStyleBackColor = true;
 			this.integrateButton.Click += new System.EventHandler(this.integrateButton_Click);
 			// 
@@ -203,7 +203,7 @@
 			this.StripMenu_Detach.Enabled = false;
 			this.StripMenu_Detach.Name = "StripMenu_Detach";
 			this.StripMenu_Detach.Size = new System.Drawing.Size(160, 22);
-			this.StripMenu_Detach.Text = "ウィンドウ開放";
+			this.StripMenu_Detach.Text = "释放窗口";
 			this.StripMenu_Detach.Click += new System.EventHandler(this.StripMenu_Detach_Click);
 			// 
 			// FormIntegrate

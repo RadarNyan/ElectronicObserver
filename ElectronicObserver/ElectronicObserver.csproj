@@ -785,9 +785,24 @@
       <Project>{c75532c4-765b-418e-b09b-46d36b2abdb1}</Project>
       <Name>WinFormsUI</Name>
     </ProjectReference>
+    <ProjectReference Include="..\DockPanelSuite\WinFormsUI\ThemeVS2012Light.csproj">
+      <Project>{4ed4fdb5-9fd0-49e6-876d-1635f727c755}</Project>
+      <Name>ThemeVS2012Light</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DockPanelSuite\WinFormsUI\ThemeSolarizedDark.csproj">
+      <Project>{a965d7bb-5cda-4531-ab67-58d4fa10aa6d}</Project>
+      <Name>ThemeSolarizedDark</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DockPanelSuite\WinFormsUI\ThemeSolarizedLight.csproj">
+      <Project>{50d6ede2-b00e-4487-8426-9ef4d8d1d416}</Project>
+      <Name>ThemeSolarizedLight</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>copy "$(TargetDir)*.*" "$(ProjectDir)..\output\"</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

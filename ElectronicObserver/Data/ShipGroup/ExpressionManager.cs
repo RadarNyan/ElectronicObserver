@@ -86,7 +86,7 @@ namespace ElectronicObserver.Data.ShipGroup {
 		public override string ToString() {
 
 			if ( Expressions == null )
-				return "(なし)";
+				return "( 无 )";
 
 			StringBuilder sb = new StringBuilder();
 			foreach ( var ex in Expressions ) {
@@ -95,11 +95,11 @@ namespace ElectronicObserver.Data.ShipGroup {
 				else if ( sb.Length == 0 )
 					sb.Append( ex.ToString() );
 				else
-					sb.AppendFormat( " {0} {1}", ex.ExternalAnd ? "かつ" : "または", ex.ToString() );
+					sb.AppendFormat( " {0} {1}", ex.ExternalAnd ? "而且" : "或者", ex.ToString() );
 			}
 
 			if ( sb.Length == 0 )
-				sb.Append( "(なし)" );
+				sb.Append( "( 无 )" );
 			return sb.ToString();
 		}
 

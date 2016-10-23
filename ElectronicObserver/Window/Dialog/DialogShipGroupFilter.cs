@@ -213,10 +213,10 @@ namespace ElectronicObserver.Window.Dialog {
 				_dtRightOperand_equipment.Columns.AddRange( new DataColumn[]{ 
 					new DataColumn( "Value", typeof( int ) ), 
 					new DataColumn( "Display", typeof( string ) ) } );
-				_dtRightOperand_equipment.Rows.Add( -1, "(なし)" );
+				_dtRightOperand_equipment.Rows.Add( -1, "( 无 )" );
 				foreach ( var eq in KCDatabase.Instance.MasterEquipments.Values.Where( eq => !eq.IsAbyssalEquipment ).OrderBy( eq => eq.CategoryType ) )
 					_dtRightOperand_equipment.Rows.Add( eq.EquipmentID, eq.Name );
-				_dtRightOperand_equipment.Rows.Add( 0, "(未開放)" );
+				_dtRightOperand_equipment.Rows.Add( 0, "( 未开放 )" );
 				_dtRightOperand_equipment.AcceptChanges();
 			}
 
@@ -334,7 +334,7 @@ namespace ElectronicObserver.Window.Dialog {
 				rows[i].CreateCells( ConstFilterView );
 
 				var ship = KCDatabase.Instance.Ships[values[i]];
-				rows[i].SetValues( values[i], ship == null ? "(未在籍)" : ship.NameWithLevel );
+				rows[i].SetValues( values[i], ship == null ? "( 未在籍 )" : ship.NameWithLevel );
 			}
 
 			ConstFilterView.Rows.AddRange( rows );
@@ -508,7 +508,7 @@ namespace ElectronicObserver.Window.Dialog {
 					case ".RepairingDockID":
 						RightOperand_NumericUpDown.Minimum = -1;
 						RightOperand_NumericUpDown.Maximum = 4;
-						Description.Text = "-1=未入渠, 1～4=入渠中(ドック番号)";
+						Description.Text = "-1 = 未入渠， 1～4 = 入渠中 ( 船坞编号 )";
 						break;
 					case ".RepairTime":
 						RightOperand_NumericUpDown.Minimum = 0;
@@ -699,7 +699,7 @@ namespace ElectronicObserver.Window.Dialog {
 			int selectedrow = GetSelectedRow( ExpressionView );
 
 			if ( selectedrow == -1 ) {
-				MessageBox.Show( "対象となる行を選択してください。", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Asterisk );
+				MessageBox.Show( "请选择目标行。", "错误", MessageBoxButtons.OK, MessageBoxIcon.Asterisk );
 				return;
 			}
 
@@ -766,7 +766,7 @@ namespace ElectronicObserver.Window.Dialog {
 
 			int procrow = GetSelectedRow( ExpressionView );
 			if ( procrow == -1 ) {
-				MessageBox.Show( "対象となる式(左側)の行を選択してください。\r\n行が存在しない場合は追加してください。", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Asterisk );
+				MessageBox.Show( "请先在左侧选择对象行。\r\n如果左侧没有行请先添加。", "错误", MessageBoxButtons.OK, MessageBoxIcon.Asterisk );
 				return;
 			}
 
@@ -783,13 +783,13 @@ namespace ElectronicObserver.Window.Dialog {
 
 			int procrow = GetSelectedRow( ExpressionView );
 			if ( procrow == -1 ) {
-				MessageBox.Show( "対象となる式列(左側)を選択してください。", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Asterisk );
+				MessageBox.Show( "请先在左侧选择对象行。", "错误", MessageBoxButtons.OK, MessageBoxIcon.Asterisk );
 				return;
 			}
 
 			int selectedrow = GetSelectedRow( ExpressionDetailView );
 			if ( selectedrow == -1 ) {
-				MessageBox.Show( "対象となる行を選択してください。", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Asterisk );
+				MessageBox.Show( "请先选中对象行。", "错误", MessageBoxButtons.OK, MessageBoxIcon.Asterisk );
 				return;
 			}
 
@@ -807,13 +807,13 @@ namespace ElectronicObserver.Window.Dialog {
 
 			int procrow = GetSelectedRow( ExpressionView );
 			if ( procrow == -1 ) {
-				MessageBox.Show( "対象となる式列(左側)を選択してください。", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Asterisk );
+				MessageBox.Show( "请先在左侧选择对象行。", "错误", MessageBoxButtons.OK, MessageBoxIcon.Asterisk );
 				return;
 			}
 
 			int selectedrow = GetSelectedRow( ExpressionDetailView );
 			if ( selectedrow == -1 ) {
-				MessageBox.Show( "対象となる行を選択してください。", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Asterisk );
+				MessageBox.Show( "请先选中对象行。", "错误", MessageBoxButtons.OK, MessageBoxIcon.Asterisk );
 				return;
 			}
 
@@ -1039,7 +1039,7 @@ namespace ElectronicObserver.Window.Dialog {
 						if ( ship != null ) {
 							Description.Text = ship.NameWithLevel;
 						} else {
-							Description.Text = "(未在籍)";
+							Description.Text = "( 未在籍 )";
 						}
 					} break;
 
@@ -1048,18 +1048,18 @@ namespace ElectronicObserver.Window.Dialog {
 						if ( ship != null ) {
 							Description.Text = ship.ShipTypeName + " " + ship.NameWithClass;
 						} else {
-							Description.Text = "(存在せず)";
+							Description.Text = "( 不存在 )";
 						}
 					} break;
 
 				case ".RepairTime": {
-						Description.Text = string.Format( "(ミリ秒単位) {0}", DateTimeHelper.ToTimeRemainString( DateTimeHelper.FromAPITimeSpan( intvalue ) ) );
+						Description.Text = string.Format( "( 毫秒 ) {0}", DateTimeHelper.ToTimeRemainString( DateTimeHelper.FromAPITimeSpan( intvalue ) ) );
 					} break;
 
 				case ".MasterShip.AlbumNo": {
 						var ship = KCDatabase.Instance.MasterShips.Values.FirstOrDefault( s => s.AlbumNo == intvalue );
 						if ( ship == null )
-							Description.Text = "(存在せず)";
+							Description.Text = "( 不存在 )";
 						else
 							Description.Text = ship.ShipTypeName + " " + ship.NameWithClass;
 
@@ -1067,11 +1067,11 @@ namespace ElectronicObserver.Window.Dialog {
 
 				case ".MasterShip.RemodelBeforeShipID": {
 						if ( intvalue == 0 ) {
-							Description.Text = "(未改装)";
+							Description.Text = "( 未改装 )";
 						} else {
 							var ship = KCDatabase.Instance.MasterShips[intvalue];
 							if ( ship == null )
-								Description.Text = "(存在せず)";
+								Description.Text = "( 不存在 )";
 							else {
 								var before = ship.RemodelBeforeShip;
 								Description.Text = ship.NameWithClass + " ← " + ( before == null ? "×" : before.NameWithClass );
@@ -1081,11 +1081,11 @@ namespace ElectronicObserver.Window.Dialog {
 
 				case ".MasterShip.RemodelAfterShipID": {
 						if ( intvalue == 0 ) {
-							Description.Text = "(最終改装)";
+							Description.Text = "( 最终改装 )";
 						} else {
 							var ship = KCDatabase.Instance.MasterShips[intvalue];
 							if ( ship == null )
-								Description.Text = "(存在せず)";
+								Description.Text = "( 不存在 )";
 							else {
 								var after = ship.RemodelAfterShip;
 								Description.Text = ship.NameWithClass + " → " + ( after == null ? "×" : after.NameWithClass );
@@ -1134,7 +1134,7 @@ namespace ElectronicObserver.Window.Dialog {
 
 		private void ClearConstFilter_Click( object sender, EventArgs e ) {
 
-			if ( MessageBox.Show( ConstFilterSelector.Text + " を初期化します。\r\nよろしいですか?", "初期化の確認",
+			if ( MessageBox.Show( "即将初始化" + ConstFilterSelector.Text + "\r\n确认清空吗？", "初始化确认",
 				MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button2 )
 				== System.Windows.Forms.DialogResult.Yes ) {
 
@@ -1151,7 +1151,7 @@ namespace ElectronicObserver.Window.Dialog {
 
 		private void ConvertToExpression_Click( object sender, EventArgs e ) {
 
-			if ( MessageBox.Show( "現在の包含/除外リストを式に変換します。\r\n逆変換はできません。\r\nよろしいですか？", "確認",
+			if ( MessageBox.Show( "将包含/排除列表转换为过滤规则。\r\n此操作不可逆。\r\n确认转换吗？", "要求确认",
 					MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1 )
 					== System.Windows.Forms.DialogResult.Yes ) {
 

@@ -160,8 +160,8 @@ namespace ElectronicObserver.Window {
 			Utility.ErrorReporter.SendErrorReport( new Exception( exceptionName ), message );
 		}
 
-		public void AddLog( int priority, string message ) {
-			Utility.Logger.Add( priority, message );
+		public void AddLog( int priority, string message, string msgchs1="", string msgjap2="", string msgchs2="", string msgjap3="", string msgchs3="" ) {
+			Utility.Logger.Add( priority, message, msgchs1, msgjap2, msgchs2, msgjap3, msgchs3 );
 		}
 
 
@@ -182,6 +182,7 @@ namespace ElectronicObserver.Window {
 				config.ToolMenuDockStyle = (int)c.ToolMenuDockStyle;
 				config.IsToolMenuVisible = c.IsToolMenuVisible;
 				config.ConfirmAtRefresh = c.ConfirmAtRefresh;
+				config.BackColor = this.BackColor.ToArgb();
 
 				return config;
 			}
@@ -320,7 +321,7 @@ namespace ElectronicObserver.Window {
 
 		void Browser_Faulted( Exception e ) {
 			if ( Browser.Proxy == null ) {
-				Utility.Logger.Add( 3, "ブラウザプロセスが予期せず終了しました。" );
+				Utility.Logger.Add(3,  "", "浏览器异常退出。");
 			} else {
 				Utility.ErrorReporter.SendErrorReport( e, "ブラウザプロセス間で通信エラーが発生しました。" );
 			}

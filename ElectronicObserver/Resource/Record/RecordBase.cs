@@ -81,7 +81,7 @@ namespace ElectronicObserver.Resource.Record {
 
 			} catch ( FileNotFoundException ) {
 
-				Utility.Logger.Add( 1, "レコード " + path + " は存在しません。" );
+				Utility.Logger.Add(1, "", "找不到记录文件 : " + path);
 
 
 			} catch ( Exception ex ) {

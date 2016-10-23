@@ -252,7 +252,7 @@ namespace ElectronicObserver.Window {
 				CombinedTag.Text = Constants.GetCombinedFleet( KCDatabase.Instance.Fleet.CombinedFlag );
 
 				if ( KCDatabase.Instance.Fleet.CombinedFlag == 3 ) {
-					ToolTipInfo.SetToolTip( CombinedTag, string.Format( "ドラム缶搭載: {0}個\r\n大発動艇搭載: {1}個\r\n輸送量(TP): {2}\r\n",
+					ToolTipInfo.SetToolTip( CombinedTag, string.Format( "载有运输桶 : {0} 个\r\n载有大发动艇 : {1} 个\r\n运输量 (TP) : {2}\r\n",
 						KCDatabase.Instance.Fleet[1].MembersWithoutEscaped.Sum( s => s == null ? 0 : s.AllSlotInstanceMaster.Count( eq => eq != null && eq.CategoryType == 30 ) ) +
 						KCDatabase.Instance.Fleet[2].MembersWithoutEscaped.Sum( s => s == null ? 0 : s.AllSlotInstanceMaster.Count( eq => eq != null && eq.CategoryType == 30 ) ),
 						KCDatabase.Instance.Fleet[1].MembersWithoutEscaped.Sum( s => s == null ? 0 : s.AllSlotInstanceMaster.Count( eq => eq != null && eq.CategoryType == 24 ) ) +
@@ -271,7 +271,7 @@ namespace ElectronicObserver.Window {
 			if ( KCDatabase.Instance.Fleet.AnchorageRepairingTimer > DateTime.MinValue ) {
 				AnchorageRepairingTimer.Text = DateTimeHelper.ToTimeElapsedString( KCDatabase.Instance.Fleet.AnchorageRepairingTimer );
 				AnchorageRepairingTimer.Tag = KCDatabase.Instance.Fleet.AnchorageRepairingTimer;
-				ToolTipInfo.SetToolTip( AnchorageRepairingTimer, "泊地修理タイマ\r\n開始: " + DateTimeHelper.TimeToCSVString( KCDatabase.Instance.Fleet.AnchorageRepairingTimer ) + "\r\n回復: " + DateTimeHelper.TimeToCSVString( KCDatabase.Instance.Fleet.AnchorageRepairingTimer.AddMinutes( 20 ) ) );
+				ToolTipInfo.SetToolTip( AnchorageRepairingTimer, "泊地修理计时器\r\n开始 : " + DateTimeHelper.TimeToCSVString( KCDatabase.Instance.Fleet.AnchorageRepairingTimer ) + "\r\n恢复 : " + DateTimeHelper.TimeToCSVString( KCDatabase.Instance.Fleet.AnchorageRepairingTimer.AddMinutes( 20 ) ) );
 			}
 		}
 

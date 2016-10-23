@@ -32,7 +32,6 @@ namespace ElectronicObserver.Window {
 				ShipName = new ImageLabel();
 				ShipName.Text = "???";
 				ShipName.Anchor = AnchorStyles.Left;
-				ShipName.ForeColor = parent.ForeColor;
 				ShipName.TextAlign = ContentAlignment.MiddleLeft;
 				ShipName.Padding = new Padding( 0, 1, 0, 1 );
 				ShipName.Margin = new Padding( 2, 0, 2, 0 );
@@ -45,7 +44,6 @@ namespace ElectronicObserver.Window {
 				CompletionTime = new Label();
 				CompletionTime.Text = "";
 				CompletionTime.Anchor = AnchorStyles.Left;
-				CompletionTime.ForeColor = parent.ForeColor;
 				CompletionTime.Tag = null;
 				CompletionTime.TextAlign = ContentAlignment.MiddleLeft;
 				CompletionTime.Padding = new Padding( 0, 1, 0, 1 );
@@ -116,7 +114,7 @@ namespace ElectronicObserver.Window {
 					tooltip.SetToolTip( ShipName, name );
 					CompletionTime.Text = DateTimeHelper.ToTimeRemainString( arsenal.CompletionTime );
 					CompletionTime.Tag = arsenal.CompletionTime;
-					tooltip.SetToolTip( CompletionTime, "完了日時 : " + arsenal.CompletionTime.ToString() );
+					tooltip.SetToolTip( CompletionTime, "完成时间 : " + arsenal.CompletionTime.ToString() );
 
 				} else if ( arsenal.State == 3 ) {
 					//complete!
@@ -154,6 +152,7 @@ namespace ElectronicObserver.Window {
 				ShipName.Font = parent.Font;
 				CompletionTime.Font = parent.Font;
 				CompletionTime.BackColor = Color.Transparent;
+				ShipName.ForeColor = CompletionTime.ForeColor = Utility.Configuration.Config.UI.ForeColor;
 			}
 
 		}
@@ -213,21 +212,26 @@ namespace ElectronicObserver.Window {
 
 					name = string.Format( "{0}「{1}」", ship.ShipTypeName, ship.NameWithClass );
 
+					Utility.Logger.Add(2, "", string.Format("工厂船坞 #{0} 开始建造 : ", _buildingID),
+						string.Format("{0}。({1}/{2}/{3}/{4}-{5})",
+							name,
+							arsenal.Fuel,
+							arsenal.Ammo,
+							arsenal.Steel,
+							arsenal.Bauxite,
+							arsenal.DevelopmentMaterial),
+						" 秘书舰 : ", KCDatabase.Instance.Fleet[1].MembersInstance[0].NameWithLevel);
 				} else {
 
-					name = "艦娘";
+					Utility.Logger.Add(2, "", string.Format("工厂船坞 #{0} 开始建造新舰娘。", _buildingID),
+					string.Format("({0}/{1}/{2}/{3}-{4})",
+						arsenal.Fuel,
+						arsenal.Ammo,
+						arsenal.Steel,
+						arsenal.Bauxite,
+						arsenal.DevelopmentMaterial),
+					" 秘书舰 : ", KCDatabase.Instance.Fleet[1].MembersInstance[0].NameWithLevel);
 				}
-
-				Utility.Logger.Add( 2, string.Format( "工廠ドック #{0}で {1}の建造を開始しました。({2}/{3}/{4}/{5}-{6} 秘書艦: {7})",
-					_buildingID,
-					name,
-					arsenal.Fuel,
-					arsenal.Ammo,
-					arsenal.Steel,
-					arsenal.Bauxite,
-					arsenal.DevelopmentMaterial,
-					KCDatabase.Instance.Fleet[1].MembersInstance[0].NameWithLevel
-					) );
 
 				_buildingID = -1;
 			}
@@ -262,7 +266,7 @@ namespace ElectronicObserver.Window {
 
 		void ConfigurationChanged() {
 
-			Font = Utility.Configuration.Config.UI.MainFont;
+			Font = Utility.Configuration.Config.UI.JapFont;
 			MenuMain_ShowShipName.Checked = Utility.Configuration.Config.FormArsenal.ShowShipName;
 
 			if ( ControlArsenal != null ) {

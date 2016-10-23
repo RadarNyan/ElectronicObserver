@@ -170,6 +170,16 @@ namespace ElectronicObserver.Utility {
 				/// </summary>
 				public SerializableFont SubFont { get; set; }
 
+				/// <summary>
+				/// Japanese Main Font ( Hard-coded to Meiryo UI, 12px )
+				/// </summary>
+				public SerializableFont JapFont { get; set; }
+
+				/// <summary>
+				/// Japanese Sub Font ( Hard-coded to Meiryo UI, 10px )
+				/// </summary>
+				public SerializableFont JapFont2 { get; set; }
+
 				[IgnoreDataMember]
 				private bool _barColorMorphing;
 
@@ -243,10 +253,189 @@ namespace ElectronicObserver.Utility {
 					//*/
 				};
 
+				#region - UI Colors -
+
+				public int ThemeID { get; set; }
+				public SerializableColor SolarizedBase03 { get; set; }
+				public SerializableColor SolarizedBase02 { get; set; }
+				public SerializableColor SolarizedBase01 { get; set; }
+				public SerializableColor SolarizedBase00 { get; set; }
+				public SerializableColor SolarizedBase0 { get; set; }
+				public SerializableColor SolarizedBase1 { get; set; }
+				public SerializableColor SolarizedBase2 { get; set; }
+				public SerializableColor SolarizedBase3 { get; set; }
+				public SerializableColor SolarizedYellow  { get; set; }
+				public SerializableColor SolarizedOrange  { get; set; }
+				public SerializableColor SolarizedRed     { get; set; }
+				public SerializableColor SolarizedMagenta { get; set; }
+				public SerializableColor SolarizedViolet  { get; set; }
+				public SerializableColor SolarizedBlue    { get; set; }
+				public SerializableColor SolarizedCyan    { get; set; }
+				public SerializableColor SolarizedGreen   { get; set; }
+				// 常用背景色、前景色
+				public Color BackColor { get {
+				switch (ThemeID) {
+					case 0:  return SolarizedBase3.ColorData;
+					case 1:  return SolarizedBase03.ColorData;
+					default: return SystemColors.Control;
+				}}}
+				public Color ForeColor { get {
+				switch (ThemeID) {
+					case 0:  return SolarizedBase01.ColorData;
+					case 1:  return SolarizedBase1.ColorData;
+					default: return SystemColors.ControlText;
+				}}}
+				public Color SubBackColor { get {
+				switch (ThemeID) {
+					case 0:  return SolarizedBase2.ColorData;
+					case 1:  return SolarizedBase02.ColorData;
+					default: return SystemColors.Control;
+				}}}
+				public Color SubForeColor { get {
+				switch (ThemeID) {
+					case 0:  return SolarizedBase00.ColorData;
+					case 1:  return SolarizedBase0.ColorData;
+					default: return Color.FromArgb(0x88, 0x88, 0x88);
+				}}}
+				public Color Color_Red { get {
+				switch (ThemeID) {
+					case 0:  return SolarizedRed.ColorData;
+					case 1:  return SolarizedRed.ColorData;
+					default: return Color.Red;
+				}}}
+				// 视图 - 舰队：疲劳度
+				public Color Fleet_ColorConditionVeryTired { get {
+				switch (ThemeID) {
+					case 0:  return SolarizedRed.ColorData;
+					case 1:  return SolarizedRed.ColorData;
+					default: return Color.LightCoral;
+				}}}
+				public Color Fleet_ColorConditionTired { get {
+				switch (ThemeID) {
+					case 0:  return SolarizedOrange.ColorData;
+					case 1:  return SolarizedOrange.ColorData;
+					default: return Color.LightSalmon;
+				}}}
+				public Color Fleet_ColorConditionLittleTired { get {
+				switch (ThemeID) {
+					case 0:  return SolarizedYellow.ColorData;
+					case 1:  return SolarizedYellow.ColorData;
+					default: return Color.Moccasin;
+				}}}
+				public Color Fleet_ColorConditionSparkle { get {
+				switch (ThemeID) {
+					case 0:  return SolarizedBlue.ColorData;
+					case 1:  return SolarizedBlue.ColorData;
+					default: return Color.LightGreen;
+				}}}
+				// 视图 - 舰队：装备改修
+				public Color Fleet_equipmentLevelColor { get {
+				switch (ThemeID) {
+					case 0:  return SolarizedCyan.ColorData;
+					case 1:  return SolarizedCyan.ColorData;
+					default: return Color.FromArgb(0x00, 0x66, 0x66);
+				}}}
+				// 视图 - 罗盘：敌舰名、事件名
+				public Color Compass_ShipNameColor3 { get { // Flagship
+				switch (ThemeID) {
+					case 0:  return SolarizedOrange.ColorData;
+					case 1:  return SolarizedOrange.ColorData;
+					default: return Color.FromArgb(0xFF, 0x88, 0x00);
+				}}}
+				public Color Compass_ShipNameColor4 { get { // Latemodel, Flagship kai
+				switch (ThemeID) {
+					case 0:  return SolarizedBlue.ColorData;
+					case 1:  return SolarizedBlue.ColorData;
+					default: return Color.FromArgb(0x00, 0x88, 0xFF);
+				}}}
+				public Color Compass_ShipNameColor5 { get { // Latemodel Elite
+				switch (ThemeID) {
+					case 0:  return SolarizedMagenta.ColorData;
+					case 1:  return SolarizedMagenta.ColorData;
+					default: return Color.FromArgb(0x88, 0x00, 0x00);
+				}}}
+				public Color Compass_ShipNameColor6 { get { // Latemodel Flagship
+				switch (ThemeID) {
+					case 0:  return SolarizedYellow.ColorData;
+					case 1:  return SolarizedYellow.ColorData;
+					default: return Color.FromArgb(0x88, 0x44, 0x00);
+				}}}
+				public Color Compass_ColorTextEventKind3 { get { // Night Battle
+				switch (ThemeID) {
+					case 0:  return SolarizedViolet.ColorData;
+					case 1:  return SolarizedViolet.ColorData;
+					default: return Color.Navy;
+				}}}
+				public Color Compass_ColorTextEventKind6 { get { // Air Battle
+				switch (ThemeID) {
+					case 0:  return SolarizedGreen.ColorData;
+					case 1:  return SolarizedGreen.ColorData;
+					default: return Color.DarkGreen;
+				}}}
+				public Color Compass_ColorTextEventKind5 { get { // Enemy Combined
+				switch (ThemeID) {
+					case 0:  return SolarizedRed.ColorData;
+					case 1:  return SolarizedRed.ColorData;
+					default: return Color.DarkRed;
+				}}}
+				public Color Compass_ColoroverlayBrush { get { // 当舰载机数量叠加到飞机图标上时背景填充的色块
+				switch (ThemeID) {
+					case 0:  return Color.FromArgb(0xC0, 0xFD, 0xF6, 0xE3);
+					case 1:  return Color.FromArgb(0xC0, 0x00, 0x2B, 0x36);
+					default: return Color.FromArgb(0xC0, 0xF0, 0xF0, 0xF0);
+				}}}
+				// 视图 - 战斗：血条背景色、血条文字色
+				public Color Battle_ColorHPBarsBossDamaged { get {
+				switch (ThemeID) {
+					case 0:  return SolarizedOrange.ColorData;
+					case 1:  return SolarizedOrange.ColorData;
+					default: return Color.MistyRose;
+				}}}
+				public Color Battle_ColorHPBarsMVP { get {
+				switch (ThemeID) {
+					case 0:  return SolarizedYellow.ColorData;
+					case 1:  return SolarizedYellow.ColorData;
+					default: return Color.Moccasin;
+				}}}
+				public Color Battle_ColorHPBarsEscaped { get {
+				switch (ThemeID) {
+					case 0:  return SolarizedBase1.ColorData;
+					case 1:  return SolarizedBase01.ColorData;
+					default: return Color.Silver;
+				}}}
+				public Color Battle_ColorHPTextRepair { get {
+				switch (ThemeID) {
+					case 0:  return SolarizedBase1.ColorData;
+					case 1:  return SolarizedBase01.ColorData;
+					default: return Color.FromArgb(0x00, 0x00, 0x88);
+				}}}
+
+				#endregion
+
 				public ConfigUI() {
-					MainFont = new Font( "Meiryo UI", 12, FontStyle.Regular, GraphicsUnit.Pixel );
-					SubFont = new Font( "Meiryo UI", 10, FontStyle.Regular, GraphicsUnit.Pixel );
+					MainFont = new Font( "Microsoft YaHei", 12, FontStyle.Regular, GraphicsUnit.Pixel );
+					SubFont  = new Font( "Microsoft YaHei", 10, FontStyle.Regular, GraphicsUnit.Pixel );
+					JapFont  = new Font( "Meiryo UI", 12, FontStyle.Regular, GraphicsUnit.Pixel );
+					JapFont2 = new Font( "Meiryo UI", 10, FontStyle.Regular, GraphicsUnit.Pixel );
 					BarColorMorphing = false;
+					ThemeID = 0; // 0 - SolarizedLight; 1 - SolarizedDark; other - VS2012Light
+					// Solarized
+					SolarizedBase03 = new SerializableColor(0xFF002B36);
+					SolarizedBase02 = new SerializableColor(0xFF073642);
+					SolarizedBase01 = new SerializableColor(0xFF586E75);
+					SolarizedBase00 = new SerializableColor(0xFF657B83);
+					SolarizedBase0 = new SerializableColor(0xFF839496);
+					SolarizedBase1 = new SerializableColor(0xFF93A1A1);
+					SolarizedBase2 = new SerializableColor(0xFFEEE8D5);
+					SolarizedBase3 = new SerializableColor(0xFFFDF6E3);
+					SolarizedYellow  = new SerializableColor(0xFFB58900);
+					SolarizedOrange  = new SerializableColor(0xFFCB4B16);
+					SolarizedRed     = new SerializableColor(0xFFDC322F);
+					SolarizedMagenta = new SerializableColor(0xFFD33682); 
+					SolarizedViolet  = new SerializableColor(0xFF6C71C4);
+					SolarizedBlue    = new SerializableColor(0xFF268BD2);
+					SolarizedCyan    = new SerializableColor(0xFF2AA198);
+					SolarizedGreen   = new SerializableColor(0xFF859900);
 				}
 			}
 			/// <summary>UI</summary>
@@ -323,7 +512,7 @@ namespace ElectronicObserver.Utility {
 					LogLevel = 2;
 					SaveLogFlag = true;
 					SaveErrorReport = true;
-					FileEncodingID = 4;
+					FileEncodingID = 1;
 					ShowSpoiler = true;
 					PlayTime = 0;
 					PlayTimeIgnoreInterval = 10 * 60;
@@ -833,7 +1022,7 @@ namespace ElectronicObserver.Utility {
 					ZoomRate = 100;
 					ZoomFit = false;
 					LogInPageURL = @"http://www.dmm.com/netgame_s/kancolle/";
-					IsEnabled = true;
+					IsEnabled = false;
 					ScreenShotPath = "ScreenShot";
 					ScreenShotFormat = 2;
 					StyleSheet = "\r\nbody {\r\n	margin:0;\r\n	overflow:hidden\r\n}\r\n\r\n#game_frame {\r\n	position:fixed;\r\n	left:50%;\r\n	top:-16px;\r\n	margin-left:-450px;\r\n	z-index:1\r\n}\r\n";
@@ -1192,8 +1381,8 @@ namespace ElectronicObserver.Utility {
 				CheckUpdate( mainForm );
 				OnConfigurationChanged();
 			} else {
-				MessageBox.Show( SoftwareInformation.SoftwareNameJapanese + " をご利用いただきありがとうございます。\r\n設定や使用方法については「ヘルプ」→「オンラインヘルプ」を参照してください。\r\nご使用の前に必ずご一読ください。",
-					"初回起動メッセージ", MessageBoxButtons.OK, MessageBoxIcon.Information );
+				MessageBox.Show( "欢迎使用" + SoftwareInformation.SoftwareNameJapanese + " 。\r\n\r\n设置和使用方法请参考 [帮助] - [在线帮助]\r\n使用前敬请阅读。",
+					"初次启动信息", MessageBoxButtons.OK, MessageBoxIcon.Information );
 
 
 				// そのままだと正常に動作しなくなった(らしい)ので、ブラウザバージョンの書き込み
@@ -1207,7 +1396,7 @@ namespace ElectronicObserver.Utility {
 					reg = Microsoft.Win32.Registry.CurrentUser.CreateSubKey( DialogConfiguration.RegistryPathMaster + DialogConfiguration.RegistryPathGPURendering );
 					reg.SetValue( Window.FormBrowserHost.BrowserExeName, DialogConfiguration.DefaultGPURendering ? 1 : 0, Microsoft.Win32.RegistryValueKind.DWord );
 
-					Utility.Logger.Add( 2, "ブラウザバージョンをレジストリに書き込みました。削除したい場合は「設定→サブウィンドウ→ブラウザ2→削除」を押してください。" );
+					Utility.Logger.Add(2, "", "已将浏览器版本写入注册表。想要清除的话点击 [设置]-[子窗口]-[浏览器2] 里的 [清除] 按钮。");
 
 
 				} catch ( Exception ex ) {

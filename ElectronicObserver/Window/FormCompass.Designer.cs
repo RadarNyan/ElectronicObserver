@@ -180,6 +180,7 @@
 			this.TextEnemyFleetName.TabIndex = 0;
 			this.TextEnemyFleetName.Text = "(敵艦隊名)";
 			this.TextEnemyFleetName.MouseDown += new System.Windows.Forms.MouseEventHandler(this.TextEnemyFleetName_MouseDown);
+			this.TextEnemyFleetName.Font = Utility.Configuration.Config.UI.JapFont;
 			// 
 			// TextFormation
 			// 
@@ -213,11 +214,11 @@
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
 			this.ClientSize = new System.Drawing.Size(300, 200);
 			this.Controls.Add(this.BasePanel);
-			this.Font = new System.Drawing.Font("Meiryo UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+			this.Font = new System.Drawing.Font("Microsoft YaHei", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
 			this.HideOnClose = true;
 			this.Name = "FormCompass";
-			this.Text = "羅針盤";
+			this.Text = "罗盘";
 			this.Load += new System.EventHandler(this.FormCompass_Load);
 			this.BasePanel.ResumeLayout(false);
 			this.BasePanel.PerformLayout();

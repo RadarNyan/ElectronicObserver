@@ -425,7 +425,7 @@ namespace ElectronicObserver.Window.Dialog {
 					FormBrowser_BrowserVersion.Text = DefaultBrowserVersion.ToString();
 					FormBrowser_GPURendering.Checked = DefaultGPURendering;
 
-					Utility.Logger.Add( 3, "レジストリからの読み込みに失敗しました。" + ex.Message );
+					Utility.Logger.Add(3, "", "读取注册表信息失败。" + ex.Message);
 
 				} finally {
 					if ( reg != null )
@@ -772,7 +772,7 @@ namespace ElectronicObserver.Window.Dialog {
 
 		private void BGMPlayer_SetVolumeAll_Click( object sender, EventArgs e ) {
 
-			if ( MessageBox.Show( "すべてのBGMに対して音量 " + (int)BGMPlayer_VolumeAll.Value + " を適用します。\r\nよろしいですか？\r\n", "音量一括設定の確認",
+			if ( MessageBox.Show( "将所有 BGM 的音量设为 " + (int)BGMPlayer_VolumeAll.Value + "\r\n确认设置吗？\r\n", "确认批量设置音量",
 				MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1 ) == System.Windows.Forms.DialogResult.Yes ) {
 
 				foreach ( var h in BGMHandles.Values ) {
@@ -794,7 +794,7 @@ namespace ElectronicObserver.Window.Dialog {
 
 		private void UpdatePlayTime() {
 			double elapsed = ( DateTime.Now - _shownTime ).TotalSeconds;
-			Log_PlayTime.Text = "プレイ時間: " + ElectronicObserver.Utility.Mathematics.DateTimeHelper.ToTimeElapsedString( TimeSpan.FromSeconds( _playTimeCache + elapsed ) );
+			Log_PlayTime.Text = "游戏用时 : " + ElectronicObserver.Utility.Mathematics.DateTimeHelper.ToTimeElapsedString( TimeSpan.FromSeconds( _playTimeCache + elapsed ) );
 		}
 
 		private void PlayTimeTimer_Tick( object sender, EventArgs e ) {

@@ -17,9 +17,9 @@ namespace ElectronicObserver.Window.Dialog {
 
 		private DevelopmentRecord _record;
 
-		private const string NameAny = "(全て)";
-		private const string NameNotExist = "(失敗)";
-		private const string NameExist = "(成功)";
+		private const string NameAny = "( 全部 )";
+		private const string NameNotExist = "( 失败 )";
+		private const string NameExist = "( 成功 )";
 
 
 		private class SearchArgument {
@@ -185,7 +185,7 @@ namespace ElectronicObserver.Window.Dialog {
 		private void ButtonRun_Click( object sender, EventArgs e ) {
 
 			if ( Searcher.IsBusy ) {
-				if ( MessageBox.Show( "検索を中止しますか?", "検索中です", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button2 )
+				if ( MessageBox.Show( "要中断搜索吗？", "正在搜索中", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button2 )
 					== System.Windows.Forms.DialogResult.Yes ) {
 					Searcher.CancelAsync();
 				}
@@ -193,6 +193,7 @@ namespace ElectronicObserver.Window.Dialog {
 			}
 
 			RecordView.Rows.Clear();
+			RecordView.Font = Utility.Configuration.Config.UI.JapFont;
 
 			var row = new DataGridViewRow();
 			row.CreateCells( RecordView );
@@ -214,7 +215,7 @@ namespace ElectronicObserver.Window.Dialog {
 				RecordView_Header.Width = 50;
 				RecordView_Header.HeaderText = "";
 				RecordView_Name.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-				RecordView_Name.HeaderText = "装備";
+				RecordView_Name.HeaderText = "装备";
 				RecordView_Date.Width = 140;
 				RecordView_Date.Visible = true;
 				RecordView_Recipe.Width = 120;
@@ -226,20 +227,20 @@ namespace ElectronicObserver.Window.Dialog {
 				RecordView_Detail.Visible = false;
 			} else {
 				RecordView_Header.Width = 150;
-				RecordView_Header.HeaderText = "回数";
+				RecordView_Header.HeaderText = "次数";
 				RecordView_Name.AutoSizeMode = DataGridViewAutoSizeColumnMode.NotSet;
 				RecordView_Name.Width = 160;
-				RecordView_Name.HeaderText = ( ( EquipmentName.Text != NameAny && EquipmentName.Text != NameExist ) || (int)EquipmentCategory.SelectedValue != -1 ) ? "レシピ" : "装備";
+				RecordView_Name.HeaderText = ( ( EquipmentName.Text != NameAny && EquipmentName.Text != NameExist ) || (int)EquipmentCategory.SelectedValue != -1 ) ? "公式" : "装备";
 				RecordView_Date.Visible = false;
 				RecordView_Recipe.Visible = false;
 				RecordView_FlagshipType.Visible = false;
 				RecordView_Flagship.Visible = false;
-				RecordView_Detail.HeaderText = ( SecretaryName.Text != NameAny || (int)SecretaryCategory.SelectedValue != -1 ) ? "レシピ別回数" : "艦種別回数";
+				RecordView_Detail.HeaderText = ( SecretaryName.Text != NameAny || (int)SecretaryCategory.SelectedValue != -1 ) ? "各公式次数" : "各舰种次数";
 				RecordView_Detail.Visible = true;
 			}
 			RecordView.ColumnHeadersVisible = true;
 
-			StatusInfo.Text = "検索中です...";
+			StatusInfo.Text = "搜索中 ...";
 			StatusInfo.Tag = DateTime.Now;
 
 			Searcher.RunWorkerAsync( args );
@@ -400,7 +401,7 @@ namespace ElectronicObserver.Window.Dialog {
 						r.EquipmentName,
 						r.Date,
 						GetRecipeString( r ),
-						shiptype != null ? shiptype.Name : "(不明)",
+						shiptype != null ? shiptype.Name : "( 不明 )",
 						r.FlagshipName,
 						null
 						);
@@ -438,7 +439,7 @@ namespace ElectronicObserver.Window.Dialog {
 					if ( prioritySecretary > 0 )
 						key2 = currentRecipe;
 					else
-						key2 = shiptype != null ? shiptype.Name : "(不明)";
+						key2 = shiptype != null ? shiptype.Name : "( 不明 )";
 
 					if ( !countsdetail.ContainsKey( key ) ) {
 						countsdetail.Add( key, new Dictionary<string, int>() );
@@ -520,11 +521,11 @@ namespace ElectronicObserver.Window.Dialog {
 				RecordView.Sort( RecordView.SortedColumn ?? RecordView_Header,
 					RecordView.SortOrder == SortOrder.Ascending ? ListSortDirection.Ascending : ListSortDirection.Descending );
 
-				StatusInfo.Text = "検索が完了しました。(" + (int)( DateTime.Now - (DateTime)StatusInfo.Tag ).TotalMilliseconds + " ms)";
+				StatusInfo.Text = "搜索完成。(" + (int)( DateTime.Now - (DateTime)StatusInfo.Tag ).TotalMilliseconds + " ms)";
 
 			} else {
 
-				StatusInfo.Text = "検索がキャンセルされました。";
+				StatusInfo.Text = "搜索已被取消。";
 			}
 
 		}

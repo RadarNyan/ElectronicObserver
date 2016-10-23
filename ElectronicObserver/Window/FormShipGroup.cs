@@ -203,7 +203,7 @@ namespace ElectronicObserver.Window {
 			CSGrayRight.Font =
 			CSCherryRight.Font =
 			CSIsLocked.Font =
-				config.UI.MainFont;
+				config.UI.JapFont;
 
 			foreach ( System.Windows.Forms.Control c in TabPanel.Controls )
 				c.Font = Font;
@@ -801,7 +801,7 @@ namespace ElectronicObserver.Window {
 
 		private void MenuGroup_Add_Click( object sender, EventArgs e ) {
 
-			using ( var dialog = new DialogTextInput( "グループを追加", "グループ名を入力してください：" ) ) {
+			using ( var dialog = new DialogTextInput( "新建分组", "请输入分组名 :" ) ) {
 
 				if ( dialog.ShowDialog( this ) == System.Windows.Forms.DialogResult.OK ) {
 
@@ -831,7 +831,7 @@ namespace ElectronicObserver.Window {
 			if ( senderLabel == null )
 				return;		//想定外
 
-			using ( var dialog = new DialogTextInput( "グループをコピー", "グループ名を入力してください：" ) ) {
+			using ( var dialog = new DialogTextInput( "复制分组", "请输入新分组名 :" ) ) {
 
 				if ( dialog.ShowDialog( this ) == System.Windows.Forms.DialogResult.OK ) {
 
@@ -858,7 +858,7 @@ namespace ElectronicObserver.Window {
 			ShipGroupData group = KCDatabase.Instance.ShipGroup[(int)senderLabel.Tag];
 
 			if ( group != null ) {
-				if ( MessageBox.Show( string.Format( "グループ [{0}] を削除しますか？\r\nこの操作は元に戻せません。", group.Name ), "確認",
+				if ( MessageBox.Show( string.Format( "要删除分组 [{0}] 吗？\r\n此操作无法撤消。", group.Name ), "需要确认",
 					MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2 )
 					== System.Windows.Forms.DialogResult.Yes ) {
 
@@ -872,7 +872,7 @@ namespace ElectronicObserver.Window {
 				}
 
 			} else {
-				MessageBox.Show( "このグループは削除できません。", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Exclamation );
+				MessageBox.Show( "不能删除该分组。", "错误", MessageBoxButtons.OK, MessageBoxIcon.Exclamation );
 			}
 		}
 
@@ -885,7 +885,7 @@ namespace ElectronicObserver.Window {
 
 			if ( group != null ) {
 
-				using ( var dialog = new DialogTextInput( "グループ名の変更", "グループ名を入力してください：" ) ) {
+				using ( var dialog = new DialogTextInput( "重命名分组", "请输入新分组名 :" ) ) {
 
 					dialog.InputtedText = group.Name;
 
@@ -897,7 +897,7 @@ namespace ElectronicObserver.Window {
 				}
 
 			} else {
-				MessageBox.Show( "このグループの名前を変更することはできません。", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Exclamation );
+				MessageBox.Show( "不能重命名该分组。", "错误", MessageBoxButtons.OK, MessageBoxIcon.Exclamation );
 			}
 
 		}
@@ -1112,7 +1112,7 @@ namespace ElectronicObserver.Window {
 
 		private void MenuMember_AddToGroup_Click( object sender, EventArgs e ) {
 
-			using ( var dialog = new DialogTextSelect( "グループの選択", "追加するグループを選択してください：",
+			using ( var dialog = new DialogTextSelect( "选择分组", "请选择要追加到的分组 :",
 				KCDatabase.Instance.ShipGroup.ShipGroups.Values.ToArray() ) ) {
 
 				if ( dialog.ShowDialog( this ) == System.Windows.Forms.DialogResult.OK ) {
@@ -1136,7 +1136,7 @@ namespace ElectronicObserver.Window {
 			if ( ships.Count() == 0 )
 				return;
 
-			using ( var dialog = new DialogTextInput( "グループの追加", "グループ名を入力してください：" ) ) {
+			using ( var dialog = new DialogTextInput( "新建分组", "请输入分组名 :" ) ) {
 
 				if ( dialog.ShowDialog( this ) == System.Windows.Forms.DialogResult.OK ) {
 
@@ -1473,7 +1473,7 @@ namespace ElectronicObserver.Window {
 
 						}
 
-						Utility.Logger.Add( 2, "艦船グループ CSVを " + dialog.OutputPath + " に保存しました。" );
+						Utility.Logger.Add(2, "", "已将舰船分组保存为 : " + dialog.OutputPath);
 
 					} catch ( Exception ex ) {
 

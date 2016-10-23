@@ -20,8 +20,8 @@ namespace ElectronicObserver.Window {
 
 	public partial class FormBattle : DockContent {
 
-		private readonly Color WinRankColor_Win = SystemColors.ControlText;
-		private readonly Color WinRankColor_Lose = Color.Red;
+		private readonly Color WinRankColor_Win = Utility.Configuration.Config.UI.ForeColor;
+		private readonly Color WinRankColor_Lose = Utility.Configuration.Config.UI.Color_Red;
 
 
 		private List<ShipStatusHP> HPBars;
@@ -309,7 +309,7 @@ namespace ElectronicObserver.Window {
 
 			if ( pd != null && pd.IsAvailable ) {
 
-				Searching.Text = "基地航空隊";
+				Searching.Text = "基地航空队";
 				Searching.ImageAlign = ContentAlignment.MiddleLeft;
 				Searching.ImageIndex = (int)ResourceManager.EquipmentContent.LandAttacker;
 
@@ -318,17 +318,17 @@ namespace ElectronicObserver.Window {
 
 				foreach ( var phase in pd.AirAttackUnits ) {
 
-					sb.AppendFormat( "{0} 回目 - #{1} :\r\n",
+					sb.AppendFormat( "第 {0} 次 - #{1} :\r\n",
 						index, phase.AirUnitID );
 
 					if ( phase.IsStage1Available ) {
-						sb.AppendFormat( "　St1: 自軍 -{0}/{1} | 敵軍 -{2}/{3} | {4}\r\n",
+						sb.AppendFormat( "　St1: 自军 -{0}/{1} | 敌军 -{2}/{3} | {4}\r\n",
 							phase.AircraftLostStage1Friend, phase.AircraftTotalStage1Friend,
 							phase.AircraftLostStage1Enemy, phase.AircraftTotalStage1Enemy,
 							Constants.GetAirSuperiority( phase.AirSuperiority ) );
 					}
 					if ( phase.IsStage2Available ) {
-						sb.AppendFormat( "　St2: 自軍 -{0}/{1} | 敵軍 -{2}/{3}\r\n",
+						sb.AppendFormat( "　St2: 自军 -{0}/{1} | 敌军 -{2}/{3}\r\n",
 							phase.AircraftLostStage2Friend, phase.AircraftTotalStage2Friend,
 							phase.AircraftLostStage2Enemy, phase.AircraftTotalStage2Enemy );
 					}
@@ -349,7 +349,7 @@ namespace ElectronicObserver.Window {
 		/// 基地航空隊フェーズの結果をクリアします。
 		/// </summary>
 		private void ClearBaseAirAttack() {
-			Searching.Text = "索敵";
+			Searching.Text = "索敌";
 			Searching.ImageAlign = ContentAlignment.MiddleCenter;
 			Searching.ImageIndex = -1;
 			ToolTipInfo.SetToolTip( Searching, null );
@@ -370,17 +370,17 @@ namespace ElectronicObserver.Window {
 				AirStage1Friend.Text = string.Format( "-{0}/{1}", planeFriend[0], planeFriend[1] );
 
 				if ( planeFriend[1] > 0 && planeFriend[0] == planeFriend[1] )
-					AirStage1Friend.ForeColor = Color.Red;
+					AirStage1Friend.ForeColor = Utility.Configuration.Config.UI.Color_Red;
 				else
-					AirStage1Friend.ForeColor = SystemColors.ControlText;
+					AirStage1Friend.ForeColor = Utility.Configuration.Config.UI.ForeColor;
 
 				int[] planeEnemy = { pd.AircraftLostStage1Enemy, pd.AircraftTotalStage1Enemy };
 				AirStage1Enemy.Text = string.Format( "-{0}/{1}", planeEnemy[0], planeEnemy[1] );
 
 				if ( planeEnemy[1] > 0 && planeEnemy[0] == planeEnemy[1] )
-					AirStage1Enemy.ForeColor = Color.Red;
+					AirStage1Enemy.ForeColor = Utility.Configuration.Config.UI.Color_Red;
 				else
-					AirStage1Enemy.ForeColor = SystemColors.ControlText;
+					AirStage1Enemy.ForeColor = Utility.Configuration.Config.UI.ForeColor;
 
 
 				//触接
@@ -388,7 +388,7 @@ namespace ElectronicObserver.Window {
 				if ( touchFriend != -1 ) {
 					AirStage1Friend.ImageAlign = ContentAlignment.MiddleLeft;
 					AirStage1Friend.ImageIndex = (int)ResourceManager.EquipmentContent.Seaplane;
-					ToolTipInfo.SetToolTip( AirStage1Friend, "触接中: " + KCDatabase.Instance.MasterEquipments[touchFriend].Name );
+					ToolTipInfo.SetToolTip( AirStage1Friend, "触接中 : " + KCDatabase.Instance.MasterEquipments[touchFriend].Name );
 				} else {
 					AirStage1Friend.ImageAlign = ContentAlignment.MiddleCenter;
 					AirStage1Friend.ImageIndex = -1;
@@ -399,7 +399,7 @@ namespace ElectronicObserver.Window {
 				if ( touchEnemy != -1 ) {
 					AirStage1Enemy.ImageAlign = ContentAlignment.MiddleLeft;
 					AirStage1Enemy.ImageIndex = (int)ResourceManager.EquipmentContent.Seaplane;
-					ToolTipInfo.SetToolTip( AirStage1Enemy, "触接中: " + KCDatabase.Instance.MasterEquipments[touchEnemy].Name );
+					ToolTipInfo.SetToolTip( AirStage1Enemy, "触接中 : " + KCDatabase.Instance.MasterEquipments[touchEnemy].Name );
 				} else {
 					AirStage1Enemy.ImageAlign = ContentAlignment.MiddleCenter;
 					AirStage1Enemy.ImageIndex = -1;
@@ -411,13 +411,13 @@ namespace ElectronicObserver.Window {
 				AirSuperiority.Text = Constants.GetAirSuperiority( -1 );
 
 				AirStage1Friend.Text = "-";
-				AirStage1Friend.ForeColor = SystemColors.ControlText;
+				AirStage1Friend.ForeColor = Utility.Configuration.Config.UI.ForeColor;
 				AirStage1Friend.ImageAlign = ContentAlignment.MiddleCenter;
 				AirStage1Friend.ImageIndex = -1;
 				ToolTipInfo.SetToolTip( AirStage1Friend, null );
 
 				AirStage1Enemy.Text = "-";
-				AirStage1Enemy.ForeColor = SystemColors.ControlText;
+				AirStage1Enemy.ForeColor = Utility.Configuration.Config.UI.ForeColor;
 				AirStage1Enemy.ImageAlign = ContentAlignment.MiddleCenter;
 				AirStage1Enemy.ImageIndex = -1;
 				ToolTipInfo.SetToolTip( AirStage1Enemy, null );
@@ -430,17 +430,17 @@ namespace ElectronicObserver.Window {
 				AirStage2Friend.Text = string.Format( "-{0}/{1}", planeFriend[0], planeFriend[1] );
 
 				if ( planeFriend[1] > 0 && planeFriend[0] == planeFriend[1] )
-					AirStage2Friend.ForeColor = Color.Red;
+					AirStage2Friend.ForeColor = Utility.Configuration.Config.UI.Color_Red;
 				else
-					AirStage2Friend.ForeColor = SystemColors.ControlText;
+					AirStage2Friend.ForeColor = Utility.Configuration.Config.UI.ForeColor;
 
 				int[] planeEnemy = { pd.AircraftLostStage2Enemy, pd.AircraftTotalStage2Enemy };
 				AirStage2Enemy.Text = string.Format( "-{0}/{1}", planeEnemy[0], planeEnemy[1] );
 
 				if ( planeEnemy[1] > 0 && planeEnemy[0] == planeEnemy[1] )
-					AirStage2Enemy.ForeColor = Color.Red;
+					AirStage2Enemy.ForeColor = Utility.Configuration.Config.UI.Color_Red;
 				else
-					AirStage2Enemy.ForeColor = SystemColors.ControlText;
+					AirStage2Enemy.ForeColor = Utility.Configuration.Config.UI.ForeColor;
 
 
 				//対空カットイン
@@ -452,13 +452,13 @@ namespace ElectronicObserver.Window {
 					AACutin.ImageAlign = ContentAlignment.MiddleLeft;
 					AACutin.ImageIndex = (int)ResourceManager.EquipmentContent.HighAngleGun;
 					ToolTipInfo.SetToolTip( AACutin, string.Format(
-						"対空カットイン: {0}\r\nカットイン種別: {1} ({2})",
+						"对空 CI : {0}\r\nCI 类型 : {1} ({2})",
 						pd.AACutInShip.NameWithLevel,
 						cutinID,
 						Constants.GetAACutinKind( cutinID ) ) );
 
 				} else {
-					AACutin.Text = "対空砲火";
+					AACutin.Text = "对空炮火";
 					AACutin.ImageAlign = ContentAlignment.MiddleCenter;
 					AACutin.ImageIndex = -1;
 					ToolTipInfo.SetToolTip( AACutin, null );
@@ -466,10 +466,10 @@ namespace ElectronicObserver.Window {
 
 			} else {	//艦対空戦闘発生せず
 				AirStage2Friend.Text = "-";
-				AirStage2Friend.ForeColor = SystemColors.ControlText;
+				AirStage2Friend.ForeColor = Utility.Configuration.Config.UI.ForeColor;
 				AirStage2Enemy.Text = "-";
-				AirStage2Enemy.ForeColor = SystemColors.ControlText;
-				AACutin.Text = "対空砲火";
+				AirStage2Enemy.ForeColor = Utility.Configuration.Config.UI.ForeColor;
+				AACutin.Text = "対空炮火";
 				AACutin.ImageAlign = ContentAlignment.MiddleCenter;
 				AACutin.ImageIndex = -1;
 				ToolTipInfo.SetToolTip( AACutin, null );
@@ -500,7 +500,7 @@ namespace ElectronicObserver.Window {
 
 				AirSuperiority.Text = Constants.GetAirSuperiority( pd1.AirSuperiority );
 				if ( isBattle2Enabled ) {
-					ToolTipInfo.SetToolTip( AirSuperiority, "第2次: " + Constants.GetAirSuperiority( pd2.AirSuperiority ) );
+					ToolTipInfo.SetToolTip( AirSuperiority, "第 2 次 : " + Constants.GetAirSuperiority( pd2.AirSuperiority ) );
 				} else {
 					ToolTipInfo.SetToolTip( AirSuperiority, null );
 				}
@@ -513,14 +513,14 @@ namespace ElectronicObserver.Window {
 					( isBattle2Enabled ? pd2.AircraftTotalStage1Friend : 0 ),
 				};
 				AirStage1Friend.Text = string.Format( "-{0}/{1}", planeFriend[0] + planeFriend[2], planeFriend[1] );
-				ToolTipInfo.SetToolTip( AirStage1Friend, string.Format( "第1次: -{0}/{1}\r\n第2次: -{2}/{3}\r\n",
+				ToolTipInfo.SetToolTip( AirStage1Friend, string.Format( "第 1 次 : -{0}/{1}\r\n第 2 次 : -{2}/{3}\r\n",
 					planeFriend[0], planeFriend[1], planeFriend[2], planeFriend[3] ) );
 
 				if ( ( planeFriend[1] > 0 && planeFriend[0] == planeFriend[1] ) ||
 					 ( planeFriend[3] > 0 && planeFriend[2] == planeFriend[3] ) )
-					AirStage1Friend.ForeColor = Color.Red;
+					AirStage1Friend.ForeColor = Utility.Configuration.Config.UI.Color_Red;
 				else
-					AirStage1Friend.ForeColor = SystemColors.ControlText;
+					AirStage1Friend.ForeColor = Utility.Configuration.Config.UI.ForeColor;
 
 
 				int[] planeEnemy = { 
@@ -530,14 +530,14 @@ namespace ElectronicObserver.Window {
 					( isBattle2Enabled ? pd2.AircraftTotalStage1Enemy : 0 ),
 				};
 				AirStage1Enemy.Text = string.Format( "-{0}/{1}", planeEnemy[0] + planeEnemy[2], planeEnemy[1] );
-				ToolTipInfo.SetToolTip( AirStage1Enemy, string.Format( "第1次: -{0}/{1}\r\n第2次: -{2}/{3}\r\n",
+				ToolTipInfo.SetToolTip( AirStage1Enemy, string.Format( "第 1 次 : -{0}/{1}\r\n第 2 次 : -{2}/{3}\r\n",
 					planeEnemy[0], planeEnemy[1], planeEnemy[2], planeEnemy[3] ) );
 
 				if ( ( planeEnemy[1] > 0 && planeEnemy[0] == planeEnemy[1] ) ||
 					 ( planeEnemy[3] > 0 && planeEnemy[2] == planeEnemy[3] ) )
-					AirStage1Enemy.ForeColor = Color.Red;
+					AirStage1Enemy.ForeColor = Utility.Configuration.Config.UI.Color_Red;
 				else
-					AirStage1Enemy.ForeColor = SystemColors.ControlText;
+					AirStage1Enemy.ForeColor = Utility.Configuration.Config.UI.ForeColor;
 
 
 				//触接
@@ -551,10 +551,10 @@ namespace ElectronicObserver.Window {
 
 					EquipmentDataMaster[] planes = { KCDatabase.Instance.MasterEquipments[touchFriend[0]], KCDatabase.Instance.MasterEquipments[touchFriend[1]] };
 					ToolTipInfo.SetToolTip( AirStage1Friend, string.Format(
-						"{0}触接中\r\n第1次: {1}\r\n第2次: {2}",
+						"{0} 触接中\r\n第 1 次 : {1}\r\n第 2 次 : {2}",
 						ToolTipInfo.GetToolTip( AirStage1Friend ) ?? "",
-						planes[0] != null ? planes[0].Name : "(なし)",
-						planes[1] != null ? planes[1].Name : "(なし)"
+						planes[0] != null ? planes[0].Name : "( 无 )",
+						planes[1] != null ? planes[1].Name : "( 无 )"
 						) );
 				} else {
 					AirStage1Friend.ImageAlign = ContentAlignment.MiddleCenter;
@@ -572,10 +572,10 @@ namespace ElectronicObserver.Window {
 
 					EquipmentDataMaster[] planes = { KCDatabase.Instance.MasterEquipments[touchEnemy[0]], KCDatabase.Instance.MasterEquipments[touchEnemy[1]] };
 					ToolTipInfo.SetToolTip( AirStage1Enemy, string.Format(
-						"{0}触接中\r\n第1次: {1}\r\n第2次: {2}",
+						"{0} 触接中\r\n第 1 次 : {1}\r\n第 2 次 : {2}",
 						ToolTipInfo.GetToolTip( AirStage1Enemy ) ?? "",
-						planes[0] != null ? planes[0].Name : "(なし)",
-						planes[1] != null ? planes[1].Name : "(なし)"
+						planes[0] != null ? planes[0].Name : "( 无 )",
+						planes[1] != null ? planes[1].Name : "( 无 )"
 						) );
 				} else {
 					AirStage1Enemy.ImageAlign = ContentAlignment.MiddleCenter;
@@ -587,10 +587,10 @@ namespace ElectronicObserver.Window {
 				AirSuperiority.Text = Constants.GetAirSuperiority( -1 );
 				ToolTipInfo.SetToolTip( AirSuperiority, null );
 				AirStage1Friend.Text = "-";
-				AirStage1Friend.ForeColor = SystemColors.ControlText;
+				AirStage1Friend.ForeColor = Utility.Configuration.Config.UI.ForeColor;
 				ToolTipInfo.SetToolTip( AirStage1Friend, null );
 				AirStage1Enemy.Text = "-";
-				AirStage1Enemy.ForeColor = SystemColors.ControlText;
+				AirStage1Enemy.ForeColor = Utility.Configuration.Config.UI.ForeColor;
 				ToolTipInfo.SetToolTip( AirStage1Enemy, null );
 			}
 
@@ -608,14 +608,14 @@ namespace ElectronicObserver.Window {
 					( isBattle2Enabled ? pd2.AircraftTotalStage2Friend : 0 ),
 				};
 				AirStage2Friend.Text = string.Format( "-{0}/{1}", planeFriend[0] + planeFriend[2], planeFriend[1] );
-				ToolTipInfo.SetToolTip( AirStage2Friend, string.Format( "第1次: -{0}/{1}\r\n第2次: -{2}/{3}\r\n",
+				ToolTipInfo.SetToolTip( AirStage2Friend, string.Format( "第 1 次 : -{0}/{1}\r\n第 2 次 : -{2}/{3}\r\n",
 					planeFriend[0], planeFriend[1], planeFriend[2], planeFriend[3] ) );
 
 				if ( ( planeFriend[1] > 0 && planeFriend[0] == planeFriend[1] ) ||
 					 ( planeFriend[3] > 0 && planeFriend[2] == planeFriend[3] ) )
-					AirStage2Friend.ForeColor = Color.Red;
+					AirStage2Friend.ForeColor = Utility.Configuration.Config.UI.Color_Red;
 				else
-					AirStage2Friend.ForeColor = SystemColors.ControlText;
+					AirStage2Friend.ForeColor = Utility.Configuration.Config.UI.ForeColor;
 
 
 				int[] planeEnemy = { 
@@ -625,15 +625,15 @@ namespace ElectronicObserver.Window {
 					( isBattle2Enabled ? pd2.AircraftTotalStage2Enemy : 0 ),
 				};
 				AirStage2Enemy.Text = string.Format( "-{0}/{1}", planeEnemy[0] + planeEnemy[2], planeEnemy[1] );
-				ToolTipInfo.SetToolTip( AirStage2Enemy, string.Format( "第1次: -{0}/{1}\r\n第2次: -{2}/{3}\r\n{4}",
+				ToolTipInfo.SetToolTip( AirStage2Enemy, string.Format( "第 1 次 : -{0}/{1}\r\n第 2 次 : -{2}/{3}\r\n{4}",
 					planeEnemy[0], planeEnemy[1], planeEnemy[2], planeEnemy[3],
 					isBattle2Enabled ? "" : "(第二次戦発生せず)" ) );			//DEBUG
 
 				if ( ( planeEnemy[1] > 0 && planeEnemy[0] == planeEnemy[1] ) ||
 					 ( planeEnemy[3] > 0 && planeEnemy[2] == planeEnemy[3] ) )
-					AirStage2Enemy.ForeColor = Color.Red;
+					AirStage2Enemy.ForeColor = Utility.Configuration.Config.UI.Color_Red;
 				else
-					AirStage2Enemy.ForeColor = SystemColors.ControlText;
+					AirStage2Enemy.ForeColor = Utility.Configuration.Config.UI.ForeColor;
 
 
 				//対空カットイン
@@ -655,23 +655,23 @@ namespace ElectronicObserver.Window {
 						AACutin.ImageIndex = (int)ResourceManager.EquipmentContent.HighAngleGun;
 
 						StringBuilder sb = new StringBuilder();
-						sb.AppendLine( "対空カットイン" );
+						sb.AppendLine( "对空 CI" );
 						for ( int i = 0; i < 2; i++ ) {
 							if ( fire[i] ) {
-								sb.AppendFormat( "第{0}次: {1}\r\nカットイン種別: {2} ({3})\r\n",
+								sb.AppendFormat( "第 {0} 次 : {1}\r\nCI 类型 : {2} ({3})\r\n",
 									i + 1,
 									( i == 0 ? pd1 : pd2 ).AACutInShip.NameWithLevel,
 									cutinID[i],
 									Constants.GetAACutinKind( cutinID[i] ) );
 							} else {
-								sb.AppendFormat( "第{0}次: (発動せず)\r\n",
+								sb.AppendFormat( "第 {0} 次 : ( 未发动 )\r\n",
 									i + 1 );
 							}
 						}
 						ToolTipInfo.SetToolTip( AACutin, sb.ToString() );
 
 					} else {
-						AACutin.Text = "対空砲火";
+						AACutin.Text = "对空炮火";
 						AACutin.ImageAlign = ContentAlignment.MiddleCenter;
 						AACutin.ImageIndex = -1;
 						ToolTipInfo.SetToolTip( AACutin, null );
@@ -680,12 +680,12 @@ namespace ElectronicObserver.Window {
 
 			} else {	//艦対空戦闘発生せず
 				AirStage2Friend.Text = "-";
-				AirStage2Friend.ForeColor = SystemColors.ControlText;
+				AirStage2Friend.ForeColor = Utility.Configuration.Config.UI.ForeColor;
 				ToolTipInfo.SetToolTip( AirStage2Friend, null );
 				AirStage2Enemy.Text = "-";
-				AirStage2Enemy.ForeColor = SystemColors.ControlText;
+				AirStage2Enemy.ForeColor = Utility.Configuration.Config.UI.ForeColor;
 				ToolTipInfo.SetToolTip( AirStage2Enemy, null );
-				AACutin.Text = "対空砲火";
+				AACutin.Text = "对空炮火";
 				AACutin.ImageAlign = ContentAlignment.MiddleCenter;
 				AACutin.ImageIndex = -1;
 				ToolTipInfo.SetToolTip( AACutin, null );
@@ -707,26 +707,26 @@ namespace ElectronicObserver.Window {
 			ToolTipInfo.SetToolTip( AirSuperiority, null );
 
 			AirStage1Friend.Text = "-";
-			AirStage1Friend.ForeColor = SystemColors.ControlText;
+			AirStage1Friend.ForeColor = Utility.Configuration.Config.UI.ForeColor;
 			AirStage1Friend.ImageAlign = ContentAlignment.MiddleCenter;
 			AirStage1Friend.ImageIndex = -1;
 			ToolTipInfo.SetToolTip( AirStage1Friend, null );
 
 			AirStage1Enemy.Text = "-";
-			AirStage1Enemy.ForeColor = SystemColors.ControlText;
+			AirStage1Enemy.ForeColor = Utility.Configuration.Config.UI.ForeColor;
 			AirStage1Enemy.ImageAlign = ContentAlignment.MiddleCenter;
 			AirStage1Enemy.ImageIndex = -1;
 			ToolTipInfo.SetToolTip( AirStage1Enemy, null );
 
 			AirStage2Friend.Text = "-";
-			AirStage2Friend.ForeColor = SystemColors.ControlText;
+			AirStage2Friend.ForeColor = Utility.Configuration.Config.UI.ForeColor;
 			AirStage2Friend.ImageAlign = ContentAlignment.MiddleCenter;
 			AirStage2Friend.ImageIndex = -1;
 			ToolTipInfo.SetToolTip( AirStage2Friend, null );
 
 			AirStage2Enemy.Text = "-";
 			AirStage2Enemy.ImageAlign = ContentAlignment.MiddleCenter;
-			AirStage2Enemy.ForeColor = SystemColors.ControlText;
+			AirStage2Enemy.ForeColor = Utility.Configuration.Config.UI.ForeColor;
 			AirStage2Enemy.ImageIndex = -1;
 			ToolTipInfo.SetToolTip( AirStage2Enemy, null );
 
@@ -758,7 +758,7 @@ namespace ElectronicObserver.Window {
 					HPBars[i].Value = resultHPs[i];
 					HPBars[i].PrevValue = initialHPs[i];
 					HPBars[i].MaximumValue = maxHPs[i];
-					HPBars[i].BackColor = SystemColors.Control;
+					HPBars[i].BackColor = Utility.Configuration.Config.UI.BackColor;
 					HPBars[i].Visible = true;
 				} else {
 					HPBars[i].Visible = false;
@@ -774,7 +774,7 @@ namespace ElectronicObserver.Window {
 
 
 					ToolTipInfo.SetToolTip( HPBars[i], string.Format
-						( "{0} Lv. {1}\r\nHP: ({2} → {3})/{4} ({5}) [{6}]\r\n与ダメージ: {7}\r\n\r\n{8}",
+						( "{0} Lv. {1}\r\nHP: ({2} → {3})/{4} ({5}) [{6}]\r\n造成伤害 : {7}\r\n\r\n{8}",
 						ship.MasterShip.NameWithClass,
 						ship.Level,
 						Math.Max( HPBars[i].PrevValue, 0 ),
@@ -786,8 +786,8 @@ namespace ElectronicObserver.Window {
 						bd.GetBattleDetail( i )
 						) );
 
-					if ( isEscaped ) HPBars[i].BackColor = Color.Silver;
-					else HPBars[i].BackColor = SystemColors.Control;
+					if ( isEscaped ) HPBars[i].BackColor = Utility.Configuration.Config.UI.Battle_ColorHPBarsEscaped;
+					else HPBars[i].BackColor = Utility.Configuration.Config.UI.BackColor;
 				}
 			}
 
@@ -823,7 +823,7 @@ namespace ElectronicObserver.Window {
 						bool isEscaped = bd.Initial.FriendFleetEscort.EscapedShipList.Contains( ship.MasterID );
 
 						ToolTipInfo.SetToolTip( HPBars[i + 12], string.Format(
-							"{0} Lv. {1}\r\nHP: ({2} → {3})/{4} ({5}) [{6}]\r\n与ダメージ: {7}\r\n\r\n{8}",
+							"{0} Lv. {1}\r\nHP: ({2} → {3})/{4} ({5}) [{6}]\r\n造成伤害 : {7}\r\n\r\n{8}",
 							ship.MasterShip.NameWithClass,
 							ship.Level,
 							Math.Max( HPBars[i + 12].PrevValue, 0 ),
@@ -891,12 +891,12 @@ namespace ElectronicObserver.Window {
 
 
 			if ( bd.Initial.IsBossDamaged )
-				HPBars[6].BackColor = Color.MistyRose;
+				HPBars[6].BackColor = Utility.Configuration.Config.UI.Battle_ColorHPBarsBossDamaged;
 
 			foreach ( int i in bd.MVPShipIndexes )
-				HPBars[i].BackColor = Color.Moccasin;
+				HPBars[i].BackColor = Utility.Configuration.Config.UI.Battle_ColorHPBarsMVP;
 			foreach ( int i in bd.MVPShipCombinedIndexes )
-				HPBars[12 + i].BackColor = Color.Moccasin;
+				HPBars[12 + i].BackColor = Utility.Configuration.Config.UI.Battle_ColorHPBarsMVP;
 		}
 
 
@@ -936,10 +936,10 @@ namespace ElectronicObserver.Window {
 					ShipData ship = fleet.MembersInstance[index];
 
 					AirStage1Friend.Text = "#" + ( index + 1 );
-					AirStage1Friend.ForeColor = SystemColors.ControlText;
+					AirStage1Friend.ForeColor = Utility.Configuration.Config.UI.ForeColor;
 					AirStage1Friend.ImageAlign = ContentAlignment.MiddleLeft;
 					AirStage1Friend.ImageIndex = (int)ResourceManager.EquipmentContent.Searchlight;
-					ToolTipInfo.SetToolTip( AirStage1Friend, "探照灯照射: " + ship.NameWithLevel );
+					ToolTipInfo.SetToolTip( AirStage1Friend, "探照灯照射 : " + ship.NameWithLevel );
 				} else {
 					ToolTipInfo.SetToolTip( AirStage1Friend, null );
 				}
@@ -950,10 +950,10 @@ namespace ElectronicObserver.Window {
 				int index = pd.SearchlightIndexEnemy;
 				if ( index != -1 ) {
 					AirStage1Enemy.Text = "#" + ( index + 1 );
-					AirStage1Enemy.ForeColor = SystemColors.ControlText;
+					AirStage1Enemy.ForeColor = Utility.Configuration.Config.UI.ForeColor;
 					AirStage1Enemy.ImageAlign = ContentAlignment.MiddleLeft;
 					AirStage1Enemy.ImageIndex = (int)ResourceManager.EquipmentContent.Searchlight;
-					ToolTipInfo.SetToolTip( AirStage1Enemy, "探照灯照射: " + pd.SearchlightEnemyInstance.NameWithClass );
+					ToolTipInfo.SetToolTip( AirStage1Enemy, "探照灯照射 : " + pd.SearchlightEnemyInstance.NameWithClass );
 				} else {
 					ToolTipInfo.SetToolTip( AirStage1Enemy, null );
 				}
@@ -962,19 +962,19 @@ namespace ElectronicObserver.Window {
 
 			//夜間触接判定
 			if ( pd.TouchAircraftFriend != -1 ) {
-				SearchingFriend.Text = "夜間触接";
+				SearchingFriend.Text = "夜间触接";
 				SearchingFriend.ImageIndex = (int)ResourceManager.EquipmentContent.Seaplane;
 				SearchingFriend.ImageAlign = ContentAlignment.MiddleLeft;
-				ToolTipInfo.SetToolTip( SearchingFriend, "夜間触接中: " + KCDatabase.Instance.MasterEquipments[pd.TouchAircraftFriend].Name );
+				ToolTipInfo.SetToolTip( SearchingFriend, "夜间触接中 : " + KCDatabase.Instance.MasterEquipments[pd.TouchAircraftFriend].Name );
 			} else {
 				ToolTipInfo.SetToolTip( SearchingFriend, null );
 			}
 
 			if ( pd.TouchAircraftEnemy != -1 ) {
-				SearchingEnemy.Text = "夜間触接";
+				SearchingEnemy.Text = "夜间触接";
 				SearchingEnemy.ImageIndex = (int)ResourceManager.EquipmentContent.Seaplane;
 				SearchingFriend.ImageAlign = ContentAlignment.MiddleLeft;
-				ToolTipInfo.SetToolTip( SearchingEnemy, "夜間触接中: " + KCDatabase.Instance.MasterEquipments[pd.TouchAircraftEnemy].Name );
+				ToolTipInfo.SetToolTip( SearchingEnemy, "夜间触接中 : " + KCDatabase.Instance.MasterEquipments[pd.TouchAircraftEnemy].Name );
 			} else {
 				ToolTipInfo.SetToolTip( SearchingEnemy, null );
 			}
@@ -985,10 +985,10 @@ namespace ElectronicObserver.Window {
 
 				if ( index != -1 ) {
 					AirStage2Friend.Text = "#" + ( index + 1 );
-					AirStage2Friend.ForeColor = SystemColors.ControlText;
+					AirStage2Friend.ForeColor = Utility.Configuration.Config.UI.ForeColor;
 					AirStage2Friend.ImageAlign = ContentAlignment.MiddleLeft;
 					AirStage2Friend.ImageIndex = (int)ResourceManager.EquipmentContent.Flare;
-					ToolTipInfo.SetToolTip( AirStage2Friend, "照明弾投射: " + fleet.MembersInstance[index].NameWithLevel );
+					ToolTipInfo.SetToolTip( AirStage2Friend, "照明弹投射 : " + fleet.MembersInstance[index].NameWithLevel );
 
 				} else {
 					ToolTipInfo.SetToolTip( AirStage2Friend, null );
@@ -1000,10 +1000,10 @@ namespace ElectronicObserver.Window {
 
 				if ( index != -1 ) {
 					AirStage2Enemy.Text = "#" + ( index + 1 );
-					AirStage2Enemy.ForeColor = SystemColors.ControlText;
+					AirStage2Enemy.ForeColor = Utility.Configuration.Config.UI.ForeColor;
 					AirStage2Enemy.ImageAlign = ContentAlignment.MiddleLeft;
 					AirStage2Enemy.ImageIndex = (int)ResourceManager.EquipmentContent.Flare;
-					ToolTipInfo.SetToolTip( AirStage2Enemy, "照明弾投射: " + pd.FlareEnemyInstance.NameWithClass );
+					ToolTipInfo.SetToolTip( AirStage2Enemy, "照明弹投射 : " + pd.FlareEnemyInstance.NameWithClass );
 				} else {
 					ToolTipInfo.SetToolTip( AirStage2Enemy, null );
 				}
@@ -1041,24 +1041,24 @@ namespace ElectronicObserver.Window {
 
 			for ( int i = 0; i < 6; i++ ) {
 				if ( friend.EscapedShipList.Contains( friend.Members[i] ) ) {
-					HPBars[i].BackColor = Color.Silver;
+					HPBars[i].BackColor = Utility.Configuration.Config.UI.Battle_ColorHPBarsEscaped;
 
 				} else if ( br.MVPIndex == i + 1 ) {
-					HPBars[i].BackColor = Color.Moccasin;
+					HPBars[i].BackColor = Utility.Configuration.Config.UI.Battle_ColorHPBarsMVP;
 
 				} else {
-					HPBars[i].BackColor = SystemColors.Control;
+					HPBars[i].BackColor = Utility.Configuration.Config.UI.BackColor;
 				}
 
 				if ( escort != null ) {
 					if ( escort.EscapedShipList.Contains( escort.Members[i] ) ) {
-						HPBars[i + 12].BackColor = Color.Silver;
+						HPBars[i + 12].BackColor = Utility.Configuration.Config.UI.Battle_ColorHPBarsEscaped;
 
 					} else if ( br.MVPIndexCombined == i + 1 ) {
-						HPBars[i + 12].BackColor = Color.Moccasin;
+						HPBars[i + 12].BackColor = Utility.Configuration.Config.UI.Battle_ColorHPBarsMVP;
 
 					} else {
-						HPBars[i + 12].BackColor = SystemColors.Control;
+						HPBars[i + 12].BackColor = Utility.Configuration.Config.UI.BackColor;
 					}
 				}
 			}
@@ -1077,8 +1077,9 @@ namespace ElectronicObserver.Window {
 
 			var config = Utility.Configuration.Config;
 
-			MainFont = TableTop.Font = TableBottom.Font = Font = config.UI.MainFont;
-			SubFont = config.UI.SubFont;
+			MainFont = config.UI.JapFont;
+			TableTop.Font = TableBottom.Font = Font = config.UI.MainFont;
+			SubFont = config.UI.JapFont2;
 
 			BaseLayoutPanel.AutoScroll = config.FormBattle.IsScrollable;
 

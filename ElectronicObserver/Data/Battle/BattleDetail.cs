@@ -186,7 +186,7 @@ namespace ElectronicObserver.Data.Battle {
 		}
 
 		protected override string GetAttackerName() {
-			return "支援" + GetAttackKind();
+			return GetAttackKind() + "支援";
 		}
 
 		protected override int CaclulateAttackKind( int[] slots, int attackerShipID, int defenderShipID ) {
@@ -196,11 +196,11 @@ namespace ElectronicObserver.Data.Battle {
 		protected override string GetAttackKind() {
 			switch ( AttackType ) {
 				case 1:
-					return "空撃";
+					return "航空";
 				case 2:
-					return "砲撃";
+					return "炮击";
 				case 3:
-					return "雷撃";
+					return "雷击";
 				default:
 					return "不明";
 			}
@@ -231,17 +231,19 @@ namespace ElectronicObserver.Data.Battle {
 	/// </summary>
 	public class BattleAirDetail : BattleDayDetail {
 
-		public BattleAirDetail( BattleData bd, int attackerId, int defenderId, int damage, int criticalType, int attackType )
-			: base( bd, attackerId, defenderId, new int[] { damage }, new int[] { criticalType }, attackType ) {
+		public int WaveIndex { get; protected set; }
 
+		public BattleAirDetail( BattleData bd, int waveIndex, int defenderId, int damage, int criticalType, int attackType )
+			: base( bd, -1, defenderId, new int[] { damage }, new int[] { criticalType }, attackType ) {
+			WaveIndex = waveIndex;
 		}
 
 		protected override string GetAttackerName() {
-			if ( AttackerIndex == 0 ) {
-				return "航空隊";
+			if ( WaveIndex == 0 ) {
+				return "航空队";
 
-			} else if ( AttackerIndex > 0 ) {
-				return string.Format( "基地航空隊 第{0}波", AttackerIndex );
+			} else if ( WaveIndex > 0 ) {
+				return string.Format( "基地航空队 第{0}波", WaveIndex );
 
 			} else {
 				return "未確認飛行物体";

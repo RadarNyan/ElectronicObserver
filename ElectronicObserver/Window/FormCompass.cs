@@ -105,7 +105,7 @@ namespace ElectronicObserver.Window {
 				if ( shipID == -1 ) {
 					//なし
 					ShipName.Text = "-";
-					ShipName.ForeColor = Color.FromArgb( 0x00, 0x00, 0x00 );
+					ShipName.ForeColor = Utility.Configuration.Config.UI.ForeColor;
 					Equipments.Visible = false;
 					ToolTipInfo.SetToolTip( ShipName, null );
 					ToolTipInfo.SetToolTip( Equipments, null );
@@ -145,8 +145,8 @@ namespace ElectronicObserver.Window {
 
 
 			public void ConfigurationChanged() {
-				ShipName.Font = Parent.MainFont;
-				Equipments.Font = Parent.SubFont;
+				ShipName.Font = Utility.Configuration.Config.UI.JapFont;
+				Equipments.Font = Utility.Configuration.Config.UI.JapFont2;
 
 			}
 
@@ -237,8 +237,9 @@ namespace ElectronicObserver.Window {
 
 			public void ConfigurationChanged() {
 				for ( int i = 0; i < ShipNames.Length; i++ )
-					ShipNames[i].Font = Parent.MainFont;
-				Formation.Font = AirSuperiority.Font = Parent.MainFont;
+					ShipNames[i].Font = Utility.Configuration.Config.UI.JapFont;
+				Formation.Font = Parent.MainFont;
+				AirSuperiority.Font = Utility.Configuration.Config.UI.JapFont;
 			}
 
 			public void Update( EnemyFleetRecord.EnemyFleetElement fleet ) {
@@ -262,7 +263,7 @@ namespace ElectronicObserver.Window {
 					if ( ship == null ) {
 						// nothing
 						ShipNames[i].Text = "-";
-						ShipNames[i].ForeColor = Color.Black;
+						ShipNames[i].ForeColor = Utility.Configuration.Config.UI.ForeColor;
 						ShipNames[i].Tag = -1;
 						ShipNames[i].Cursor = Cursors.Default;
 						ToolTipInfo.SetToolTip( ShipNames[i], null );
@@ -281,12 +282,14 @@ namespace ElectronicObserver.Window {
 				}
 
 				Formation.Text = Constants.GetFormationShort( fleet.Formation );
+				Formation.ForeColor = Utility.Configuration.Config.UI.ForeColor;
 				//Formation.ImageIndex = (int)ResourceManager.IconContent.BattleFormationEnemyLineAhead + fleet.Formation - 1;
 				Formation.Visible = true;
 
 				{
 					int air = Calculator.GetAirSuperiority( fleet.FleetMember );
 					AirSuperiority.Text = air.ToString();
+					AirSuperiority.ForeColor = Utility.Configuration.Config.UI.ForeColor;
 					ToolTipInfo.SetToolTip( AirSuperiority, GetAirSuperiorityString( air ) );
 					AirSuperiority.Visible = true;
 				}
@@ -315,17 +318,17 @@ namespace ElectronicObserver.Window {
 				case 0:
 				case 1:		//normal
 				default:
-					return Color.FromArgb( 0x00, 0x00, 0x00 );
+					return Utility.Configuration.Config.UI.ForeColor;
 				case 2:		//elite
-					return Color.FromArgb( 0xFF, 0x00, 0x00 );
+					return Utility.Configuration.Config.UI.Color_Red;
 				case 3:		//flagship
-					return Color.FromArgb( 0xFF, 0x88, 0x00 );
+					return Utility.Configuration.Config.UI.Compass_ShipNameColor3;
 				case 4:		//latemodel / flagship kai
-					return Color.FromArgb( 0x00, 0x88, 0xFF );
+					return Utility.Configuration.Config.UI.Compass_ShipNameColor4;
 				case 5:		//latemodel elite
-					return Color.FromArgb( 0x88, 0x00, 0x00 );
+					return Utility.Configuration.Config.UI.Compass_ShipNameColor5;
 				case 6:		//latemodel flagship
-					return Color.FromArgb( 0x88, 0x44, 0x00 );
+					return Utility.Configuration.Config.UI.Compass_ShipNameColor6;
 			}
 		}
 
@@ -415,55 +418,55 @@ namespace ElectronicObserver.Window {
 				sb.Append( " Lv. " ).Append( level );
 			sb.AppendLine();
 
-			sb.Append( "耐久: " ).Append( hp ).AppendLine();
+			sb.Append( "耐久 : " ).Append( hp ).AppendLine();
 
-			sb.Append( "火力: " ).Append( firepower_c );
+			sb.Append( "火力 : " ).Append( firepower_c );
 			if ( firepower_c != firepower )
 				sb.Append( "/" ).Append( firepower );
 			sb.AppendLine();
 
-			sb.Append( "雷装: " ).Append( torpedo_c );
+			sb.Append( "雷装 : " ).Append( torpedo_c );
 			if ( torpedo_c != torpedo )
 				sb.Append( "/" ).Append( torpedo );
 			sb.AppendLine();
 
-			sb.Append( "対空: " ).Append( aa_c );
+			sb.Append( "对空 : " ).Append( aa_c );
 			if ( aa_c != aa )
 				sb.Append( "/" ).Append( aa );
 			sb.AppendLine();
 
-			sb.Append( "装甲: " ).Append( armor_c );
+			sb.Append( "装甲 : " ).Append( armor_c );
 			if ( armor_c != armor )
 				sb.Append( "/" ).Append( armor );
 			sb.AppendLine();
 
-			sb.Append( "対潜: " );
+			sb.Append( "对潜 : " );
 			if ( asw_c < 0 ) sb.Append( "???" );
 			else sb.Append( asw_c );
 			if ( asw_c != asw )
 				sb.Append( "/" ).Append( asw );
 			sb.AppendLine();
 
-			sb.Append( "回避: " );
+			sb.Append( "回避 : " );
 			if ( evasion_c < 0 ) sb.Append( "???" );
 			else sb.Append( evasion_c );
 			if ( evasion_c != evasion )
 				sb.Append( "/" ).Append( evasion );
 			sb.AppendLine();
 
-			sb.Append( "索敵: " );
+			sb.Append( "索敌 : " );
 			if ( los_c < 0 ) sb.Append( "???" );
 			else sb.Append( los_c );
 			if ( los_c != los )
 				sb.Append( "/" ).Append( los );
 			sb.AppendLine();
 
-			sb.Append( "運: " ).Append( luck_c );
+			sb.Append( "运 : " ).Append( luck_c );
 			if ( luck_c != luck )
 				sb.Append( "/" ).Append( luck );
 			sb.AppendLine();
 
-			sb.AppendFormat( "射程: {0} / 速力: {1}\r\n(右クリックで図鑑)\r\n",
+			sb.AppendFormat( "射程 : {0} / 速度 : {1}\r\n( 点击鼠标右键转到图鉴 )\r\n",
 				Constants.GetRange( range ),
 				Constants.GetSpeed( ship.Speed ) );
 
@@ -483,20 +486,20 @@ namespace ElectronicObserver.Window {
 					sb.AppendFormat( "[{0}] {1}\r\n", ship.Aircraft[i], eq.Name );
 			}
 
-			sb.AppendFormat( "\r\n昼戦: {0}\r\n夜戦: {1}\r\n",
+			sb.AppendFormat( "\r\n昼战 : {0}\r\n夜战 : {1}\r\n",
 				Constants.GetDayAttackKind( Calculator.GetDayAttackKind( slot, ship.ShipID, -1 ) ),
 				Constants.GetNightAttackKind( Calculator.GetNightAttackKind( slot, ship.ShipID, -1 ) ) );
 
 			{
 				int aacutin = Calculator.GetAACutinKind( shipID, slot );
 				if ( aacutin != 0 ) {
-					sb.AppendFormat( "対空: {0}\r\n", Constants.GetAACutinKind( aacutin ) );
+					sb.AppendFormat( "对空 : {0}\r\n", Constants.GetAACutinKind( aacutin ) );
 				}
 			}
 			{
 				int airsup = Calculator.GetAirSuperiority( slot, ship.Aircraft.ToArray() );
 				if ( airsup > 0 ) {
-					sb.AppendFormat( "制空戦力: {0}\r\n", airsup );
+					sb.AppendFormat( "制空战力 : {0}\r\n", airsup );
 				}
 			}
 
@@ -505,7 +508,7 @@ namespace ElectronicObserver.Window {
 
 		private static string GetAirSuperiorityString( int air ) {
 			if ( air > 0 ) {
-				return string.Format( "確保: {0}\r\n優勢: {1}\r\n均衡: {2}\r\n劣勢: {3}\r\n",
+				return string.Format( "确保 : {0}\r\n优势 : {1}\r\n均衡 : {2}\r\n劣势 : {3}\r\n",
 							(int)( air * 3.0 ),
 							(int)Math.Ceiling( air * 1.5 ),
 							(int)( air / 1.5 + 1 ),
@@ -646,15 +649,15 @@ namespace ElectronicObserver.Window {
 					case 0:
 					case 1:
 					default:	//昼夜戦・その他
-						return SystemColors.ControlText;
+						return Utility.Configuration.Config.UI.ForeColor;
 					case 2:
 					case 3:		//夜戦・夜昼戦
-						return Color.Navy;
+						return Utility.Configuration.Config.UI.Compass_ColorTextEventKind3;
 					case 4:		//航空戦
 					case 6:		//長距離空襲戦
-						return Color.DarkGreen;
+						return Utility.Configuration.Config.UI.Compass_ColorTextEventKind6;
 					case 5:		// 敵連合
-						return Color.DarkRed;
+						return Utility.Configuration.Config.UI.Compass_ColorTextEventKind5;
 				}
 			};
 
@@ -664,7 +667,7 @@ namespace ElectronicObserver.Window {
 
 			} else if ( apiname == "api_req_member/get_practice_enemyinfo" ) {
 
-				TextMapArea.Text = "演習";
+				TextMapArea.Text = "演习";
 				TextDestination.Text = string.Format( "{0} {1}", data.api_nickname, Constants.GetAdmiralRank( (int)data.api_rank ) );
 				TextDestination.ImageAlign = ContentAlignment.MiddleCenter;
 				TextDestination.ImageIndex = -1;
@@ -673,8 +676,10 @@ namespace ElectronicObserver.Window {
 				TextEventKind.ForeColor = getColorFromEventKind( 0 );
 				TextEventKind.ImageAlign = ContentAlignment.MiddleCenter;
 				TextEventKind.ImageIndex = -1;
+				TextEventKind.Font = Utility.Configuration.Config.UI.JapFont;
 				ToolTipInfo.SetToolTip( TextEventKind, null );
 				TextEventDetail.Text = string.Format( "Lv. {0} / {1} exp.", data.api_level, data.api_experience[0] );
+				TextEventDetail.Font = Utility.Configuration.Config.UI.JapFont;
 				TextEventDetail.ImageAlign = ContentAlignment.MiddleCenter;
 				TextEventDetail.ImageIndex = -1;
 				ToolTipInfo.SetToolTip( TextEventDetail, null );
@@ -693,7 +698,7 @@ namespace ElectronicObserver.Window {
 				_enemyFleetCandidateIndex = -1;
 
 
-				TextMapArea.Text = string.Format( "出撃海域 : {0}-{1}{2}", compass.MapAreaID, compass.MapInfoID,
+				TextMapArea.Text = string.Format( "出击海域 : {0}-{1}{2}", compass.MapAreaID, compass.MapInfoID,
 					compass.MapInfo.EventDifficulty > 0 ? " [" + Constants.GetDifficulty( compass.MapInfo.EventDifficulty ) + "]" : "" );
 				{
 					var mapinfo = compass.MapInfo;
@@ -702,7 +707,7 @@ namespace ElectronicObserver.Window {
 						ToolTipInfo.SetToolTip( TextMapArea, null );
 
 					} else if ( mapinfo.RequiredDefeatedCount != -1 ) {
-						ToolTipInfo.SetToolTip( TextMapArea, string.Format( "撃破: {0} / {1} 回", mapinfo.CurrentDefeatedCount, mapinfo.RequiredDefeatedCount ) );
+						ToolTipInfo.SetToolTip( TextMapArea, string.Format( "击破 : {0} / {1} 次", mapinfo.CurrentDefeatedCount, mapinfo.RequiredDefeatedCount ) );
 
 					} else if ( mapinfo.MapHPMax > 0 ) {
 						ToolTipInfo.SetToolTip( TextMapArea, string.Format( "{0}: {1} / {2}", mapinfo.GaugeType == 3 ? "TP" : "HP", mapinfo.MapHPCurrent, mapinfo.MapHPMax ) );
@@ -713,7 +718,7 @@ namespace ElectronicObserver.Window {
 				}
 
 
-				TextDestination.Text = string.Format( "次のセル : {0}{1}", compass.Destination, ( compass.IsEndPoint ? " (終点)" : "" ) );
+				TextDestination.Text = string.Format( "下一点 : {0}{1}", compass.Destination, ( compass.IsEndPoint ? " ( 终点 )" : "" ) );
 				if ( compass.LaunchedRecon != 0 ) {
 					TextDestination.ImageAlign = ContentAlignment.MiddleRight;
 					TextDestination.ImageIndex = (int)ResourceManager.EquipmentContent.Seaplane;
@@ -721,16 +726,16 @@ namespace ElectronicObserver.Window {
 					string tiptext;
 					switch ( compass.CommentID ) {
 						case 1:
-							tiptext = "敵艦隊発見！";
+							tiptext = "发现敌舰队！";
 							break;
 						case 2:
-							tiptext = "攻撃目標発見！";
+							tiptext = "发现攻击目标！";
 							break;
 						case 3:
 							tiptext = "針路哨戒！";
 							break;
 						default:
-							tiptext = "索敵機発艦！";
+							tiptext = "索敌机离舰！";
 							break;
 					}
 					ToolTipInfo.SetToolTip( TextDestination, tiptext );
@@ -762,6 +767,7 @@ namespace ElectronicObserver.Window {
 						case 2:		//資源
 						case 8:		//船団護衛成功
 							TextEventDetail.Text = GetMaterialInfo( compass );
+							TextEventDetail.Font = Utility.Configuration.Config.UI.MainFont;
 							break;
 
 						case 3:		//渦潮
@@ -785,6 +791,7 @@ namespace ElectronicObserver.Window {
 									Constants.GetMaterialName( compass.WhirlpoolItemID ),
 									compass.WhirlpoolItemAmount,
 									(double)compass.WhirlpoolItemAmount / Math.Max( materialmax, 1 ) );
+								TextEventDetail.Font = Utility.Configuration.Config.UI.MainFont;
 
 							}
 							break;
@@ -799,7 +806,7 @@ namespace ElectronicObserver.Window {
 							break;
 
 						case 5:		//ボス戦闘
-							TextEventKind.ForeColor = Color.Red;
+							TextEventKind.ForeColor = Utility.Configuration.Config.UI.Color_Red;
 
 							if ( compass.EventKind >= 2 ) {
 								eventkind += "/" + Constants.GetMapEventKind( compass.EventKind );
@@ -815,12 +822,13 @@ namespace ElectronicObserver.Window {
 									TextEventDetail.Text = "";
 									break;
 								case 1:		//敵影を見ず
-									eventkind = "敵影を見ず";
+									eventkind = "不见敌影";
 									TextEventDetail.Text = "";
 									break;
 								case 2:		//能動分岐
-									eventkind = "能動分岐";
+									eventkind = "能动分歧";
 									TextEventDetail.Text = string.Join( "/", compass.RouteChoices );
+									TextEventDetail.Font = Utility.Configuration.Config.UI.MainFont; // Necssary?
 									break;
 							}
 							break;
@@ -830,18 +838,21 @@ namespace ElectronicObserver.Window {
 
 							switch ( compass.EventKind ) {
 								case 0:		//航空偵察
-									eventkind = "航空偵察";
+									eventkind = "航空侦察";
 
 									switch ( compass.AirReconnaissanceResult ) {
 										case 0:
 										default:
-											TextEventDetail.Text = "失敗";
+											TextEventDetail.Text = "失败";
+											TextEventDetail.Font = Utility.Configuration.Config.UI.MainFont;
 											break;
 										case 1:
 											TextEventDetail.Text = "成功";
+											TextEventDetail.Font = Utility.Configuration.Config.UI.MainFont;
 											break;
 										case 2:
 											TextEventDetail.Text = "大成功";
+											TextEventDetail.Font = Utility.Configuration.Config.UI.MainFont;
 											break;
 									}
 
@@ -863,6 +874,7 @@ namespace ElectronicObserver.Window {
 
 									if ( compass.GetItems.Any() ) {
 										TextEventDetail.Text += "　" + GetMaterialInfo( compass );
+										TextEventDetail.Font = Utility.Configuration.Config.UI.MainFont;
 									}
 
 									break;
@@ -884,6 +896,7 @@ namespace ElectronicObserver.Window {
 
 					}
 					TextEventKind.Text = eventkind;
+					TextEventKind.Font = Utility.Configuration.Config.UI.MainFont;
 				}
 
 
@@ -930,7 +943,7 @@ namespace ElectronicObserver.Window {
 			}
 
 			if ( !strs.Any() ) {
-				return "(なし)";
+				return "( 无 )";
 
 			} else {
 				return string.Join( ", ", strs );
@@ -962,8 +975,9 @@ namespace ElectronicObserver.Window {
 
 
 			if ( _enemyFleetCandidate.Count == 0 ) {
-				TextEventDetail.Text = "(敵艦隊候補なし)";
-				TextEnemyFleetName.Text = "(敵艦隊名不明)";
+				TextEventDetail.Text = "( 尚无敌舰队候选 )";
+				TextEventDetail.Font = Utility.Configuration.Config.UI.MainFont;
+				TextEnemyFleetName.Text = "( 敌舰队名不明 )";
 
 
 				TableEnemyCandidate.Visible = false;
@@ -1010,7 +1024,8 @@ namespace ElectronicObserver.Window {
 				if ( efrecord != null ) {
 					TextEnemyFleetName.Text = efrecord.FleetName;
 				}
-				TextEventDetail.Text = "敵艦隊ID: " + efcurrent.FleetID.ToString( "x8" );
+				TextEventDetail.Text = "敌舰队 ID: " + efcurrent.FleetID.ToString( "x8" );
+				TextEventDetail.Font = Utility.Configuration.Config.UI.MainFont;
 				ToolTipInfo.SetToolTip( TextEventDetail, null );
 			}
 
@@ -1075,12 +1090,13 @@ namespace ElectronicObserver.Window {
 
 
 				TextEventDetail.Text = TextEnemyFleetName.Text = candidate.FleetName;
+				TextEventDetail.Font = Utility.Configuration.Config.UI.JapFont;
 
 				if ( _enemyFleetCandidate.Count > _candidatesDisplayCount ) {
 					TextEventDetail.Text += " ▼";
-					ToolTipInfo.SetToolTip( TextEventDetail, string.Format( "候補: {0} / {1}\r\n(左右クリックでページめくり)\r\n", _enemyFleetCandidateIndex + 1, _enemyFleetCandidate.Count ) );
+					ToolTipInfo.SetToolTip( TextEventDetail, string.Format( "候选 : {0} / {1}\r\n( 左右点击滚动 )\r\n", _enemyFleetCandidateIndex + 1, _enemyFleetCandidate.Count ) );
 				} else {
-					ToolTipInfo.SetToolTip( TextEventDetail, string.Format( "候補: {0}\r\n", _enemyFleetCandidate.Count ) );
+					ToolTipInfo.SetToolTip( TextEventDetail, string.Format( "候选 : {0}\r\n", _enemyFleetCandidate.Count ) );
 				}
 
 				TableEnemyCandidate.SuspendLayout();

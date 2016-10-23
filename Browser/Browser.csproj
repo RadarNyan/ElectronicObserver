@@ -80,6 +80,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ToolStripOverride.cs" />
     <EmbeddedResource Include="FormBrowser.resx">
       <DependentUpon>FormBrowser.cs</DependentUpon>
     </EmbeddedResource>

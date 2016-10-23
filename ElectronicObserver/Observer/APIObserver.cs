@@ -166,7 +166,7 @@ namespace ElectronicObserver.Observer {
 
 				ProxyStarted();
 
-				Utility.Logger.Add( 2, string.Format( "APIObserver: ポート {0} 番で受信を開始しました。", portID ) );
+				Utility.Logger.Add(2, "", "APIObserver: 开始监听端口 " + portID);
 
 			} catch ( Exception ex ) {
 

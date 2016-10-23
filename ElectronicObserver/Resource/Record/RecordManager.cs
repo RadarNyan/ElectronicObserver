@@ -66,9 +66,9 @@ namespace ElectronicObserver.Resource.Record {
 
 			if ( logging ) {
 				if ( succeeded )
-					Utility.Logger.Add( 2, "レコードをロードしました。" );
+					Utility.Logger.Add(2, "", "已读取记录。");
 				else
-					Utility.Logger.Add( 3, "レコードのロードに失敗しました。" );
+					Utility.Logger.Add(3, "", "读取记录失败。");
 			}
 
 			return succeeded;
@@ -92,9 +92,9 @@ namespace ElectronicObserver.Resource.Record {
 
 			if ( logging ) {
 				if ( succeeded )
-					Utility.Logger.Add( 2, "レコードをセーブしました。" );
+					Utility.Logger.Add(2, "", "已保存记录。");
 				else
-					Utility.Logger.Add( 2, "レコードのセーブに失敗しました。" );
+					Utility.Logger.Add(2, "", "保存记录失败。");
 			}
 
 			return succeeded;
@@ -123,9 +123,9 @@ namespace ElectronicObserver.Resource.Record {
 				_prevTime = DateTime.Now;
 
 				if ( Save( false ) ) {
-					Utility.Logger.Add( 1, "レコードのオートセーブを行いました。" );
+					Utility.Logger.Add(1, "", "记录已自动保存。");
 				} else {
-					Utility.Logger.Add( 3, "レコードのオートセーブに失敗しました。" );
+					Utility.Logger.Add(3, "", "自动保存记录失败。");
 				}
 			}
 		}

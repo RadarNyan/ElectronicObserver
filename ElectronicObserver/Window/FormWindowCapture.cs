@@ -19,9 +19,9 @@ namespace ElectronicObserver.Window {
 	public partial class FormWindowCapture : DockContent {
 
 		public static readonly String WARNING_MESSAGE = 
-				"このウィンドウをキャプチャします。よろしいですか？\r\n\r\n" +
-				"注意: ウィンドウによっては正常に取り込めず、不安定になる可能性があります。\r\n" +
-				"データを保存する・母港に戻るなど、安全を確保してから実行してください。\r\n";
+				"已选定以上窗口，确认捕获吗？\r\n\r\n" +
+				"注意：窗口捕获存在无法正常捕获、引发不稳定的可能性。\r\n" +
+				"请先进行保存数据、返回母港等操作，确认安全后再进行捕获。\r\n";
 
 		private FormMain parent;
 
@@ -81,7 +81,7 @@ namespace ElectronicObserver.Window {
 			WinAPI.GetWindowText( hWnd, stringBuilder, stringBuilder.Capacity );
 
 			if ( MessageBox.Show( stringBuilder.ToString() + "\r\n" + WARNING_MESSAGE,
-				"ウィンドウキャプチャの確認", MessageBoxButtons.YesNo, MessageBoxIcon.Question )
+				"确认捕获窗口", MessageBoxButtons.YesNo, MessageBoxIcon.Question )
 				== System.Windows.Forms.DialogResult.Yes ) {
 
 				FormIntegrate form = new FormIntegrate( parent );
