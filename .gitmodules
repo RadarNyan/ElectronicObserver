@@ -1,3 +1,4 @@
 [submodule "DockPanelSuite"]
 	path = DockPanelSuite
-	url = https://github.com/andanteyk/dockpanelsuite.git
+	url = https://github.com/RadarNyan/dockpanelsuite.git
+	branch = 74eo-rn
