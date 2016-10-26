@@ -591,7 +591,7 @@ namespace ElectronicObserver.Data {
 				case 7:
 					return "高角炮 / 高射装置 / 电探";
 				case 8:
-					return "高角炮+高射装置 / 电探";
+					return "高角炮＋高射装置 / 电探";
 				case 9:
 					return "高角炮 / 高射装置";
 				case 10:
@@ -705,7 +705,7 @@ namespace ElectronicObserver.Data {
 		public static string GetAdmiralRank( int id ) {
 			switch ( id ) {
 				case 1:
-					return "元帅";
+					return "元帥";
 				case 2:
 					return "大将";
 				case 3:
@@ -721,7 +721,7 @@ namespace ElectronicObserver.Data {
 				case 8:
 					return "少佐";
 				case 9:
-					return "中坚少佐";
+					return "中堅少佐";
 				case 10:
 					return "新米少佐";
 				default:

@@ -149,7 +149,7 @@
 			this.TopMenu_File_Update.Name = "TopMenu_File_Update";
 			this.TopMenu_File_Update.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
 			this.TopMenu_File_Update.Size = new System.Drawing.Size(198, 22);
-			this.TopMenu_File_Update.Text = "刷新(&U)";
+			this.TopMenu_File_Update.Text = "更新(&U)";
 			this.TopMenu_File_Update.Click += new System.EventHandler(this.TopMenu_File_Update_Click);
 			// 
 			// SaveCSVDialog
