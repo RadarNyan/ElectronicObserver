@@ -60,6 +60,8 @@ namespace ElectronicObserver.Window.Control {
 			BarAmmo = new StatusBarModule();
 
 			BarFuel.UsePrevValue = BarAmmo.UsePrevValue = false;
+			if (Utility.Configuration.Config.UI.RemoveBarShadow)
+				BarFuel.BarBackgroundOffset = BarAmmo.BarBackgroundOffset = 0;
 
 			ResourceTip = resourceTip;
 		}

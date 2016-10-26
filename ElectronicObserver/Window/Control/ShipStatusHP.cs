@@ -254,6 +254,8 @@ namespace ElectronicObserver.Window.Control {
 			_HPBar.PrevValue = 88;
 			_HPBar.MaximumValue = 100;
 			_repairTime = null;
+			if (Utility.Configuration.Config.UI.RemoveBarShadow)
+				_HPBar.BarBackgroundOffset = 0;
 
 			_maximumDigit = 999;
 
@@ -273,6 +275,16 @@ namespace ElectronicObserver.Window.Control {
 
 
 
+		public void RepaintHPtext () {
+			if (this.BackColor == Utility.Configuration.Config.UI.BackColor) {
+				_mainFontColor = Utility.Configuration.Config.UI.ForeColor;
+				_subFontColor  = Utility.Configuration.Config.UI.SubForeColor;
+			} else {
+				_mainFontColor = Utility.Configuration.Config.UI.Blink_ForeColor;
+				_subFontColor  = Utility.Configuration.Config.UI.Blink_SubForeColor;
+			}
+			this.Refresh();
+		}
 
 		private void ShipStatusHP_Paint( object sender, PaintEventArgs e ) {
 

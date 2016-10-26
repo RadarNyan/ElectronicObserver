@@ -555,6 +555,7 @@ namespace ElectronicObserver.Data {
 			//初期化
 			tooltip.SetToolTip( label, null );
 			label.BackColor = Color.Transparent;
+			label.ForeColor = Utility.Configuration.Config.UI.ForeColor;
 
 
 
@@ -763,22 +764,32 @@ namespace ElectronicObserver.Data {
 			switch ( state ) {
 				case FleetStates.Damaged:
 				case FleetStates.SortieDamaged:
-					label.BackColor = DateTime.Now.Second % 2 == 0 ? Color.LightCoral : Color.Transparent;
+					label.BackColor = DateTime.Now.Second % 2 == 0 ? Utility.Configuration.Config.UI.Blink_BackColorLightCoral : Color.Transparent;
+					label.ForeColor = DateTime.Now.Second % 2 == 0 ? Utility.Configuration.Config.UI.Blink_ForeColor : Utility.Configuration.Config.UI.ForeColor;
 					break;
 				case FleetStates.Docking:
 					label.Text = "入渠中 " + DateTimeHelper.ToTimeRemainString( timer );
 					if ( Utility.Configuration.Config.FormFleet.BlinkAtCompletion && ( timer - DateTime.Now ).TotalMilliseconds <= Utility.Configuration.Config.NotifierRepair.AccelInterval )
-						label.BackColor = DateTime.Now.Second % 2 == 0 ? Color.LightGreen : Color.Transparent;
+					{
+						label.BackColor = DateTime.Now.Second % 2 == 0 ? Utility.Configuration.Config.UI.Blink_BackColorLightGreen : Color.Transparent;
+						label.ForeColor = DateTime.Now.Second % 2 == 0 ? Utility.Configuration.Config.UI.Blink_ForeColor : Utility.Configuration.Config.UI.ForeColor;
+					}
 					break;
 				case FleetStates.Expedition:
 					label.Text = "远征中 " + DateTimeHelper.ToTimeRemainString( timer );
 					if ( Utility.Configuration.Config.FormFleet.BlinkAtCompletion && ( timer - DateTime.Now ).TotalMilliseconds <= Utility.Configuration.Config.NotifierExpedition.AccelInterval )
-						label.BackColor = DateTime.Now.Second % 2 == 0 ? Color.LightGreen : Color.Transparent;
+					{
+						label.BackColor = DateTime.Now.Second % 2 == 0 ? Utility.Configuration.Config.UI.Blink_BackColorLightGreen : Color.Transparent;
+						label.ForeColor = DateTime.Now.Second % 2 == 0 ? Utility.Configuration.Config.UI.Blink_ForeColor : Utility.Configuration.Config.UI.ForeColor;
+					}
 					break;
 				case FleetStates.Tired:
 					label.Text = "疲劳 " + DateTimeHelper.ToTimeRemainString( timer );
 					if ( Utility.Configuration.Config.FormFleet.BlinkAtCompletion && ( timer - DateTime.Now ).TotalMilliseconds <= 0 )
-						label.BackColor = DateTime.Now.Second % 2 == 0 ? Color.LightGreen : Color.Transparent;
+					{
+						label.BackColor = DateTime.Now.Second % 2 == 0 ? Utility.Configuration.Config.UI.Blink_BackColorLightGreen : Color.Transparent;
+						label.ForeColor = DateTime.Now.Second % 2 == 0 ? Utility.Configuration.Config.UI.Blink_ForeColor : Utility.Configuration.Config.UI.ForeColor;
+					}
 					break;
 				case FleetStates.AnchorageRepairing:
 					label.Text = "修理中 " + DateTimeHelper.ToTimeElapsedString( KCDatabase.Instance.Fleet.AnchorageRepairingTimer );
