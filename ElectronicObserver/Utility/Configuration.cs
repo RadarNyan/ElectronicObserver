@@ -303,6 +303,36 @@ namespace ElectronicObserver.Utility {
 					case 1:  return SolarizedRed.ColorData;
 					default: return Color.Red;
 				}}}
+				public Color Color_Magenta { get {
+				switch (ThemeID) {
+					case 0:  return SolarizedMagenta.ColorData;
+					case 1:  return SolarizedMagenta.ColorData;
+					default: return Color.FromArgb( 0xFF, 0x00, 0xFF );
+				}}}
+				public Color Blink_ForeColor { get {
+				switch (ThemeID) {
+					case 0:  return SolarizedBase3.ColorData;
+					case 1:  return SolarizedBase03.ColorData;
+					default: return SystemColors.ControlText;
+				}}}
+				public Color Blink_SubForeColor { get {
+				switch (ThemeID) {
+					case 0:  return SolarizedBase2.ColorData;
+					case 1:  return SolarizedBase02.ColorData;
+					default: return SystemColors.ControlText;
+				}}}
+				public Color Blink_BackColorLightCoral { get {
+				switch (ThemeID) {
+					case 0:  return SolarizedRed.ColorData;
+					case 1:  return SolarizedRed.ColorData;
+					default: return Color.LightCoral;
+				}}}
+				public Color Blink_BackColorLightGreen { get {
+				switch (ThemeID) {
+					case 0:  return SolarizedCyan.ColorData;
+					case 1:  return SolarizedCyan.ColorData;
+					default: return Color.LightGreen;
+				}}}
 				// 视图 - 舰队：疲劳度
 				public Color Fleet_ColorConditionVeryTired { get {
 				switch (ThemeID) {
@@ -408,6 +438,12 @@ namespace ElectronicObserver.Utility {
 					case 0:  return SolarizedBase1.ColorData;
 					case 1:  return SolarizedBase01.ColorData;
 					default: return Color.FromArgb(0x00, 0x00, 0x88);
+				}}}
+				public bool RemoveBarShadow { get {
+				switch (ThemeID) {
+					case 0:  return true;
+					case 1:  return true;
+					default: return false;
 				}}}
 
 				#endregion

@@ -341,7 +341,7 @@ namespace ElectronicObserver.Window.Control {
 			base.Font = new Font( "Meiryo UI", 10, FontStyle.Regular, GraphicsUnit.Pixel );
 
 			_aircraftColorDisabled = Color.FromArgb( 0xAA, 0xAA, 0xAA );
-			_aircraftColorLost = Color.FromArgb( 0xFF, 0x00, 0xFF );
+			_aircraftColorLost = Utility.Configuration.Config.UI.Color_Magenta;
 			_aircraftColorDamaged = Utility.Configuration.Config.UI.Color_Red;
 			_aircraftColorFull = Utility.Configuration.Config.UI.ForeColor;
 

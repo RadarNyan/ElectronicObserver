@@ -669,6 +669,7 @@ namespace ElectronicObserver.Window {
 
 				TextMapArea.Text = "演习";
 				TextDestination.Text = string.Format( "{0} {1}", data.api_nickname, Constants.GetAdmiralRank( (int)data.api_rank ) );
+				TextDestination.Font = Utility.Configuration.Config.UI.JapFont;
 				TextDestination.ImageAlign = ContentAlignment.MiddleCenter;
 				TextDestination.ImageIndex = -1;
 				ToolTipInfo.SetToolTip( TextDestination, null );
@@ -719,6 +720,7 @@ namespace ElectronicObserver.Window {
 
 
 				TextDestination.Text = string.Format( "下一点 : {0}{1}", compass.Destination, ( compass.IsEndPoint ? " ( 终点 )" : "" ) );
+				TextDestination.Font = Utility.Configuration.Config.UI.MainFont;
 				if ( compass.LaunchedRecon != 0 ) {
 					TextDestination.ImageAlign = ContentAlignment.MiddleRight;
 					TextDestination.ImageIndex = (int)ResourceManager.EquipmentContent.Seaplane;

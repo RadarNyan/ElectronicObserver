@@ -41,7 +41,7 @@ namespace ElectronicObserver.Observer.kcsapi.api_req_mission {
 					int[] materials = (int[])data.api_get_material;
 					for ( int i = 0; i < 4; i++ ) {
 						if ( materials[i] > 0 ) {
-							sb.AddLast( Constants.GetMaterialName( i + 1 ) + " x " + materials[i] );
+							sb.AddLast( Constants.GetMaterialName( i + 1 ) + " +" + materials[i] );
 						}
 					}
 
@@ -60,19 +60,19 @@ namespace ElectronicObserver.Observer.kcsapi.api_req_mission {
 
 							switch ( kind ) {
 								case 1:
-									sb.AddLast( "高速修复材 x " + count );
+									sb.AddLast( "高速修复材 +" + count );
 									break;
 								case 2:
-									sb.AddLast( "高速建造材 x " + count );
+									sb.AddLast( "高速建造材 +" + count );
 									break;
 								case 3:
-									sb.AddLast( "开发资材 x " + count );
+									sb.AddLast( "开发资材 +" + count );
 									break;
 								case 4:
-									sbj.AddLast( KCDatabase.Instance.MasterUseItems[id].Name + " x " + count );
+									sbj.AddLast( KCDatabase.Instance.MasterUseItems[id].Name + " +" + count );
 									break;
 								case 5:
-									sb.AddLast( "家具币 x " + count );
+									sb.AddLast( "家具币 +" + count );
 									break;
 							}
 

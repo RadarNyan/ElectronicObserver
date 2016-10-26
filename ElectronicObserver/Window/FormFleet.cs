@@ -592,15 +592,30 @@ namespace ElectronicObserver.Window {
 					Condition.ImageIndex = -1;
 
 					if ( cond < 20 )
+					{
 						Condition.BackColor = Utility.Configuration.Config.UI.Fleet_ColorConditionVeryTired;
+						Condition.ForeColor = Utility.Configuration.Config.UI.Blink_ForeColor;
+					}
 					else if ( cond < 30 )
+					{
 						Condition.BackColor = Utility.Configuration.Config.UI.Fleet_ColorConditionTired;
+						Condition.ForeColor = Utility.Configuration.Config.UI.Blink_ForeColor;
+					}
 					else if ( cond < 40 )
+					{
 						Condition.BackColor = Utility.Configuration.Config.UI.Fleet_ColorConditionLittleTired;
+						Condition.ForeColor = Utility.Configuration.Config.UI.Blink_ForeColor;
+					}
 					else if ( cond < 50 )
+					{
 						Condition.BackColor = Utility.Configuration.Config.UI.BackColor;
+						Condition.ForeColor = Utility.Configuration.Config.UI.ForeColor;
+					}
 					else
+					{
 						Condition.BackColor = Utility.Configuration.Config.UI.Fleet_ColorConditionSparkle;
+						Condition.ForeColor = Utility.Configuration.Config.UI.Blink_ForeColor;
+					}
 
 				} else {
 					Condition.BackColor = Utility.Configuration.Config.UI.BackColor;

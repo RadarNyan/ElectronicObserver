@@ -989,8 +989,8 @@
 			this.Life_ClockFormat.FormattingEnabled = true;
 			this.Life_ClockFormat.Items.AddRange(new object[] {
             "现在时间",
-            "距演习刷新还剩",
-            "距任务刷新还剩"});
+            "距演习更新还剩",
+            "距任务更新还剩"});
 			this.Life_ClockFormat.Location = new System.Drawing.Point(81, 135);
 			this.Life_ClockFormat.Name = "Life_ClockFormat";
 			this.Life_ClockFormat.Size = new System.Drawing.Size(121, 23);
@@ -1593,7 +1593,7 @@
 			this.FormShipGroup_AutoUpdate.Name = "FormShipGroup_AutoUpdate";
 			this.FormShipGroup_AutoUpdate.Size = new System.Drawing.Size(93, 19);
 			this.FormShipGroup_AutoUpdate.TabIndex = 1;
-			this.FormShipGroup_AutoUpdate.Text = "自动刷新";
+			this.FormShipGroup_AutoUpdate.Text = "自动更新";
 			this.ToolTipInfo.SetToolTip(this.FormShipGroup_AutoUpdate, "是否自动更新舰船数据。");
 			this.FormShipGroup_AutoUpdate.UseVisualStyleBackColor = true;
 			// 

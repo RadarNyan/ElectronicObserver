@@ -222,7 +222,7 @@ namespace ElectronicObserver.Window.Control {
 			}
 		}
 
-		private Color _barColorDecrement = FromArgb( 0xFF882222 );
+		private Color _barColorDecrement = Utility.Configuration.Config.UI.SubBackColor;
 		/// <summary>
 		/// バーの色(減少分)
 		/// </summary>

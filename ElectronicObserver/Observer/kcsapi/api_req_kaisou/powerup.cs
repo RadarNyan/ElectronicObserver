@@ -61,22 +61,37 @@ namespace ElectronicObserver.Observer.kcsapi.api_req_kaisou {
 
 						int firepower = updated_ship.FirepowerBase - ship.FirepowerBase;
 						if ( firepower > 0 )
-							contents.AddLast( "火力 +" + firepower );
+							contents.AddLast(string.Format("火力 +{0} ({1}/{2})",
+								firepower,
+								updated_ship.FirepowerBase,
+								updated_ship.MasterShip.FirepowerMax));
 						int torpedo = updated_ship.TorpedoBase - ship.TorpedoBase;
 						if ( torpedo > 0 )
-							contents.AddLast( "雷装 +" + torpedo );
+							contents.AddLast(string.Format("雷装 +{0} ({1}/{2})",
+								torpedo,
+								updated_ship.TorpedoBase,
+								updated_ship.MasterShip.TorpedoMax));
 						int aa = updated_ship.AABase - ship.AABase;
 						if ( aa > 0 )
-							contents.AddLast( "对空 +" + aa );
+							contents.AddLast(string.Format("对空 +{0} ({1}/{2})",
+								aa,
+								updated_ship.AABase,
+								updated_ship.MasterShip.AAMax));
 						int armor = updated_ship.ArmorBase - ship.ArmorBase;
 						if ( armor > 0 )
-							contents.AddLast( "装甲 +" + armor );
+							contents.AddLast(string.Format("装甲 +{0} ({1}/{2})",
+								armor,
+								updated_ship.ArmorBase,
+								updated_ship.MasterShip.ArmorMax));
 						int luck = updated_ship.LuckBase - ship.LuckBase;
 						if ( luck > 0 )
-							contents.AddLast( "运 +" + luck );
+							contents.AddLast(string.Format("运 +{0} ({1}/{2})",
+								luck,
+								updated_ship.LuckBase,
+								updated_ship.MasterShip.LuckMax));
 
-						sb.AppendFormat( string.Join( ", ", contents ) + " )" );
-						Utility.Logger.Add(2, "", "成功对 ", ship.NameWithLevel, "进行了近代化改修。 ( " + sb.ToString());
+						sb.AppendFormat(string.Join(", ", contents));
+						Utility.Logger.Add(2, "", "成功对 ", ship.NameWithLevel, " 进行了近代化改修 : " + sb.ToString());
 					}
 				}
 				ship.LoadFromResponse( APIName, data.api_ship );

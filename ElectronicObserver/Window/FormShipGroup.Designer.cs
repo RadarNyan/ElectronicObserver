@@ -777,7 +777,7 @@
 			this.MenuGroup_AutoUpdate.CheckOnClick = true;
 			this.MenuGroup_AutoUpdate.Name = "MenuGroup_AutoUpdate";
 			this.MenuGroup_AutoUpdate.Size = new System.Drawing.Size(191, 22);
-			this.MenuGroup_AutoUpdate.Text = "自动刷新";
+			this.MenuGroup_AutoUpdate.Text = "自动更新";
 			// 
 			// MenuGroup_ShowStatusBar
 			// 

@@ -269,10 +269,7 @@ namespace ElectronicObserver.Data.Battle {
 			// ロギング
 			if ( IsPractice ) {
 				Utility.Logger.Add(2, "", "同",
-					string.Format("「{0}」",
-						EnemyAdmiralName),
-					string.Format("{0}的",
-						EnemyAdmiralRank),
+					string.Format("「{0}」", EnemyAdmiralName), "提督的舰队",
 					string.Format("「{0}」",
 						Result.EnemyFleetName),
 					string.Format("进行了演习。( 结果 : {0}, 提督经验 +{1}, 舰娘经验 +{2} )",
