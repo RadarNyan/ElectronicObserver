@@ -500,7 +500,14 @@ namespace ElectronicObserver.Observer {
                         if (changed)
                         {
                             StringBuilder builder = new StringBuilder("svdata=");
-                            builder.Append(JavaScriptSerializer.Serialize(api_start2));
+                            foreach(char c in JavaScriptSerializer.Serialize(api_start2))
+                            {
+                                if (c > 127) {
+                                    builder.Append(string.Format(@"\u{0:x4}", (int)c));
+                                } else {
+                                    builder.Append(c);
+                                }
+                            }
                             oSession.utilSetResponseBody(builder.ToString());
                         }
                     }
