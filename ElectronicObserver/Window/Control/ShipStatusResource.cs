@@ -105,6 +105,12 @@ namespace ElectronicObserver.Window.Control {
 
 			const int margin = 3;
 
+			if (Utility.Configuration.Config.UI.RemoveBarShadow)
+			{
+				BarFuel.Paint( e.Graphics, new Rectangle(0, 5, this.Width, BarFuel.GetPreferredSize().Height));
+				BarAmmo.Paint( e.Graphics, new Rectangle(0, this.Height - BarFuel.GetPreferredSize().Height - 3, this.Width, BarFuel.GetPreferredSize().Height));
+				return;
+			}
 			BarFuel.Paint( e.Graphics, new Rectangle( 0, margin, this.Width, BarFuel.GetPreferredSize().Height ) );
 			BarAmmo.Paint( e.Graphics, new Rectangle( 0, this.Height - margin - BarFuel.GetPreferredSize().Height, this.Width, BarFuel.GetPreferredSize().Height ) );
 

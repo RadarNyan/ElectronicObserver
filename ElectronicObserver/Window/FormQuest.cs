@@ -35,9 +35,9 @@ namespace ElectronicObserver.Window {
 			CSDefaultLeft = new DataGridViewCellStyle();
 			CSDefaultLeft.Alignment = DataGridViewContentAlignment.MiddleLeft;
 			CSDefaultLeft.BackColor =
-			CSDefaultLeft.SelectionBackColor = SystemColors.Control;
-			CSDefaultLeft.ForeColor = SystemColors.ControlText;
-			CSDefaultLeft.SelectionForeColor = SystemColors.ControlText;
+			CSDefaultLeft.SelectionBackColor = Utility.Configuration.Config.UI.BackColor;
+			CSDefaultLeft.ForeColor = Utility.Configuration.Config.UI.ForeColor;
+			CSDefaultLeft.SelectionForeColor = Utility.Configuration.Config.UI.ForeColor;
 			CSDefaultLeft.WrapMode = DataGridViewTriState.False;
 
 			CSDefaultCenter = new DataGridViewCellStyle( CSDefaultLeft );
@@ -48,34 +48,36 @@ namespace ElectronicObserver.Window {
 				CSCategories[i] = new DataGridViewCellStyle( CSDefaultCenter );
 
 				Color c;
+				CSCategories[i].ForeColor = CSCategories[i].SelectionForeColor = Utility.Configuration.Config.UI.Blink_ForeColor;
 				switch ( i + 1 ) {
 					case 1:		//編成
-						c = Color.FromArgb( 0xAA, 0xFF, 0xAA );
+						c = Utility.Configuration.Config.UI.Quest_Type1Color;
 						break;
 					case 2:		//出撃
-						c = Color.FromArgb( 0xFF, 0xCC, 0xCC );
+						c = Utility.Configuration.Config.UI.Quest_Type2Color;
 						break;
 					case 3:		//演習
-						c = Color.FromArgb( 0xDD, 0xFF, 0xAA );
+						c = Utility.Configuration.Config.UI.Quest_Type3Color;
 						break;
 					case 4:		//遠征
-						c = Color.FromArgb( 0xCC, 0xFF, 0xFF );
+						c = Utility.Configuration.Config.UI.Quest_Type4Color;
 						break;
 					case 5:		//補給/入渠
-						c = Color.FromArgb( 0xFF, 0xFF, 0xCC );
+						c = Utility.Configuration.Config.UI.Quest_Type5Color;
 						break;
 					case 6:		//工廠
-						c = Color.FromArgb( 0xDD, 0xCC, 0xBB );
+						c = Utility.Configuration.Config.UI.Quest_Type6Color;
 						break;
 					case 7:		//改装
-						c = Color.FromArgb( 0xDD, 0xCC, 0xFF );
+						c = Utility.Configuration.Config.UI.Quest_Type7Color;
 						break;
 					case 8:		//出撃(2)
-						c = Color.FromArgb( 0xFF, 0xCC, 0xCC );
+						c = Utility.Configuration.Config.UI.Quest_Type2Color;
 						break;
 					case 9:		//その他
 					default:
 						c = CSDefaultCenter.BackColor;
+						CSCategories[i].ForeColor = CSCategories[i].SelectionForeColor = Utility.Configuration.Config.UI.ForeColor;
 						break;
 				}
 
@@ -91,6 +93,15 @@ namespace ElectronicObserver.Window {
 
 			#endregion
 
+			if (Utility.Configuration.Config.UI.RemoveBarShadow) { // 暂时借用这个属性
+				QuestView.ColumnHeadersHeight = 21;
+				QuestView.EnableHeadersVisualStyles = false;
+				QuestView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
+				QuestView.ColumnHeadersDefaultCellStyle.ForeColor = Utility.Configuration.Config.UI.ForeColor;
+				QuestView.ColumnHeadersDefaultCellStyle.BackColor = Utility.Configuration.Config.UI.SubBackColor;
+				QuestView.GridColor = Utility.Configuration.Config.UI.SubBackColor;
+				QuestView.BackgroundColor = Utility.Configuration.Config.UI.BackColor;
+			}
 
 			SystemEvents.SystemShuttingDown += SystemEvents_SystemShuttingDown;
 		}

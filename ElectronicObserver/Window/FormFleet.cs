@@ -683,7 +683,8 @@ namespace ElectronicObserver.Window {
 
 			TableFleet.Visible = false;
 			TableFleet.SuspendLayout();
-			TableFleet.BorderStyle = BorderStyle.FixedSingle;
+			// TableFleet.BorderStyle = BorderStyle.FixedSingle;
+			TableFleet.BackColor = Utility.Configuration.Config.UI.SubBackColor;
 			ControlFleet = new TableFleetControl( this, TableFleet );
 			TableFleet.ResumeLayout();
 
@@ -1073,7 +1074,7 @@ namespace ElectronicObserver.Window {
 
 
 		private void TableMember_CellPaint( object sender, TableLayoutCellPaintEventArgs e ) {
-			e.Graphics.DrawLine( Pens.Silver, e.CellBounds.X, e.CellBounds.Bottom - 1, e.CellBounds.Right - 1, e.CellBounds.Bottom - 1 );
+			e.Graphics.DrawLine(Utility.Configuration.Config.UI.SubBackColorPen, e.CellBounds.X, e.CellBounds.Bottom - 1, e.CellBounds.Right - 1, e.CellBounds.Bottom - 1);
 		}
 
 

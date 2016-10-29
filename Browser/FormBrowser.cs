@@ -272,7 +272,6 @@ namespace Browser {
 
 		private void Browser_DocumentCompleted( object sender, WebBrowserDocumentCompletedEventArgs e ) {
 
-			StyleSheetApplied = false;
 			ApplyStyleSheet();
 
 			ApplyZoom();
@@ -327,6 +326,7 @@ namespace Browser {
 		/// ブラウザを再読み込みします。
 		/// </summary>
 		public void RefreshBrowser() {
+			StyleSheetApplied = false;
 			Browser.Refresh( WebBrowserRefreshOption.Completely );
 		}
 

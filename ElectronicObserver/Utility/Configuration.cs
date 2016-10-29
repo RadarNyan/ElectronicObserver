@@ -297,6 +297,12 @@ namespace ElectronicObserver.Utility {
 					case 1:  return SolarizedBase0.ColorData;
 					default: return Color.FromArgb(0x88, 0x88, 0x88);
 				}}}
+				public Pen SubBackColorPen { get {
+				switch (ThemeID) {
+					case 0:  return new Pen(SolarizedBase2.ColorData, 1);
+					case 1:  return new Pen(SolarizedBase02.ColorData, 1);
+					default: return new Pen(SystemColors.Control, 1);
+				}}}
 				public Color Color_Red { get {
 				switch (ThemeID) {
 					case 0:  return SolarizedRed.ColorData;
@@ -364,6 +370,49 @@ namespace ElectronicObserver.Utility {
 					case 0:  return SolarizedCyan.ColorData;
 					case 1:  return SolarizedCyan.ColorData;
 					default: return Color.FromArgb(0x00, 0x66, 0x66);
+				}}}
+				// 视图 - 任务：任务种类
+				public Color Quest_Type1Color { get { // 编成
+				switch (ThemeID) {
+					case 0:  return SolarizedGreen.ColorData;
+					case 1:  return SolarizedGreen.ColorData;
+					default: return Color.FromArgb(0xAA, 0xFF, 0xAA);
+				}}}
+				public Color Quest_Type2Color { get { // 出击
+				switch (ThemeID) {
+					case 0:  return SolarizedRed.ColorData;
+					case 1:  return SolarizedRed.ColorData;
+					default: return Color.FromArgb(0xFF, 0xCC, 0xCC);
+				}}}
+				public Color Quest_Type3Color { get { // 演习
+				switch (ThemeID) {
+					case 0:  return SolarizedGreen.ColorData;
+					case 1:  return SolarizedGreen.ColorData;
+					default: return Color.FromArgb(0xDD, 0xFF, 0xAA);
+				}}}
+				public Color Quest_Type4Color { get { // 远征
+				switch (ThemeID) {
+					case 0:  return SolarizedCyan.ColorData;
+					case 1:  return SolarizedCyan.ColorData;
+					default: return Color.FromArgb(0xCC, 0xFF, 0xFF);
+				}}}
+				public Color Quest_Type5Color { get { // 补给、入渠
+				switch (ThemeID) {
+					case 0:  return SolarizedYellow.ColorData;
+					case 1:  return SolarizedYellow.ColorData;
+					default: return Color.FromArgb(0xFF, 0xFF, 0xCC);
+				}}}
+				public Color Quest_Type6Color { get { // 工厂
+				switch (ThemeID) {
+					case 0:  return SolarizedOrange.ColorData;
+					case 1:  return SolarizedOrange.ColorData;
+					default: return Color.FromArgb(0xDD, 0xCC, 0xBB);
+				}}}
+				public Color Quest_Type7Color { get { // 改装
+				switch (ThemeID) {
+					case 0:  return SolarizedViolet.ColorData;
+					case 1:  return SolarizedViolet.ColorData;
+					default: return Color.FromArgb(0xDD, 0xCC, 0xFF);
 				}}}
 				// 视图 - 罗盘：敌舰名、事件名
 				public Color Compass_ShipNameColor3 { get { // Flagship

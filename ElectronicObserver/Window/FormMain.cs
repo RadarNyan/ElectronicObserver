@@ -259,6 +259,10 @@ namespace ElectronicObserver.Window {
 			{
 				f.BackColor = this.BackColor;
 				f.ForeColor = this.ForeColor;
+				if (f is FormShipGroup) { // 暂时不对舰队编成窗口应用主题
+					f.BackColor = SystemColors.Control;
+					f.ForeColor = SystemColors.ControlText;
+				} 
 			}
 
 			StripStatus_Information.BackColor = StripStatus_InformationJap2.BackColor = StripStatus_InformationJap3.BackColor = StripStatus_InformationChs1.BackColor = StripStatus_InformationChs2.BackColor = StripStatus_InformationChs3.BackColor = System.Drawing.Color.Transparent;
