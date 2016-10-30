@@ -121,7 +121,8 @@
     <value>
 try {
 $(document.body).css({visibility:"hidden"});
-$("#externalswf").css({visibility:"visible",position:"fixed",left:0,top:0});
+$("#flashWrap").css({position:"fixed",left:0,top:0,width:"100%",height:"100%"});
+$("#externalswf").css({visibility:"visible",width:"100%",height:"100%"});
 }
 catch(e) {
 	alert("フレームCSS適用に失敗しました: "+e);
@@ -131,7 +132,9 @@ catch(e) {
     <value>
 try {
 $(document.body).css({visibility:"hidden",overflow:"hidden"});
-$("#area-game").css({visibility:"visible",position:"fixed",left:0,top:0});
+$(".dmm-ntgnavi").css({display:"none"});
+$("#area-game").css({position:"fixed",left:0,top:0,width:"100%",height:"100%"});
+$("#game_frame").css({visibility:"visible",width:"100%",height:"100%"});
 }
 catch(e) {
 	alert("ページCSS適用に失敗しました: "+e);
