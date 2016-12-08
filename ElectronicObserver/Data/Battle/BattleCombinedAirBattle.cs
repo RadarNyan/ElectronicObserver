@@ -18,10 +18,10 @@ namespace ElectronicObserver.Data.Battle {
 		public override void LoadFromResponse( string apiname, dynamic data ) {
 			base.LoadFromResponse( apiname, (object)data );
 
-			BaseAirAttack = new PhaseBaseAirAttack( this );
-			AirBattle = new PhaseAirBattle( this );
-			Support = new PhaseSupport( this );
-			AirBattle2 = new PhaseAirBattle( this, "2" );
+			BaseAirAttack = new PhaseBaseAirAttack( this, "基地航空队攻击" );
+			AirBattle = new PhaseAirBattle( this, "第一次航空战" );
+			Support = new PhaseSupport( this, "支援攻击" );
+			AirBattle2 = new PhaseAirBattle( this, "第二次航空战", "2" );
 
 			BaseAirAttack.EmulateBattle( _resultHPs, _attackDamages );
 			AirBattle.EmulateBattle( _resultHPs, _attackDamages );
@@ -35,30 +35,24 @@ namespace ElectronicObserver.Data.Battle {
 			get { return "api_req_combined_battle/airbattle"; }
 		}
 
+		public override string BattleName {
+			get { return "联合舰队 航空战"; }
+		}
 
 		public override BattleData.BattleTypeFlag BattleType {
 			get { return BattleTypeFlag.Day | BattleTypeFlag.Combined; }
 		}
 
-		public override string GetBattleDetail( int index ) {
-			var sb = new StringBuilder();
 
-			string baseair = BaseAirAttack.GetBattleDetail( index );
-			string airbattle1 = AirBattle.GetBattleDetail( index );
-			string support = Support.GetBattleDetail( index );
-			string airbattle2 = AirBattle2.GetBattleDetail( index );
-
-			if ( baseair != null )
-				sb.AppendLine( "《基地航空队攻击》" ).Append( baseair );
-			if ( airbattle1 != null )
-				sb.AppendLine( "《第一次航空战》" ).Append( airbattle1 );
-			if ( support != null )
-				sb.AppendLine( "《支援攻击》" ).Append( support );
-			if ( airbattle2 != null )
-				sb.AppendLine( "《第二次航空战》" ).Append( airbattle2 );
-
-			return sb.ToString();
+		public override IEnumerable<PhaseBase> GetPhases() {
+			yield return Initial;
+			yield return Searching;
+			yield return BaseAirAttack;
+			yield return AirBattle;
+			yield return Support;
+			yield return AirBattle2;
 		}
+
 	}
 
 }

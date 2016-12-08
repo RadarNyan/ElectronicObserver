@@ -29,6 +29,7 @@ namespace ElectronicObserver.Window {
 				#region Initialize
 
 				Name = new ImageLabel();
+				Name.Name = "Name";
 				Name.Text = "*";
 				Name.Anchor = AnchorStyles.Left;
 				Name.TextAlign = ContentAlignment.MiddleLeft;
@@ -39,6 +40,7 @@ namespace ElectronicObserver.Window {
 				Name.AutoSize = true;
 				Name.ContextMenuStrip = parent.ContextMenuBaseAirCorps;
 				Name.Visible = false;
+				Name.Cursor = Cursors.Help;
 
 				ActionKind = new ImageLabel();
 				ActionKind.Text = "*";
@@ -130,14 +132,17 @@ namespace ElectronicObserver.Window {
 
 				} else {
 
-					Name.Text = corps.Name;
+					Name.Text = string.Format( "#{0} - {1}", corps.MapAreaID, corps.Name );
+					Name.Tag = corps.MapAreaID;
+					var sb = new StringBuilder();
+					sb.AppendLine( "所属海域 : " + KCDatabase.Instance.MapArea[corps.MapAreaID].Name );
 
 					// state 
 					if ( corps.Squadrons.Values.Any( sq => sq != null && sq.AircraftCurrent < sq.AircraftMax ) ) {
 						// 未補給
 						Name.ImageAlign = ContentAlignment.MiddleRight;
 						Name.ImageIndex = (int)ResourceManager.IconContent.FleetNotReplenished;
-						ToolTipInfo.SetToolTip( Name, "未補給" );
+						sb.AppendLine( "未补给" );
 
 					} else if ( corps.Squadrons.Values.Any( sq => sq != null && sq.Condition > 1 ) ) {
 						// 疲労
@@ -146,21 +151,21 @@ namespace ElectronicObserver.Window {
 						if ( tired == 2 ) {
 							Name.ImageAlign = ContentAlignment.MiddleRight;
 							Name.ImageIndex = (int)ResourceManager.IconContent.ConditionTired;
-							ToolTipInfo.SetToolTip( Name, "疲労" );
+							sb.AppendLine( "疲劳" );
 
 						} else {
 							Name.ImageAlign = ContentAlignment.MiddleRight;
 							Name.ImageIndex = (int)ResourceManager.IconContent.ConditionVeryTired;
-							ToolTipInfo.SetToolTip( Name, "過労" );
+							sb.AppendLine( "过劳" );
 
 						}
 
 					} else {
 						Name.ImageAlign = ContentAlignment.MiddleCenter;
 						Name.ImageIndex = -1;
-						ToolTipInfo.SetToolTip( Name, null );
 
 					}
+					ToolTipInfo.SetToolTip( Name, sb.ToString() );
 
 
 					ActionKind.Text = "[" + Constants.GetBaseAirCorpsActionKind( corps.ActionKind ) + "]";
@@ -169,7 +174,7 @@ namespace ElectronicObserver.Window {
 						int airSuperiority = Calculator.GetAirSuperiority( corps );
 						AirSuperiority.Text = airSuperiority.ToString();
 						ToolTipInfo.SetToolTip( AirSuperiority,
-							string.Format( "確保: {0}\r\n優勢: {1}\r\n均衡: {2}\r\n劣勢: {3}\r\n",
+							string.Format( "确保 : {0}\r\n优势 : {1}\r\n均衡 : {2}\r\n劣势 : {3}\r\n",
 							(int)( airSuperiority / 3.0 ),
 							(int)( airSuperiority / 1.5 ),
 							Math.Max( (int)( airSuperiority * 1.5 - 1 ), 0 ),
@@ -209,7 +214,7 @@ namespace ElectronicObserver.Window {
 				var sb = new StringBuilder();
 
 				if ( corps == null )
-					return "(未開放)\r\n";
+					return "( 未开放 )\r\n";
 
 				foreach ( var squadron in corps.Squadrons.Values ) {
 					if ( squadron == null )
@@ -220,7 +225,7 @@ namespace ElectronicObserver.Window {
 					switch ( squadron.State ) {
 						case 0:		// 未配属
 						default:
-							sb.AppendLine( "(なし)" );
+							sb.AppendLine( "( 无 )" );
 							break;
 
 						case 1:		// 配属済み
@@ -235,10 +240,10 @@ namespace ElectronicObserver.Window {
 								default:
 									break;
 								case 2:
-									sb.Append( "[疲労] " );
+									sb.Append( "[疲劳] " );
 									break;
 								case 3:
-									sb.Append( "[過労] " );
+									sb.Append( "[过劳] " );
 									break;
 							}
 
@@ -246,7 +251,7 @@ namespace ElectronicObserver.Window {
 							break;
 
 						case 2:		// 配置転換中
-							sb.AppendFormat( "配置転換中 (開始時刻: {0})\r\n",
+							sb.AppendFormat( "配置转换中 ( 开始时间 : {0} )\r\n",
 								DateTimeHelper.TimeToCSVString( squadron.RelocatedTime ) );
 							break;
 					}
@@ -264,7 +269,7 @@ namespace ElectronicObserver.Window {
 			InitializeComponent();
 
 
-			ControlMember = new TableBaseAirCorpsControl[3];
+			ControlMember = new TableBaseAirCorpsControl[9];
 			TableMember.SuspendLayout();
 			for ( int i = 0; i < ControlMember.Length; i++ ) {
 				ControlMember[i] = new TableBaseAirCorpsControl( this, TableMember, i );
@@ -308,26 +313,45 @@ namespace ElectronicObserver.Window {
 
 		void Updated( string apiname, dynamic data ) {
 
-			var db = KCDatabase.Instance;
+			var keys = KCDatabase.Instance.BaseAirCorps.Keys;
 
 			TableMember.SuspendLayout();
 			for ( int i = 0; i < ControlMember.Length; i++ ) {
-				ControlMember[i].Update( i + 1 );
+				ControlMember[i].Update( i < keys.Count() ? keys.ElementAt( i ) : -1 );
 			}
 			TableMember.ResumeLayout();
 
 		}
 
 
+		private void ContextMenuBaseAirCorps_Opening( object sender, System.ComponentModel.CancelEventArgs e ) {
+			if ( KCDatabase.Instance.BaseAirCorps.Count == 0 ) {
+				e.Cancel = true;
+				return;
+			}
+
+			if ( ContextMenuBaseAirCorps.SourceControl.Name == "Name" )
+				ContextMenuBaseAirCorps_CopyOrganization.Tag = ContextMenuBaseAirCorps.SourceControl.Tag as int? ?? -1;
+			else
+				ContextMenuBaseAirCorps_CopyOrganization.Tag = -1;
+		}
+
 		private void ContextMenuBaseAirCorps_CopyOrganization_Click( object sender, EventArgs e ) {
 
 			var sb = new StringBuilder();
+			int areaid = ContextMenuBaseAirCorps_CopyOrganization.Tag as int? ?? -1;
 
-			foreach ( var corps in KCDatabase.Instance.BaseAirCorps.Values ) {
+			var baseaircorps = KCDatabase.Instance.BaseAirCorps.Values;
+			if ( areaid != -1 )
+				baseaircorps = baseaircorps.Where( c => c.MapAreaID == areaid );
 
-				sb.AppendFormat( "{0}\t[{1}] 制空戦力{2}\r\n",
-					corps.Name, Constants.GetBaseAirCorpsActionKind( corps.ActionKind ),
-					Calculator.GetAirSuperiority( corps ) );
+			foreach ( var corps in baseaircorps ) {
+
+				sb.AppendFormat( "{0}\t[{1}] 制空战力 {2} / 战斗行动半径 {3}\r\n",
+					( areaid == -1 ? ( KCDatabase.Instance.MapArea[corps.MapAreaID].Name + "：" ) : "" ) + corps.Name,
+					Constants.GetBaseAirCorpsActionKind( corps.ActionKind ),
+					Calculator.GetAirSuperiority( corps ),
+					corps.Distance );
 
 				var sq = corps.Squadrons.Values.ToArray();
 
@@ -336,34 +360,45 @@ namespace ElectronicObserver.Window {
 						sb.Append( "/" );
 
 					if ( sq[i] == null ) {
-						sb.Append( "(消息不明)" );
+						sb.Append( "( 消息不明 )" );
 						continue;
 					}
 
 					switch ( sq[i].State ) {
 						case 0:
-							sb.Append( "(未配属)" );
+							sb.Append( "( 未配属 )" );
 							break;
 						case 1: {
 								var eq = sq[i].EquipmentInstance;
 
-								sb.Append( eq == null ? "(なし)" : eq.NameWithLevel );
+								sb.Append( eq == null ? "( 无 )" : eq.NameWithLevel );
 
 								if ( sq[i].AircraftCurrent < sq[i].AircraftMax )
 									sb.AppendFormat( "[{0}/{1}]", sq[i].AircraftCurrent, sq[i].AircraftMax );
 							} break;
 						case 2:
-							sb.Append( "(配置転換中)" );
+							sb.Append( "( 配置转换中 )" );
 							break;
 					}
 				}
 
-				sb.AppendLine().AppendLine();
+				sb.AppendLine();
 			}
 
 			Clipboard.SetData( DataFormats.StringFormat, sb.ToString() );
 		}
 
+		private void ContextMenuBaseAirCorps_DisplayRelocatedEquipments_Click( object sender, EventArgs e ) {
+
+			string message = string.Join( "\r\n", KCDatabase.Instance.RelocatedEquipments.Values
+				.Where( eq => eq.EquipmentInstance != null )
+				.Select( eq => string.Format( "{0} ({1}～)", eq.EquipmentInstance.NameWithLevel, DateTimeHelper.TimeToCSVString( eq.RelocatedTime ) ) ) );
+
+			if ( message.Length == 0 )
+				message = "现在没有装备正在配置转换中。";
+
+			MessageBox.Show( message, "配置转换中的装备", MessageBoxButtons.OK, MessageBoxIcon.Information );
+		}
 
 
 		private void TableMember_CellPaint( object sender, TableLayoutCellPaintEventArgs e ) {
@@ -373,6 +408,8 @@ namespace ElectronicObserver.Window {
 		protected override string GetPersistString() {
 			return "BaseAirCorps";
 		}
+
+
 
 
 	}

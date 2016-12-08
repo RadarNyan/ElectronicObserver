@@ -15,7 +15,7 @@ namespace ElectronicObserver.Data.Battle {
 		public override void LoadFromResponse( string apiname, dynamic data ) {
 			base.LoadFromResponse( apiname, (object)data );
 
-			NightBattle = new PhaseNightBattle( this, false );
+			NightBattle = new PhaseNightBattle( this, "夜战", false );
 
 			NightBattle.EmulateBattle( _resultHPs, _attackDamages );
 
@@ -26,19 +26,19 @@ namespace ElectronicObserver.Data.Battle {
 			get { return "api_req_battle_midnight/sp_midnight"; }
 		}
 
+		public override string BattleName {
+			get { return "通常舰队 开幕夜战"; }
+		}
+
 		public override BattleTypeFlag BattleType {
 			get { return BattleTypeFlag.Night; }
 		}
 
-		public override string GetBattleDetail( int index ) {
-			var sb = new StringBuilder();
 
-			string night = NightBattle.GetBattleDetail( index );
-
-			if ( night != null )
-				sb.AppendLine( "《夜战》" ).Append( night );
-
-			return sb.ToString();
+		public override IEnumerable<PhaseBase> GetPhases() {
+			yield return Initial;
+			yield return Searching;
+			yield return NightBattle;
 		}
 	}
 

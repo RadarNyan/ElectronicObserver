@@ -1,6 +1,9 @@
-﻿using ElectronicObserver.Resource.Record;
+﻿using ElectronicObserver.Data.Battle.Detail;
+using ElectronicObserver.Resource.Record;
+using ElectronicObserver.Utility.Mathematics;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,6 +14,9 @@ namespace ElectronicObserver.Data.Battle {
 	/// 戦闘関連の処理を統括して扱います。
 	/// </summary>
 	public class BattleManager : ResponseWrapper {
+
+		private const string BattleLogPath = "BattleLog";
+
 
 		/// <summary>
 		/// 羅針盤データ
@@ -41,6 +47,7 @@ namespace ElectronicObserver.Data.Battle {
 			AirBattle,						// 航空戦
 			AirRaid,						// 長距離空襲戦
 			Practice,						// 演習
+			BaseAirRaid,					// 基地空襲戦
 			BattlePhaseMask = 0xFF,			// 戦闘形態マスク
 			CombinedTaskForce = 0x100,		// 機動部隊
 			CombinedSurface = 0x200,		// 水上部隊
@@ -83,6 +90,36 @@ namespace ElectronicObserver.Data.Battle {
 		/// 敵が連合艦隊かどうか
 		/// </summary>
 		public bool IsEnemyCombined { get { return ( BattleMode & BattleModes.EnemyCombinedFleet ) != 0; } }
+
+		/// <summary>
+		/// 基地空襲戦かどうか
+		/// </summary>
+		public bool IsBaseAirRaid { get { return ( BattleMode & BattleModes.BattlePhaseMask ) == BattleModes.BaseAirRaid; } }
+
+
+		/// <summary>
+		/// 1回目の戦闘
+		/// </summary>
+		public BattleData FirstBattle {
+			get {
+				if ( StartsFromDayBattle )
+					return BattleDay;
+				else
+					return BattleNight;
+			}
+		}
+
+		/// <summary>
+		/// 2回目の戦闘
+		/// </summary>
+		public BattleData SecondBattle {
+			get {
+				if ( StartsFromDayBattle )
+					return BattleNight;
+				else
+					return BattleDay;
+			}
+		}
 
 
 		/// <summary>
@@ -130,6 +167,13 @@ namespace ElectronicObserver.Data.Battle {
 					BattleMode = BattleModes.Undefined;
 					Compass = new CompassData();
 					Compass.LoadFromResponse( apiname, data );
+
+					if ( Compass.HasAirRaid ) {
+						BattleMode = BattleModes.BaseAirRaid;
+						BattleDay = new BattleBaseAirRaid();
+						BattleDay.LoadFromResponse( apiname, Compass.AirRaidData );
+						WriteBattleLog();
+					}
 					break;
 
 				case "api_req_sortie/battle":
@@ -146,6 +190,7 @@ namespace ElectronicObserver.Data.Battle {
 
 				case "api_req_battle_midnight/sp_midnight":
 					BattleMode = BattleModes.NightOnly;
+					BattleDay = null;
 					BattleNight = new BattleNightOnly();
 					BattleNight.LoadFromResponse( apiname, data );
 					break;
@@ -172,10 +217,12 @@ namespace ElectronicObserver.Data.Battle {
 					BattleNight = new BattleCombinedNormalNight();
 					//BattleNight.TakeOverParameters( BattleDay );		//checkme: 連合艦隊夜戦では昼戦での与ダメージがMVPに反映されない仕様？
 					BattleNight.LoadFromResponse( apiname, data );
+					BattleNight.Initial.TakeOverMaxHPs( BattleDay );
 					break;
 
 				case "api_req_combined_battle/sp_midnight":
 					BattleMode = BattleModes.NightOnly | BattleModes.CombinedMask;
+					BattleDay = null;
 					BattleNight = new BattleCombinedNightOnly();
 					BattleNight.LoadFromResponse( apiname, data );
 					break;
@@ -206,9 +253,23 @@ namespace ElectronicObserver.Data.Battle {
 
 				case "api_req_combined_battle/ec_midnight_battle":
 					BattleNight = new BattleEnemyCombinedNight();
-					//BattleNight.TakeOverParameters( BattleDay );		//undone: これで正しいかは未検証
+					BattleNight.TakeOverParameters( BattleDay );
 					BattleNight.LoadFromResponse( apiname, data );
+					BattleNight.Initial.TakeOverMaxHPs( BattleDay );
 					break;
+
+				case "api_req_combined_battle/each_battle":
+					BattleMode = BattleModes.Normal | BattleModes.CombinedTaskForce | BattleModes.EnemyCombinedFleet;
+					BattleDay = new BattleCombinedEachDay();
+					BattleDay.LoadFromResponse( apiname, data );
+					break;
+
+				case "api_req_combined_battle/each_battle_water":
+					BattleMode = BattleModes.Normal | BattleModes.CombinedSurface | BattleModes.EnemyCombinedFleet;
+					BattleDay = new BattleCombinedEachWater();
+					BattleDay.LoadFromResponse( apiname, data );
+					break;
+
 
 				case "api_req_member/get_practice_enemyinfo":
 					EnemyAdmiralName = data.api_nickname;
@@ -354,6 +415,9 @@ namespace ElectronicObserver.Data.Battle {
 				RecordManager.Instance.ShipDrop.Add( shipID, itemID, eqID, Compass.MapAreaID, Compass.MapInfoID, Compass.Destination, Compass.MapInfo.EventDifficulty, Compass.EventID == 5, enemyFleetData.FleetID, Result.Rank, KCDatabase.Instance.Admiral.Level );
 			}
 
+			WriteBattleLog();
+
+
 
 			//DEBUG
 			/*/
@@ -459,7 +523,7 @@ namespace ElectronicObserver.Data.Battle {
 			if ( ( BattleMode & BattleModes.BattlePhaseMask ) == BattleModes.AirRaid )
 				return GetWinRankAirRaid( friendcount, friendsunk, friendrate );
 			else
-				return GetWinRank( friendcount, enemycount, friendsunk, enemysunk, friendrate, enemyrate, resultHPs[6] <= 0 );
+				return GetWinRank( friendcount, enemycount, friendsunk, enemysunk, friendrate, enemyrate, friend[0].HPRate <= 0.25, resultHPs[6] <= 0 );
 
 
 		}
@@ -474,13 +538,14 @@ namespace ElectronicObserver.Data.Battle {
 		/// <param name="sunkEnemy">撃沈した敵軍艦数。</param>
 		/// <param name="friendrate">自軍損害率。</param>
 		/// <param name="enemyrate">敵軍損害率。</param>
-		/// <param name="defeatFlagship">敵旗艦を撃沈しているか。</param>
+		/// <param name="isfriendFlagshipHeavilyDamaged">自艦隊の旗艦が大破しているか。</param>
+		/// <param name="defeatEnemyFlagship">敵旗艦を撃沈しているか。</param>
 		/// <remarks>thanks: nekopanda</remarks>
 		private static int GetWinRank(
 			int countFriend, int countEnemy,
 			int sunkFriend, int sunkEnemy,
 			double friendrate, double enemyrate,
-			bool defeatFlagship ) {
+			bool isfriendFlagshipHeavilyDamaged, bool defeatEnemyFlagship ) {
 
 			int rifriend = (int)( friendrate * 100 );
 			int rienemy = (int)( enemyrate * 100 );
@@ -496,12 +561,20 @@ namespace ElectronicObserver.Data.Battle {
 					else
 						return 6;	// S
 
-				} else if ( sunkEnemy > 0 && sunkEnemy >= countEnemy * 2 / 3 )		// 敵の 2/3 以上を撃沈
+				} else if ( countEnemy > 1 && sunkEnemy >= (int)( countEnemy * 0.7 ) )		// 敵の 70% 以上を撃沈
 					return 5;	// A
 			}
 
-			// 敵旗艦撃沈 かつ 轟沈艦が敵より少ない、もしくはゲージが 2.5 倍以上
-			if ( ( defeatFlagship && sunkFriend < sunkEnemy ) || rienemy > ( 2.5 * rifriend ) )
+			// 敵旗艦撃沈 かつ 轟沈艦が敵より少ない
+			if ( defeatEnemyFlagship && sunkFriend < sunkEnemy )
+				return 4;	// B
+
+			// 自艦隊1隻 かつ 旗艦大破
+			if ( countFriend == 1 && isfriendFlagshipHeavilyDamaged )
+				return 2;	// D
+
+			// ゲージが 2.5 倍以上
+			if ( rienemy > ( 2.5 * rifriend ) )
 				return 4;	// B
 
 			// ゲージが 0.9 倍以上
@@ -546,6 +619,37 @@ namespace ElectronicObserver.Data.Battle {
 			//*/
 
 			return rank;
+		}
+
+
+
+		private void WriteBattleLog() {
+
+			if ( !Utility.Configuration.Config.Log.SaveBattleLog )
+				return;
+
+			try {
+				string parent = BattleLogPath;
+
+				if ( !Directory.Exists( parent ) )
+					Directory.CreateDirectory( parent );
+
+				string info;
+				if ( IsPractice )
+					info = "practice";
+				else
+					info = string.Format( "{0}-{1}-{2}", Compass.MapAreaID, Compass.MapInfoID, Compass.Destination );
+
+				string path = string.Format( "{0}\\{1}@{2}.txt", parent, DateTimeHelper.GetTimeStamp(), info );
+
+				using ( var sw = new StreamWriter( path, false, Utility.Configuration.Config.Log.FileEncoding ) ) {
+					sw.Write( BattleDetailDescriptor.GetBattleDetail( this ) );
+				}
+
+			} catch ( Exception ex ) {
+
+				Utility.ErrorReporter.SendErrorReport( ex, "戦闘ログの出力に失敗しました。" );
+			}
 		}
 
 	}

@@ -33,8 +33,8 @@ namespace ElectronicObserver.Data.Battle {
 		public override void LoadFromResponse( string apiname, dynamic data ) {
 			base.LoadFromResponse( apiname, (object)data );
 
-			Initial = new PhaseInitial( this );
-			Searching = new PhaseSearching( this );
+			Initial = new PhaseInitial( this, "战力" );
+			Searching = new PhaseSearching( this, "索敌" );
 
 			_resultHPs = Initial.InitialHPs.ToArray();
 			if ( _attackDamages == null )
@@ -95,6 +95,11 @@ namespace ElectronicObserver.Data.Battle {
 		/// </summary>
 		public abstract string APIName { get; }
 
+		/// <summary>
+		/// 戦闘形態の名称
+		/// </summary>
+		public abstract string BattleName { get; }
+
 
 		[Flags]
 		public enum BattleTypeFlag {
@@ -104,6 +109,7 @@ namespace ElectronicObserver.Data.Battle {
 			Practice = 0x1000,
 			Combined = 0x2000,
 			EnemyCombined = 0x4000,
+			BaseAirRaid = 0x8000,
 		}
 
 		/// <summary>
@@ -112,7 +118,33 @@ namespace ElectronicObserver.Data.Battle {
 		public abstract BattleTypeFlag BattleType { get; }
 
 
-		public abstract string GetBattleDetail( int index );
+		/// <summary>
+		/// すべての戦闘詳細データを取得します。
+		/// </summary>
+		public string GetBattleDetail() {
+			return GetBattleDetail( -1 );
+		}
+
+		/// <summary>
+		/// 指定したインデックスの艦の戦闘詳細データを取得します。
+		/// </summary>
+		/// <param name="index">インデックス。[0-23]</param>
+		public string GetBattleDetail( int index ) {
+			var sb = new StringBuilder();
+
+			foreach ( var phase in GetPhases() ) {
+				string bd = phase.GetBattleDetail( index );
+
+				if ( !string.IsNullOrEmpty( bd ) ) {
+					sb.AppendLine( "《" + phase.Title + "》" ).Append( bd );
+				}
+			}
+			return sb.ToString();
+		}
+
+
+		public abstract IEnumerable<PhaseBase> GetPhases();
+
 	}
 
 }

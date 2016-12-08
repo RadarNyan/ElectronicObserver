@@ -412,15 +412,6 @@ api_start2	：艦娘・装備固有データその他
 		api_no			：海域カテゴリ内ID(ex. 2-3 の 3)
 		api_map_bgm		：通常戦闘BGMID　[0]=昼戦, [1]=夜戦
 		api_boss_bgm	：ボス戦闘BGMID
-	
-	api_mst_mapcell		：海域セルデータ
-		api_map_no		：海域ID
-		api_maparea_id	：海域カテゴリID
-		api_mapinfo_no	：海域カテゴリ内ID
-		api_id			：海域セルユニークID(全海域の通し番号)
-		api_no			：海域セルID(同海域内限定)
-		api_color_no	：セルの状態
-							0=初期位置, 1=(存在せず), 2=資源獲得, 3=渦潮, 4=通常戦闘, 5=ボス戦闘, 6=(気のせいだった, api_req_map/start|nextにのみ存在, ここでは4として扱われる?) or 揚陸地点, 7=航空戦, 8=船団護衛成功, 9=航空偵察, 10=長距離空襲戦
 
 	api_mst_mission		：遠征データ
 		api_id			：遠征ID
@@ -583,9 +574,17 @@ api_port/port		：母港情報
 		api_base_convert_slot	：配置転換中の装備固有ID　1つ以上あるときのみ存在
 	api_event_object		：('16 夏イベ版データ)
 		api_m_flag			：
-		api_base_conver_slot：配置転換中の装備固有ID　1つ以上あるときのみ存在
+		api_base_convert_slot：配置転換中の装備固有ID　1つ以上あるときのみ存在
 		api_m_flag2			：0=なし　1=ギミック解除SE再生
+	api_event_object		：('16 秋イベ版データ)
+		api_m_flag			：2
+		api_m_flag2			：ギミック解除時に1
 	api_parallel_quest_count	：最大受領可能任務数
+	api_plane_info				：基地航空隊関連データ　要素があるときのみ存在（メンバも然り）
+		api_unset_slot			：更新された unsetslot? []　基地航空隊が更新されたときに増える？
+			api_type3No			：装備カテゴリID
+			api_slot_list		：装備IDリスト []
+		api_base_convert_slot	：配置転換中の装備IDリスト []
 
 api_get_member/slot_item	：装備品情報
 	api_id					：装備固有ID
@@ -1197,11 +1196,6 @@ api_req_kaisou/lock				：装備ロック
 	api_locked			：ロック状態(1=ロック)
 
 
-api_get_member/mapcell		：マップデータ
-	api_id		：海域セルID
-	api_passed	：通行済み　初期地点は常に0
-
-
 Request.api_req_map/start	：出撃
 	api_deck_id			：出撃艦隊ID
 	api_formation_id	：
@@ -1210,22 +1204,39 @@ Request.api_req_map/start	：出撃
 	api_mapinfo_no		：海域カテゴリ内番号
 
 api_req_map/start		：出撃　同じメンバはnextのほうが情報が新しいのでそちらを参照
-	api_rashin_flg		：羅針盤を表示するかどうか
-	api_rashin_id		：妖精さん　1=眠そう, 2=桃の髪飾り, 3=ひよこ, 4=魔法使い
-	api_maparea_id		：海域カテゴリID
-	api_mapinfo_no		：海域カテゴリ内番号
-	api_no				：次に向かうセルのID
-	api_color_no		：次のセルの色　api_mst_mapcell参照
-	api_event_id		：イベント　api_mst_mapcell参照
-	api_event_kind		：イベント種別?　0=資源? 1=戦闘
-	api_next			：? 0=行き止まり
-	api_bosscell_no		：ボスセルID
-	api_bosscomp		：ボス到達済みフラグ？
+	api_cell_data		：当該海域の全セルデータ
+		api_id			：海域セルユニークID(全海域の通し番号)
+		api_no			：海域セルID(同海域内限定)
+		api_color_no	：セルの状態
+							 0=初期位置
+							 1=(存在せず)
+							 2=資源獲得
+							 3=渦潮
+							 4=通常戦闘, 気のせいだった
+							 5=ボス戦闘
+							 6=揚陸地点
+							 7=航空戦
+							 8=船団護衛成功
+							 9=航空偵察
+							10=長距離空襲戦
+		api_passed		：1=通行済み　初期地点は常に0
+	api_rashin_flg		：
+	api_rashin_id		：
+	api_maparea_id		：
+	api_mapinfo_no		：
+	api_no				：
+	api_color_no		：
+	api_event_id		：
+	api_event_kind		：
+	api_next			：
+	api_bosscell_no		：
+	api_bosscomp		：
 	api_eventmap		：イベント海域ゲージ情報
 		api_max_maphp	：ゲージ最大値
 		api_now_maphp	：ゲージ現在値　常に最大値に等しい
 		api_dmg			：＊ダメージ倍率? =6だとHP90の旗艦撃沈で540減少?
-	api_from_no			：スタート地点のセルID startにのみ存在
+	api_airsearch		：
+	api_from_no			：スタート地点のセルID
 	api_distance_data	：各セルの距離データ　基地航空隊出撃時のみ存在？
 		api_mapcell_id	：マスターセルID（マップ別ではなく全海域間固有ID）
 		api_distance	：距離
@@ -1240,7 +1251,7 @@ api_req_map/next		：進撃
 	api_maparea_id		：海域カテゴリID(2-3でいう2)
 	api_mapinfo_no		：海域カテゴリ内番号(2-3でいう3)
 	api_no				：次に向かうセルのID
-	api_color_no		：次のセルの色　api_start2/api_mst_mapcell参照　3=青, 4=赤, 6=揚陸地点, 9=航空偵察
+	api_color_no		：次のセルの色　api_req_map/start.api_cell_data.api_color_no と同じ　
 	api_event_id		：イベント
 							 0=初期位置
 							 1=(存在せず)
@@ -1254,7 +1265,7 @@ api_req_map/next		：進撃
 							 9=揚陸地点
 							10=長距離空襲戦
 	api_event_kind		：イベント種別　
-							0=非戦闘セル, 1=通常戦闘, 2=夜戦, 3=夜昼, 4=航空戦, 5=敵連合艦隊戦, 6=長距離空襲戦
+							0=非戦闘セル, 1=通常戦闘, 2=夜戦, 3=夜昼戦, 4=航空戦, 5=敵連合艦隊戦, 6=長距離空襲戦
 							api_event_id=6(気のせいだった)時は　0="気のせいだった。", 1="敵影を見ず。", 2=能動分岐
 							api_event_id=7(航空戦)時は　0=航空偵察, 4=航空戦
 	api_next			：次のマスでのルート分岐の本数 0=行き止まり
@@ -1307,31 +1318,35 @@ api_req_map/next		：進撃
 		api_maxhps
 		api_air_base_attack
 			api_stage_flag
-			api_plane_from	：[2][]
-		api_squadron_plane	：[1+航空隊保有数] +1は先頭の -1 の分
-		api_stage1
-			api_f_count
-			api_f_lostcount
-			api_e_count
-			api_e_lostcount
-			api_disp_seiku
-			api_touch_plane	：[2]
-		api_stage2
-			???(null)
-		api_stage3
-			api_frai_flag
-			api_erai_flag
-			api_fbak_flag
-			api_ebak_flag
-			api_fcl_flag
-			api_ecl_flag
-			api_fdam
-			api_edam
+			api_plane_from		：[2][]　[0][]には防空状態の基地のインデックス(1から)が入る
+			api_squadron_plane	：[1+航空隊保有数] -1から始まる　
+				[]				：防空状態の基地の場合　[参加した中隊数]
+					api_mst_id	：装備ID
+					api_count	：参加機数
+				{}				：その他の状態の基地の場合　空オブジェクト
+			api_stage1
+				api_f_count
+				api_f_lostcount
+				api_e_count
+				api_e_lostcount
+				api_disp_seiku
+				api_touch_plane	：[2]
+			api_stage2			：null
+			api_stage3
+				api_frai_flag
+				api_erai_flag
+				api_fbak_flag
+				api_ebak_flag
+				api_fcl_flag
+				api_ecl_flag
+				api_fdam
+				api_edam
 		api_lost_kind		：基地被害状況
 			1=「空襲により備蓄資源に損害を受けました！」
 			2=「空襲により備蓄資源に損害を受け、基地航空隊にも地上撃破の損害が発生しました！」
 			3=「空襲により基地航空隊に地上撃破の損害が発生しました！」
 			4=「空襲による基地の損害はありません。」
+		api_m1		：('16秋イベ) 1=スタート地点解放ギミック発動　それ以外の場合は存在しない
 
 Request.api_req_sortie/battle	：戦闘(昼戦)
 	api_formation		：陣形
@@ -1641,20 +1656,21 @@ api_req_combined_battle/ec_battle	：通常艦隊昼戦（敵連合艦隊）
 	api_hougeki3			：第三次砲撃戦 api_hougeki1 と同じ なければ存在しない
 
 
-api_req_combiend_battle/ec_midnight_battle	：通常艦隊夜戦（敵連合艦隊）
-	api_active_deck			：出撃艦隊ID [2] [0]=味方側(api_deck_id に相当), [1]=敵側(1=主力艦隊, 2=随伴艦隊)
-	api_deck_id				：0
+api_req_combiend_battle/ec_midnight_battle	：通常艦隊/連合艦隊夜戦（敵連合艦隊）
+	api_active_deck			：戦闘参加艦隊フラグ [2] [0]=味方側, [1]=敵側 1=主力艦隊, 2=随伴艦隊 
+	api_deck_id				：出撃艦隊ID 味方連合なら1
 	api_ship_ke				：敵主力艦隊艦船ID [7] (-1から始まる)
 	api_ship_ke_combined	：敵随伴艦隊艦船ID [7] (-1から始まる)
 	api_ship_lv				：敵主力艦隊Lv [7] (-1から始まる)
 	api_ship_lv_combined	：敵随伴艦隊Lv [7] (-1から始まる)
 	api_nowhps				：味方/敵主力艦隊現在HP [13] (-1から始まる)
 	api_maxhps				：味方/敵主力艦隊最大HP [13] (-1から始まる)
-	api_nowhps_combined		：味方/敵随伴艦隊現在HP [13] (-1から始まる, 味方側は -1 で埋められる)
-	api_maxhps_combined		：味方/敵随伴艦隊最大HP [13] (-1から始まる, 味方側は -1 で埋められる)
+	api_nowhps_combined		：味方/敵随伴艦隊現在HP [13] (-1から始まる, 味方通常艦隊の場合 -1 で埋められる)
+	api_maxhps_combined		：味方/敵随伴艦隊最大HP [13] (-1から始まる, 味方通常艦隊の場合 -1 で埋められる)
 	api_eSlot				：敵主力艦隊装備IDリスト [6][5]
 	api_eSlot_combined		：敵随伴艦隊装備IDリスト [6][5]
-	api_fParam				：味方パラメータ [6][4] (火雷空甲)
+	api_fParam				：味方主力艦隊パラメータ [6][4] (火雷空甲)
+	api_fParam_combined		：味方随伴艦隊パラメータ [6][4] (火雷空甲) 味方随伴艦隊がいるときのみ存在
 	api_eParam				：敵主力艦隊パラメータ [6][4] (火雷空甲)
 	api_eParam_combined		：敵随伴艦隊パラメータ [6][4] (火雷空甲)
 	api_touch_plane			：夜間触接機ID [2]
@@ -1701,7 +1717,7 @@ api_req_sortie/battleresult	：戦闘結果
 	api_get_slotitem		：ドロップ装備情報？ api_get_flag[2]=1のときのみ存在
 		api_slotitem_id		：装備ID
 	api_get_eventitem		：海域攻略報酬　イベント海域突破時のみ存在
-		api_type			：報酬種別 1=アイテム, 2=艦娘, 3=装備
+		api_type			：報酬種別 1=アイテム, 2=艦娘, 3=装備, 5=家具
 		api_id				：ID
 		api_value			：個数？
 	api_get_eventflag		：？ api_get_eventitem存在時に消滅
@@ -1711,7 +1727,7 @@ api_req_sortie/battleresult	：戦闘結果
 		api_now_hp			：現在のTP(減少前)　文字列型
 		api_max_hp			：最大TP　文字列型
 		api_sub_value		：減少したTP　文字列だったり数値だったりする
-
+	api_m1					：('16秋イベ)ギミック解除フラグ?　1=解除　それ以外の場合存在しない
 
 api_get_member/ship2		：旧進撃中(現在はケッコンカッコカリ・給糧艦使用(未確認)のみだと思われる)
 	api_data		：portに同じ
@@ -1771,6 +1787,7 @@ api_get_member/base_air_corps	：基地航空隊情報
 		api_cond			：コンディション　1=通常, 2=黄疲労, 3=赤疲労？　未配属なら存在しない
 
 Request.api_req_air_corps/set_plane		：基地航空隊 - 中隊設定
+	api_area_id		：所属海域ID
 	api_base_id		：航空隊ID
 	api_squadron_id	：中隊ID
 	api_item_id		：配属装備固有ID　-1=はずす
@@ -1781,6 +1798,7 @@ api_req_air_corps/set_plane		：基地航空隊 - 中隊設定
 	api_after_bauxite	：消費後のボーキサイト　配備時(消費時)のみ存在
 
 Request.api_req_air_corps/change_name		：基地航空隊 - 航空隊名変更
+	api_area_id		：所属海域ID
 	api_base_id		：航空隊ID
 	api_name		：変更後の名前
 
@@ -1788,7 +1806,8 @@ api_req_air_corps/change_name	：基地航空隊 - 航空隊名変更
 	(情報なし)
 
 Request.api_req_air_corps/set_action	：基地航空隊 - 行動指示変更
-	api_base_id		：航空隊ID　コンマ区切り配列になるかも
+	api_area_id		：所属海域ID
+	api_base_id		：航空隊ID　コンマ区切り配列
 	api_action_kind	：行動指示　〃
 
 api_req_air_corps/set_action	：基地航空隊 - 行動指示変更
@@ -1804,6 +1823,7 @@ api_req_map/start_air_base		：基地航空隊 - 出撃
 	(情報なし)
 
 Request.api_req_air_corps/supply		：基地航空隊 - 補給
+	api_area_id		：所属海域ID
 	api_base_id		：航空隊ID
 	api_squadron_id	：補給する中隊IDリスト　コンマ区切り
 
@@ -2018,6 +2038,136 @@ api_req_combined_battle/ld_airbattle		：連合艦隊 長距離空襲戦　存�
 	api_kouku
 
 
+api_req_combined_battle/each_battle		：連合艦隊(機動部隊) vs 敵連合艦隊　昼戦　構成的には ec_battle と combined_battle/battle の合併版のようなもの
+	api_deck_id				：数値型
+	api_ship_ke
+	api_ship_ke_combined
+	api_ship_lv
+	api_ship_lv_combined
+	api_nowhps				：[13]
+	api_maxhps				：[13]
+	api_nowhps_combined		：[13]
+	api_maxhps_combined		：[13]
+	api_eSlot
+	api_eSlot_combined
+	api_fParam
+	api_fParam_combined
+	api_eParam
+	api_eParam_combined
+	api_midnight_flag
+	api_search
+	api_formation
+	api_stage_flag
+	api_kouku
+		api_plane_from
+		api_stage1
+		api_stage2
+		api_stage3
+		api_stage3_combined
+	api_support_flag
+	api_support_info
+	api_opening_taisen_flag
+	api_opening_taisen
+	api_opening_flag
+	api_opening_atack
+		api_frai
+		api_erai
+		api_fdam
+		api_edam
+		api_fydam
+		api_eydam
+		api_fcl
+		api_ecl
+	api_hourai_flag
+	api_hougeki1
+		api_at_eflag
+		api_at_list
+		api_at_type
+		api_df_list
+		api_si_list
+		api_cl_list
+		api_damage
+	api_hougeki2
+	api_raigeki
+	api_hougeki3
+
+
+api_req_combined_battle/each_battle_water	：連合艦隊(水上部隊) vs 敵連合艦隊　昼戦
+	api_deck_id					：数値型
+	api_ship_ke
+	api_ship_ke_combined
+	api_ship_lv
+	api_ship_lv_combined
+	api_nowhps
+	api_maxhps
+	api_nowhps_combined
+	api_maxhps_combined
+	api_eSlot
+	api_eSlot_combined
+	api_fParam
+	api_fParam_combined
+	api_eParam
+	api_eParam_combined
+	api_midnight_flag
+	api_search
+	api_formation				：味方陣形のみ文字列型、ほかは数値型
+	api_stage_flag
+	api_kouku
+		api_plane_from
+		api_stage1
+			api_f_count
+			api_f_lostcount
+			api_e_count
+			api_e_lostcount
+			api_disp_seiku
+			api_touch_plane
+		api_stage2
+			api_f_count
+			api_f_lostcount
+			api_e_count
+			api_e_lostcount
+			api_air_fire
+				api_idx
+				api_kind
+				api_use_items
+		api_stage3
+			api_frai_flag
+			api_erai_flag
+			api_fbak_flag
+			api_ebak_flag
+			api_fcl_flag
+			api_ecl_flag
+			api_fdam
+			api_edam
+		api_stage3_combined
+	api_support_flag
+	api_support_info
+	api_opening_taisen_flag
+	api_opening_taisen
+	api_opening_flag
+	api_opening_atack			：スペルミスに注意
+		api_frai
+		api_erai
+		api_fdam
+		api_edam
+		api_fydam
+		api_eydam
+		api_fcl
+		api_ecl
+	api_hourai_flag
+	api_hougeki1				：第一次砲撃戦（主力艦隊vs主力艦隊）
+		api_at_eflag
+		api_at_list
+		api_at_type
+		api_df_list
+		api_si_list
+		api_cl_list
+		api_damage
+	api_hougeki2				：第二次砲撃戦（随伴艦隊vs随伴艦隊）
+	api_hougeki3				：第三次砲撃戦（主力艦隊vs主力艦隊, 対全体）
+	api_raigeki					：雷撃戦
+
+
 api_req_combined_battle/battleresult	：連合艦隊 戦闘結果 (味方通常艦隊-敵連合艦隊を含む)
 	api_ship_id					：敵艦船ID　敵連合艦隊時は False
 	api_win_rank				：勝利ランク
@@ -2172,6 +2322,10 @@ api_dmm_payment/paycheck			：アイテム購入
 Request.api_req_member/registration_sp		：艦これAndroid版 事前登録
 	api_register_type	：0=解除, 1=登録
 
+api_req_furniture/radio_play	：母港ラジオ再生
+	(情報なし)
+
+
 
 
 ◇APIが呼ばれる順番
@@ -2186,7 +2340,6 @@ api_port/port
 [出撃選択]
 api_get_member/mapinfo
 [出撃]
-api_get_member/mapcell
 api_req_map/start
 [戦闘-昼戦]
 api_req_sortie/battle

@@ -117,6 +117,11 @@ namespace ElectronicObserver.Data {
 
 
 		/// <summary>
+		/// 海域カテゴリデータ
+		/// </summary>
+		public IDDictionary<MapAreaData> MapArea { get; private set; }
+
+		/// <summary>
 		/// 海域データ
 		/// </summary>
 		public IDDictionary<MapInfoData> MapInfo { get; private set; }
@@ -139,7 +144,10 @@ namespace ElectronicObserver.Data {
 		/// </summary>
 		public IDDictionary<BaseAirCorpsData> BaseAirCorps { get; private set; }
 
-
+		/// <summary>
+		/// 配置転換中装備データ
+		/// </summary>
+		public IDDictionary<RelocationData> RelocatedEquipments { get; private set; }
 
 		private KCDatabase() {
 
@@ -159,10 +167,12 @@ namespace ElectronicObserver.Data {
 			Quest = new QuestManager();
 			QuestProgress = new QuestProgressManager();
 			Battle = new BattleManager();
+			MapArea = new IDDictionary<MapAreaData>();
 			MapInfo = new IDDictionary<MapInfoData>();
 			Mission = new IDDictionary<MissionData>();
 			ShipGroup = new ShipGroupManager();
 			BaseAirCorps = new IDDictionary<BaseAirCorpsData>();
+			RelocatedEquipments = new IDDictionary<RelocationData>();
 		}
 
 

@@ -115,7 +115,7 @@ namespace ElectronicObserver.Window {
 					ToolTipInfo.SetToolTip( ShipName, db.Ships[dock.ShipID].NameWithLevel );
 					RepairTime.Text = DateTimeHelper.ToTimeRemainString( dock.CompletionTime );
 					RepairTime.Tag = dock.CompletionTime;
-					ToolTipInfo.SetToolTip( RepairTime, "完成时间 : " + dock.CompletionTime );
+					ToolTipInfo.SetToolTip( RepairTime, "完成时间 : " + DateTimeHelper.TimeToCSVString( dock.CompletionTime ) );
 
 				}
 
