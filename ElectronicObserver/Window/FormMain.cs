@@ -146,6 +146,7 @@ namespace ElectronicObserver.Window {
 			StripMenu_Tool_ResourceChart.Image = ResourceManager.Instance.Icons.Images[(int)ResourceManager.IconContent.FormResourceChart];
 			StripMenu_Tool_AlbumMasterShip.Image = ResourceManager.Instance.Icons.Images[(int)ResourceManager.IconContent.FormAlbumShip];
 			StripMenu_Tool_AlbumMasterEquipment.Image = ResourceManager.Instance.Icons.Images[(int)ResourceManager.IconContent.FormAlbumEquipment];
+			StripMenu_Tool_AntiAirDefense.Image = ResourceManager.Instance.Icons.Images[(int)ResourceManager.IconContent.FormAntiAirDefense];
 
 			StripMenu_Help_Version.Image = ResourceManager.Instance.Icons.Images[(int)ResourceManager.IconContent.AppIcon];
 			#endregion
@@ -1204,6 +1205,13 @@ namespace ElectronicObserver.Window {
 
 		}
 
+		private void StripMenu_Tool_AntiAirDefense_Click( object sender, EventArgs e ) {
+
+			new Dialog.DialogAntiAirDefense().Show( this );
+
+		}
+
+
 
 
 		private void StripMenu_File_Layout_LockLayout_Click( object sender, EventArgs e ) {
@@ -1343,8 +1351,7 @@ namespace ElectronicObserver.Window {
 
 		#endregion
 
-
-
+		
 
 
 

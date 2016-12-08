@@ -12,7 +12,7 @@ namespace ElectronicObserver.Data.Battle {
 		public override void LoadFromResponse( string apiname, dynamic data ) {
 			base.LoadFromResponse( apiname, (object)data );
 
-			NightBattle = new PhaseNightBattle( this, false );
+			NightBattle = new PhaseNightBattle( this, "夜战", false );
 
 			NightBattle.EmulateBattle( _resultHPs, _attackDamages );
 
@@ -23,19 +23,18 @@ namespace ElectronicObserver.Data.Battle {
 			get { return "api_req_combined_battle/ec_midnight_battle"; }
 		}
 
-		public override BattleData.BattleTypeFlag BattleType {
-			get { return BattleTypeFlag.Night | BattleTypeFlag.EnemyCombined; }
+		public override string BattleName {
+			get { return "对联合舰队 夜战"; }
 		}
 
-		public override string GetBattleDetail( int index ) {
-			var sb = new StringBuilder();
+		public override BattleData.BattleTypeFlag BattleType {
+			get { return BattleTypeFlag.Night | BattleTypeFlag.EnemyCombined | ( NightBattle.IsFriendEscort ? BattleTypeFlag.Combined : 0 ); }
+		}
 
-			string night = NightBattle.GetBattleDetail( index );
 
-			if ( night != null )
-				sb.AppendLine( "《夜战》" ).Append( night );
-
-			return sb.ToString();
+		public override IEnumerable<PhaseBase> GetPhases() {
+			yield return Initial;
+			yield return NightBattle;
 		}
 	}
 }

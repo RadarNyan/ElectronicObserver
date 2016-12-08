@@ -592,6 +592,10 @@ namespace ElectronicObserver.Utility {
 				/// </summary>
 				public double PlayTimeIgnoreInterval { get; set; }
 
+				/// <summary>
+				/// 戦闘ログを保存するか
+				/// </summary>
+				public bool SaveBattleLog { get; set; }
 
 				public ConfigLog() {
 					LogLevel = 2;
@@ -601,6 +605,7 @@ namespace ElectronicObserver.Utility {
 					ShowSpoiler = true;
 					PlayTime = 0;
 					PlayTimeIgnoreInterval = 10 * 60;
+					SaveBattleLog = false;
 				}
 
 			}
@@ -897,7 +902,7 @@ namespace ElectronicObserver.Utility {
 
 				public ConfigFormFleet() {
 					ShowAircraft = true;
-					SearchingAbilityMethod = 3;
+					SearchingAbilityMethod = 4;
 					IsScrollable = true;
 					FixShipNameWidth = false;
 					ShortenHPBar = false;
@@ -1186,9 +1191,11 @@ namespace ElectronicObserver.Utility {
 				/// </summary>
 				public bool IsScrollable { get; set; }
 
+				public bool HideDuringBattle { get; set; }
 
 				public ConfigFormBattle() {
 					IsScrollable = false;
+					HideDuringBattle = false;
 				}
 			}
 

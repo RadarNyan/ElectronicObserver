@@ -1,5 +1,6 @@
 ﻿using ElectronicObserver.Data;
 using ElectronicObserver.Data.Battle;
+using ElectronicObserver.Data.Battle.Detail;
 using ElectronicObserver.Data.Battle.Phase;
 using ElectronicObserver.Observer;
 using ElectronicObserver.Resource;
@@ -109,6 +110,8 @@ namespace ElectronicObserver.Window {
 			o.APIList["api_req_combined_battle/ld_airbattle"].ResponseReceived += Updated;
 			o.APIList["api_req_combined_battle/ec_battle"].ResponseReceived += Updated;
 			o.APIList["api_req_combined_battle/ec_midnight_battle"].ResponseReceived += Updated;
+			o.APIList["api_req_combined_battle/each_battle"].ResponseReceived += Updated;
+			o.APIList["api_req_combined_battle/each_battle_water"].ResponseReceived += Updated;
 			o.APIList["api_req_combined_battle/battleresult"].ResponseReceived += Updated;
 			o.APIList["api_req_practice/battle"].ResponseReceived += Updated;
 			o.APIList["api_req_practice/midnight_battle"].ResponseReceived += Updated;
@@ -123,17 +126,31 @@ namespace ElectronicObserver.Window {
 
 			KCDatabase db = KCDatabase.Instance;
 			BattleManager bm = db.Battle;
+			bool hideDuringBattle = Utility.Configuration.Config.FormBattle.HideDuringBattle;
 
 			BaseLayoutPanel.SuspendLayout();
 			TableTop.SuspendLayout();
 			TableBottom.SuspendLayout();
 			switch ( apiname ) {
 
-				case "api_req_map/start":
-				case "api_req_map/next":
 				case "api_port/port":
 					BaseLayoutPanel.Visible = false;
 					ToolTipInfo.RemoveAll();
+					break;
+
+				case "api_req_map/start":
+				case "api_req_map/next":
+					if ( !bm.Compass.HasAirRaid )
+						goto case "api_port/port";
+
+					SetFormation( bm.BattleDay );
+					ClearSearchingResult();
+					ClearBaseAirAttack();
+					SetAerialWarfare( bm.BattleDay.AirBattle );
+					SetHPBar( bm.BattleDay );
+					SetDamageRate( bm );
+
+					BaseLayoutPanel.Visible = !hideDuringBattle;
 					break;
 
 
@@ -148,7 +165,7 @@ namespace ElectronicObserver.Window {
 						SetHPBar( bm.BattleDay );
 						SetDamageRate( bm );
 
-						BaseLayoutPanel.Visible = true;
+						BaseLayoutPanel.Visible = !hideDuringBattle;
 					} break;
 
 				case "api_req_battle_midnight/battle":
@@ -158,7 +175,7 @@ namespace ElectronicObserver.Window {
 						SetHPBar( bm.BattleNight );
 						SetDamageRate( bm );
 
-						BaseLayoutPanel.Visible = true;
+						BaseLayoutPanel.Visible = !hideDuringBattle;
 					} break;
 
 				case "api_req_battle_midnight/sp_midnight": {
@@ -171,7 +188,7 @@ namespace ElectronicObserver.Window {
 						SetHPBar( bm.BattleNight );
 						SetDamageRate( bm );
 
-						BaseLayoutPanel.Visible = true;
+						BaseLayoutPanel.Visible = !hideDuringBattle;
 					} break;
 
 				case "api_req_sortie/airbattle": {
@@ -183,13 +200,15 @@ namespace ElectronicObserver.Window {
 						SetHPBar( bm.BattleDay );
 						SetDamageRate( bm );
 
-						BaseLayoutPanel.Visible = true;
+						BaseLayoutPanel.Visible = !hideDuringBattle;
 					} break;
 
 				case "api_req_combined_battle/battle":
 				case "api_req_combined_battle/battle_water":
 				case "api_req_combined_battle/ld_airbattle":
-				case "api_req_combined_battle/ec_battle": {
+				case "api_req_combined_battle/ec_battle":
+				case "api_req_combined_battle/each_battle":
+				case "api_req_combined_battle/each_battle_water": {
 
 						SetFormation( bm.BattleDay );
 						SetSearchingResult( bm.BattleDay );
@@ -198,7 +217,7 @@ namespace ElectronicObserver.Window {
 						SetHPBar( bm.BattleDay );
 						SetDamageRate( bm );
 
-						BaseLayoutPanel.Visible = true;
+						BaseLayoutPanel.Visible = !hideDuringBattle;
 					} break;
 
 				case "api_req_combined_battle/airbattle": {
@@ -210,7 +229,7 @@ namespace ElectronicObserver.Window {
 						SetHPBar( bm.BattleDay );
 						SetDamageRate( bm );
 
-						BaseLayoutPanel.Visible = true;
+						BaseLayoutPanel.Visible = !hideDuringBattle;
 					} break;
 
 				case "api_req_combined_battle/midnight_battle":
@@ -220,7 +239,7 @@ namespace ElectronicObserver.Window {
 						SetHPBar( bm.BattleNight );
 						SetDamageRate( bm );
 
-						BaseLayoutPanel.Visible = true;
+						BaseLayoutPanel.Visible = !hideDuringBattle;
 					} break;
 
 				case "api_req_combined_battle/sp_midnight": {
@@ -233,7 +252,7 @@ namespace ElectronicObserver.Window {
 						SetHPBar( bm.BattleNight );
 						SetDamageRate( bm );
 
-						BaseLayoutPanel.Visible = true;
+						BaseLayoutPanel.Visible = !hideDuringBattle;
 					} break;
 
 
@@ -272,14 +291,14 @@ namespace ElectronicObserver.Window {
 
 			int searchFriend = bd.Searching.SearchingFriend;
 			SearchingFriend.Text = Constants.GetSearchingResultShort( searchFriend );
-			SearchingFriend.ImageAlign = ContentAlignment.MiddleLeft;
-			SearchingFriend.ImageIndex = (int)( searchFriend < 4 ? ResourceManager.EquipmentContent.Seaplane : ResourceManager.EquipmentContent.Radar );
+			SearchingFriend.ImageAlign = searchFriend > 0 ? ContentAlignment.MiddleLeft : ContentAlignment.MiddleCenter;
+			SearchingFriend.ImageIndex = searchFriend > 0 ? (int)( searchFriend < 4 ? ResourceManager.EquipmentContent.Seaplane : ResourceManager.EquipmentContent.Radar ) : -1;
 			ToolTipInfo.SetToolTip( SearchingFriend, null );
 
 			int searchEnemy = bd.Searching.SearchingEnemy;
 			SearchingEnemy.Text = Constants.GetSearchingResultShort( searchEnemy );
-			SearchingEnemy.ImageAlign = ContentAlignment.MiddleLeft;
-			SearchingEnemy.ImageIndex = (int)( searchEnemy < 4 ? ResourceManager.EquipmentContent.Seaplane : ResourceManager.EquipmentContent.Radar );
+			SearchingEnemy.ImageAlign = searchEnemy > 0 ? ContentAlignment.MiddleLeft : ContentAlignment.MiddleCenter;
+			SearchingEnemy.ImageIndex = searchEnemy > 0 ? (int)( searchEnemy < 4 ? ResourceManager.EquipmentContent.Seaplane : ResourceManager.EquipmentContent.Radar ) : -1;
 			ToolTipInfo.SetToolTip( SearchingEnemy, null );
 
 		}
@@ -746,6 +765,7 @@ namespace ElectronicObserver.Window {
 			bool isPractice = ( bd.BattleType & BattleData.BattleTypeFlag.Practice ) != 0;
 			bool isCombined = ( bd.BattleType & BattleData.BattleTypeFlag.Combined ) != 0;
 			bool isEnemyCombined = ( bd.BattleType & BattleData.BattleTypeFlag.EnemyCombined ) != 0;
+			bool isBaseAirRaid = ( bd.BattleType & BattleData.BattleTypeFlag.BaseAirRaid ) != 0;
 
 			var initialHPs = bd.Initial.InitialHPs;
 			var maxHPs = bd.Initial.MaxHPs;
@@ -769,19 +789,29 @@ namespace ElectronicObserver.Window {
 			// friend main
 			for ( int i = 0; i < 6; i++ ) {
 				if ( initialHPs[i] != -1 ) {
-					ShipData ship = bd.Initial.FriendFleet.MembersInstance[i];
-					bool isEscaped =  bd.Initial.FriendFleet.EscapedShipList.Contains( ship.MasterID );
+					string name;
+					bool isEscaped;
+					bool isLandBase;
 
+					if ( isBaseAirRaid ) {
+						name = string.Format( "第 {0} 基地", i + 1 );
+						isEscaped = false;
+						isLandBase = true;
+					} else {
+						ShipData ship = bd.Initial.FriendFleet.MembersInstance[i];
+						name = string.Format( "{0} Lv. {1}", ship.MasterShip.NameWithClass, ship.Level );
+						isEscaped = bd.Initial.FriendFleet.EscapedShipList.Contains( ship.MasterID );
+						isLandBase = ship.MasterShip.IsLandBase;
+					}
 
 					ToolTipInfo.SetToolTip( HPBars[i], string.Format
-						( "{0} Lv. {1}\r\nHP: ({2} → {3})/{4} ({5}) [{6}]\r\n造成伤害 : {7}\r\n\r\n{8}",
-						ship.MasterShip.NameWithClass,
-						ship.Level,
+						( "{0}\r\nHP: ({1} → {2})/{3} ({4}) [{5}]\r\n造成伤害 : {6}\r\n\r\n{7}",
+						name,
 						Math.Max( HPBars[i].PrevValue, 0 ),
 						Math.Max( HPBars[i].Value, 0 ),
 						HPBars[i].MaximumValue,
 						HPBars[i].Value - HPBars[i].PrevValue,
-						Constants.GetDamageState( (double)HPBars[i].Value / HPBars[i].MaximumValue, isPractice, ship.MasterShip.IsLandBase, isEscaped ),
+						Constants.GetDamageState( (double)HPBars[i].Value / HPBars[i].MaximumValue, isPractice, isLandBase, isEscaped ),
 						attackDamages[i],
 						bd.GetBattleDetail( i )
 						) );
@@ -906,15 +936,17 @@ namespace ElectronicObserver.Window {
 				HPBars[6].RepaintHPtext();
 			}
 
-			foreach ( int i in bd.MVPShipIndexes )
-			{
-				HPBars[i].BackColor = Utility.Configuration.Config.UI.Battle_ColorHPBarsMVP;
-				HPBars[i].RepaintHPtext();
-			}
-			foreach ( int i in bd.MVPShipCombinedIndexes )
-			{
-				HPBars[12 + i].BackColor = Utility.Configuration.Config.UI.Battle_ColorHPBarsMVP;
-				HPBars[12 + i].RepaintHPtext();
+			if ( !isBaseAirRaid ) {
+				foreach ( int i in bd.MVPShipIndexes )
+				{
+					HPBars[i].BackColor = Utility.Configuration.Config.UI.Battle_ColorHPBarsMVP;
+					HPBars[i].RepaintHPtext();
+				}
+				foreach ( int i in bd.MVPShipCombinedIndexes )
+				{
+					HPBars[12 + i].BackColor = Utility.Configuration.Config.UI.Battle_ColorHPBarsMVP;
+					HPBars[12 + i].RepaintHPtext();
+				}
 			}
 		}
 
@@ -931,9 +963,14 @@ namespace ElectronicObserver.Window {
 			DamageFriend.Text = friendrate.ToString( "p1" );
 			DamageEnemy.Text = enemyrate.ToString( "p1" );
 
-			WinRank.Text = Constants.GetWinRank( rank );
-			WinRank.ForeColor = rank >= 4 ? WinRankColor_Win : WinRankColor_Lose;
-
+			if ( bm.IsBaseAirRaid ) {
+				int kind = bm.Compass.AirRaidDamageKind;
+				WinRank.Text = Constants.GetAirRaidDamageShort( kind );
+				WinRank.ForeColor = ( 1 <= kind && kind <= 3 ) ? WinRankColor_Lose : WinRankColor_Win;
+			} else {
+				WinRank.Text = Constants.GetWinRank( rank );
+				WinRank.ForeColor = rank >= 4 ? WinRankColor_Win : WinRankColor_Lose;
+			}
 		}
 
 
@@ -1097,6 +1134,36 @@ namespace ElectronicObserver.Window {
 		}
 
 
+		private void RightClickMenu_Opening( object sender, CancelEventArgs e ) {
+
+			var bm = KCDatabase.Instance.Battle;
+
+			if ( bm == null || bm.BattleMode == BattleManager.BattleModes.Undefined )
+				e.Cancel = true;
+
+			RightClickMenu_ShowBattleResult.Enabled = !BaseLayoutPanel.Visible;
+		}
+
+		private void RightClickMenu_ShowBattleDetail_Click( object sender, EventArgs e ) {
+			var bm = KCDatabase.Instance.Battle;
+
+			if ( bm == null || bm.BattleMode == BattleManager.BattleModes.Undefined )
+				return;
+
+			var dialog = new Dialog.DialogBattleDetail();
+
+			dialog.BattleDetailText = BattleDetailDescriptor.GetBattleDetail( bm );
+			dialog.Location = RightClickMenu.Location;
+			dialog.Show( this );
+
+		}
+
+		private void RightClickMenu_ShowBattleResult_Click( object sender, EventArgs e ) {
+			BaseLayoutPanel.Visible = true;
+		}
+
+
+
 
 		void ConfigurationChanged() {
 
@@ -1135,6 +1202,7 @@ namespace ElectronicObserver.Window {
 			return "Battle";
 		}
 
+	
 	}
 
 }

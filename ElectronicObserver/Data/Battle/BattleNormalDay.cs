@@ -16,15 +16,15 @@ namespace ElectronicObserver.Data.Battle {
 		public override void LoadFromResponse( string apiname, dynamic data ) {
 			base.LoadFromResponse( apiname, (object)data );
 
-			BaseAirAttack = new PhaseBaseAirAttack( this );
-			AirBattle = new PhaseAirBattle( this );
-			Support = new PhaseSupport( this );
-			OpeningASW = new PhaseOpeningASW( this, false );
-			OpeningTorpedo = new PhaseTorpedo( this, 0 );
-			Shelling1 = new PhaseShelling( this, 1, "1", false );
-			Shelling2 = new PhaseShelling( this, 2, "2", false );
-			Shelling3 = new PhaseShelling( this, 3, "3", false );
-			Torpedo = new PhaseTorpedo( this, 4 );
+			BaseAirAttack = new PhaseBaseAirAttack( this, "基地航空队攻击" );
+			AirBattle = new PhaseAirBattle( this, "航空战" );
+			Support = new PhaseSupport( this, "支援攻击" );
+			OpeningASW = new PhaseOpeningASW( this, "先制对潜", false );
+			OpeningTorpedo = new PhaseTorpedo( this, "开幕雷击", 0 );
+			Shelling1 = new PhaseShelling( this, "第一次炮击战", 1, "1", false );
+			Shelling2 = new PhaseShelling( this, "第二次炮击战", 2, "2", false );
+			Shelling3 = new PhaseShelling( this, "第三次炮击战", 3, "3", false );
+			Torpedo = new PhaseTorpedo( this, "雷击战", 4 );
 
 
 			BaseAirAttack.EmulateBattle( _resultHPs, _attackDamages );
@@ -44,44 +44,27 @@ namespace ElectronicObserver.Data.Battle {
 			get { return "api_req_sortie/battle"; }
 		}
 
+		public override string BattleName {
+			get { return "通常舰队 昼战"; }
+		}
 
 		public override BattleData.BattleTypeFlag BattleType {
 			get { return BattleTypeFlag.Day; }
 		}
 
-		public override string GetBattleDetail( int index ) {
-			var sb = new StringBuilder();
 
-			string baseair = BaseAirAttack.GetBattleDetail( index );
-			string airbattle = AirBattle.GetBattleDetail( index );
-			string support = Support.GetBattleDetail( index );
-			string asw = OpeningASW.GetBattleDetail( index );
-			string openingTorpedo = OpeningTorpedo.GetBattleDetail( index );
-			string shelling1 = Shelling1.GetBattleDetail( index );
-			string shelling2 = Shelling2.GetBattleDetail( index );
-			string shelling3 = Shelling3.GetBattleDetail( index );
-			string torpedo = Torpedo.GetBattleDetail( index );
-			
-			if ( baseair != null )
-				sb.AppendLine( "《基地航空队攻击》" ).Append( baseair );
-			if ( airbattle != null )
-				sb.AppendLine( "《航空战》" ).Append( airbattle );
-			if ( support != null )
-				sb.AppendLine( "《支援攻击》" ).Append( support );
-			if ( asw != null )
-				sb.AppendLine( "《开幕对潜》" ).Append( asw );
-			if ( openingTorpedo != null )
-				sb.AppendLine( "《开幕雷击》" ).Append( openingTorpedo );
-			if ( shelling1 != null )
-				sb.AppendLine( "《第一次炮击战》" ).Append( shelling1 );
-			if ( shelling2 != null )
-				sb.AppendLine( "《第二次炮击战》" ).Append( shelling2 );
-			if ( shelling3 != null )
-				sb.AppendLine( "《第三次炮击战》" ).Append( shelling3 );
-			if ( torpedo != null )
-				sb.AppendLine( "《雷击战》" ).Append( torpedo );
-			
-			return sb.ToString();
+		public override IEnumerable<PhaseBase> GetPhases() {
+			yield return Initial;
+			yield return Searching;
+			yield return BaseAirAttack;
+			yield return AirBattle;
+			yield return Support;
+			yield return OpeningASW;
+			yield return OpeningTorpedo;
+			yield return Shelling1;
+			yield return Shelling2;
+			yield return Shelling3;
+			yield return Torpedo;
 		}
 	}
 

@@ -11,7 +11,6 @@ namespace ElectronicObserver.Data {
 	/// <summary>
 	/// 基地航空隊のデータを扱います。
 	/// </summary>
-	[DebuggerDisplay( "[{AirCorpsID}] {Name}" )]
 	public class BaseAirCorpsData : APIWrapper, IIdentifiable {
 
 
@@ -82,15 +81,6 @@ namespace ElectronicObserver.Data {
 			}
 		}
 
-		/// <summary>
-		/// 配置転換中の装備固有IDリスト
-		/// </summary>
-		public static HashSet<int> RelocatedEquipments { get; private set; }
-
-
-		static BaseAirCorpsData() {
-			RelocatedEquipments = new HashSet<int>();
-		}
 
 
 		public BaseAirCorpsData() {
@@ -132,15 +122,14 @@ namespace ElectronicObserver.Data {
 					break;
 
 				case "api_req_air_corps/set_plane": {
-						var prev = Squadrons.Values.Select( sq => sq != null ? sq.EquipmentMasterID : 0 ).ToArray();
+						var prev = Squadrons.Values.Select( sq => sq != null && sq.State == 1 ? sq.EquipmentMasterID : 0 ).ToArray();
 						SetSquadrons( apiname, data.api_plane_info );
-						
+
 						foreach ( var deleted in prev.Except( Squadrons.Values.Select( sq => sq != null && sq.State == 1 ? sq.EquipmentMasterID : 0 ) ) ) {
 							var eq = KCDatabase.Instance.Equipments[deleted];
 
 							if ( eq != null ) {
-								eq.RelocatedTime = DateTime.Now;
-								BaseAirCorpsData.RelocatedEquipments.Add( deleted );
+								KCDatabase.Instance.RelocatedEquipments.Add( new RelocationData( deleted, DateTime.Now ) );
 							}
 						}
 
@@ -171,13 +160,26 @@ namespace ElectronicObserver.Data {
 		}
 
 
-		public static void SetRelocatedEquipments( IEnumerable<int> values ) {
-			if ( values != null )
-				RelocatedEquipments = new HashSet<int>( values );
+
+		public override string ToString() {
+			return string.Format( "[{0}:{1}] {2}", MapAreaID, AirCorpsID, Name );
 		}
 
+
 		public int ID {
-			get { return AirCorpsID; }
+			get { return GetID( RawData ); }
 		}
+
+
+		public static int GetID( int mapAreaID, int airCorpsID ) {
+			return mapAreaID * 10 + airCorpsID;
+		}
+		public static int GetID( Dictionary<string, string> request ) {
+			return GetID( int.Parse( request["api_area_id"] ), int.Parse( request["api_base_id"] ) );
+		}
+		public static int GetID( dynamic response ) {
+			return GetID( response.api_area_id() ? (int)response.api_area_id : -1, (int)response.api_rid );
+		}
+
 	}
 }

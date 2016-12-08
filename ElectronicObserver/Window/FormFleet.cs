@@ -31,8 +31,9 @@ namespace ElectronicObserver.Window {
 			public ImageLabel StateMain;
 			public ImageLabel AirSuperiority;
 			public ImageLabel SearchingAbility;
+			public ImageLabel AntiAirPower;
 			public ToolTip ToolTipInfo;
-			public ElectronicObserver.Data.FleetData.FleetStates State;
+			public FleetData.FleetStates State;
 			public DateTime Timer;
 
 			public TableFleetControl( FormFleet parent ) {
@@ -47,6 +48,7 @@ namespace ElectronicObserver.Window {
 				Name.Margin = new Padding( 2, 0, 2, 0 );
 				Name.AutoSize = true;
 				//Name.Visible = false;
+				Name.Cursor = Cursors.Help;
 
 				StateMain = new ImageLabel();
 				StateMain.Anchor = AnchorStyles.Left;
@@ -74,6 +76,16 @@ namespace ElectronicObserver.Window {
 				SearchingAbility.Margin = new Padding( 2, 0, 2, 0 );
 				SearchingAbility.AutoSize = true;
 
+				AntiAirPower = new ImageLabel();
+				AntiAirPower.Anchor = AnchorStyles.Left;
+				AntiAirPower.ForeColor = parent.MainFontColor;
+				AntiAirPower.ImageList = ResourceManager.Instance.Equipments;
+				AntiAirPower.ImageIndex = (int)ResourceManager.EquipmentContent.HighAngleGun;
+				AntiAirPower.Padding = new Padding( 2, 2, 2, 2 );
+				AntiAirPower.Margin = new Padding( 2, 0, 2, 0 );
+				AntiAirPower.AutoSize = true;
+
+
 				ConfigurationChanged( parent );
 
 				ToolTipInfo = parent.ToolTipInfo;
@@ -96,6 +108,7 @@ namespace ElectronicObserver.Window {
 				table.Controls.Add( StateMain, 1, 0 );
 				table.Controls.Add( AirSuperiority, 2, 0 );
 				table.Controls.Add( SearchingAbility, 3, 0 );
+				table.Controls.Add( AntiAirPower, 4, 0 );
 				table.ResumeLayout();
 
 				int row = 0;
@@ -130,15 +143,7 @@ namespace ElectronicObserver.Window {
 
 					int speed = fleet.MembersWithoutEscaped.Min( s => s == null ? 10 : s.MasterShip.Speed );
 
-					var slots = fleet.MembersWithoutEscaped
-						.Where( s => s != null )
-						.SelectMany( s => s.SlotInstance )
-						.Where( e => e != null );
-					var daihatsu = slots.Where( e => e.EquipmentID == 68 );
-					var daihatsu_tank = slots.Where( e => e.EquipmentID == 166 );
-					var landattacker = slots.Where( e => e.EquipmentID == 167 );
-					double expeditionBonus = Math.Min( daihatsu.Count() * 0.05 + daihatsu_tank.Count() * 0.02 + landattacker.Count() * 0.01, 0.20 );
-
+					double expeditionBonus = Calculator.GetExpeditionBonus( fleet );
 					int tp = Calculator.GetTPDamage( fleet );
 
 					ToolTipInfo.SetToolTip( Name, string.Format(
@@ -148,9 +153,9 @@ namespace ElectronicObserver.Window {
 						Constants.GetSpeed( speed ),
 						fleet.MembersInstance.Sum( s => s == null ? 0 : s.SlotInstanceMaster.Count( q => q == null ? false : q.CategoryType == 30 ) ),
 						fleet.MembersInstance.Count( s => s == null ? false : s.SlotInstanceMaster.Any( q => q == null ? false : q.CategoryType == 30 ) ),
-						daihatsu.Count() + daihatsu_tank.Count() + landattacker.Count(),
+						fleet.MembersInstance.Sum( s => s == null ? 0 : s.SlotInstanceMaster.Count( q => q == null ? false : q.CategoryType == 24 || q.CategoryType == 46 ) ),
 						fleet.MembersInstance.Count( s => s == null ? false : s.SlotInstanceMaster.Any( q => q == null ? false : q.CategoryType == 24 || q.CategoryType == 46 ) ),
-						expeditionBonus + 0.01 * expeditionBonus * ( daihatsu.Sum( e => e.Level ) + daihatsu_tank.Sum( e => e.Level ) + landattacker.Sum( e => e.Level ) ) / Math.Max( daihatsu.Count() + daihatsu_tank.Count() + landattacker.Count(), 1 ),
+						expeditionBonus,
 						tp,
 						(int)( tp * 0.7 ),
 						fueltotal,
@@ -188,11 +193,14 @@ namespace ElectronicObserver.Window {
 					double probStart = fleet.GetContactProbability();
 					var probSelect = fleet.GetContactSelectionProbability();
 
-					sb.AppendFormat( "2-5 式 ( 旧 ) : {0}\r\n2-5 式 ( 秋 ) : {1}\r\n2-5 新秋简易式 : {2}\r\n判定式 (33) : {3}\r\n\r\n触接开始率 : \r\n　确保 {4:p1} / 优势 {5:p1}\r\n",
+					sb.AppendFormat( "2-5 式 ( 旧 ) : {0}\r\n2-5 式 ( 秋 ) : {1}\r\n2-5 新秋简易式 : {2}\r\n判定式 (33) : {3}\r\n新判定式 (33) :\r\n　分歧点系数 1: {4:f2}\r\n　分歧点系数 3: {5:f2}\r\n　分歧点系数 4: {6:f2}\r\n\r\n接触开始率 : \r\n　确保 {7:p1} / 优势 {8:p1}\r\n",
 						fleet.GetSearchingAbilityString( 0 ),
 						fleet.GetSearchingAbilityString( 1 ),
 						fleet.GetSearchingAbilityString( 2 ),
 						fleet.GetSearchingAbilityString( 3 ),
+						Math.Floor( Calculator.GetSearchingAbility_New33( fleet, 1 ) * 100 ) / 100,
+						Math.Floor( Calculator.GetSearchingAbility_New33( fleet, 3 ) * 100 ) / 100,
+						Math.Floor( Calculator.GetSearchingAbility_New33( fleet, 4 ) * 100 ) / 100,
 						probStart,
 						probStart * 0.6 );
 
@@ -205,6 +213,21 @@ namespace ElectronicObserver.Window {
 					}
 
 					ToolTipInfo.SetToolTip( SearchingAbility, sb.ToString() );
+				}
+
+				// 対空能力計算
+				{
+					var sb = new StringBuilder();
+					double lineahead = Calculator.GetAdjustedFleetAAValue( fleet, 1 );
+
+					AntiAirPower.Text = lineahead.ToString( "0.0" );
+
+					sb.AppendFormat( "舰队防空\r\n单纵阵 : {0:0.0} / 复纵阵 : {1:0.0} / 轮形阵 : {2:0.0}\r\n",
+						lineahead,
+						Calculator.GetAdjustedFleetAAValue( fleet, 2 ),
+						Calculator.GetAdjustedFleetAAValue( fleet, 3 ) );
+
+					ToolTipInfo.SetToolTip( AntiAirPower, sb.ToString() );
 				}
 			}
 
@@ -469,7 +492,7 @@ namespace ElectronicObserver.Window {
 					Condition.Text = ship.Condition.ToString();
 					Condition.Tag = ship.Condition;
 					SetConditionDesign( ship.Condition );
-					
+
 					if ( ship.Condition < 49 ) {
 						TimeSpan ts = new TimeSpan( 0, (int)Math.Ceiling( ( 49 - ship.Condition ) / 3.0 ) * 3, 0 );
 						ToolTipInfo.SetToolTip( Condition, string.Format( "距离完全恢复约 {0:D2}:{1:D2}", (int)ts.TotalMinutes, (int)ts.Seconds ) );
@@ -564,7 +587,14 @@ namespace ElectronicObserver.Window {
 					if ( aacutin != 0 ) {
 						sb.AppendFormat( "对空 : {0}\r\n", Constants.GetAACutinKind( aacutin ) );
 					}
+					double adjustedaa = Calculator.GetAdjustedAAValue( ship );
+					sb.AppendFormat( "加权对空 : {0} (比例击坠 : {1:p2})\r\n",
+						adjustedaa,
+						Calculator.GetProportionalAirDefense( adjustedaa )
+						);
+
 				}
+
 				{
 					int airsup;
 					if ( Utility.Configuration.Config.FormFleet.AirSuperiorityMethod == 1 )
@@ -994,6 +1024,16 @@ namespace ElectronicObserver.Window {
 		}
 
 
+		private void ContextMenuFleet_AntiAirDetails_Click( object sender, EventArgs e ) {
+
+			var dialog = new DialogAntiAirDefense();
+
+			dialog.SetFleetID( FleetID );
+			dialog.Show( this );
+
+		}
+
+
 		private void ContextMenuFleet_Capture_Click( object sender, EventArgs e ) {
 
 			using ( Bitmap bitmap = new Bitmap( this.ClientSize.Width, this.ClientSize.Height ) ) {
@@ -1013,8 +1053,8 @@ namespace ElectronicObserver.Window {
 			MainFont = Font = c.UI.JapFont;
 			SubFont = c.UI.JapFont2;
 
-			AutoScroll = ContextMenuFleet_IsScrollable.Checked = c.FormFleet.IsScrollable;
-			ContextMenuFleet_FixShipNameWidth.Checked = c.FormFleet.FixShipNameWidth;
+			AutoScroll = c.FormFleet.IsScrollable;
+
 
 			if ( ControlFleet != null && KCDatabase.Instance.Fleet[FleetID] != null ) {
 				ControlFleet.ConfigurationChanged( this );
@@ -1061,17 +1101,6 @@ namespace ElectronicObserver.Window {
 
 
 
-		//よく考えたら別の艦隊タブと同期しないといけないので封印
-		private void ContextMenuFleet_IsScrollable_Click( object sender, EventArgs e ) {
-			Utility.Configuration.Config.FormFleet.IsScrollable = ContextMenuFleet_IsScrollable.Checked;
-			ConfigurationChanged();
-		}
-
-		private void ContextMenuFleet_FixShipNameWidth_Click( object sender, EventArgs e ) {
-			Utility.Configuration.Config.FormFleet.FixShipNameWidth = ContextMenuFleet_FixShipNameWidth.Checked;
-			ConfigurationChanged();
-		}
-
 
 		private void TableMember_CellPaint( object sender, TableLayoutCellPaintEventArgs e ) {
 			e.Graphics.DrawLine(Utility.Configuration.Config.UI.SubBackColorPen, e.CellBounds.X, e.CellBounds.Bottom - 1, e.CellBounds.Right - 1, e.CellBounds.Bottom - 1);
@@ -1081,7 +1110,6 @@ namespace ElectronicObserver.Window {
 		protected override string GetPersistString() {
 			return "Fleet #" + FleetID.ToString();
 		}
-
 
 
 

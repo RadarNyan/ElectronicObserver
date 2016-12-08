@@ -59,6 +59,7 @@
 			this.UI_MainFont = new System.Windows.Forms.TextBox();
 			this.label5 = new System.Windows.Forms.Label();
 			this.tabPage3 = new System.Windows.Forms.TabPage();
+			this.Log_SaveBattleLog = new System.Windows.Forms.CheckBox();
 			this.Log_ShowSpoiler = new System.Windows.Forms.CheckBox();
 			this.label12 = new System.Windows.Forms.Label();
 			this.label11 = new System.Windows.Forms.Label();
@@ -117,6 +118,8 @@
 			this.tabPage19 = new System.Windows.Forms.TabPage();
 			this.FormDock_BlinkAtCompletion = new System.Windows.Forms.CheckBox();
 			this.tabPage16 = new System.Windows.Forms.TabPage();
+			this.label34 = new System.Windows.Forms.Label();
+			this.FormHeadquarters_DisplayUseItemID = new System.Windows.Forms.ComboBox();
 			this.label26 = new System.Windows.Forms.Label();
 			this.FormHeadquarters_Visibility = new System.Windows.Forms.CheckedListBox();
 			this.FormHeadquarters_BlinkAtMaximum = new System.Windows.Forms.CheckBox();
@@ -140,6 +143,7 @@
 			this.FormShipGroup_ShowStatusBar = new System.Windows.Forms.CheckBox();
 			this.FormShipGroup_AutoUpdate = new System.Windows.Forms.CheckBox();
 			this.tabPage20 = new System.Windows.Forms.TabPage();
+			this.FormBattle_HideDuringBattle = new System.Windows.Forms.CheckBox();
 			this.FormBattle_IsScrollable = new System.Windows.Forms.CheckBox();
 			this.tabPage12 = new System.Windows.Forms.TabPage();
 			this.FormBrowser_ToolMenuDockStyle = new System.Windows.Forms.ComboBox();
@@ -215,8 +219,6 @@
 			this.APIListBrowser = new System.Windows.Forms.OpenFileDialog();
 			this.Log_PlayTime = new System.Windows.Forms.Label();
 			this.PlayTimeTimer = new System.Windows.Forms.Timer(this.components);
-			this.FormHeadquarters_DisplayUseItemID = new System.Windows.Forms.ComboBox();
-			this.label34 = new System.Windows.Forms.Label();
 			this.tabControl1.SuspendLayout();
 			this.tabPage1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.Connection_UpstreamProxyPort)).BeginInit();
@@ -651,6 +653,7 @@
 			// 
 			// tabPage3
 			// 
+			this.tabPage3.Controls.Add(this.Log_SaveBattleLog);
 			this.tabPage3.Controls.Add(this.Log_ShowSpoiler);
 			this.tabPage3.Controls.Add(this.label12);
 			this.tabPage3.Controls.Add(this.label11);
@@ -666,6 +669,17 @@
 			this.tabPage3.TabIndex = 2;
 			this.tabPage3.Text = "日志";
 			this.tabPage3.UseVisualStyleBackColor = true;
+			// 
+			// Log_SaveBattleLog
+			// 
+			this.Log_SaveBattleLog.AutoSize = true;
+			this.Log_SaveBattleLog.Location = new System.Drawing.Point(8, 140);
+			this.Log_SaveBattleLog.Name = "Log_SaveBattleLog";
+			this.Log_SaveBattleLog.Size = new System.Drawing.Size(120, 19);
+			this.Log_SaveBattleLog.TabIndex = 8;
+			this.Log_SaveBattleLog.Text = "保存战斗日志";
+			this.ToolTipInfo.SetToolTip(this.Log_SaveBattleLog, "是否保存战斗日志。");
+			this.Log_SaveBattleLog.UseVisualStyleBackColor = true;
 			// 
 			// Log_ShowSpoiler
 			// 
@@ -884,7 +898,7 @@
 			this.Debug_SealingPanel.Controls.Add(this.Debug_APIListPathSearch);
 			this.Debug_SealingPanel.Location = new System.Drawing.Point(0, 56);
 			this.Debug_SealingPanel.Name = "Debug_SealingPanel";
-			this.Debug_SealingPanel.Size = new System.Drawing.Size(576, 253);
+			this.Debug_SealingPanel.Size = new System.Drawing.Size(576, 247);
 			this.Debug_SealingPanel.TabIndex = 1;
 			// 
 			// Debug_APIListPath
@@ -1251,7 +1265,8 @@
             "2-5 式 ( 旧 )",
             "2-5 式 ( 秋 )",
             "2-5 新秋简易式",
-            "判定式 (33)"});
+            "判定式 (33)",
+            "新判定式 (33)"});
 			this.FormFleet_SearchingAbilityMethod.Location = new System.Drawing.Point(115, 31);
 			this.FormFleet_SearchingAbilityMethod.Name = "FormFleet_SearchingAbilityMethod";
 			this.FormFleet_SearchingAbilityMethod.Size = new System.Drawing.Size(127, 23);
@@ -1336,13 +1351,30 @@
 			this.tabPage16.Controls.Add(this.label26);
 			this.tabPage16.Controls.Add(this.FormHeadquarters_Visibility);
 			this.tabPage16.Controls.Add(this.FormHeadquarters_BlinkAtMaximum);
-			this.tabPage16.Location = new System.Drawing.Point(4, 24);
+			this.tabPage16.Location = new System.Drawing.Point(4, 22);
 			this.tabPage16.Name = "tabPage16";
 			this.tabPage16.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage16.Size = new System.Drawing.Size(562, 258);
+			this.tabPage16.Size = new System.Drawing.Size(562, 260);
 			this.tabPage16.TabIndex = 6;
 			this.tabPage16.Text = "司令部";
 			this.tabPage16.UseVisualStyleBackColor = true;
+			// 
+			// label34
+			// 
+			this.label34.AutoSize = true;
+			this.label34.Location = new System.Drawing.Point(200, 7);
+			this.label34.Name = "label34";
+			this.label34.Size = new System.Drawing.Size(116, 15);
+			this.label34.TabIndex = 4;
+			this.label34.Text = "自定义物品 :";
+			// 
+			// FormHeadquarters_DisplayUseItemID
+			// 
+			this.FormHeadquarters_DisplayUseItemID.FormattingEnabled = true;
+			this.FormHeadquarters_DisplayUseItemID.Location = new System.Drawing.Point(322, 6);
+			this.FormHeadquarters_DisplayUseItemID.Name = "FormHeadquarters_DisplayUseItemID";
+			this.FormHeadquarters_DisplayUseItemID.Size = new System.Drawing.Size(121, 23);
+			this.FormHeadquarters_DisplayUseItemID.TabIndex = 3;
 			// 
 			// label26
 			// 
@@ -1362,7 +1394,7 @@
 			this.FormHeadquarters_Visibility.IntegralHeight = false;
 			this.FormHeadquarters_Visibility.Location = new System.Drawing.Point(6, 46);
 			this.FormHeadquarters_Visibility.Name = "FormHeadquarters_Visibility";
-			this.FormHeadquarters_Visibility.Size = new System.Drawing.Size(150, 206);
+			this.FormHeadquarters_Visibility.Size = new System.Drawing.Size(150, 208);
 			this.FormHeadquarters_Visibility.TabIndex = 1;
 			// 
 			// FormHeadquarters_BlinkAtMaximum
@@ -1599,6 +1631,7 @@
 			// 
 			// tabPage20
 			// 
+			this.tabPage20.Controls.Add(this.FormBattle_HideDuringBattle);
 			this.tabPage20.Controls.Add(this.FormBattle_IsScrollable);
 			this.tabPage20.Location = new System.Drawing.Point(4, 22);
 			this.tabPage20.Name = "tabPage20";
@@ -1607,6 +1640,17 @@
 			this.tabPage20.TabIndex = 10;
 			this.tabPage20.Text = "战斗";
 			this.tabPage20.UseVisualStyleBackColor = true;
+			// 
+			// FormBattle_HideDuringBattle
+			// 
+			this.FormBattle_HideDuringBattle.AutoSize = true;
+			this.FormBattle_HideDuringBattle.Location = new System.Drawing.Point(6, 31);
+			this.FormBattle_HideDuringBattle.Name = "FormBattle_HideDuringBattle";
+			this.FormBattle_HideDuringBattle.Size = new System.Drawing.Size(115, 19);
+			this.FormBattle_HideDuringBattle.TabIndex = 7;
+			this.FormBattle_HideDuringBattle.Text = "战斗结束前隐藏";
+			this.ToolTipInfo.SetToolTip(this.FormBattle_HideDuringBattle, "战斗中隐藏结果，避免剧透。\r\n即使在隐藏状态，也可以通过战斗窗口的右键菜单项来临时显示。");
+			this.FormBattle_HideDuringBattle.UseVisualStyleBackColor = true;
 			// 
 			// FormBattle_IsScrollable
 			// 
@@ -2127,7 +2171,7 @@
 			// 
 			this.label10.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.label10.AutoSize = true;
-			this.label10.Location = new System.Drawing.Point(3, 294);
+			this.label10.Location = new System.Drawing.Point(3, 288);
 			this.label10.Name = "label10";
 			this.label10.Size = new System.Drawing.Size(238, 15);
 			this.label10.TabIndex = 5;
@@ -2444,23 +2488,6 @@
 			this.PlayTimeTimer.Interval = 1000;
 			this.PlayTimeTimer.Tick += new System.EventHandler(this.PlayTimeTimer_Tick);
 			// 
-			// FormHeadquarters_DisplayUseItemID
-			// 
-			this.FormHeadquarters_DisplayUseItemID.FormattingEnabled = true;
-			this.FormHeadquarters_DisplayUseItemID.Location = new System.Drawing.Point(322, 6);
-			this.FormHeadquarters_DisplayUseItemID.Name = "FormHeadquarters_DisplayUseItemID";
-			this.FormHeadquarters_DisplayUseItemID.Size = new System.Drawing.Size(121, 23);
-			this.FormHeadquarters_DisplayUseItemID.TabIndex = 3;
-			// 
-			// label34
-			// 
-			this.label34.AutoSize = true;
-			this.label34.Location = new System.Drawing.Point(200, 7);
-			this.label34.Name = "label34";
-			this.label34.Size = new System.Drawing.Size(116, 15);
-			this.label34.TabIndex = 4;
-			this.label34.Text = "自定义物品 :";
-			// 
 			// DialogConfiguration
 			// 
 			this.AcceptButton = this.ButtonOK;
@@ -2745,5 +2772,7 @@
 		private System.Windows.Forms.Timer PlayTimeTimer;
 		private System.Windows.Forms.Label label34;
 		private System.Windows.Forms.ComboBox FormHeadquarters_DisplayUseItemID;
+		private System.Windows.Forms.CheckBox FormBattle_HideDuringBattle;
+		private System.Windows.Forms.CheckBox Log_SaveBattleLog;
 	}
 }

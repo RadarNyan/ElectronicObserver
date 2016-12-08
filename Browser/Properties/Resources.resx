@@ -119,22 +119,35 @@
   </resheader>
   <data name="FrameScript" xml:space="preserve">
     <value>
-try {
-$(document.body).css({visibility:"hidden"});
-$("#externalswf").css({visibility:"visible",position:"fixed",left:0,top:0});
-}
-catch(e) {
+try {{
+var node = document.getElementById('{0}');
+if (node) document.getElementsByTagName('head')[0].removeChild(node);
+node = document.createElement('div');
+node.innerHTML = 'F&lt;style id=\'{0}\'>body {{ visibility: hidden; }} \
+#flashWrap {{ position: fixed; left: 0; top: 0; width: 100% !important; height: 100% !important; }} \
+#externalswf {{ visibility: visible; width: 100% !important; height: 100% !important; }}&lt;/style>';
+document.getElementsByTagName('head')[0].appendChild(node.lastChild);
+}}
+catch(e) {{
 	alert("フレームCSS適用に失敗しました: "+e);
-}</value>
+}}</value>
   </data>
   <data name="PageScript" xml:space="preserve">
     <value>
-try {
-$(document.body).css({visibility:"hidden",overflow:"hidden"});
-$("#area-game").css({visibility:"visible",position:"fixed",left:0,top:0});
-}
-catch(e) {
+try {{
+var node = document.getElementById('{0}');
+if (node) document.getElementsByTagName('head')[0].removeChild(node);
+node = document.createElement('div');
+node.innerHTML = 'P&lt;style id=\'{0}\'>body {{ visibility: hidden; overflow: hidden; }} \
+div #block_background {{ visibility: visible; }} \
+div #alert {{ visibility: visible; overflow: scroll; overflow-x: hidden; top: 3% !important; left: 3% !important; width: 94% !important; height: 94%; padding: 2%; box-sizing: border-box;}} \
+div.dmm-ntgnavi {{ display: none; }} \
+#area-game {{ position: fixed; left: 0; top: 0; width: 100%; height: 100%; }} \
+#game_frame {{ visibility: visible; width: 100% !important; height: 100% !important; }}&lt;/style>';
+document.getElementsByTagName('head')[0].appendChild(node.lastChild);
+}}
+catch(e) {{
 	alert("ページCSS適用に失敗しました: "+e);
-}</value>
+}}</value>
   </data>
 </root>

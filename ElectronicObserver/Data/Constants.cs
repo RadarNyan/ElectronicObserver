@@ -309,15 +309,33 @@ namespace ElectronicObserver.Data {
 		public static string GetAirRaidDamage( int value ) {
 			switch ( value ) {
 				case 1:
-					return "遭到空袭 - 资源受损";
+					return "发生空袭 - 资源受损";
 				case 2:
-					return "遭到空袭 - 资源、航空队受损";
+					return "发生空袭 - 资源、航空队受损";
 				case 3:
-					return "遭到空袭 - 航空队受损";
+					return "发生空袭 - 航空队受损";
 				case 4:
-					return "遭到空袭 - 没有受损";
+					return "发生空袭 - 未受损";
 				default:
-					return "未被空袭";
+					return "未发生空袭";
+			}
+		}
+
+		/// <summary>
+		/// 空襲被害の状態を表す文字列を取得します。(短縮版)
+		/// </summary>
+		public static string GetAirRaidDamageShort( int value ) {
+			switch ( value ) {
+				case 1:
+					return "资源受损";
+				case 2:
+					return "资源、航空";
+				case 3:
+					return "航空队受损";
+				case 4:
+					return "未受损";
+				default:
+					return "-";
 			}
 		}
 
@@ -523,9 +541,11 @@ namespace ElectronicObserver.Data {
 				case 10:
 					return "火箭炮炮击";
 				case 11:
-					return "登陆攻击 ( 大发动艇 )";
+					return "登陆攻击 ( 大发战车 )";
 				case 12:
 					return "登陆攻击 ( 内火艇 )";
+				case 13:
+					return "登陆攻击 ( 特大发 )";
 				default:
 					return "不明";
 			}
@@ -560,9 +580,11 @@ namespace ElectronicObserver.Data {
 				case 10:
 					return "火箭炮炮击";
 				case 11:
-					return "登陆攻击 ( 大发动艇 )";
+					return "登陆攻击 ( 大发战车 )";
 				case 12:
 					return "登陆攻击 ( 内火艇 )";
+				case 13:
+					return "登陆攻击 ( 特大发 )";
 				default:
 					return "不明";
 			}
@@ -585,7 +607,7 @@ namespace ElectronicObserver.Data {
 				case 4:
 					return "大口径主炮 / 三式弹 / 高射装置 / 电探";
 				case 5:
-					return "高角炮 + 高射装置 x 2 / 电探";
+					return "高角炮＋高射装置 x 2 / 电探";
 				case 6:
 					return "大口径主炮 / 三式弹 / 高射装置";
 				case 7:
@@ -609,6 +631,10 @@ namespace ElectronicObserver.Data {
 				case 17:
 					return "高角炮 / 机枪";
 				case 18:
+					return "集中机枪";
+				case 19:
+					return "高角炮 / 集中机枪";
+				case 20:
 					return "集中机枪";
 				default:
 					return "不明";

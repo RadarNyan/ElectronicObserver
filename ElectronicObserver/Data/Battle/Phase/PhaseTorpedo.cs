@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ElectronicObserver.Data.Battle.Detail;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,14 +17,16 @@ namespace ElectronicObserver.Data.Battle.Phase {
 		/// </summary>
 		private readonly int phaseID;
 
-		public PhaseTorpedo( BattleData data, int phaseID )
-			: base( data ) {
+		public PhaseTorpedo( BattleData data, string title, int phaseID )
+			: base( data, title ) {
 
 			this.phaseID = phaseID;
 
 			if ( !IsAvailable )
 				return;
 
+
+			IsShortFormat = ( (int[])TorpedoData.api_fdam ).Length <= 7;
 
 			Damages = GetConcatArray( "api_fdam", "api_edam" );
 			AttackDamages = GetConcatArray( "api_fydam", "api_eydam" );
@@ -50,13 +53,9 @@ namespace ElectronicObserver.Data.Battle.Phase {
 
 			if ( !IsAvailable ) return;
 
-			for ( int i = 0; i < hps.Length; i++ ) {
-				AddDamage( hps, i, Damages[i] );
-			}
-
-			for ( int i = 0; i < damages.Length; i++ ) {
-				damages[i] += AttackDamages[i];
-			}
+			// 表示上は逐次ダメージ反映のほうが都合がいいが、AddDamage を逐次的にやるとダメコン判定を誤るため
+			int[] currentHP = new int[hps.Length];
+			Array.Copy( hps, currentHP, currentHP.Length );
 
 			for ( int i = 0; i < Targets.Length; i++ ) {
 				if ( Targets[i] > 0 ) {
@@ -65,10 +64,19 @@ namespace ElectronicObserver.Data.Battle.Phase {
 						target += 6;
 					if ( PhaseBase.IsIndexFriend( i ) )
 						target += 6;
+					if ( PhaseBase.IsIndexEnemy( i ) && IsShortFormat && IsCombined )
+						target += 12;
 
-					BattleDetails.Add( new BattleDayDetail( _battleData, i, target, new int[] { AttackDamages[i] }, new int[] { CriticalFlags[i] }, -1 ) );
+					BattleDetails.Add( new BattleDayDetail( _battleData, i, target, new int[] { AttackDamages[i] }, new int[] { CriticalFlags[i] }, -1, currentHP[target] ) );
+					currentHP[target] -= Math.Max( AttackDamages[i], 0 );
 				}
 			}
+
+			for ( int i = 0; i < hps.Length; i++ ) {
+				AddDamage( hps, i, Damages[i] );
+				damages[i] += AttackDamages[i];
+			}
+
 		}
 
 
@@ -96,6 +104,9 @@ namespace ElectronicObserver.Data.Battle.Phase {
 		/// クリティカルフラグ(攻撃側)
 		/// </summary>
 		public int[] CriticalFlags { get; private set; }
+
+
+		private bool IsShortFormat { get; set; }
 
 
 		private int[] GetConcatArray( string friendName, string enemyName ) {
