@@ -1,5 +1,7 @@
-## 七四式电子观测仪 ( 汉化版 )　[![Build status](https://ci.appveyor.com/api/projects/status/c5b6vry20magv8ro/branch/master?svg=true)](https://ci.appveyor.com/project/RadarNyan/electronicobserver-icfh9/branch/master)
-本项目 fork 自 andanteyk 的 [七四式電子観測儀](https://github.com/andanteyk/ElectronicObserver) , 主要目的有：
+![七四式电子观测仪 ( 汉化版 )](https://gist.githubusercontent.com/RadarNyan/0e24f29bcf8be522c972f1621669e00c/raw/674df2250a4ed9aa9d8bdbf9117b77079d90b67d/74EO-RN-BANNER.png)
+
+[![Build status](https://ci.appveyor.com/api/projects/status/c5b6vry20magv8ro/branch/master?svg=true)](https://ci.appveyor.com/project/RadarNyan/electronicobserver-icfh9/branch/master)
+#### 本项目 fork 自 andanteyk 的 [七四式電子観測儀](https://github.com/andanteyk/ElectronicObserver) , 主要目的有：
 * 汉化 ( 原项目创建之初没有考虑到多国语言，后期增加修改过大且增加维护成本，原作者因此拒绝过相关的 PR )
 * 改造 ( 更换图标、修改配色、添加功能…… )
 
