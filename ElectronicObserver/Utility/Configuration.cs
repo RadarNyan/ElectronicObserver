@@ -289,7 +289,7 @@ namespace ElectronicObserver.Utility {
 				switch (ThemeID) {
 					case 0:  return SolarizedBase2.ColorData;
 					case 1:  return SolarizedBase02.ColorData;
-					default: return SystemColors.Control;
+					default: return Color.Silver;
 				}}}
 				public Color SubForeColor { get {
 				switch (ThemeID) {
@@ -301,7 +301,7 @@ namespace ElectronicObserver.Utility {
 				switch (ThemeID) {
 					case 0:  return new Pen(SolarizedBase2.ColorData, 1);
 					case 1:  return new Pen(SolarizedBase02.ColorData, 1);
-					default: return new Pen(SystemColors.Control, 1);
+					default: return Pens.Silver;
 				}}}
 				public Color Color_Red { get {
 				switch (ThemeID) {
