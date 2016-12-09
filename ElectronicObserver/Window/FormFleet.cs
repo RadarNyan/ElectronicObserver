@@ -193,7 +193,8 @@ namespace ElectronicObserver.Window {
 					double probStart = fleet.GetContactProbability();
 					var probSelect = fleet.GetContactSelectionProbability();
 
-					sb.AppendFormat( "2-5 式 ( 旧 ) : {0}\r\n2-5 式 ( 秋 ) : {1}\r\n2-5 新秋简易式 : {2}\r\n判定式 (33) : {3}\r\n新判定式 (33) :\r\n　分歧点系数 1: {4:f2}\r\n　分歧点系数 3: {5:f2}\r\n　分歧点系数 4: {6:f2}\r\n\r\n接触开始率 : \r\n　确保 {7:p1} / 优势 {8:p1}\r\n",
+/*
+					sb.AppendFormat( "2-5 式 ( 旧 ) : {0}\r\n2-5 式 ( 秋 ) : {1}\r\n2-5 新秋简易式 : {2}\r\n判定式 (33) : {3}\r\n新判定式 (33) :\r\n　分歧点系数 1: {4:f2}\r\n　分歧点系数 3: {5:f2}\r\n　分歧点系数 4: {6:f2}\r\n\r\n触接开始率 : \r\n　确保 {7:p1} / 优势 {8:p1}\r\n",
 						fleet.GetSearchingAbilityString( 0 ),
 						fleet.GetSearchingAbilityString( 1 ),
 						fleet.GetSearchingAbilityString( 2 ),
@@ -201,6 +202,17 @@ namespace ElectronicObserver.Window {
 						Math.Floor( Calculator.GetSearchingAbility_New33( fleet, 1 ) * 100 ) / 100,
 						Math.Floor( Calculator.GetSearchingAbility_New33( fleet, 3 ) * 100 ) / 100,
 						Math.Floor( Calculator.GetSearchingAbility_New33( fleet, 4 ) * 100 ) / 100,
+						probStart,
+						probStart * 0.6 );
+*/
+					// 添加分歧点系数的补充说明
+					sb.AppendFormat( "2-5 旧 / 秋 / 新秋简易式\r\n　{0} / {1} / {2}\r\n\r\n新判定式 (33)\r\n分歧点系数 1: {3:f2}\r\n　2-5-H->BOSS	31 / 33\r\n分歧点系数 4: {4:f2}\r\n　3-5-G->BOSS	23 / 28\r\n　6-1-E->F(大鯨)	12 / 16\r\n　6-1-F->K	20 / 25\r\n分歧点系数 3: {5:f2}\r\n　6-2-F->I	43 / ?\r\n　6-2-H->BOSS	? / 40\r\n　6-3-H->BOSS	36 / 38\r\n\r\n触接开始率 : \r\n　确保 {6:p1} / 优势 {7:p1}\r\n",
+						fleet.GetSearchingAbilityString( 0 ),
+						fleet.GetSearchingAbilityString( 1 ),
+						fleet.GetSearchingAbilityString( 2 ),
+						Math.Floor( Calculator.GetSearchingAbility_New33( fleet, 1 ) * 100 ) / 100,
+						Math.Floor( Calculator.GetSearchingAbility_New33( fleet, 4 ) * 100 ) / 100,
+						Math.Floor( Calculator.GetSearchingAbility_New33( fleet, 3 ) * 100 ) / 100,
 						probStart,
 						probStart * 0.6 );
 
