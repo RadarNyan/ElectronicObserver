@@ -180,6 +180,9 @@ namespace ElectronicObserver.Utility {
 				/// </summary>
 				public SerializableFont JapFont2 { get; set; }
 
+				// ThemeID
+				public int ThemeID { get; set; }
+
 				[IgnoreDataMember]
 				private bool _barColorMorphing;
 
@@ -187,21 +190,47 @@ namespace ElectronicObserver.Utility {
 				/// HPバーの色を滑らかに変化させるか
 				/// </summary>
 				public bool BarColorMorphing {
-					get { return _barColorMorphing; }
-					set {
+					get {
+						SetBarColorScheme();
+						return _barColorMorphing;
+					} set {
 						_barColorMorphing = value;
+						SetBarColorScheme();
+					}
+				}
 
-						if ( !_barColorMorphing )
+				private void SetBarColorScheme() {
+					if ( !_barColorMorphing ) {
+						switch (ThemeID) {
+						case 0:
+							BarColorScheme = new List<SerializableColor>( DefaultBarColorScheme[4] );
+							break;
+						case 1:
+							BarColorScheme = new List<SerializableColor>( DefaultBarColorScheme[2] );
+							break;
+						default:
 							BarColorScheme = new List<SerializableColor>( DefaultBarColorScheme[0] );
-						else
+							break;
+						}
+					} else {
+						switch (ThemeID) {
+						case 0:
+							BarColorScheme = new List<SerializableColor>( DefaultBarColorScheme[5] );
+							break;
+						case 1:
+							BarColorScheme = new List<SerializableColor>( DefaultBarColorScheme[3] );
+							break;
+						default:
 							BarColorScheme = new List<SerializableColor>( DefaultBarColorScheme[1] );
+							break;
+						}
 					}
 				}
 
 				/// <summary>
 				/// HPバーのカラーリング
 				/// </summary>
-				public List<SerializableColor> BarColorScheme { get; set; }
+				public List<SerializableColor> BarColorScheme { get; private set; }
 
 
 				[IgnoreDataMember]
@@ -251,11 +280,67 @@ namespace ElectronicObserver.Utility {
 						SerializableColor.UIntToColor( 0xFF888888 ),
 					},
 					//*/
+					new List<SerializableColor>() { // SolarizedDark
+						SerializableColor.UIntToColor( 0xFFc71015 ), // Red
+						SerializableColor.UIntToColor( 0xFFc71015 ), // Red
+						SerializableColor.UIntToColor( 0xFFc94800 ), // Orange
+						SerializableColor.UIntToColor( 0xFFc94800 ), // Orange
+						SerializableColor.UIntToColor( 0xFFd68d00 ), // Yellow
+						SerializableColor.UIntToColor( 0xFFd68d00 ), // Yellow
+						SerializableColor.UIntToColor( 0xFF469046 ), // Green
+						SerializableColor.UIntToColor( 0xFF469046 ), // Green
+						// SerializableColor.UIntToColor( 0xFF105da7 ), // Blue
+						SerializableColor.UIntToColor( 0xFF268BD2 ), // SolarizedBlue
+						SerializableColor.UIntToColor( 0xFFa3c8a3 ), // Lighter Green
+						SerializableColor.UIntToColor( 0xFF63080a ), // Darker Red
+						SerializableColor.UIntToColor( 0xFF073642 ), // SolarizedBase02
+					},
+					new List<SerializableColor>() {
+						SerializableColor.UIntToColor( 0xFFFF0000 ),
+						SerializableColor.UIntToColor( 0xFFFF0000 ),
+						SerializableColor.UIntToColor( 0xFFFF4400 ),
+						SerializableColor.UIntToColor( 0xFFFF8800 ),
+						SerializableColor.UIntToColor( 0xFFFFAA00 ),
+						SerializableColor.UIntToColor( 0xFFEEEE00 ),
+						SerializableColor.UIntToColor( 0xFFCCEE00 ),
+						SerializableColor.UIntToColor( 0xFF00CC00 ),
+						SerializableColor.UIntToColor( 0xFF0044CC ),
+						SerializableColor.UIntToColor( 0xFF00FF44 ),
+						SerializableColor.UIntToColor( 0xFF882222 ),
+						SerializableColor.UIntToColor( 0xFF888888 ),
+					},
+					new List<SerializableColor>() { // SolarizedLight
+						SerializableColor.UIntToColor( 0xFFc71015 ), // Red
+						SerializableColor.UIntToColor( 0xFFc71015 ), // Red
+						SerializableColor.UIntToColor( 0xFFc94800 ), // Orange
+						SerializableColor.UIntToColor( 0xFFc94800 ), // Orange
+						SerializableColor.UIntToColor( 0xFFd68d00 ), // Yellow
+						SerializableColor.UIntToColor( 0xFFd68d00 ), // Yellow
+						SerializableColor.UIntToColor( 0xFF469046 ), // Green
+						SerializableColor.UIntToColor( 0xFF469046 ), // Green
+						SerializableColor.UIntToColor( 0xFF268BD2 ), // SolarizedBlue
+						SerializableColor.UIntToColor( 0xFFa3c8a3 ), // Lighter Green
+						SerializableColor.UIntToColor( 0xFFe3888a ), // Lighter Red
+						SerializableColor.UIntToColor( 0xFFEEE8D5 ), // SolarizedBase2
+					},
+					new List<SerializableColor>() {
+						SerializableColor.UIntToColor( 0xFFFF0000 ),
+						SerializableColor.UIntToColor( 0xFFFF0000 ),
+						SerializableColor.UIntToColor( 0xFFFF4400 ),
+						SerializableColor.UIntToColor( 0xFFFF8800 ),
+						SerializableColor.UIntToColor( 0xFFFFAA00 ),
+						SerializableColor.UIntToColor( 0xFFEEEE00 ),
+						SerializableColor.UIntToColor( 0xFFCCEE00 ),
+						SerializableColor.UIntToColor( 0xFF00CC00 ),
+						SerializableColor.UIntToColor( 0xFF0044CC ),
+						SerializableColor.UIntToColor( 0xFF00FF44 ),
+						SerializableColor.UIntToColor( 0xFF882222 ),
+						SerializableColor.UIntToColor( 0xFF888888 ),
+					},
 				};
 
 				#region - UI Colors -
 
-				public int ThemeID { get; set; }
 				public SerializableColor SolarizedBase03 { get; set; }
 				public SerializableColor SolarizedBase02 { get; set; }
 				public SerializableColor SolarizedBase01 { get; set; }
@@ -414,6 +499,31 @@ namespace ElectronicObserver.Utility {
 					case 1:  return SolarizedViolet.ColorData;
 					default: return Color.FromArgb(0xDD, 0xCC, 0xFF);
 				}}}
+				// 视图 - 任务：任务进度
+				public Color Quest_ColorProcessLT50 { get {
+				switch (ThemeID) {
+					case 0:  return Color.FromArgb( 0xD6, 0x8D, 0x00 ); // Orange
+					case 1:  return Color.FromArgb( 0xD6, 0x8D, 0x00 );
+					default: return Color.FromArgb( 0xFF, 0x88, 0x00 );
+				}}}
+				public Color Quest_ColorProcessLT80 { get {
+				switch (ThemeID) {
+					case 0:  return Color.FromArgb( 0x46, 0x90, 0x46 ); // Green
+					case 1:  return Color.FromArgb( 0x46, 0x90, 0x46 );
+					default: return Color.FromArgb( 0x00, 0xCC, 0x00 );
+				}}}
+				public Color Quest_ColorProcessLT100 { get {
+				switch (ThemeID) {
+					case 0:  return Color.FromArgb( 0x3C, 0x89, 0x7F ); // Cyan
+					case 1:  return Color.FromArgb( 0x3C, 0x89, 0x7F );
+					default: return Color.FromArgb( 0x00, 0x88, 0x00 );
+				}}}
+				public Color Quest_ColorProcessDefault { get {
+				switch (ThemeID) {
+					case 0:  return Color.FromArgb( 0x26, 0x8B, 0xD2 ); // Solarized Blue
+					case 1:  return Color.FromArgb( 0x26, 0x8B, 0xD2 );
+					default: return Color.FromArgb( 0x00, 0x88, 0xFF );
+				}}}
 				// 视图 - 罗盘：敌舰名、事件名
 				public Color Compass_ShipNameColor3 { get { // Flagship
 				switch (ThemeID) {
@@ -502,8 +612,8 @@ namespace ElectronicObserver.Utility {
 					SubFont  = new Font( "Microsoft YaHei", 10, FontStyle.Regular, GraphicsUnit.Pixel );
 					JapFont  = new Font( "Meiryo UI", 12, FontStyle.Regular, GraphicsUnit.Pixel );
 					JapFont2 = new Font( "Meiryo UI", 10, FontStyle.Regular, GraphicsUnit.Pixel );
-					BarColorMorphing = false;
 					ThemeID = 0; // 0 - SolarizedLight; 1 - SolarizedDark; other - VS2012Light
+					BarColorMorphing = false;
 					// Solarized
 					SolarizedBase03 = new SerializableColor(0xFF002B36);
 					SolarizedBase02 = new SerializableColor(0xFF073642);

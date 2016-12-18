@@ -687,6 +687,7 @@ namespace ElectronicObserver.Window {
 				TextEventDetail.ImageIndex = -1;
 				ToolTipInfo.SetToolTip( TextEventDetail, null );
 				TextEnemyFleetName.Text = data.api_deckname;
+				TextEnemyFleetName.Font = Utility.Configuration.Config.UI.JapFont;
 
 			} else {
 
@@ -982,6 +983,7 @@ namespace ElectronicObserver.Window {
 				TextEventDetail.Text = "( 尚无敌舰队候选 )";
 				TextEventDetail.Font = Utility.Configuration.Config.UI.MainFont;
 				TextEnemyFleetName.Text = "( 敌舰队名不明 )";
+				TextEnemyFleetName.Font = Utility.Configuration.Config.UI.MainFont;
 
 
 				TableEnemyCandidate.Visible = false;
@@ -1027,6 +1029,7 @@ namespace ElectronicObserver.Window {
 				var efrecord = RecordManager.Instance.EnemyFleet[efcurrent.FleetID];
 				if ( efrecord != null ) {
 					TextEnemyFleetName.Text = efrecord.FleetName;
+					TextEnemyFleetName.Font = Utility.Configuration.Config.UI.JapFont;
 				}
 				TextEventDetail.Text = "敌舰队 ID: " + efcurrent.FleetID.ToString( "x8" );
 				TextEventDetail.Font = Utility.Configuration.Config.UI.MainFont;
@@ -1094,7 +1097,7 @@ namespace ElectronicObserver.Window {
 
 
 				TextEventDetail.Text = TextEnemyFleetName.Text = candidate.FleetName;
-				TextEventDetail.Font = Utility.Configuration.Config.UI.JapFont;
+				TextEventDetail.Font = TextEnemyFleetName.Font = Utility.Configuration.Config.UI.JapFont;
 
 				if ( _enemyFleetCandidate.Count > _candidatesDisplayCount ) {
 					TextEventDetail.Text += " ▼";
