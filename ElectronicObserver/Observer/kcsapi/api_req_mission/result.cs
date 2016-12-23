@@ -69,7 +69,7 @@ namespace ElectronicObserver.Observer.kcsapi.api_req_mission {
 									sb.AddLast( "开发资材 +" + count );
 									break;
 								case 4:
-									sbj.AddLast( KCDatabase.Instance.MasterUseItems[id].Name + " +" + count );
+									sbj.AddLast( KCDatabase.Instance.MasterUseItems[id].Name.Replace("（", "(").Replace("）", ")") + " +" + count );
 									break;
 								case 5:
 									sb.AddLast( "家具币 +" + count );
