@@ -43,7 +43,7 @@ namespace ElectronicObserver.Observer.kcsapi.api_req_kaisou {
 			KCDatabase db = KCDatabase.Instance;
 
 			var ship = db.Ships[(int)data.api_ship.api_id];
-			
+
 
 			if ( ship != null ) {
 
