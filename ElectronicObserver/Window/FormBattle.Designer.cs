@@ -109,7 +109,7 @@
 			this.DamageFriend.TabIndex = 3;
 			this.DamageFriend.Text = "損害率";
 			this.DamageFriend.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.DamageFriend.Font = Utility.Configuration.Config.UI.JapFont;
+			this.DamageFriend.Font = Utility.Configuration.Config.UI.JapFont.FontData;
 			// 
 			// FleetEnemyEscort
 			// 
@@ -134,7 +134,7 @@
 			this.WinRank.TabIndex = 4;
 			this.WinRank.Text = "戦績判定";
 			this.WinRank.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.WinRank.Font = Utility.Configuration.Config.UI.JapFont;
+			this.WinRank.Font = Utility.Configuration.Config.UI.JapFont.FontData;
 			// 
 			// DamageEnemy
 			// 
@@ -146,7 +146,7 @@
 			this.DamageEnemy.TabIndex = 5;
 			this.DamageEnemy.Text = "損害率";
 			this.DamageEnemy.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.DamageEnemy.Font = Utility.Configuration.Config.UI.JapFont;
+			this.DamageEnemy.Font = Utility.Configuration.Config.UI.JapFont.FontData;
 			// 
 			// FleetFriendEscort
 			// 
@@ -272,7 +272,7 @@
 			this.AirStage2Friend.TabIndex = 9;
 			this.AirStage2Friend.Text = "撃墜";
 			this.AirStage2Friend.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.AirStage2Friend.Font = Utility.Configuration.Config.UI.JapFont;
+			this.AirStage2Friend.Font = Utility.Configuration.Config.UI.JapFont.FontData;
 			// 
 			// AACutin
 			// 
@@ -295,7 +295,7 @@
 			this.AirStage2Enemy.TabIndex = 11;
 			this.AirStage2Enemy.Text = "撃墜";
 			this.AirStage2Enemy.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.AirStage2Enemy.Font = Utility.Configuration.Config.UI.JapFont;
+			this.AirStage2Enemy.Font = Utility.Configuration.Config.UI.JapFont.FontData;
 			// 
 			// AirStage1Enemy
 			// 
@@ -307,7 +307,7 @@
 			this.AirStage1Enemy.TabIndex = 8;
 			this.AirStage1Enemy.Text = "撃墜";
 			this.AirStage1Enemy.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.AirStage1Enemy.Font = Utility.Configuration.Config.UI.JapFont;
+			this.AirStage1Enemy.Font = Utility.Configuration.Config.UI.JapFont.FontData;
 			// 
 			// SearchingFriend
 			// 
@@ -341,7 +341,7 @@
 			this.AirStage1Friend.TabIndex = 6;
 			this.AirStage1Friend.Text = "撃墜";
 			this.AirStage1Friend.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.AirStage1Friend.Font = Utility.Configuration.Config.UI.JapFont;
+			this.AirStage1Friend.Font = Utility.Configuration.Config.UI.JapFont.FontData;
 			// 
 			// SearchingEnemy
 			// 

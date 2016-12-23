@@ -312,15 +312,15 @@ namespace ElectronicObserver.Utility {
 					new List<SerializableColor>() { // SolarizedLight
 						SerializableColor.UIntToColor( 0xFFc71015 ), // Red
 						SerializableColor.UIntToColor( 0xFFc71015 ), // Red
-						SerializableColor.UIntToColor( 0xFFc94800 ), // Orange
-						SerializableColor.UIntToColor( 0xFFc94800 ), // Orange
-						SerializableColor.UIntToColor( 0xFFd68d00 ), // Yellow
-						SerializableColor.UIntToColor( 0xFFd68d00 ), // Yellow
+						SerializableColor.UIntToColor( 0xFFFF8800 ), // MEDIUM DAMAGED
+						SerializableColor.UIntToColor( 0xFFFF8800 ), // MEDIUM DAMAGED
+						SerializableColor.UIntToColor( 0xFFFFBF00 ), // LITTLE DAMAGED
+						SerializableColor.UIntToColor( 0xFFFFBF00 ), // LITTLE DAMAGED
 						SerializableColor.UIntToColor( 0xFF469046 ), // Green
 						SerializableColor.UIntToColor( 0xFF469046 ), // Green
 						SerializableColor.UIntToColor( 0xFF268BD2 ), // SolarizedBlue
 						SerializableColor.UIntToColor( 0xFFa3c8a3 ), // Lighter Green
-						SerializableColor.UIntToColor( 0xFFe3888a ), // Lighter Red
+						SerializableColor.UIntToColor( 0xFFFFD2D2 ), // DAMAGE RECEIVED
 						SerializableColor.UIntToColor( 0xFFEEE8D5 ), // SolarizedBase2
 					},
 					new List<SerializableColor>() {
@@ -1009,6 +1009,10 @@ namespace ElectronicObserver.Utility {
 				/// </summary>
 				public bool ShowConditionIcon { get; set; }
 
+				/// <summary>
+				/// 艦名表示幅固定時の幅
+				/// </summary>
+				public int FixedShipNameWidth { get; set; }
 
 				public ConfigFormFleet() {
 					ShowAircraft = true;
@@ -1022,6 +1026,7 @@ namespace ElectronicObserver.Utility {
 					ShowAnchorageRepairingTimer = true;
 					BlinkAtCompletion = true;
 					ShowConditionIcon = true;
+					FixedShipNameWidth = 40;
 				}
 			}
 			/// <summary>[艦隊]ウィンドウ</summary>
