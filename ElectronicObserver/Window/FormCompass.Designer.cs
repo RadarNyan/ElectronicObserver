@@ -180,7 +180,6 @@
 			this.TextEnemyFleetName.TabIndex = 0;
 			this.TextEnemyFleetName.Text = "(敵艦隊名)";
 			this.TextEnemyFleetName.MouseDown += new System.Windows.Forms.MouseEventHandler(this.TextEnemyFleetName_MouseDown);
-			this.TextEnemyFleetName.Font = Utility.Configuration.Config.UI.JapFont;
 			// 
 			// TextFormation
 			// 
