@@ -374,13 +374,13 @@ namespace ElectronicObserver.Utility {
 				switch (ThemeID) {
 					case 0:  return SolarizedBase2.ColorData;
 					case 1:  return SolarizedBase02.ColorData;
-					default: return Color.Silver;
+					default: return Color.FromArgb(0xCC, 0xCE, 0xDB);
 				}}}
 				public Color SubForeColor { get {
 				switch (ThemeID) {
 					case 0:  return SolarizedBase00.ColorData;
 					case 1:  return SolarizedBase0.ColorData;
-					default: return Color.FromArgb(0x88, 0x88, 0x88);
+					default: return Color.FromArgb(0x6D, 0x6D, 0x6D);
 				}}}
 				public Pen SubBackColorPen { get {
 				switch (ThemeID) {
