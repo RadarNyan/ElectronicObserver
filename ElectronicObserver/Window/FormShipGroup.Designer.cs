@@ -407,7 +407,7 @@
 			// 
 			// ShipView_RepairTime
 			// 
-			this.ShipView_RepairTime.HeaderText = "入渠时间";
+			this.ShipView_RepairTime.HeaderText = "入渠耗时";
 			this.ShipView_RepairTime.Name = "ShipView_RepairTime";
 			this.ShipView_RepairTime.ReadOnly = true;
 			this.ShipView_RepairTime.Width = 60;
@@ -786,7 +786,7 @@
 			this.MenuGroup_ShowStatusBar.CheckState = System.Windows.Forms.CheckState.Checked;
 			this.MenuGroup_ShowStatusBar.Name = "MenuGroup_ShowStatusBar";
 			this.MenuGroup_ShowStatusBar.Size = new System.Drawing.Size(191, 22);
-			this.MenuGroup_ShowStatusBar.Text = "显示滚动条";
+			this.MenuGroup_ShowStatusBar.Text = "显示状态栏";
 			this.MenuGroup_ShowStatusBar.CheckedChanged += new System.EventHandler(this.MenuGroup_ShowStatusBar_CheckedChanged);
 			// 
 			// splitContainer1

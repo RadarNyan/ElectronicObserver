@@ -1,0 +1,121 @@
+// 除含有以双斜线开头的注释外，本文件是标准的 json 格式
+// 最外层是 array，内部每个配色主题为 object
+// [{第一个配色主题},{第二个配色主题},{第三个配色主题} ... ]
+
+[{
+  // 定义主题名，启动时会显示在日志中
+  "name": "VS2012 Light",
+
+// ######################################################
+// ## 颜色格式支持 #RGB / #RRGGBB 使用其他格式定义无效 ##
+// ######################################################
+
+  // 基本颜色 ( 后面的面板颜色优先于基本颜色 )
+  // 不排除未来这些基本颜色将被用作其他用途，请勿定义成和名称不符的颜色
+  "basicColors": {
+    "red":     "#F00",    // 红色 - 严重疲劳、大破、出击任务、elite 级深海
+    "orange":  "#FFA500", // 橙色 - 中等疲劳、中破、flagship 级深海
+    "yellow":  "#FF0",    // 黄色 - 轻微疲劳、小破、
+    "green":   "#0F0",    // 绿色 - 
+    "cyan":    "#0FF",    // 青色 - 装备改修等级
+    "blue":    "#00F",    // 蓝色 - 战意高扬、满血、任务进度 100%
+    "magenta": "#F0F",    // 洋红 - 航空队全灭 ( 残机数 0 )
+    "violet":  "#EE82EE"  // 紫色 - 改装任务
+  },
+  // 数值条颜色
+  "barColors": [[
+    "#FF0000", // 大破
+    "#FF0000", // 大破
+    "#FF8800", // 中破
+    "#FF8800", // 中破
+    "#FFCC00", // 小破
+    "#FFCC00", // 小破
+    "#00CC00", // 擦伤
+    "#00CC00", // 擦伤
+    "#0044CC", // 无伤
+    "#44FF00", // 未使用 ? (_barColorIncrement)
+    "#882222", // 造成伤害
+    "#888888"  // 背景色
+  ],[
+    // 开启 "更多阶数值条颜色" 时的定义
+    "#FF0000", // 大破
+    "#FF0000", // 大破
+    "#FF4400", // 中破
+    "#FF8800", // 中破
+    "#FFAA00", // 小破
+    "#EEEE00", // 小破
+    "#CCEE00", // 擦伤
+    "#00CC00", // 擦伤
+    "#0044CC", // 无伤
+    "#00FF44", //
+    "#882222", // 造成伤害
+    "#888888"  // 背景色
+  ]],
+  // 面板颜色
+  "panelColors": {
+    "foreground":  "#000000", // 主文字色 - 大部分文字颜色
+    "background":  "#F0F0F0", // 主背景色 - 各面板背景颜色
+    "foreground2": "#000000", // 副文字色 - 副背景色上的文字颜色
+    "background2": "#E3E3E3", // 副背景色 - 状态栏背景、各种分隔线
+
+//  ######################################################
+//  ##  以下颜色均存在默认值，在每行注释后的 [] 内标出  ##
+//  ######################################################
+
+  // 状态栏
+  "statusBarFG" : "#000000", // [foreground2] 状态栏文字色
+  "statusBarBG" : "#E3E3E3", // [background2] 状态栏背景色
+
+    // 主界面 - 标签页
+    // 注：自定义配色刚刚实现，以下三组颜色暂不建议设置为不同颜色
+    "tabActiveFG":    "#FFFFFF", // [foreground2] 活动前台标签页文字色
+    "tabActiveBG":    "#007ACC", // [background2] 活动前台标签页背景色
+    "tabLostFocusFG": "#FFFFFF", // [foreground2] 非活动前台标签页文字色
+    "tabLostFocusBG": "#007ACC", // [background2] 非活动前台标签页背景色
+    "tabHoverFG":     "#FFFFFF", // [foreground2] 光标悬停后台标签页文字色
+    "tabHoverBG":     "#1C97EA", // [background2] 光标悬停后台标签页背景色
+    // 视图 - 舰队
+    "fleet": {
+      "conditionVeryTired":   "#F08080", // [red]    严重疲劳
+      "conditionTired":       "#FFA07A", // [orange] 中等疲劳
+      "conditionLittleTired": "#FFE4B5", // [yellow] 轻微疲劳
+      "conditionSparkle":     "#90EE90", // [blue]   战意高扬
+      "equipmentLevel":       "#006666"  // [cyan]   装备改修值
+    },
+    // 视图 - 司令部
+    "hq": {
+      "empty": "place_holder"
+    },
+    // 视图 - 任务
+    "quest": {
+      "typeHensei":     "#AAFFAA", // [green]  编成类任务
+      "typeShutsugeki": "#FFCCCC", // [red]    出击类任务
+      "typeEnshu":      "#DDFFAA", // [green]  演习类任务
+      "typeEnsei":      "#DDFFAA", // [cyan]   远征类任务
+      "typeHokyu":      "#CCFFFF", // [yellow] 补给、入渠类任务
+      "typeKojo":       "#DDCCBB", // [orange] 工厂类任务
+      "typeKaiso":      "#DDCCFF", // [violet] 改装类任务
+      "processLT50":    "#FF8800", // [orange] 任务进度 <50%
+      "processLT80":    "#00CC00", // [green]  任务进度 <80%
+      "processLT100":   "#008800", // [cyan]   任务进度 <100%
+      "processDefault": "#0088FF"  // [blue]   任务进度 100%
+    },
+    // 视图 - 罗盘
+    "compass": {
+      "shipClass2": "#F00",    // [red]     elite
+      "shipClass3": "#FF8800", // [orange]  flagship
+      "shipClass4": "#0088FF", // [blue]    改 flagship / 后期型
+      "shipClass5": "#880000", // [magenta] 后期型 elite
+      "shipClass6": "#884400", // [yellow]  后期型 flagship
+      "eventKind3": "#000080", // [violet]  夜战
+      "eventKind6": "#006400", // [green]   航空战
+      "eventKind5": "#8B0000"  // [violet]  敌联合
+    },
+    // 视图 - 战斗
+    "battle": {
+      "barBossDamaged": "#FFE4E1", // [orange]      受损状态 BOSS
+      "barMVP":         "#FFE4B5", // [blue]        MVP
+      "barEscaped":     "#C0C0C0"  // [background2] 已退避
+    }
+  }
+}]

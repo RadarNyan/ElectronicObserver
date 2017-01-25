@@ -665,6 +665,23 @@ namespace ElectronicObserver.Data {
 
 		}
 
+		// 远征中判定
+		public bool InExpedition {
+			get {
+				FleetManager fm = KCDatabase.Instance.Fleet;
+				foreach ( var f in fm.Fleets.Values ) {
+					if ( f.Members.Contains( MasterID ) ) {
+						if ( f.FleetID == 1 ) {
+							return false;
+						} else {
+							return (f.ExpeditionState != 0);
+						}
+					}
+				}
+				return false;
+			}
+		}
+
 
 		/// <summary>
 		/// ケッコン済みかどうか

@@ -1444,6 +1444,24 @@ namespace ElectronicObserver.Utility.Data {
 			return new TimeSpan( DateTimeHelper.FromAPITimeSpan( ship.RepairTime ).Add( TimeSpan.FromSeconds( -30 ) ).Ticks / ( ship.HPMax - ship.HPCurrent ) );
 		}
 
+		public static TimeSpan CalculateDockingUnitTime(ShipData ship, int hp) {
+			TimeSpan time = RoundUpToOneMinute(new TimeSpan(DateTimeHelper.FromAPITimeSpan(ship.RepairTime).Add(TimeSpan.FromSeconds(-30)).Ticks / (ship.HPMax - ship.HPCurrent) * hp));
+			if (hp == 1 && time.Ticks > TimeSpan.FromMinutes(20).Ticks) {
+				return TimeSpan.FromMinutes(20);
+			} else {
+				return time;
+			}
+		}
+
+		public static TimeSpan CalculateDockingTotalTime(ShipData ship) {
+			return RoundUpToOneMinute(new TimeSpan(DateTimeHelper.FromAPITimeSpan(ship.RepairTime).Add(TimeSpan.FromSeconds(-30)).Ticks));
+		}
+
+		private static TimeSpan RoundUpToOneMinute (TimeSpan time) {
+			var oneMinuteTicks = TimeSpan.FromSeconds(60).Ticks;
+			return new TimeSpan(((time.Ticks + oneMinuteTicks - 1) / oneMinuteTicks) * oneMinuteTicks);
+		}
+
 	}
 
 

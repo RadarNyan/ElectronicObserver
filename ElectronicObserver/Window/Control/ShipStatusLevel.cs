@@ -144,6 +144,16 @@ namespace ElectronicObserver.Window.Control {
 			}
 		}
 
+		private string _textValueNext;
+		public string TextValueNext {
+			get { return _textValueNext; }
+			set {
+				_textValueNext = value;
+				_valueNextSizeCache = null;
+				PropertyChanged();
+			}
+		}
+
 
 		// size cache
 
@@ -178,10 +188,17 @@ namespace ElectronicObserver.Window.Control {
 		private Size? _valueNextSizeCache;
 		private Size ValueNextSizeCache {
 			get {
-				return _valueNextSizeCache ??
-					( _valueNextSizeCache = TextNext == null ?
-						Size.Empty :
-						( TextRenderer.MeasureText( Math.Max( ValueNext, MaximumValueNext ).ToString(), SubFont, MaxSize, TextFormatText ) - new Size( (int)( MainFont.Size / 2.0 ), 0 ) ) ).Value;
+				if ( _textValueNext != "" ) {
+					return _valueNextSizeCache ??
+						( _valueNextSizeCache = TextNext == null ?
+							Size.Empty :
+							( TextRenderer.MeasureText( _textValueNext, SubFont, MaxSize, TextFormatText ) - new Size( (int)( MainFont.Size / 2.0 ), 0 ) ) ).Value;
+				} else {
+					return _valueNextSizeCache ??
+						( _valueNextSizeCache = TextNext == null ?
+							Size.Empty :
+							( TextRenderer.MeasureText( Math.Max( ValueNext, MaximumValueNext ).ToString(), SubFont, MaxSize, TextFormatText ) - new Size( (int)( MainFont.Size / 2.0 ), 0 ) ) ).Value;
+				}
 			}
 		}
 
@@ -211,6 +228,7 @@ namespace ElectronicObserver.Window.Control {
 			_valueNext = 0;
 			_maximumValueNext = 0;
 			_textNext = "next:";
+			_textValueNext = "";
 		}
 
 
@@ -245,7 +263,11 @@ namespace ElectronicObserver.Window.Control {
 
 			p.Y = basearea.Bottom - ValueNextSizeCache.Height + 1;
 			if ( TextNext != null ) {
-				TextRenderer.DrawText( e.Graphics, ValueNext.ToString(), SubFont, new Rectangle( p, ValueNextSizeCache ), SubFontColor, TextFormatText );
+				if ( TextValueNext == "" ) {
+					TextRenderer.DrawText( e.Graphics, ValueNext.ToString(), SubFont, new Rectangle( p, ValueNextSizeCache ), SubFontColor, TextFormatText );
+				} else {
+					TextRenderer.DrawText( e.Graphics, TextValueNext, SubFont, new Rectangle( p, ValueNextSizeCache ), SubFontColor, TextFormatText );
+				}
 				//e.Graphics.DrawRectangle( Pens.Orange, new Rectangle( p, ValueNextSizeCache ) );
 			}
 

@@ -79,21 +79,12 @@ namespace ElectronicObserver.Window {
 
 			Utility.Configuration.Instance.Load( this );
 
-			switch (Utility.Configuration.Config.UI.ThemeID) {
-			case 0:
-				this.MainDockPanel.Theme = new WeifenLuo.WinFormsUI.Docking.SolarizedLightTheme();
-				break;
-			case 1:
-				this.MainDockPanel.Theme = new WeifenLuo.WinFormsUI.Docking.SolarizedDarkTheme();
-				break;
-			default:
-				this.MainDockPanel.Theme = new WeifenLuo.WinFormsUI.Docking.VS2012LightTheme();
-				break;
-			}
+			this.MainDockPanel.Styles = Configuration.Config.UI.DockPanelSuiteStyles;
+			this.MainDockPanel.Theme = new WeifenLuo.WinFormsUI.Docking.VS2012Theme();
 			this.BackColor = this.StripMenu.BackColor = Utility.Configuration.Config.UI.BackColor;
 			this.ForeColor = this.StripMenu.ForeColor = Utility.Configuration.Config.UI.ForeColor;
-			this.StripStatus.BackColor = Utility.Configuration.Config.UI.SubBackColor;
-			this.StripStatus.ForeColor = Utility.Configuration.Config.UI.SubForeColor;
+			this.StripStatus.BackColor = Utility.Configuration.Config.UI.StatusBarBackColor;
+			this.StripStatus.ForeColor = Utility.Configuration.Config.UI.StatusBarForeColor;
 
 			Utility.Logger.Instance.LogAdded += new Utility.LogAddedEventHandler( ( Utility.Logger.LogData data ) => {
 				if ( InvokeRequired ) {

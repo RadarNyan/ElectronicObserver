@@ -600,9 +600,7 @@
       <DependentUpon>FormIntegrated.cs</DependentUpon>
     </Compile>
     <Compile Include="Window\Support\ControlHelper.cs" />
-    <Compile Include="Window\Support\CustomFloatWindowFactory.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="Window\Support\CustomFloatWindowFactory.cs" />
     <Compile Include="Window\Support\WindowPlacementManager.cs" />
     <EmbeddedResource Include="Window\Control\ImageLabel.resx">
       <DependentUpon>ImageLabel.cs</DependentUpon>
@@ -776,6 +774,12 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="Settings\ColorScheme.example.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Settings\ColorScheme.Solarized.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -789,7 +793,7 @@
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5">
       <Visible>False</Visible>
-      <ProductName>Microsoft .NET Framework 4.5 %28x86 和 x64%29</ProductName>
+      <ProductName>Microsoft .NET Framework 4.5 %28x86 and x64%29</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
@@ -811,27 +815,19 @@
       <Project>{8bb3e37d-09fb-40b9-958a-8cdcd18ef1f5}</Project>
       <Name>BrowserLib</Name>
     </ProjectReference>
+    <ProjectReference Include="..\DockPanelSuite\WinFormsUI\ThemeVS2012.csproj">
+      <Project>{a965d7bb-5cda-4531-ab67-58d4fa10aa6d}</Project>
+      <Name>ThemeVS2012</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DockPanelSuite\WinFormsUI\WinFormsUI.csproj">
       <Project>{c75532c4-765b-418e-b09b-46d36b2abdb1}</Project>
       <Name>WinFormsUI</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\DockPanelSuite\WinFormsUI\ThemeVS2012Light.csproj">
-      <Project>{4ed4fdb5-9fd0-49e6-876d-1635f727c755}</Project>
-      <Name>ThemeVS2012Light</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\DockPanelSuite\WinFormsUI\ThemeSolarizedDark.csproj">
-      <Project>{a965d7bb-5cda-4531-ab67-58d4fa10aa6d}</Project>
-      <Name>ThemeSolarizedDark</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\DockPanelSuite\WinFormsUI\ThemeSolarizedLight.csproj">
-      <Project>{50d6ede2-b00e-4487-8426-9ef4d8d1d416}</Project>
-      <Name>ThemeSolarizedLight</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>copy "$(TargetDir)*.*" "$(ProjectDir)..\output\"</PostBuildEvent>
+    <PostBuildEvent>xcopy "$(TargetDir)." "$(ProjectDir)..\output" /E</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
