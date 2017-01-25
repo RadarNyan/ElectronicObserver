@@ -131,6 +131,7 @@ namespace ElectronicObserver.Data.ShipGroup {
 			{ ".IsLockedByEquipment", "有带锁装备" },
 			{ ".SallyArea", "出击海域" },
 			{ ".FleetWithIndex", "所属舰队" },
+			{ ".InExpedition", "远征中" },
 			{ ".IsMarried", "结婚" },
 			{ ".AirBattlePower", "航空威力" },
 			{ ".ShellingPower", "炮击威力" },
