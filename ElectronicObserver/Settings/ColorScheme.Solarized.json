@@ -1,0 +1,79 @@
+// Solarized Light & Solarized Dark
+// Version 20170119
+// Based on "Solarized" by Ethan Schoonover (http://ethanschoonover.com/solarized)
+
+[{
+  "name": "Solarized Light",
+  "basicColors": { // SolarizedColors
+    "red":     "#dc322f",
+    "orange":  "#cb4b16",
+    "yellow":  "#b58900",
+    "green":   "#859900",
+    "cyan":    "#2aa198",
+    "blue":    "#268bd2",
+    "magenta": "#d33682",
+    "violet":  "#6c71c4"
+  },
+  "barColors": [[
+    "#c71015",
+    "#c71015",
+    "#FF8800",
+    "#FF8800",
+    "#FFBF00",
+    "#FFBF00",
+    "#469046",
+    "#469046",
+    "#268BD2",
+    "#a3c8a3",
+    "#FFD2D2",
+    "#EEE8D5"
+  ]],
+  "panelColors": {
+    "foreground":  "#586e75", // SolarizedBase01
+    "background":  "#fdf6e3", // SolarizedBase3
+    "foreground2": "#657b83", // SolarizedBase00
+    "background2": "#eee8d5", // SolarizedBase2
+    "quest": {
+      "processLT50":    "#d68d00",
+      "processLT80":    "#469046",
+      "processLT100":   "#3c897f"
+    }
+  }
+},{
+  "name": "Solarized Dark",
+  "basicColors": { // SolarizedColors
+    "red":     "#dc322f",
+    "orange":  "#cb4b16",
+    "yellow":  "#b58900",
+    "green":   "#859900",
+    "cyan":    "#2aa198",
+    "blue":    "#268bd2",
+    "magenta": "#d33682",
+    "violet":  "#6c71c4"
+  },
+  "barColors": [[
+    "#c71015",
+    "#c71015",
+    "#c94800",
+    "#c94800",
+    "#d68d00",
+    "#d68d00",
+    "#469046",
+    "#469046",
+    "#268BD2",
+    "#a3c8a3",
+    "#63080a",
+    "#073642"
+  ]],
+  "panelColors": {
+    "foreground":  "#93a1a1", // SolarizedBase1
+    "background":  "#002b36", // SolarizedBase03
+    "foreground2": "#839496", // SolarizedBase0
+    "background2": "#073642", // SolarizedBase02
+    "quest": {
+      "processLT50":    "#d68d00",
+      "processLT80":    "#469046",
+      "processLT100":   "#3c897f"
+    }
+  }
+}]

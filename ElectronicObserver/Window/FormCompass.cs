@@ -320,7 +320,7 @@ namespace ElectronicObserver.Window {
 				default:
 					return Utility.Configuration.Config.UI.ForeColor;
 				case 2:		//elite
-					return Utility.Configuration.Config.UI.Color_Red;
+					return Utility.Configuration.Config.UI.Compass_ShipNameColor2;
 				case 3:		//flagship
 					return Utility.Configuration.Config.UI.Compass_ShipNameColor3;
 				case 4:		//latemodel / flagship kai
