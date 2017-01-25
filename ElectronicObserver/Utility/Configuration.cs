@@ -184,6 +184,9 @@ namespace ElectronicObserver.Utility {
 				// ThemeID
 				public int ThemeID { get; set; }
 
+				// 司令部显示战果
+				public bool ShowGrowthInsteadOfNextInHQ { get; set; }
+
 				[IgnoreDataMember]
 				private bool _barColorMorphing;
 
@@ -372,6 +375,7 @@ namespace ElectronicObserver.Utility {
 					JapFont  = new Font( "Meiryo UI", 12, FontStyle.Regular, GraphicsUnit.Pixel );
 					JapFont2 = new Font( "Meiryo UI", 10, FontStyle.Regular, GraphicsUnit.Pixel );
 					ThemeID = 0;
+					ShowGrowthInsteadOfNextInHQ = false;
 					BarColorMorphing = false;
 				}
 			}

@@ -215,14 +215,31 @@ namespace ElectronicObserver.Window {
 			HQLevel.Value = db.Admiral.Level;
 			{
 				StringBuilder tooltip = new StringBuilder();
-				if ( db.Admiral.Level < ExpTable.AdmiralExp.Max( e => e.Key ) ) {
-					HQLevel.TextNext = "next:";
-					HQLevel.ValueNext = ExpTable.GetNextExpAdmiral( db.Admiral.Exp );
-					tooltip.AppendFormat( "{0} / {1}\r\n", db.Admiral.Exp, ExpTable.AdmiralExp[db.Admiral.Level + 1].Total );
+				if ( Utility.Configuration.Config.UI.ShowGrowthInsteadOfNextInHQ ) {
+					HQLevel.TextNext = "Growth:";
+					var res1 = RecordManager.Instance.Resource.GetRecordPrevious();
+					var res2 = RecordManager.Instance.Resource.GetRecordDay();
+					if ( res1 != null && res2 != null ) {
+						HQLevel.TextValueNext = String.Format(
+							"{0:n2} / {1:n2}",
+							(db.Admiral.Exp - res1.HQExp) * 7 / 10000.0,
+							(db.Admiral.Exp - res2.HQExp) * 7 / 10000.0
+						);
+					} else {
+						HQLevel.TextValueNext = "N/A";
+					}
 				} else {
-					HQLevel.TextNext = "exp:";
-					HQLevel.ValueNext = db.Admiral.Exp;
+					if ( db.Admiral.Level < ExpTable.AdmiralExp.Max( e => e.Key ) ) {
+						HQLevel.TextNext = "next:";
+						HQLevel.ValueNext = ExpTable.GetNextExpAdmiral( db.Admiral.Exp );
+						tooltip.AppendFormat( "{0} / {1}\r\n", db.Admiral.Exp, ExpTable.AdmiralExp[db.Admiral.Level + 1].Total );
+					} else {
+						HQLevel.TextNext = "exp:";
+						HQLevel.ValueNext = db.Admiral.Exp;
+					}
 				}
+
+
 
 				//戦果ツールチップ
 				//fixme: もっとましな書き方はなかっただろうか
