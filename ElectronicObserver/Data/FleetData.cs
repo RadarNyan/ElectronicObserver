@@ -656,26 +656,52 @@ namespace ElectronicObserver.Data {
 					label.ImageIndex = (int)ResourceManager.IconContent.FleetAnchorageRepairing;
 
 					StringBuilder sb = new StringBuilder();
-					sb.AppendFormat( "开始时间 : {0}\r\n修理时间 :\r\n",
+					sb.AppendFormat( "开始时间 :\r\n{0}\r\n",
 						DateTimeHelper.TimeToCSVString( KCDatabase.Instance.Fleet.AnchorageRepairingTimer ) );
 
+					sb.Append("修理耗时 :\r\n");
 					for ( int i = 0; i < fleet.Members.Count; i++ ) {
 						var ship = fleet.MembersInstance[i];
 						if ( ship != null && ship.HPRate < 1.0 ) {
-							var totaltime = DateTimeHelper.FromAPITimeSpan( ship.RepairTime );
 							var unittime = Calculator.CalculateDockingUnitTime( ship );
-							sb.AppendFormat( "#{0} : {1:00}:{2:00}:{3:00} @ {4:00}:{5:00}:{6:00} x -{7} HP\r\n",
+							var totaltime = Calculator.CalculateDockingTotalTime(ship);
+							sb.AppendFormat(
+								"#{0} : {1:00}:{2:00}:00 @ {3:00}'{4:00}\" x -{5} HP\r\n",
 								i + 1,
 								(int)totaltime.TotalHours,
 								totaltime.Minutes,
-								totaltime.Seconds,
-								(int)unittime.TotalHours,
 								unittime.Minutes,
 								unittime.Seconds,
 								ship.HPMax - ship.HPCurrent
-								);
-						} else {
-							sb.Append( "#" ).Append( i + 1 ).Append( " : ----\r\n" );
+							);
+						}
+					}
+
+					if (Configuration.Config.UI.MaxAkashiPerHP != 0) {
+						sb.Append("每 HP 耗时 : (hh:mm)\r\n");
+						for ( int i = 0; i < fleet.Members.Count; i++ ) {
+							var ship = fleet.MembersInstance[i];
+							if ( ship != null && ship.HPRate < 1.0 ) {
+								sb.AppendFormat("#{0} : ", i + 1);
+								int hpToFix = ship.HPMax - ship.HPCurrent;
+								for (int hp = 1; hp <= hpToFix; hp++) {
+									var perhp = Calculator.CalculateDockingUnitTime(ship, hp);
+									sb.AppendFormat(
+										"{0:00}:{1:00}",
+										(int)perhp.Hours,
+										// (int)perhp.Hours > 0 ? String.Format("{0:00}", (int)perhp.Hours) : "",
+										perhp.Minutes
+									);
+									if (hp == hpToFix) {
+										sb.Append("\r\n");
+									} else if (hp == Configuration.Config.UI.MaxAkashiPerHP) {
+										sb.Append(" ...\r\n");
+										break;
+									} else {
+										sb.Append(" | ");
+									}
+								}
+							}
 						}
 					}
 

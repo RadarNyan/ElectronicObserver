@@ -187,6 +187,9 @@ namespace ElectronicObserver.Utility {
 				// 司令部显示战果
 				public bool ShowGrowthInsteadOfNextInHQ { get; set; }
 
+				// 明石 ToolTip 每 HP 耗时最大显示数量
+				public int MaxAkashiPerHP { get; set; }
+
 				[IgnoreDataMember]
 				private bool _barColorMorphing;
 
@@ -376,6 +379,7 @@ namespace ElectronicObserver.Utility {
 					JapFont2 = new Font( "Meiryo UI", 10, FontStyle.Regular, GraphicsUnit.Pixel );
 					ThemeID = 0;
 					ShowGrowthInsteadOfNextInHQ = false;
+					MaxAkashiPerHP = 5;
 					BarColorMorphing = false;
 				}
 			}
