@@ -1340,7 +1340,8 @@ namespace ElectronicObserver.Utility {
 			} else {
 				MessageBox.Show( "欢迎使用" + SoftwareInformation.SoftwareNameJapanese + " 。\r\n\r\n设置和使用方法请参考 [帮助] - [在线帮助]\r\n使用前敬请阅读。",
 					"初次启动信息", MessageBoxButtons.OK, MessageBoxIcon.Information );
-
+				MessageBox.Show( "※ 本汉化版启动时浏览器不会自动加载页面 ※\r\n\r\n如有需要请在确保代理设置准确无误后手动通\r\n过 [文件] - [设置] - [子窗口] - [浏览器] 勾选\r\n[启动时自动加载页面] 开启此功能。",
+					"重要提示", MessageBoxButtons.OK, MessageBoxIcon.Information );
 
 				// そのままだと正常に動作しなくなった(らしい)ので、ブラウザバージョンの書き込み
 				Microsoft.Win32.RegistryKey reg = null;

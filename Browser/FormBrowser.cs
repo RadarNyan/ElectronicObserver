@@ -810,7 +810,7 @@ namespace Browser {
 		private void ToolMenu_Other_Refresh_Click( object sender, EventArgs e ) {
 
 			if ( !Configuration.ConfirmAtRefresh ||
-				MessageBox.Show( "即将刷新浏览器。\r\n确认刷新吗？", "要求确认",
+				MessageBox.Show( "即将刷新浏览器。\r\n确认刷新吗？\r\n※ 译注：除非网页 ( 非游戏画面 ) 显示异常，建议使用「转到登录页」代替刷新。", "要求确认",
 				MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button2 )
 				== System.Windows.Forms.DialogResult.OK ) {
 
@@ -867,12 +867,12 @@ namespace Browser {
 
 		private void ToolMenu_Other_ClearCache_Click( object sender, EventArgs e ) {
 
-			if ( MessageBox.Show( "ブラウザのキャッシュを削除します。\nよろしいですか？", "キャッシュの削除", MessageBoxButtons.OKCancel, MessageBoxIcon.Question )
+			if ( MessageBox.Show( "即将清除浏览器的缓存。\n确定清除吗？", "清除缓存", MessageBoxButtons.OKCancel, MessageBoxIcon.Question )
 				== System.Windows.Forms.DialogResult.OK ) {
 
 				BeginInvoke( (MethodInvoker)( () => {
 					ClearCache();
-					MessageBox.Show( "キャッシュの削除が完了しました。", "削除完了", MessageBoxButtons.OK, MessageBoxIcon.Information );
+					MessageBox.Show( "缓存清除完毕。\n※ 如果已经在游戏中建议刷新页面 ※", "清除完成", MessageBoxButtons.OK, MessageBoxIcon.Information );
 				} ) );
 
 			}
