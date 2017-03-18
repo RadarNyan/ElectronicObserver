@@ -48,7 +48,9 @@ namespace ElectronicObserver.Utility.Data {
 		/// 艦載機熟練度の内部値テーブル(仮)
 		/// </summary>
 		private static readonly List<int> AircraftExpTable = new List<int>() {
-			0, 10, 25, 40, 55, 70, 85, 100, 120
+			//0, 10, 25, 40, 55, 70, 85, 100, 120
+			0, 10, 25, 40, 55, 70, 85, 100, 0, 0, // 内部熟练度可能达到的下限值 index = 0~7
+			9, 24, 39, 54, 69, 84, 99, 120, 0, 0  // 内部熟练度可能达到的上限值 (index + 10)
 		};
 
 		/// <summary>
@@ -92,9 +94,16 @@ namespace ElectronicObserver.Utility.Data {
 					interceptorBonus = eq.Evasion * 1.5;
 			}
 
-			return (int)( ( eq.AA + levelBonus * level + interceptorBonus ) * Math.Sqrt( count )
-				+ Math.Sqrt( AircraftExpTable[aircraftLevel] / 10.0 )
-				+ ( AircraftLevelBonus.ContainsKey( category ) ? AircraftLevelBonus[category][aircraftLevel] : 0 ) );
+			if (aircraftLevel < 10) {
+				return (int)( ( eq.AA + levelBonus * level + interceptorBonus ) * Math.Sqrt( count )
+					+ Math.Sqrt( AircraftExpTable[aircraftLevel] / 10.0 )
+					+ ( AircraftLevelBonus.ContainsKey( category ) ? AircraftLevelBonus[category][aircraftLevel] : 0 ) );
+			} else {
+				return (int)( ( eq.AA + levelBonus * level + interceptorBonus ) * Math.Sqrt( count )
+					+ Math.Sqrt( AircraftExpTable[aircraftLevel] / 10.0 )
+					+ ( AircraftLevelBonus.ContainsKey( category ) ? AircraftLevelBonus[category][aircraftLevel - 10] : 0 ) );
+			}
+
 		}
 
 
@@ -186,6 +195,17 @@ namespace ElectronicObserver.Utility.Data {
 			return fleet.MembersWithoutEscaped.Select( ship => GetAirSuperiority( ship ) ).Sum();
 		}
 
+		// 计算由内部熟练度可能获得的最大制空值
+		public static int GetAirSuperiority2( FleetData fleet ) {
+			if ( fleet == null )
+				return 0;
+			return fleet.MembersWithoutEscaped.Select( ship => GetAirSuperiority2( ship ) ).Sum();
+		}
+
+		public static int GetAirSuperiority2( ShipData ship ) {
+			if ( ship == null ) return 0;
+			return ship.SlotInstance.Select( ( eq, i ) => eq == null ? 0 : GetAirSuperiority( eq.EquipmentID, ship.Aircraft[i], (eq.AircraftLevel + 10 ), eq.Level ) ).Sum();
+		}
 
 		/// <summary>
 		/// 基地航空隊の制空戦力を求めます。

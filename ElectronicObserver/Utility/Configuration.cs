@@ -190,6 +190,9 @@ namespace ElectronicObserver.Utility {
 				// 明石 ToolTip 每 HP 耗时最大显示数量
 				public int MaxAkashiPerHP { get; set; }
 
+				// 制空值显示范围
+				public bool AirSuperiorityShowRange { get; set; }
+
 				[IgnoreDataMember]
 				private bool _barColorMorphing;
 
@@ -380,6 +383,7 @@ namespace ElectronicObserver.Utility {
 					ThemeID = 0;
 					ShowGrowthInsteadOfNextInHQ = false;
 					MaxAkashiPerHP = 5;
+					AirSuperiorityShowRange = false;
 					BarColorMorphing = false;
 				}
 			}

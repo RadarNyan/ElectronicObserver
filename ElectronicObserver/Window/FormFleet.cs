@@ -173,8 +173,13 @@ namespace ElectronicObserver.Window {
 				//制空戦力計算	
 				{
 					int airSuperiority = fleet.GetAirSuperiority();
+					int airSuperiority2 = fleet.GetAirSuperiority2();
 					bool includeLevel = Utility.Configuration.Config.FormFleet.AirSuperiorityMethod == 1;
-					AirSuperiority.Text = airSuperiority.ToString();
+					if (airSuperiority2 != 0 && airSuperiority2 != airSuperiority) {
+						AirSuperiority.Text = String.Format("{0}~{1}", airSuperiority, airSuperiority2);
+					} else {
+						AirSuperiority.Text = airSuperiority.ToString();
+					}
 					ToolTipInfo.SetToolTip( AirSuperiority,
 						string.Format( "确保 : {0}\r\n优势 : {1}\r\n均衡 : {2}\r\n劣势 : {3}\r\n({4}: {5})\r\n",
 						(int)( airSuperiority / 3.0 ),
