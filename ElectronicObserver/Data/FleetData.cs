@@ -678,13 +678,15 @@ namespace ElectronicObserver.Data {
 					for ( int i = 0; i < fleet.Members.Count; i++ ) {
 						var ship = fleet.MembersInstance[i];
 						if ( ship != null && ship.HPRate < 1.0 ) {
-							var unittime = Calculator.CalculateDockingUnitTime( ship );
-							var totaltime = Calculator.CalculateDockingTotalTime(ship);
+							//var unittime = Calculator.CalculateDockingUnitTime( ship );
+							//var totaltime = Calculator.CalculateDockingTotalTime(ship);
+							var unittime = Calculator.CalculateDockingUnitTime(ship, 1);
+							var totaltime = Calculator.CalculateDockingUnitTime(ship, (ship.HPMax - ship.HPCurrent));
 							sb.AppendFormat(
 								"#{0} : {1:00}:{2:00}:00 @ {3:00}'{4:00}\" x -{5} HP\r\n",
 								i + 1,
 								(int)totaltime.TotalHours,
-								totaltime.Minutes,
+								totaltime.Seconds != 0 ? totaltime.Minutes + 1 : totaltime.Minutes,
 								unittime.Minutes,
 								unittime.Seconds,
 								ship.HPMax - ship.HPCurrent
@@ -697,23 +699,33 @@ namespace ElectronicObserver.Data {
 						for ( int i = 0; i < fleet.Members.Count; i++ ) {
 							var ship = fleet.MembersInstance[i];
 							if ( ship != null && ship.HPRate < 1.0 ) {
-								sb.AppendFormat("#{0} : ", i + 1);
+								sb.AppendFormat("#{0} :", i + 1);
 								int hpToFix = ship.HPMax - ship.HPCurrent;
 								for (int hp = 1; hp <= hpToFix; hp++) {
 									var perhp = Calculator.CalculateDockingUnitTime(ship, hp);
-									sb.AppendFormat(
-										"{0:00}:{1:00}",
-										(int)perhp.Hours,
-										// (int)perhp.Hours > 0 ? String.Format("{0:00}", (int)perhp.Hours) : "",
-										perhp.Minutes
-									);
+									/*if (hp == 1 && perhp > TimeSpan.FromMinutes(20)) {
+										//sb.Append("(00:20)");
+										sb.Append(" 00:20 ");
+									} else if (perhp < TimeSpan.FromMinutes(20)) {
+										// sb.Append("(00:20)");
+										sb.AppendFormat(
+											"(00:{1:00})",
+											perhp.Minutes
+										);
+									} else {*/
+										sb.AppendFormat(
+											" {0:00}:{1:00} ",
+											(int)perhp.Hours,
+											perhp.Seconds != 0 ? perhp.Minutes + 1 : perhp.Minutes
+										);
+									//}
 									if (hp == hpToFix) {
 										sb.Append("\r\n");
-									} else if (hp == Configuration.Config.UI.MaxAkashiPerHP) {
-										sb.Append(" ...\r\n");
+									} else if (hp == (Configuration.Config.UI.MaxAkashiPerHP)) {
+										sb.Append("...\r\n");
 										break;
 									} else {
-										sb.Append(" | ");
+										sb.Append("|");
 									}
 								}
 							}

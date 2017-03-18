@@ -1464,13 +1464,41 @@ namespace ElectronicObserver.Utility.Data {
 			return new TimeSpan( DateTimeHelper.FromAPITimeSpan( ship.RepairTime ).Add( TimeSpan.FromSeconds( -30 ) ).Ticks / ( ship.HPMax - ship.HPCurrent ) );
 		}
 
+		// 泊地修理单位 HP 所需时间
 		public static TimeSpan CalculateDockingUnitTime(ShipData ship, int hp) {
-			TimeSpan time = RoundUpToOneMinute(new TimeSpan(DateTimeHelper.FromAPITimeSpan(ship.RepairTime).Add(TimeSpan.FromSeconds(-30)).Ticks / (ship.HPMax - ship.HPCurrent) * hp));
-			if (hp == 1 && time.Ticks > TimeSpan.FromMinutes(20).Ticks) {
-				return TimeSpan.FromMinutes(20);
-			} else {
-				return time;
+			// return RoundUpToOneMinute(new TimeSpan(DateTimeHelper.FromAPITimeSpan(ship.RepairTime).Add(TimeSpan.FromSeconds(-30)).Ticks / (ship.HPMax - ship.HPCurrent) * hp));
+
+			double shipLevel = ship.Level; // 等级倍率
+			if (shipLevel > 11) {
+				shipLevel = 5 + shipLevel / 2.0 + (int)Math.Sqrt(shipLevel - 11.0);
 			}
+
+			double shipScnt; // 舰种倍率
+			switch (ship.MasterShip.ShipType)
+			{
+				case 5:  // 重巡洋艦
+				case 6:  // 航空巡洋艦
+				case 7:  // 軽空母
+				case 8:  // 高速戦艦
+				case 20: // 潜水母艦
+					shipScnt = 3.0;
+					break;
+				case 9:  // 戦艦
+				case 10: // 航空戦艦
+				case 11: // 正規空母
+				case 18: // 装甲空母
+				case 19: // 工作艦
+					shipScnt = 4.0;
+					break;
+				case 13: // 潜水艦
+					shipScnt = 1.0;
+					break;
+				default:
+					shipScnt = 2.0;
+					break;
+			}
+
+			return TimeSpan.FromSeconds((int)(shipLevel * hp * shipScnt) * 5);
 		}
 
 		public static TimeSpan CalculateDockingTotalTime(ShipData ship) {

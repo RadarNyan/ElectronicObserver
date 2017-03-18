@@ -966,9 +966,11 @@ namespace ElectronicObserver.Window {
 			if ( bm.IsBaseAirRaid ) {
 				int kind = bm.Compass.AirRaidDamageKind;
 				WinRank.Text = Constants.GetAirRaidDamageShort( kind );
+				WinRank.Font = Utility.Configuration.Config.UI.MainFont;
 				WinRank.ForeColor = ( 1 <= kind && kind <= 3 ) ? WinRankColor_Lose : WinRankColor_Win;
 			} else {
 				WinRank.Text = Constants.GetWinRank( rank );
+				WinRank.Font = Utility.Configuration.Config.UI.JapFont;
 				WinRank.ForeColor = rank >= 4 ? WinRankColor_Win : WinRankColor_Lose;
 			}
 		}

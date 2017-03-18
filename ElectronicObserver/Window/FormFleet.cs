@@ -529,9 +529,14 @@ namespace ElectronicObserver.Window {
 
 						if ( ship.RepairTime > 0 ) {
 							var span = DateTimeHelper.FromAPITimeSpan( ship.RepairTime );
-							sb.AppendFormat( "入渠耗时 : {0} @ {1}",
+							var unittime = Calculator.CalculateDockingUnitTime(ship);
+							sb.AppendFormat( // "入渠耗时 : {0} @ {1}",
+								"入渠耗时 : {0} @ {1:00}'{2:00}\"",
 								DateTimeHelper.ToTimeRemainString( span ),
-								DateTimeHelper.ToTimeRemainString( new TimeSpan( span.Add( new TimeSpan( 0, 0, -30 ) ).Ticks / ( ship.HPMax - ship.HPCurrent ) ) ) );
+								// DateTimeHelper.ToTimeRemainString( new TimeSpan( span.Add( new TimeSpan( 0, 0, -30 ) ).Ticks / ( ship.HPMax - ship.HPCurrent ) ) ) );
+								unittime.Minutes,
+								unittime.Seconds
+							);
 						}
 
 						ToolTipInfo.SetToolTip( HP, sb.ToString() );
@@ -745,6 +750,7 @@ namespace ElectronicObserver.Window {
 
 		public FormFleet( FormMain parent, int fleetID ) {
 			InitializeComponent();
+			this.SizeChanged += FormFleet_SizeChanged;
 
 			FleetID = fleetID;
 			Utility.SystemEvents.UpdateTimerTick += UpdateTimerTick;
@@ -769,6 +775,7 @@ namespace ElectronicObserver.Window {
 			TableFleet.ResumeLayout();
 
 
+			TableMember.Visible = false;
 			TableMember.SuspendLayout();
 			ControlMember = new TableMemberControl[6];
 			for ( int i = 0; i < ControlMember.Length; i++ ) {
@@ -783,7 +790,11 @@ namespace ElectronicObserver.Window {
 
 		}
 
-
+		private void FormFleet_SizeChanged(object sender, EventArgs e)
+		{
+			TableFleet.MinimumSize = new Size(Math.Max(this.Width, TableMember.Width), 0);
+			TableMember.MinimumSize = new Size(this.Width, 0);
+		}
 
 		private void FormFleet_Load( object sender, EventArgs e ) {
 
@@ -859,6 +870,12 @@ namespace ElectronicObserver.Window {
 			TableMember.SuspendLayout();
 			for ( int i = 0; i < ControlMember.Length; i++ ) {
 				ControlMember[i].Update( fleet.Members[i] );
+			}
+
+			if (fleet.Members[0] == -1) {
+				TableMember.Visible = false;
+			} else {
+				TableMember.Visible = true;
 			}
 			TableMember.ResumeLayout();
 
