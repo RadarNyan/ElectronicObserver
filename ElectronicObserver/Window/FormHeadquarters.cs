@@ -198,6 +198,7 @@ namespace ElectronicObserver.Window {
 
 			KCDatabase db = KCDatabase.Instance;
 
+			var configUI = Utility.Configuration.Config.UI;
 
 			if ( !db.Admiral.IsAvailable )
 				return;
@@ -306,10 +307,13 @@ namespace ElectronicObserver.Window {
 
 			InstantRepair.Text = db.Material.InstantRepair.ToString();
 			if (db.Material.InstantRepair >= 3000) {
-				InstantRepair.ForeColor = Utility.Configuration.Config.UI.Headquarters_MaterialMaxFG;
-				InstantRepair.BackColor = Utility.Configuration.Config.UI.Headquarters_MaterialMaxBG;
+				InstantRepair.ForeColor = configUI.Headquarters_MaterialMaxFG;
+				InstantRepair.BackColor = configUI.Headquarters_MaterialMaxBG;
+			} else if (db.Material.InstantRepair < (configUI.HqResLowAlertBucket == -1 ? db.Admiral.MaxResourceRegenerationAmount : configUI.HqResLowAlertBucket)) {
+				InstantRepair.ForeColor = configUI.Headquarters_ResourceLowFG;
+				InstantRepair.BackColor = configUI.Headquarters_ResourceLowBG;
 			} else {
-				InstantRepair.ForeColor = Utility.Configuration.Config.UI.ForeColor;
+				InstantRepair.ForeColor = configUI.ForeColor;
 				InstantRepair.BackColor = Color.Transparent;
 			}
 			ToolTipInfo.SetToolTip( InstantRepair, string.Format( "今日 : {0:+##;-##;±0}\n本周 : {1:+##;-##;±0}\n本月 : {2:+##;-##;±0}",
@@ -319,10 +323,10 @@ namespace ElectronicObserver.Window {
 
 			InstantConstruction.Text = db.Material.InstantConstruction.ToString();
 			if (db.Material.InstantConstruction >= 3000) {
-				InstantConstruction.ForeColor = Utility.Configuration.Config.UI.Headquarters_MaterialMaxFG;
-				InstantConstruction.BackColor = Utility.Configuration.Config.UI.Headquarters_MaterialMaxBG;
+				InstantConstruction.ForeColor = configUI.Headquarters_MaterialMaxFG;
+				InstantConstruction.BackColor = configUI.Headquarters_MaterialMaxBG;
 			} else {
-				InstantConstruction.ForeColor = Utility.Configuration.Config.UI.ForeColor;
+				InstantConstruction.ForeColor = configUI.ForeColor;
 				InstantConstruction.BackColor = Color.Transparent;
 			}
 			ToolTipInfo.SetToolTip( InstantConstruction, string.Format( "今日 : {0:+##;-##;±0}\n本周 : {1:+##;-##;±0}\n本月 : {2:+##;-##;±0}",
@@ -332,10 +336,10 @@ namespace ElectronicObserver.Window {
 
 			DevelopmentMaterial.Text = db.Material.DevelopmentMaterial.ToString();
 			if (db.Material.DevelopmentMaterial >= 3000) {
-				DevelopmentMaterial.ForeColor = Utility.Configuration.Config.UI.Headquarters_MaterialMaxFG;
-				DevelopmentMaterial.BackColor = Utility.Configuration.Config.UI.Headquarters_MaterialMaxBG;
+				DevelopmentMaterial.ForeColor = configUI.Headquarters_MaterialMaxFG;
+				DevelopmentMaterial.BackColor = configUI.Headquarters_MaterialMaxBG;
 			} else {
-				DevelopmentMaterial.ForeColor = Utility.Configuration.Config.UI.ForeColor;
+				DevelopmentMaterial.ForeColor = configUI.ForeColor;
 				DevelopmentMaterial.BackColor = Color.Transparent;
 			}
 			ToolTipInfo.SetToolTip( DevelopmentMaterial, string.Format( "今日 : {0:+##;-##;±0}\n本周 : {1:+##;-##;±0}\n本月 : {2:+##;-##;±0}",
@@ -345,10 +349,10 @@ namespace ElectronicObserver.Window {
 
 			ModdingMaterial.Text = db.Material.ModdingMaterial.ToString();
 			if (db.Material.ModdingMaterial >= 3000) {
-				ModdingMaterial.ForeColor = Utility.Configuration.Config.UI.Headquarters_MaterialMaxFG;
-				ModdingMaterial.BackColor = Utility.Configuration.Config.UI.Headquarters_MaterialMaxBG;
+				ModdingMaterial.ForeColor = configUI.Headquarters_MaterialMaxFG;
+				ModdingMaterial.BackColor = configUI.Headquarters_MaterialMaxBG;
 			} else {
-				ModdingMaterial.ForeColor = Utility.Configuration.Config.UI.ForeColor;
+				ModdingMaterial.ForeColor = configUI.ForeColor;
 				ModdingMaterial.BackColor = Color.Transparent;
 			}
 			ToolTipInfo.SetToolTip( ModdingMaterial, string.Format( "今日 : {0:+##;-##;±0}\n本周 : {1:+##;-##;±0}\n本月 : {2:+##;-##;±0}",
@@ -358,10 +362,10 @@ namespace ElectronicObserver.Window {
 
 			FurnitureCoin.Text = db.Admiral.FurnitureCoin.ToString();
 			if (db.Admiral.FurnitureCoin >= 200000) {
-				FurnitureCoin.ForeColor = Utility.Configuration.Config.UI.Headquarters_CoinMaxFG;
-				FurnitureCoin.BackColor = Utility.Configuration.Config.UI.Headquarters_CoinMaxBG;
+				FurnitureCoin.ForeColor = configUI.Headquarters_CoinMaxFG;
+				FurnitureCoin.BackColor = configUI.Headquarters_CoinMaxBG;
 			} else {
-				FurnitureCoin.ForeColor = Utility.Configuration.Config.UI.ForeColor;
+				FurnitureCoin.ForeColor = configUI.ForeColor;
 				FurnitureCoin.BackColor = Color.Transparent;
 			}
 			{
@@ -386,13 +390,16 @@ namespace ElectronicObserver.Window {
 				Fuel.Text = db.Material.Fuel.ToString();
 
 				if (db.Material.Fuel >= 300000) {
-					Fuel.ForeColor = Utility.Configuration.Config.UI.Headquarters_ResourceMaxFG;
-					Fuel.BackColor = Utility.Configuration.Config.UI.Headquarters_ResourceMaxBG;
-				} else if (db.Material.Fuel < db.Admiral.MaxResourceRegenerationAmount) {
-					Fuel.ForeColor = Utility.Configuration.Config.UI.Headquarters_ResourceOverFG;
-					Fuel.BackColor = Utility.Configuration.Config.UI.Headquarters_ResourceOverBG;
+					Fuel.ForeColor = configUI.Headquarters_ResourceMaxFG;
+					Fuel.BackColor = configUI.Headquarters_ResourceMaxBG;
+				} else if (db.Material.Fuel < (configUI.HqResLowAlertFuel == -1 ? db.Admiral.MaxResourceRegenerationAmount : configUI.HqResLowAlertFuel)) {
+					Fuel.ForeColor = configUI.Headquarters_ResourceLowFG;
+					Fuel.BackColor = configUI.Headquarters_ResourceLowBG;
+				} else if (db.Material.Fuel > db.Admiral.MaxResourceRegenerationAmount) {
+					Fuel.ForeColor = configUI.Headquarters_ResourceOverFG;
+					Fuel.BackColor = configUI.Headquarters_ResourceOverBG;
 				} else {
-					Fuel.ForeColor = Utility.Configuration.Config.UI.ForeColor;
+					Fuel.ForeColor = configUI.ForeColor;
 					Fuel.BackColor = Color.Transparent;
 				}
 				ToolTipInfo.SetToolTip( Fuel, string.Format( "今日 : {0:+##;-##;±0}\n本周 : {1:+##;-##;±0}\n本月 : {2:+##;-##;±0}",
@@ -402,13 +409,16 @@ namespace ElectronicObserver.Window {
 
 				Ammo.Text = db.Material.Ammo.ToString();
 				if (db.Material.Ammo >= 300000) {
-					Ammo.ForeColor = Utility.Configuration.Config.UI.Headquarters_ResourceMaxFG;
-					Ammo.BackColor = Utility.Configuration.Config.UI.Headquarters_ResourceMaxBG;
-				} else if (db.Material.Ammo < db.Admiral.MaxResourceRegenerationAmount) {
-					Ammo.ForeColor = Utility.Configuration.Config.UI.Headquarters_ResourceOverFG;
-					Ammo.BackColor = Utility.Configuration.Config.UI.Headquarters_ResourceOverBG;
+					Ammo.ForeColor = configUI.Headquarters_ResourceMaxFG;
+					Ammo.BackColor = configUI.Headquarters_ResourceMaxBG;
+				} else if (db.Material.Ammo < (configUI.HqResLowAlertAmmo == -1 ? db.Admiral.MaxResourceRegenerationAmount : configUI.HqResLowAlertAmmo)) {
+					Ammo.ForeColor = configUI.Headquarters_ResourceLowFG;
+					Ammo.BackColor = configUI.Headquarters_ResourceLowBG;
+				} else if (db.Material.Ammo > db.Admiral.MaxResourceRegenerationAmount) {
+					Ammo.ForeColor = configUI.Headquarters_ResourceOverFG;
+					Ammo.BackColor = configUI.Headquarters_ResourceOverBG;
 				} else {
-					Ammo.ForeColor = Utility.Configuration.Config.UI.ForeColor;
+					Ammo.ForeColor = configUI.ForeColor;
 					Ammo.BackColor = Color.Transparent;
 				}
 				ToolTipInfo.SetToolTip( Ammo, string.Format( "今日 : {0:+##;-##;±0}\n本周 : {1:+##;-##;±0}\n本月 : {2:+##;-##;±0}",
@@ -418,13 +428,16 @@ namespace ElectronicObserver.Window {
 
 				Steel.Text = db.Material.Steel.ToString();
 				if (db.Material.Steel >= 300000) {
-					Steel.ForeColor = Utility.Configuration.Config.UI.Headquarters_ResourceMaxFG;
-					Steel.BackColor = Utility.Configuration.Config.UI.Headquarters_ResourceMaxBG;
-				} else if (db.Material.Steel < db.Admiral.MaxResourceRegenerationAmount) {
-					Steel.ForeColor = Utility.Configuration.Config.UI.Headquarters_ResourceOverFG;
-					Steel.BackColor = Utility.Configuration.Config.UI.Headquarters_ResourceOverBG;
+					Steel.ForeColor = configUI.Headquarters_ResourceMaxFG;
+					Steel.BackColor = configUI.Headquarters_ResourceMaxBG;
+				} else if (db.Material.Steel < (configUI.HqResLowAlertSteel == -1 ? db.Admiral.MaxResourceRegenerationAmount : configUI.HqResLowAlertSteel)) {
+					Steel.ForeColor = configUI.Headquarters_ResourceLowFG;
+					Steel.BackColor = configUI.Headquarters_ResourceLowBG;
+				} else if (db.Material.Steel > db.Admiral.MaxResourceRegenerationAmount) {
+					Steel.ForeColor = configUI.Headquarters_ResourceOverFG;
+					Steel.BackColor = configUI.Headquarters_ResourceOverBG;
 				} else {
-					Steel.ForeColor = Utility.Configuration.Config.UI.ForeColor;
+					Steel.ForeColor = configUI.ForeColor;
 					Steel.BackColor = Color.Transparent;
 				}
 				ToolTipInfo.SetToolTip( Steel, string.Format( "今日 : {0:+##;-##;±0}\n本周 : {1:+##;-##;±0}\n本月 : {2:+##;-##;±0}",
@@ -434,13 +447,16 @@ namespace ElectronicObserver.Window {
 
 				Bauxite.Text = db.Material.Bauxite.ToString();
 				if (db.Material.Bauxite >= 300000) {
-					Bauxite.ForeColor = Utility.Configuration.Config.UI.Headquarters_ResourceMaxFG;
-					Bauxite.BackColor = Utility.Configuration.Config.UI.Headquarters_ResourceMaxBG;
-				} else if (db.Material.Bauxite < db.Admiral.MaxResourceRegenerationAmount) {
-					Bauxite.ForeColor = Utility.Configuration.Config.UI.Headquarters_ResourceOverFG;
-					Bauxite.BackColor = Utility.Configuration.Config.UI.Headquarters_ResourceOverBG;
+					Bauxite.ForeColor = configUI.Headquarters_ResourceMaxFG;
+					Bauxite.BackColor = configUI.Headquarters_ResourceMaxBG;
+				} else if (db.Material.Bauxite < (configUI.HqResLowAlertBauxite == -1 ? db.Admiral.MaxResourceRegenerationAmount : configUI.HqResLowAlertBauxite)) {
+					Bauxite.ForeColor = configUI.Headquarters_ResourceLowFG;
+					Bauxite.BackColor = configUI.Headquarters_ResourceLowBG;
+				} else if (db.Material.Bauxite > db.Admiral.MaxResourceRegenerationAmount) {
+					Bauxite.ForeColor = configUI.Headquarters_ResourceOverFG;
+					Bauxite.BackColor = configUI.Headquarters_ResourceOverBG;
 				} else {
-					Bauxite.ForeColor = Utility.Configuration.Config.UI.ForeColor;
+					Bauxite.ForeColor = configUI.ForeColor;
 					Bauxite.BackColor = Color.Transparent;
 				}
 				ToolTipInfo.SetToolTip( Bauxite, string.Format( "今日 : {0:+##;-##;±0}\n本周 : {1:+##;-##;±0}\n本月 : {2:+##;-##;±0}",

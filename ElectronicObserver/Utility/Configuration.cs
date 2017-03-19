@@ -193,6 +193,14 @@ namespace ElectronicObserver.Utility {
 				// 制空值显示范围
 				public bool AirSuperiorityShowRange { get; set; }
 
+				// 司令部各资源储量过低警告值
+				// -1: 自然恢复上限 ( 桶无效 ) | 3000: 小于 3000
+				public int HqResLowAlertFuel { get; set; }
+				public int HqResLowAlertAmmo { get; set; }
+				public int HqResLowAlertSteel { get; set; }
+				public int HqResLowAlertBauxite { get; set; }
+				public int HqResLowAlertBucket { get; set; }
+
 				[IgnoreDataMember]
 				private bool _barColorMorphing;
 
@@ -266,6 +274,8 @@ namespace ElectronicObserver.Utility {
 				public Color Color_Violet { get; set; }
 
 				// 视图 - 舰队
+				[IgnoreDataMember] // 入渠计时器文字色
+				public Color Fleet_ColorRepairTimerText { get; set; }
 				[IgnoreDataMember] // 疲劳状态文字色
 				public Color Fleet_ColorConditionText { get; set; }
 				[IgnoreDataMember] // 严重疲劳
@@ -306,9 +316,9 @@ namespace ElectronicObserver.Utility {
 				public Color Arsenal_BuildCompleteBG { get; set; }
 
 				// 视图 - 司令部
-				[IgnoreDataMember] // 资源超过自然回复上限文字色
+				[IgnoreDataMember] // 资源超过自然恢复上限文字色
 				public Color Headquarters_ResourceOverFG { get; set; }
-				[IgnoreDataMember] // 资源超过自然回复上限背景色
+				[IgnoreDataMember] // 资源超过自然恢复上限背景色
 				public Color Headquarters_ResourceOverBG { get; set; }
 				[IgnoreDataMember] // 剩余船位、装备位不满足活动图出击要求时闪烁文字色
 				public Color Headquarters_ShipCountOverFG { get; set; }
@@ -322,6 +332,10 @@ namespace ElectronicObserver.Utility {
 				public Color Headquarters_CoinMaxFG { get; set; }
 				[IgnoreDataMember] // 家具币达到 200,000 个时背景色
 				public Color Headquarters_CoinMaxBG { get; set; }
+				[IgnoreDataMember] // 资源储量低于警告值文字色
+				public Color Headquarters_ResourceLowFG { get; set; }
+				[IgnoreDataMember] // 资源储量低于警告值背景色
+				public Color Headquarters_ResourceLowBG { get; set; }
 				[IgnoreDataMember] // 资源储量达到 300,000 时文字色
 				public Color Headquarters_ResourceMaxFG { get; set; }
 				[IgnoreDataMember] // 资源储量达到 300,000 时背景色
@@ -394,11 +408,6 @@ namespace ElectronicObserver.Utility {
 				[IgnoreDataMember] // 受损状态 BOSS 副文字色
 				public Color Battle_ColorTextBossDamaged2 { get; set; }
 
-				// 视图 - 舰队：入渠中计时器
-				public Color Battle_ColorHPTextRepair { get {
-					return SubBackColor;
-					// return Color.FromArgb(0x00, 0x00, 0x88);
-				}}
 				public bool RemoveBarShadow { get {
 				switch (ThemeID) {
 					case 0:  return true;
@@ -417,6 +426,11 @@ namespace ElectronicObserver.Utility {
 					ShowGrowthInsteadOfNextInHQ = false;
 					MaxAkashiPerHP = 5;
 					AirSuperiorityShowRange = false;
+					HqResLowAlertFuel    = 0;
+					HqResLowAlertAmmo    = 0;
+					HqResLowAlertSteel   = 0;
+					HqResLowAlertBauxite = 0;
+					HqResLowAlertBucket  = 0;
 					BarColorMorphing = false;
 				}
 			}
@@ -1516,6 +1530,7 @@ namespace ElectronicObserver.Utility {
 ""autoHideTabInactive"":""#6D6D6D""
 },
 ""fleet"":{
+""repairTimerText"":""#888888"",
 ""conditionText"":""#000000"",
 ""conditionVeryTired"":""#F08080"",
 ""conditionTired"":""#FFA07A"",
@@ -1548,6 +1563,8 @@ namespace ElectronicObserver.Utility {
 ""materialMaxBG"":""#F08080"",
 ""coinMaxFG"":""#000000"",
 ""coinMaxFG"":""#F08080"",
+""resLowFG"":""#000000"",
+""resLowBG"":""#F08080"",
 ""resMaxFG"":""#000000"",
 ""resMaxBG"":""#F08080""
 },
@@ -1694,6 +1711,7 @@ namespace ElectronicObserver.Utility {
 			};
 			Config.UI.SetBarColorScheme();
 			// 设定各面板颜色
+			Config.UI.Fleet_ColorRepairTimerText      = ThemePanelColor("fleet", "repairTimerText");
 			Config.UI.Fleet_ColorConditionText        = ThemePanelColor("fleet", "conditionText");
 			Config.UI.Fleet_ColorConditionVeryTired   = ThemePanelColor("fleet", "conditionVeryTired");
 			Config.UI.Fleet_ColorConditionTired       = ThemePanelColor("fleet", "conditionTired");
@@ -1718,6 +1736,8 @@ namespace ElectronicObserver.Utility {
 			Config.UI.Headquarters_MaterialMaxBG   = ThemePanelColor("hq", "materialMaxBG");
 			Config.UI.Headquarters_CoinMaxFG       = ThemePanelColor("hq", "coinMaxFG");
 			Config.UI.Headquarters_CoinMaxBG       = ThemePanelColor("hq", "coinMaxBG");
+			Config.UI.Headquarters_ResourceLowFG   = ThemePanelColor("hq", "resLowFG");
+			Config.UI.Headquarters_ResourceLowBG   = ThemePanelColor("hq", "resLowBG");
 			Config.UI.Headquarters_ResourceMaxFG   = ThemePanelColor("hq", "resMaxFG");
 			Config.UI.Headquarters_ResourceMaxBG   = ThemePanelColor("hq", "resMaxBG");
 			Config.UI.Quest_TypeFG     = ThemePanelColor("quest", "typeFG");
@@ -1799,6 +1819,8 @@ namespace ElectronicObserver.Utility {
 			} else {
 				switch (form + "_" + name) {
 					// 视图 - 舰队
+					case "fleet_repairTimerText":
+						return Config.UI.SubForeColor;
 					case "fleet_conditionText":
 						return Config.UI.BackColor;
 					case "fleet_conditionVeryTired":
@@ -1841,6 +1863,10 @@ namespace ElectronicObserver.Utility {
 						return Config.UI.BackColor;
 					case "hq_coinMaxBG":
 						return Config.UI.Color_Blue;
+					case "hq_resLowFG":
+						return Config.UI.BackColor;
+					case "hq_resLowBG":
+						return Config.UI.Color_Red;
 					case "hq_resMaxFG":
 						return Config.UI.BackColor;
 					case "hq_resMaxBG":

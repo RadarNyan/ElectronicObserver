@@ -265,7 +265,7 @@ namespace ElectronicObserver.Window.Control {
 			_subFont = new Font( "Meiryo UI", 10, FontStyle.Regular, GraphicsUnit.Pixel );
 			_subFontColor = Utility.Configuration.Config.UI.SubForeColor;
 
-			_repairFontColor = Utility.Configuration.Config.UI.Battle_ColorHPTextRepair;
+			_repairFontColor = Utility.Configuration.Config.UI.Fleet_ColorRepairTimerText;
 			_text = "HP:";
 
 			_HPBar.UsePrevValue = true;
