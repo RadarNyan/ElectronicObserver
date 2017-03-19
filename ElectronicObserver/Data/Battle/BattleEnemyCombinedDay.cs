@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace ElectronicObserver.Data.Battle {
 
 	/// <summary>
-	/// 敵連合艦隊昼戦
+	/// 通常艦隊vs敵連合艦隊昼戦
 	/// </summary>
 	public class BattleEnemyCombinedDay : BattleDay {
 
@@ -20,7 +20,7 @@ namespace ElectronicObserver.Data.Battle {
 			BaseAirAttack = new PhaseBaseAirAttack( this, "基地航空队攻击" );
 			AirBattle = new PhaseAirBattle( this, "航空战" );
 			Support = new PhaseSupport( this, "支援攻击" );
-			OpeningASW = new PhaseOpeningASW( this, "先制对潜", false );
+			OpeningASW = new PhaseOpeningASW( this, "先制对潜", false, true );
 			OpeningTorpedo = new PhaseTorpedo( this, "开幕雷击", 0 );
 			Shelling1 = new PhaseShelling( this, "第一次炮击战", 1, "1", false, true );
 			Torpedo = new PhaseTorpedo( this, "雷击战", 2 );

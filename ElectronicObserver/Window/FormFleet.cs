@@ -161,7 +161,7 @@ namespace ElectronicObserver.Window {
 					int fuelunit = fleet.MembersInstance.Sum( s => s == null ? 0 : (int)Math.Floor( s.MasterShip.Fuel * 0.2 * ( s.IsMarried ? 0.85 : 1.00 ) ) );
 					int ammounit = fleet.MembersInstance.Sum( s => s == null ? 0 : (int)Math.Floor( s.MasterShip.Ammo * 0.2 * ( s.IsMarried ? 0.85 : 1.00 ) ) );
 
-					int speed = fleet.MembersWithoutEscaped.Min( s => s == null ? 10 : s.MasterShip.Speed );
+					int speed = fleet.MembersWithoutEscaped.Min( s => s == null ? 10 : s.Speed );
 
 					double expeditionBonus = Calculator.GetExpeditionBonus( fleet );
 					int tp = Calculator.GetTPDamage( fleet );
@@ -468,7 +468,7 @@ namespace ElectronicObserver.Window {
 							ship.LOSBase, ship.LOSTotal,
 							ship.LuckTotal,
 							Constants.GetRange( ship.Range ),
-							Constants.GetSpeed( ship.MasterShip.Speed )
+							Constants.GetSpeed( ship.Speed )
 							) );
 
 
@@ -1137,6 +1137,7 @@ namespace ElectronicObserver.Window {
 				bool showNext = c.FormFleet.ShowNextExp;
 				bool showConditionIcon = c.FormFleet.ShowConditionIcon;
 				var levelVisibility = c.FormFleet.EquipmentLevelVisibility;
+				bool showAircraftLevelByNumber = c.FormFleet.ShowAircraftLevelByNumber;
 				int fixedShipNameWidth = c.FormFleet.FixedShipNameWidth;
 
 				for ( int i = 0; i < ControlMember.Length; i++ ) {
@@ -1154,6 +1155,7 @@ namespace ElectronicObserver.Window {
 					ControlMember[i].Level.TextNext = showNext ? "next:" : null;
 					ControlMember[i].Condition.ImageAlign = showConditionIcon ? ContentAlignment.MiddleLeft : ContentAlignment.MiddleCenter;
 					ControlMember[i].Equipments.LevelVisibility = levelVisibility;
+					ControlMember[i].Equipments.ShowAircraftLevelByNumber = showAircraftLevelByNumber;
 					ControlMember[i].ShipResource.BarFuel.ColorMorphing =
 					ControlMember[i].ShipResource.BarAmmo.ColorMorphing = colorMorphing;
 					ControlMember[i].ShipResource.BarFuel.SetBarColorScheme( colorScheme );

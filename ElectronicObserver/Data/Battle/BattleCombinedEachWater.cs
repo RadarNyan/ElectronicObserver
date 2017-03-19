@@ -20,7 +20,7 @@ namespace ElectronicObserver.Data.Battle {
 			BaseAirAttack = new PhaseBaseAirAttack( this, "基地航空队攻击" );
 			AirBattle = new PhaseAirBattle( this, "航空战" );
 			Support = new PhaseSupport( this, "支援攻击" );
-			OpeningASW = new PhaseOpeningASW( this, "先制对潜", true );
+			OpeningASW = new PhaseOpeningASW( this, "先制对潜", true, true );
 			OpeningTorpedo = new PhaseTorpedo( this, "开幕雷击", 0 );
 			Shelling1 = new PhaseShelling( this, "第一次炮击战", 1, "1", false, false );
 			Shelling2 = new PhaseShelling( this, "第二次炮击战", 2, "2", false, false );

@@ -23,6 +23,19 @@ namespace ElectronicObserver.Data.Battle.Detail {
 				if ( bm.Compass.EventID == 5 )
 					sb.Append( " ( BOSS )" );
 				sb.AppendLine();
+
+				var mapinfo = bm.Compass.MapInfo;
+				if ( !mapinfo.IsCleared ) {
+					if ( mapinfo.RequiredDefeatedCount != -1 ) {
+						sb.AppendFormat( "击破 : {0} / {1} 次", mapinfo.CurrentDefeatedCount, mapinfo.RequiredDefeatedCount )
+							.AppendLine();
+					} else if ( mapinfo.MapHPMax > 0 ) {
+						int current = bm.Compass.MapHPCurrent > 0 ? bm.Compass.MapHPCurrent : mapinfo.MapHPCurrent;
+						int max = bm.Compass.MapHPMax > 0 ? bm.Compass.MapHPMax : mapinfo.MapHPMax;
+						sb.AppendFormat( "{0}: {1} / {2}", mapinfo.GaugeType == 3 ? "TP" : "HP", current, max )
+							.AppendLine();
+					}
+				}
 			}
 			if ( bm.Result != null ) {
 				sb.AppendLine( bm.Result.EnemyFleetName );
@@ -215,6 +228,16 @@ namespace ElectronicObserver.Data.Battle.Detail {
 					sb.Append( " / 敌军索敌 : " ).AppendLine( Constants.GetSearchingResult( p.SearchingEnemy ) );
 
 					sb.AppendLine();
+
+
+				} else if ( phase is PhaseSupport ) {
+					var p = phase as PhaseSupport;
+
+					if ( p.IsAvailable ) {
+						sb.AppendLine( "〈支援舰队〉" );
+						OutputSupportData( sb, p.SupportFleet );
+						sb.AppendLine();
+					}
 				}
 
 
@@ -387,6 +410,33 @@ namespace ElectronicObserver.Data.Battle.Detail {
 					i + 1,
 					i + 1,
 					initialHPs[i], maxHPs[i] );
+			}
+
+		}
+
+		public static void OutputSupportData( StringBuilder sb, FleetData fleet ) {
+
+			for ( int i = 0; i < fleet.MembersInstance.Count; i++ ) {
+				var ship = fleet.MembersInstance[i];
+
+				if ( ship == null )
+					continue;
+
+				sb.AppendFormat( "#{0}: {1} {2} - 火力 {3}, 雷装 {4}, 对空 {5}, 装甲 {6}\r\n",
+					i + 1,
+					ship.MasterShip.ShipTypeName, ship.NameWithLevel,
+					ship.FirepowerBase, ship.TorpedoBase, ship.AABase, ship.ArmorBase );
+
+				sb.Append( "　" );
+				for ( int k = 0; k < ship.SlotInstance.Count; k++ ) {
+					var eq = ship.SlotInstance[k];
+					if ( eq != null ) {
+						if ( k > 0 )
+							sb.Append( ", " );
+						sb.Append( eq.ToString() );
+					}
+				}
+				sb.AppendLine();
 			}
 
 		}

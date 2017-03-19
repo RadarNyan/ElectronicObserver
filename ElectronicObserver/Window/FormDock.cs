@@ -139,10 +139,14 @@ namespace ElectronicObserver.Window {
 
 
 			public void ConfigurationChanged( FormDock parent ) {
+
+				var config = Utility.Configuration.Config.FormDock;
+
 				ShipName.Font = parent.Font;
 				RepairTime.Font = parent.Font;
 				RepairTime.BackColor = Color.Transparent;
 				ShipName.ForeColor = RepairTime.ForeColor = Utility.Configuration.Config.UI.ForeColor;
+				ShipName.MaximumSize = new Size( config.MaxShipNameWidth, ShipName.MaximumSize.Height );
 			}
 		}
 

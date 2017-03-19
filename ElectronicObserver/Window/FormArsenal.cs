@@ -152,10 +152,14 @@ namespace ElectronicObserver.Window {
 
 
 			public void ConfigurationChanged( FormArsenal parent ) {
+
+				var config = Utility.Configuration.Config.FormArsenal;
+
 				ShipName.Font = parent.Font;
 				CompletionTime.Font = parent.Font;
 				CompletionTime.BackColor = Color.Transparent;
 				ShipName.ForeColor = CompletionTime.ForeColor = Utility.Configuration.Config.UI.ForeColor;
+				ShipName.MaximumSize = new Size( config.MaxShipNameWidth, ShipName.MaximumSize.Height );
 			}
 
 		}

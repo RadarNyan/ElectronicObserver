@@ -207,6 +207,10 @@ namespace ElectronicObserver.Window {
 				AirSuperiority.Font = mainfont;
 				Distance.Font = mainfont;
 				Squadrons.Font = subfont;
+
+				Squadrons.ShowAircraft = config.FormFleet.ShowAircraft;
+				Squadrons.ShowAircraftLevelByNumber = config.FormFleet.ShowAircraftLevelByNumber;
+				Squadrons.LevelVisibility = config.FormFleet.EquipmentLevelVisibility;
 			}
 
 
