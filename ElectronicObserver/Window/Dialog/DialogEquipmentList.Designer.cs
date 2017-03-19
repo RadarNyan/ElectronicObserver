@@ -199,6 +199,8 @@
 			this.DetailView.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.DetailView_CellFormatting);
 			this.DetailView.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.DetailView_CellPainting);
 			this.DetailView.Font = new System.Drawing.Font("Microsoft YaHei", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+			this.DetailView.SortCompare += new System.Windows.Forms.DataGridViewSortCompareEventHandler(this.DetailView_SortCompare);
+			this.DetailView.Sorted += new System.EventHandler(this.DetailView_Sorted);
 			// 
 			// DetailView_Level
 			// 

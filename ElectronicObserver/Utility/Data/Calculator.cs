@@ -48,7 +48,9 @@ namespace ElectronicObserver.Utility.Data {
 		/// 艦載機熟練度の内部値テーブル(仮)
 		/// </summary>
 		private static readonly List<int> AircraftExpTable = new List<int>() {
-			0, 10, 25, 40, 55, 70, 85, 100, 120
+			//0, 10, 25, 40, 55, 70, 85, 100, 120
+			0, 10, 25, 40, 55, 70, 85, 100, 0, 0, // 内部熟练度可能达到的下限值 index = 0~7
+			9, 24, 39, 54, 69, 84, 99, 120, 0, 0  // 内部熟练度可能达到的上限值 (index + 10)
 		};
 
 		/// <summary>
@@ -92,9 +94,16 @@ namespace ElectronicObserver.Utility.Data {
 					interceptorBonus = eq.Evasion * 1.5;
 			}
 
-			return (int)( ( eq.AA + levelBonus * level + interceptorBonus ) * Math.Sqrt( count )
-				+ Math.Sqrt( AircraftExpTable[aircraftLevel] / 10.0 )
-				+ ( AircraftLevelBonus.ContainsKey( category ) ? AircraftLevelBonus[category][aircraftLevel] : 0 ) );
+			if (aircraftLevel < 10) {
+				return (int)( ( eq.AA + levelBonus * level + interceptorBonus ) * Math.Sqrt( count )
+					+ Math.Sqrt( AircraftExpTable[aircraftLevel] / 10.0 )
+					+ ( AircraftLevelBonus.ContainsKey( category ) ? AircraftLevelBonus[category][aircraftLevel] : 0 ) );
+			} else {
+				return (int)( ( eq.AA + levelBonus * level + interceptorBonus ) * Math.Sqrt( count )
+					+ Math.Sqrt( AircraftExpTable[aircraftLevel] / 10.0 )
+					+ ( AircraftLevelBonus.ContainsKey( category ) ? AircraftLevelBonus[category][aircraftLevel - 10] : 0 ) );
+			}
+
 		}
 
 
@@ -186,6 +195,17 @@ namespace ElectronicObserver.Utility.Data {
 			return fleet.MembersWithoutEscaped.Select( ship => GetAirSuperiority( ship ) ).Sum();
 		}
 
+		// 计算由内部熟练度可能获得的最大制空值
+		public static int GetAirSuperiority2( FleetData fleet ) {
+			if ( fleet == null )
+				return 0;
+			return fleet.MembersWithoutEscaped.Select( ship => GetAirSuperiority2( ship ) ).Sum();
+		}
+
+		public static int GetAirSuperiority2( ShipData ship ) {
+			if ( ship == null ) return 0;
+			return ship.SlotInstance.Select( ( eq, i ) => eq == null ? 0 : GetAirSuperiority( eq.EquipmentID, ship.Aircraft[i], (eq.AircraftLevel + 10 ), eq.Level ) ).Sum();
+		}
 
 		/// <summary>
 		/// 基地航空隊の制空戦力を求めます。
@@ -1272,10 +1292,28 @@ namespace ElectronicObserver.Utility.Data {
 
 
 		/// <summary>
+		/// 対空砲火における連合艦隊補正を求めます。
+		/// </summary>
+		/// <param name="combinedFleetFlag">連合艦隊フラグ。 -1=連合艦隊でない, 1=連合艦隊主力艦隊, 2=連合艦隊随伴艦隊</param>
+		public static double GetAirDefenseCombinedFleetCoefficient( int combinedFleetFlag ) {
+			switch ( combinedFleetFlag ) {
+				case 1:
+					return 0.72;
+				case 2:
+					return 0.48;
+				default:
+					return 1.0;
+			}
+		}
+
+
+		/// <summary>
 		/// 割合撃墜(の割合)を求めます。
 		/// </summary>
-		public static double GetProportionalAirDefense( double adjustedAAValue ) {
-			return adjustedAAValue / 400;
+		/// <param name="adjustedAAValue">加重対空値</param>
+		/// <param name="combinedFleetFlag">連合艦隊フラグ。 -1=連合艦隊でない, 1=連合艦隊主力艦隊, 2=連合艦隊随伴艦隊</param>
+		public static double GetProportionalAirDefense( double adjustedAAValue, int combinedFleetFlag = -1 ) {
+			return adjustedAAValue * GetAirDefenseCombinedFleetCoefficient( combinedFleetFlag ) / 400;
 		}
 
 		/// <summary>
@@ -1283,23 +1321,15 @@ namespace ElectronicObserver.Utility.Data {
 		/// </summary>
 		/// <param name="adjustedAAValue">加重対空値</param>
 		/// <param name="adjustedFleetAAValue">艦隊防空値</param>
+		/// <param name="cutinKind">対空カットイン種別</param>
 		/// <param name="combinedFleetFlag">連合艦隊フラグ。 -1=連合艦隊でない, 1=連合艦隊主力艦隊, 2=連合艦隊随伴艦隊</param>
 		public static int GetFixedAirDefense( double adjustedAAValue, double adjustedFleetAAValue, int cutinKind, int combinedFleetFlag = -1 ) {
 			double cutinBonus = Calculator.AACutinVariableBonus.ContainsKey( cutinKind ) ? Calculator.AACutinVariableBonus[cutinKind] : 1.0;
-			double combinedBonus;
-			switch ( combinedFleetFlag ) {
-				case 1:
-					combinedBonus = 0.72;
-					break;
-				case 2:
-					combinedBonus = 0.48;
-					break;
-				default:
-					combinedBonus = 1.0;
-					break;
-			}
-			return (int)Math.Floor( ( adjustedAAValue + adjustedFleetAAValue ) * combinedBonus * cutinBonus / 10 );
+
+			return (int)Math.Floor( ( adjustedAAValue + adjustedFleetAAValue ) * GetAirDefenseCombinedFleetCoefficient( combinedFleetFlag ) * cutinBonus / 10 );
 		}
+
+
 
 
 		/// <summary>
@@ -1444,13 +1474,41 @@ namespace ElectronicObserver.Utility.Data {
 			return new TimeSpan( DateTimeHelper.FromAPITimeSpan( ship.RepairTime ).Add( TimeSpan.FromSeconds( -30 ) ).Ticks / ( ship.HPMax - ship.HPCurrent ) );
 		}
 
+		// 泊地修理单位 HP 所需时间
 		public static TimeSpan CalculateDockingUnitTime(ShipData ship, int hp) {
-			TimeSpan time = RoundUpToOneMinute(new TimeSpan(DateTimeHelper.FromAPITimeSpan(ship.RepairTime).Add(TimeSpan.FromSeconds(-30)).Ticks / (ship.HPMax - ship.HPCurrent) * hp));
-			if (hp == 1 && time.Ticks > TimeSpan.FromMinutes(20).Ticks) {
-				return TimeSpan.FromMinutes(20);
-			} else {
-				return time;
+			// return RoundUpToOneMinute(new TimeSpan(DateTimeHelper.FromAPITimeSpan(ship.RepairTime).Add(TimeSpan.FromSeconds(-30)).Ticks / (ship.HPMax - ship.HPCurrent) * hp));
+
+			double shipLevel = ship.Level; // 等级倍率
+			if (shipLevel > 11) {
+				shipLevel = 5 + shipLevel / 2.0 + (int)Math.Sqrt(shipLevel - 11.0);
 			}
+
+			double shipScnt; // 舰种倍率
+			switch (ship.MasterShip.ShipType)
+			{
+				case 5:  // 重巡洋艦
+				case 6:  // 航空巡洋艦
+				case 7:  // 軽空母
+				case 8:  // 高速戦艦
+				case 20: // 潜水母艦
+					shipScnt = 3.0;
+					break;
+				case 9:  // 戦艦
+				case 10: // 航空戦艦
+				case 11: // 正規空母
+				case 18: // 装甲空母
+				case 19: // 工作艦
+					shipScnt = 4.0;
+					break;
+				case 13: // 潜水艦
+					shipScnt = 1.0;
+					break;
+				default:
+					shipScnt = 2.0;
+					break;
+			}
+
+			return TimeSpan.FromSeconds((int)(shipLevel * hp * shipScnt) * 5);
 		}
 
 		public static TimeSpan CalculateDockingTotalTime(ShipData ship) {

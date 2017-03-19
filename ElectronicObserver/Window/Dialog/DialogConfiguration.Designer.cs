@@ -24,7 +24,7 @@
 		/// </summary>
 		private void InitializeComponent() {
 			this.components = new System.ComponentModel.Container();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.tabControl1 = new System.Windows.Forms.TabControl();
 			this.tabPage1 = new System.Windows.Forms.TabPage();
 			this.Connection_UpstreamProxyAddress = new System.Windows.Forms.TextBox();
@@ -98,6 +98,9 @@
 			this.tabPage7 = new System.Windows.Forms.TabPage();
 			this.tabControl2 = new System.Windows.Forms.TabControl();
 			this.tabPage8 = new System.Windows.Forms.TabPage();
+			this.FormFleet_ShowAircraftLevelByNumber = new System.Windows.Forms.CheckBox();
+			this.label35 = new System.Windows.Forms.Label();
+			this.FormFleet_FixedShipNameWidth = new System.Windows.Forms.NumericUpDown();
 			this.FormFleet_ShowConditionIcon = new System.Windows.Forms.CheckBox();
 			this.FormFleet_EquipmentLevelVisibility = new System.Windows.Forms.ComboBox();
 			this.label28 = new System.Windows.Forms.Label();
@@ -146,6 +149,7 @@
 			this.FormBattle_HideDuringBattle = new System.Windows.Forms.CheckBox();
 			this.FormBattle_IsScrollable = new System.Windows.Forms.CheckBox();
 			this.tabPage12 = new System.Windows.Forms.TabPage();
+			this.FormBrowser_IsDMMreloadDialogDestroyable = new System.Windows.Forms.CheckBox();
 			this.FormBrowser_ToolMenuDockStyle = new System.Windows.Forms.ComboBox();
 			this.label30 = new System.Windows.Forms.Label();
 			this.FormBrowser_ZoomFit = new System.Windows.Forms.CheckBox();
@@ -219,8 +223,13 @@
 			this.APIListBrowser = new System.Windows.Forms.OpenFileDialog();
 			this.Log_PlayTime = new System.Windows.Forms.Label();
 			this.PlayTimeTimer = new System.Windows.Forms.Timer(this.components);
-			this.FormFleet_FixedShipNameWidth = new System.Windows.Forms.NumericUpDown();
-			this.label35 = new System.Windows.Forms.Label();
+			this.FormCompass_IsScrollable = new System.Windows.Forms.CheckBox();
+			this.label36 = new System.Windows.Forms.Label();
+			this.FormDock_MaxShipNameWidth = new System.Windows.Forms.NumericUpDown();
+			this.label37 = new System.Windows.Forms.Label();
+			this.FormArsenal_MaxShipNameWidth = new System.Windows.Forms.NumericUpDown();
+			this.label38 = new System.Windows.Forms.Label();
+			this.label39 = new System.Windows.Forms.Label();
 			this.tabControl1.SuspendLayout();
 			this.tabPage1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.Connection_UpstreamProxyPort)).BeginInit();
@@ -237,6 +246,7 @@
 			this.tabPage7.SuspendLayout();
 			this.tabControl2.SuspendLayout();
 			this.tabPage8.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.FormFleet_FixedShipNameWidth)).BeginInit();
 			this.tabPage9.SuspendLayout();
 			this.tabPage19.SuspendLayout();
 			this.tabPage16.SuspendLayout();
@@ -260,7 +270,8 @@
 			this.tabPage17.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.BGMPlayer_VolumeAll)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.BGMPlayer_ControlGrid)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.FormFleet_FixedShipNameWidth)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.FormDock_MaxShipNameWidth)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.FormArsenal_MaxShipNameWidth)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// tabControl1
@@ -901,7 +912,7 @@
 			this.Debug_SealingPanel.Controls.Add(this.Debug_APIListPathSearch);
 			this.Debug_SealingPanel.Location = new System.Drawing.Point(0, 56);
 			this.Debug_SealingPanel.Name = "Debug_SealingPanel";
-			this.Debug_SealingPanel.Size = new System.Drawing.Size(576, 241);
+			this.Debug_SealingPanel.Size = new System.Drawing.Size(576, 237);
 			this.Debug_SealingPanel.TabIndex = 1;
 			// 
 			// Debug_APIListPath
@@ -1115,6 +1126,7 @@
 			// 
 			// tabPage8
 			// 
+			this.tabPage8.Controls.Add(this.FormFleet_ShowAircraftLevelByNumber);
 			this.tabPage8.Controls.Add(this.label35);
 			this.tabPage8.Controls.Add(this.FormFleet_FixedShipNameWidth);
 			this.tabPage8.Controls.Add(this.FormFleet_ShowConditionIcon);
@@ -1138,6 +1150,50 @@
 			this.tabPage8.TabIndex = 0;
 			this.tabPage8.Text = "舰队";
 			this.tabPage8.UseVisualStyleBackColor = true;
+			// 
+			// FormFleet_ShowAircraftLevelByNumber
+			// 
+			this.FormFleet_ShowAircraftLevelByNumber.AutoSize = true;
+			this.FormFleet_ShowAircraftLevelByNumber.Location = new System.Drawing.Point(159, 188);
+			this.FormFleet_ShowAircraftLevelByNumber.Name = "FormFleet_ShowAircraftLevelByNumber";
+			this.FormFleet_ShowAircraftLevelByNumber.Size = new System.Drawing.Size(184, 19);
+			this.FormFleet_ShowAircraftLevelByNumber.TabIndex = 16;
+			this.FormFleet_ShowAircraftLevelByNumber.Text = "使用数字表示舰载机熟练度";
+			this.ToolTipInfo.SetToolTip(this.FormFleet_ShowAircraftLevelByNumber, "设置是否不使用符号（|, || 等）而使用数字（1, 2 等）表示熟练度。");
+			this.FormFleet_ShowAircraftLevelByNumber.UseVisualStyleBackColor = true;
+			// 
+			// label35
+			// 
+			this.label35.AutoSize = true;
+			this.label35.Location = new System.Drawing.Point(225, 114);
+			this.label35.Name = "label35";
+			this.label35.Size = new System.Drawing.Size(21, 15);
+			this.label35.TabIndex = 8;
+			this.label35.Text = "px";
+			// 
+			// FormFleet_FixedShipNameWidth
+			// 
+			this.FormFleet_FixedShipNameWidth.Location = new System.Drawing.Point(159, 112);
+			this.FormFleet_FixedShipNameWidth.Maximum = new decimal(new int[] {
+            999,
+            0,
+            0,
+            0});
+			this.FormFleet_FixedShipNameWidth.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+			this.FormFleet_FixedShipNameWidth.Name = "FormFleet_FixedShipNameWidth";
+			this.FormFleet_FixedShipNameWidth.Size = new System.Drawing.Size(60, 23);
+			this.FormFleet_FixedShipNameWidth.TabIndex = 7;
+			this.FormFleet_FixedShipNameWidth.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.ToolTipInfo.SetToolTip(this.FormFleet_FixedShipNameWidth, "设置舰名固定宽度。");
+			this.FormFleet_FixedShipNameWidth.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
 			// 
 			// FormFleet_ShowConditionIcon
 			// 
@@ -1299,6 +1355,9 @@
 			// 
 			// tabPage9
 			// 
+			this.tabPage9.Controls.Add(this.label38);
+			this.tabPage9.Controls.Add(this.label37);
+			this.tabPage9.Controls.Add(this.FormArsenal_MaxShipNameWidth);
 			this.tabPage9.Controls.Add(this.FormArsenal_BlinkAtCompletion);
 			this.tabPage9.Controls.Add(this.FormArsenal_ShowShipName);
 			this.tabPage9.Location = new System.Drawing.Point(4, 24);
@@ -1331,6 +1390,9 @@
 			// 
 			// tabPage19
 			// 
+			this.tabPage19.Controls.Add(this.label39);
+			this.tabPage19.Controls.Add(this.label36);
+			this.tabPage19.Controls.Add(this.FormDock_MaxShipNameWidth);
 			this.tabPage19.Controls.Add(this.FormDock_BlinkAtCompletion);
 			this.tabPage19.Location = new System.Drawing.Point(4, 24);
 			this.tabPage19.Name = "tabPage19";
@@ -1415,6 +1477,7 @@
 			// 
 			// tabPage18
 			// 
+			this.tabPage18.Controls.Add(this.FormCompass_IsScrollable);
 			this.tabPage18.Controls.Add(this.FormCompass_CandidateDisplayCount);
 			this.tabPage18.Controls.Add(this.label2);
 			this.tabPage18.Location = new System.Drawing.Point(4, 24);
@@ -1671,6 +1734,7 @@
 			// 
 			// tabPage12
 			// 
+			this.tabPage12.Controls.Add(this.FormBrowser_IsDMMreloadDialogDestroyable);
 			this.tabPage12.Controls.Add(this.FormBrowser_ToolMenuDockStyle);
 			this.tabPage12.Controls.Add(this.label30);
 			this.tabPage12.Controls.Add(this.FormBrowser_ZoomFit);
@@ -1690,6 +1754,17 @@
 			this.tabPage12.TabIndex = 3;
 			this.tabPage12.Text = "浏览器";
 			this.tabPage12.UseVisualStyleBackColor = true;
+			// 
+			// FormBrowser_IsDMMreloadDialogDestroyable
+			// 
+			this.FormBrowser_IsDMMreloadDialogDestroyable.AutoSize = true;
+			this.FormBrowser_IsDMMreloadDialogDestroyable.Location = new System.Drawing.Point(282, 90);
+			this.FormBrowser_IsDMMreloadDialogDestroyable.Name = "FormBrowser_IsDMMreloadDialogDestroyable";
+			this.FormBrowser_IsDMMreloadDialogDestroyable.Size = new System.Drawing.Size(254, 19);
+			this.FormBrowser_IsDMMreloadDialogDestroyable.TabIndex = 12;
+			this.FormBrowser_IsDMMreloadDialogDestroyable.Text = "屏蔽 DMM 的刷新提示对话框。";
+			this.ToolTipInfo.SetToolTip(this.FormBrowser_IsDMMreloadDialogDestroyable, "让 DMM 的「エラーが発生したため、ページ更新します。」对话框不再弹出。( 译注：不推荐使用。)");
+			this.FormBrowser_IsDMMreloadDialogDestroyable.UseVisualStyleBackColor = true;
 			// 
 			// FormBrowser_ToolMenuDockStyle
 			// 
@@ -2382,14 +2457,14 @@
             this.BGMPlayer_ColumnContent,
             this.BGMPlayer_ColumnPath,
             this.BGMPlayer_ColumnSetting});
-			dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-			dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window;
-			dataGridViewCellStyle4.Font = new System.Drawing.Font("Meiryo UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-			dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ControlText;
-			dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Window;
-			dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.ControlText;
-			dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-			this.BGMPlayer_ControlGrid.DefaultCellStyle = dataGridViewCellStyle4;
+			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+			dataGridViewCellStyle2.Font = new System.Drawing.Font("Meiryo UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+			dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+			dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Window;
+			dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.ControlText;
+			dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+			this.BGMPlayer_ControlGrid.DefaultCellStyle = dataGridViewCellStyle2;
 			this.BGMPlayer_ControlGrid.Location = new System.Drawing.Point(6, 35);
 			this.BGMPlayer_ControlGrid.MultiSelect = false;
 			this.BGMPlayer_ControlGrid.Name = "BGMPlayer_ControlGrid";
@@ -2493,38 +2568,100 @@
 			this.PlayTimeTimer.Interval = 1000;
 			this.PlayTimeTimer.Tick += new System.EventHandler(this.PlayTimeTimer_Tick);
 			// 
-			// FormFleet_FixedShipNameWidth
+			// FormCompass_IsScrollable
 			// 
-			this.FormFleet_FixedShipNameWidth.Location = new System.Drawing.Point(159, 112);
-			this.FormFleet_FixedShipNameWidth.Maximum = new decimal(new int[] {
+			this.FormCompass_IsScrollable.AutoSize = true;
+			this.FormCompass_IsScrollable.Location = new System.Drawing.Point(6, 35);
+			this.FormCompass_IsScrollable.Name = "FormCompass_IsScrollable";
+			this.FormCompass_IsScrollable.Size = new System.Drawing.Size(144, 19);
+			this.FormCompass_IsScrollable.TabIndex = 6;
+			this.FormCompass_IsScrollable.Text = "显示滚动条";
+			this.ToolTipInfo.SetToolTip(this.FormCompass_IsScrollable, "当显示内容溢出的时候是否显示滚动条。\r\n没有溢出的情况不会显示。");
+			this.FormCompass_IsScrollable.UseVisualStyleBackColor = true;
+			// 
+			// label36
+			// 
+			this.label36.AutoSize = true;
+			this.label36.Location = new System.Drawing.Point(179, 32);
+			this.label36.Name = "label36";
+			this.label36.Size = new System.Drawing.Size(21, 15);
+			this.label36.TabIndex = 11;
+			this.label36.Text = "px";
+			// 
+			// FormDock_MaxShipNameWidth
+			// 
+			this.FormDock_MaxShipNameWidth.Location = new System.Drawing.Point(113, 30);
+			this.FormDock_MaxShipNameWidth.Maximum = new decimal(new int[] {
             999,
             0,
             0,
             0});
-			this.FormFleet_FixedShipNameWidth.Minimum = new decimal(new int[] {
+			this.FormDock_MaxShipNameWidth.Minimum = new decimal(new int[] {
             1,
             0,
             0,
             0});
-			this.FormFleet_FixedShipNameWidth.Name = "FormFleet_FixedShipNameWidth";
-			this.FormFleet_FixedShipNameWidth.Size = new System.Drawing.Size(60, 23);
-			this.FormFleet_FixedShipNameWidth.TabIndex = 7;
-			this.FormFleet_FixedShipNameWidth.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-			this.ToolTipInfo.SetToolTip(this.FormFleet_FixedShipNameWidth, "设置舰名固定宽度。");
-			this.FormFleet_FixedShipNameWidth.Value = new decimal(new int[] {
+			this.FormDock_MaxShipNameWidth.Name = "FormDock_MaxShipNameWidth";
+			this.FormDock_MaxShipNameWidth.Size = new System.Drawing.Size(60, 23);
+			this.FormDock_MaxShipNameWidth.TabIndex = 10;
+			this.FormDock_MaxShipNameWidth.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.ToolTipInfo.SetToolTip(this.FormDock_MaxShipNameWidth, "设置舰名最大宽度。");
+			this.FormDock_MaxShipNameWidth.Value = new decimal(new int[] {
             1,
             0,
             0,
             0});
 			// 
-			// label35
+			// label37
 			// 
-			this.label35.AutoSize = true;
-			this.label35.Location = new System.Drawing.Point(225, 114);
-			this.label35.Name = "label35";
-			this.label35.Size = new System.Drawing.Size(21, 15);
-			this.label35.TabIndex = 8;
-			this.label35.Text = "px";
+			this.label37.AutoSize = true;
+			this.label37.Location = new System.Drawing.Point(179, 57);
+			this.label37.Name = "label37";
+			this.label37.Size = new System.Drawing.Size(21, 15);
+			this.label37.TabIndex = 11;
+			this.label37.Text = "px";
+			// 
+			// FormArsenal_MaxShipNameWidth
+			// 
+			this.FormArsenal_MaxShipNameWidth.Location = new System.Drawing.Point(113, 55);
+			this.FormArsenal_MaxShipNameWidth.Maximum = new decimal(new int[] {
+            999,
+            0,
+            0,
+            0});
+			this.FormArsenal_MaxShipNameWidth.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+			this.FormArsenal_MaxShipNameWidth.Name = "FormArsenal_MaxShipNameWidth";
+			this.FormArsenal_MaxShipNameWidth.Size = new System.Drawing.Size(60, 23);
+			this.FormArsenal_MaxShipNameWidth.TabIndex = 10;
+			this.FormArsenal_MaxShipNameWidth.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.ToolTipInfo.SetToolTip(this.FormArsenal_MaxShipNameWidth, "设置舰名的最大宽度值。");
+			this.FormArsenal_MaxShipNameWidth.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+			// 
+			// label38
+			// 
+			this.label38.AutoSize = true;
+			this.label38.Location = new System.Drawing.Point(6, 57);
+			this.label38.Name = "label38";
+			this.label38.Size = new System.Drawing.Size(101, 15);
+			this.label38.TabIndex = 12;
+			this.label38.Text = "舰名最大宽度 :";
+			// 
+			// label39
+			// 
+			this.label39.AutoSize = true;
+			this.label39.Location = new System.Drawing.Point(6, 32);
+			this.label39.Name = "label39";
+			this.label39.Size = new System.Drawing.Size(101, 15);
+			this.label39.TabIndex = 12;
+			this.label39.Text = "舰名最大宽度 :";
 			// 
 			// DialogConfiguration
 			// 
@@ -2571,6 +2708,7 @@
 			this.tabControl2.ResumeLayout(false);
 			this.tabPage8.ResumeLayout(false);
 			this.tabPage8.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.FormFleet_FixedShipNameWidth)).EndInit();
 			this.tabPage9.ResumeLayout(false);
 			this.tabPage9.PerformLayout();
 			this.tabPage19.ResumeLayout(false);
@@ -2611,7 +2749,8 @@
 			this.tabPage17.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.BGMPlayer_VolumeAll)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.BGMPlayer_ControlGrid)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.FormFleet_FixedShipNameWidth)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.FormDock_MaxShipNameWidth)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.FormArsenal_MaxShipNameWidth)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -2813,7 +2952,16 @@
 		private System.Windows.Forms.ComboBox FormHeadquarters_DisplayUseItemID;
 		private System.Windows.Forms.CheckBox FormBattle_HideDuringBattle;
 		private System.Windows.Forms.CheckBox Log_SaveBattleLog;
+		private System.Windows.Forms.CheckBox FormBrowser_IsDMMreloadDialogDestroyable;
 		private System.Windows.Forms.Label label35;
 		private System.Windows.Forms.NumericUpDown FormFleet_FixedShipNameWidth;
+		private System.Windows.Forms.CheckBox FormFleet_ShowAircraftLevelByNumber;
+		private System.Windows.Forms.CheckBox FormCompass_IsScrollable;
+		private System.Windows.Forms.Label label37;
+		private System.Windows.Forms.NumericUpDown FormArsenal_MaxShipNameWidth;
+		private System.Windows.Forms.Label label36;
+		private System.Windows.Forms.NumericUpDown FormDock_MaxShipNameWidth;
+		private System.Windows.Forms.Label label38;
+		private System.Windows.Forms.Label label39;
 	}
 }

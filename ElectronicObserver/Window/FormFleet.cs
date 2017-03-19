@@ -75,6 +75,7 @@ namespace ElectronicObserver.Window {
 				SearchingAbility.Padding = new Padding( 2, 2, 2, 2 );
 				SearchingAbility.Margin = new Padding( 2, 0, 2, 0 );
 				SearchingAbility.AutoSize = true;
+				SearchingAbility.Click += (sender, e) => SearchingAbility_Click(sender, e, parent.FleetID);
 
 				AntiAirPower = new ImageLabel();
 				AntiAirPower.Anchor = AnchorStyles.Left;
@@ -123,6 +124,25 @@ namespace ElectronicObserver.Window {
 				#endregion
 			}
 
+			private int SearchingAbilityNew33BranchWeight = 1; // can only be 1, 4, 3
+
+			private void SearchingAbility_Click(object sender, EventArgs e, int fleetID) {
+				if (Utility.Configuration.Config.FormFleet.SearchingAbilityMethod != 4)
+					return;
+				switch (SearchingAbilityNew33BranchWeight) {
+					case 1:
+						SearchingAbilityNew33BranchWeight = 4;
+						break;
+					case 4:
+						SearchingAbilityNew33BranchWeight = 3;
+						break;
+					case 3:
+						SearchingAbilityNew33BranchWeight = 1;
+						break;
+				}
+				Update(KCDatabase.Instance.Fleet[fleetID]);
+			}
+
 			public void Update( FleetData fleet ) {
 
 				KCDatabase db = KCDatabase.Instance;
@@ -141,7 +161,7 @@ namespace ElectronicObserver.Window {
 					int fuelunit = fleet.MembersInstance.Sum( s => s == null ? 0 : (int)Math.Floor( s.MasterShip.Fuel * 0.2 * ( s.IsMarried ? 0.85 : 1.00 ) ) );
 					int ammounit = fleet.MembersInstance.Sum( s => s == null ? 0 : (int)Math.Floor( s.MasterShip.Ammo * 0.2 * ( s.IsMarried ? 0.85 : 1.00 ) ) );
 
-					int speed = fleet.MembersWithoutEscaped.Min( s => s == null ? 10 : s.MasterShip.Speed );
+					int speed = fleet.MembersWithoutEscaped.Min( s => s == null ? 10 : s.Speed );
 
 					double expeditionBonus = Calculator.GetExpeditionBonus( fleet );
 					int tp = Calculator.GetTPDamage( fleet );
@@ -173,8 +193,13 @@ namespace ElectronicObserver.Window {
 				//制空戦力計算	
 				{
 					int airSuperiority = fleet.GetAirSuperiority();
+					int airSuperiority2 = fleet.GetAirSuperiority2();
 					bool includeLevel = Utility.Configuration.Config.FormFleet.AirSuperiorityMethod == 1;
-					AirSuperiority.Text = airSuperiority.ToString();
+					if (airSuperiority2 != 0 && airSuperiority2 != airSuperiority) {
+						AirSuperiority.Text = String.Format("{0}~{1}", airSuperiority, airSuperiority2);
+					} else {
+						AirSuperiority.Text = airSuperiority.ToString();
+					}
 					ToolTipInfo.SetToolTip( AirSuperiority,
 						string.Format( "确保 : {0}\r\n优势 : {1}\r\n均衡 : {2}\r\n劣势 : {3}\r\n({4}: {5})\r\n",
 						(int)( airSuperiority / 3.0 ),
@@ -187,32 +212,45 @@ namespace ElectronicObserver.Window {
 
 
 				//索敵能力計算
-				SearchingAbility.Text = fleet.GetSearchingAbilityString();
 				{
 					StringBuilder sb = new StringBuilder();
 					double probStart = fleet.GetContactProbability();
 					var probSelect = fleet.GetContactSelectionProbability();
 
-/*
-					sb.AppendFormat( "2-5 式 ( 旧 ) : {0}\r\n2-5 式 ( 秋 ) : {1}\r\n2-5 新秋简易式 : {2}\r\n判定式 (33) : {3}\r\n新判定式 (33) :\r\n　分歧点系数 1: {4:f2}\r\n　分歧点系数 3: {5:f2}\r\n　分歧点系数 4: {6:f2}\r\n\r\n触接开始率 : \r\n　确保 {7:p1} / 优势 {8:p1}\r\n",
-						fleet.GetSearchingAbilityString( 0 ),
-						fleet.GetSearchingAbilityString( 1 ),
-						fleet.GetSearchingAbilityString( 2 ),
-						fleet.GetSearchingAbilityString( 3 ),
-						Math.Floor( Calculator.GetSearchingAbility_New33( fleet, 1 ) * 100 ) / 100,
-						Math.Floor( Calculator.GetSearchingAbility_New33( fleet, 3 ) * 100 ) / 100,
-						Math.Floor( Calculator.GetSearchingAbility_New33( fleet, 4 ) * 100 ) / 100,
-						probStart,
-						probStart * 0.6 );
-*/
-					// 添加分歧点系数的补充说明
-					sb.AppendFormat( "2-5 旧 / 秋 / 新秋简易式\r\n　{0} / {1} / {2}\r\n\r\n新判定式 (33)\r\n分歧点系数 1:	[ {3:f2} ]\r\n　2-5-H->BOSS	31 / 33\r\n分歧点系数 4:	[ {4:f2} ]\r\n　3-5-G->BOSS	23 / 28\r\n　6-1-E->F(大鯨)	12 / 16\r\n　6-1-F->K	20 / 25\r\n分歧点系数 3:	[ {5:f2} ]\r\n　6-2-F->I	43 / ?\r\n　6-2-H->BOSS	? / 40\r\n　6-3-H->BOSS	36 / 38\r\n\r\n触接开始率 : \r\n　确保 {6:p1} / 优势 {7:p1}\r\n",
-						fleet.GetSearchingAbilityString( 0 ),
-						fleet.GetSearchingAbilityString( 1 ),
-						fleet.GetSearchingAbilityString( 2 ),
-						Math.Floor( Calculator.GetSearchingAbility_New33( fleet, 1 ) * 100 ) / 100,
-						Math.Floor( Calculator.GetSearchingAbility_New33( fleet, 4 ) * 100 ) / 100,
-						Math.Floor( Calculator.GetSearchingAbility_New33( fleet, 3 ) * 100 ) / 100,
+					if (Utility.Configuration.Config.FormFleet.SearchingAbilityMethod == 4) {
+						switch (SearchingAbilityNew33BranchWeight) {
+							case 1:
+								SearchingAbility.Text = String.Format("{0:f2}", Math.Floor(Calculator.GetSearchingAbility_New33(fleet, SearchingAbilityNew33BranchWeight) * 100) / 100);
+								sb.Append("分歧点系数 1 ( 点击切换 4 / 3 )\r\n");
+								sb.Append("　2-5-H->BOSS	31 / 33\r\n");
+								break;
+							case 4:
+								SearchingAbility.Text = String.Format("(4) {0:f2}", Math.Floor(Calculator.GetSearchingAbility_New33(fleet, SearchingAbilityNew33BranchWeight) * 100) / 100);
+								sb.Append("分歧点系数 4 ( 点击切换 3 / 1 )\r\n");
+								sb.Append("　3-5-G->BOSS	23 / 28\r\n　6-1-E->F	12 / 16 (大鯨)\r\n　6-1-F->K	20 / 25\r\n");
+								break;
+							case 3:
+								SearchingAbility.Text = String.Format("(3) {0:f2}", Math.Floor(Calculator.GetSearchingAbility_New33(fleet, SearchingAbilityNew33BranchWeight) * 100) / 100);
+								sb.Append("分歧点系数 3 ( 点击切换 1 / 4 )\r\n");
+								sb.Append("　6-2-F->I	43 / ?\r\n　6-2-H->BOSS	? / 40\r\n　6-3-H->BOSS	36 / 38\r\n");
+								break;
+						}
+						sb.AppendFormat("\r\n2-5 旧 / 秋 / 新秋简易式\r\n　{0} / {1} / {2}\r\n",
+							fleet.GetSearchingAbilityString(0),
+							fleet.GetSearchingAbilityString(1),
+							fleet.GetSearchingAbilityString(2));
+					} else {
+						SearchingAbility.Text = fleet.GetSearchingAbilityString();
+						sb.AppendFormat( "2-5 旧 / 秋 / 新秋简易式\r\n　{0} / {1} / {2}\r\n\r\n新判定式 (33)\r\n分歧点系数 1:	[ {3:f2} ]\r\n　2-5-H->BOSS	 31 / 33\r\n分歧点系数 4:	[ {4:f2} ]\r\n　3-5-G->BOSS	 23 / 28\r\n　6-1-E->F(大鯨)	 12 / 16\r\n　6-1-F->K	 20 / 25\r\n分歧点系数 3:	[ {5:f2} ]\r\n　6-2-F->I	 43 / ?\r\n　6-2-H->BOSS	 ? / 40\r\n　6-3-H->BOSS	 36 / 38\r\n",
+							fleet.GetSearchingAbilityString( 0 ),
+							fleet.GetSearchingAbilityString( 1 ),
+							fleet.GetSearchingAbilityString( 2 ),
+							Math.Floor( Calculator.GetSearchingAbility_New33( fleet, 1 ) * 100 ) / 100,
+							Math.Floor( Calculator.GetSearchingAbility_New33( fleet, 4 ) * 100 ) / 100,
+							Math.Floor( Calculator.GetSearchingAbility_New33( fleet, 3 ) * 100 ) / 100);
+					}
+
+					sb.AppendFormat( "\r\n触接开始率 : \r\n　确保 {0:p1} / 优势 {1:p1}\r\n",
 						probStart,
 						probStart * 0.6 );
 
@@ -430,7 +468,7 @@ namespace ElectronicObserver.Window {
 							ship.LOSBase, ship.LOSTotal,
 							ship.LuckTotal,
 							Constants.GetRange( ship.Range ),
-							Constants.GetSpeed( ship.MasterShip.Speed )
+							Constants.GetSpeed( ship.Speed )
 							) );
 
 
@@ -491,9 +529,14 @@ namespace ElectronicObserver.Window {
 
 						if ( ship.RepairTime > 0 ) {
 							var span = DateTimeHelper.FromAPITimeSpan( ship.RepairTime );
-							sb.AppendFormat( "入渠耗时 : {0} @ {1}",
+							var unittime = Calculator.CalculateDockingUnitTime(ship);
+							sb.AppendFormat( // "入渠耗时 : {0} @ {1}",
+								"入渠耗时 : {0} @ {1:00}'{2:00}\"",
 								DateTimeHelper.ToTimeRemainString( span ),
-								DateTimeHelper.ToTimeRemainString( new TimeSpan( span.Add( new TimeSpan( 0, 0, -30 ) ).Ticks / ( ship.HPMax - ship.HPCurrent ) ) ) );
+								// DateTimeHelper.ToTimeRemainString( new TimeSpan( span.Add( new TimeSpan( 0, 0, -30 ) ).Ticks / ( ship.HPMax - ship.HPCurrent ) ) ) );
+								unittime.Minutes,
+								unittime.Seconds
+							);
 						}
 
 						ToolTipInfo.SetToolTip( HP, sb.ToString() );
@@ -636,17 +679,17 @@ namespace ElectronicObserver.Window {
 					if ( cond < 20 )
 					{
 						Condition.BackColor = Utility.Configuration.Config.UI.Fleet_ColorConditionVeryTired;
-						Condition.ForeColor = Utility.Configuration.Config.UI.Blink_ForeColor;
+						Condition.ForeColor = Utility.Configuration.Config.UI.Fleet_ColorConditionText;
 					}
 					else if ( cond < 30 )
 					{
 						Condition.BackColor = Utility.Configuration.Config.UI.Fleet_ColorConditionTired;
-						Condition.ForeColor = Utility.Configuration.Config.UI.Blink_ForeColor;
+						Condition.ForeColor = Utility.Configuration.Config.UI.Fleet_ColorConditionText;
 					}
 					else if ( cond < 40 )
 					{
 						Condition.BackColor = Utility.Configuration.Config.UI.Fleet_ColorConditionLittleTired;
-						Condition.ForeColor = Utility.Configuration.Config.UI.Blink_ForeColor;
+						Condition.ForeColor = Utility.Configuration.Config.UI.Fleet_ColorConditionText;
 					}
 					else if ( cond < 50 )
 					{
@@ -656,7 +699,7 @@ namespace ElectronicObserver.Window {
 					else
 					{
 						Condition.BackColor = Utility.Configuration.Config.UI.Fleet_ColorConditionSparkle;
-						Condition.ForeColor = Utility.Configuration.Config.UI.Blink_ForeColor;
+						Condition.ForeColor = Utility.Configuration.Config.UI.Fleet_ColorConditionText;
 					}
 
 				} else {
@@ -707,6 +750,7 @@ namespace ElectronicObserver.Window {
 
 		public FormFleet( FormMain parent, int fleetID ) {
 			InitializeComponent();
+			this.SizeChanged += FormFleet_SizeChanged;
 
 			FleetID = fleetID;
 			Utility.SystemEvents.UpdateTimerTick += UpdateTimerTick;
@@ -731,6 +775,7 @@ namespace ElectronicObserver.Window {
 			TableFleet.ResumeLayout();
 
 
+			TableMember.Visible = false;
 			TableMember.SuspendLayout();
 			ControlMember = new TableMemberControl[6];
 			for ( int i = 0; i < ControlMember.Length; i++ ) {
@@ -745,7 +790,11 @@ namespace ElectronicObserver.Window {
 
 		}
 
-
+		private void FormFleet_SizeChanged(object sender, EventArgs e)
+		{
+			TableFleet.MinimumSize = new Size(Math.Max(this.Width, TableMember.Width), 0);
+			TableMember.MinimumSize = new Size(this.Width, 0);
+		}
 
 		private void FormFleet_Load( object sender, EventArgs e ) {
 
@@ -821,6 +870,12 @@ namespace ElectronicObserver.Window {
 			TableMember.SuspendLayout();
 			for ( int i = 0; i < ControlMember.Length; i++ ) {
 				ControlMember[i].Update( fleet.Members[i] );
+			}
+
+			if (fleet.Members[0] == -1) {
+				TableMember.Visible = false;
+			} else {
+				TableMember.Visible = true;
 			}
 			TableMember.ResumeLayout();
 
@@ -1082,6 +1137,7 @@ namespace ElectronicObserver.Window {
 				bool showNext = c.FormFleet.ShowNextExp;
 				bool showConditionIcon = c.FormFleet.ShowConditionIcon;
 				var levelVisibility = c.FormFleet.EquipmentLevelVisibility;
+				bool showAircraftLevelByNumber = c.FormFleet.ShowAircraftLevelByNumber;
 				int fixedShipNameWidth = c.FormFleet.FixedShipNameWidth;
 
 				for ( int i = 0; i < ControlMember.Length; i++ ) {
@@ -1099,6 +1155,7 @@ namespace ElectronicObserver.Window {
 					ControlMember[i].Level.TextNext = showNext ? "next:" : null;
 					ControlMember[i].Condition.ImageAlign = showConditionIcon ? ContentAlignment.MiddleLeft : ContentAlignment.MiddleCenter;
 					ControlMember[i].Equipments.LevelVisibility = levelVisibility;
+					ControlMember[i].Equipments.ShowAircraftLevelByNumber = showAircraftLevelByNumber;
 					ControlMember[i].ShipResource.BarFuel.ColorMorphing =
 					ControlMember[i].ShipResource.BarAmmo.ColorMorphing = colorMorphing;
 					ControlMember[i].ShipResource.BarFuel.SetBarColorScheme( colorScheme );

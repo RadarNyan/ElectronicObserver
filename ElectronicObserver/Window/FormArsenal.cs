@@ -139,23 +139,27 @@ namespace ElectronicObserver.Window {
 					CompletionTime.Text = DateTimeHelper.ToTimeRemainString( time );
 
 					if ( Utility.Configuration.Config.FormArsenal.BlinkAtCompletion && ( time - DateTime.Now ).TotalMilliseconds <= Utility.Configuration.Config.NotifierConstruction.AccelInterval ) {
-						CompletionTime.BackColor = DateTime.Now.Second % 2 == 0 ? Utility.Configuration.Config.UI.Blink_BackColorLightGreen : Color.Transparent;
-						CompletionTime.ForeColor = DateTime.Now.Second % 2 == 0 ? Utility.Configuration.Config.UI.Blink_ForeColor : Utility.Configuration.Config.UI.ForeColor;
+						CompletionTime.BackColor = DateTime.Now.Second % 2 == 0 ? Utility.Configuration.Config.UI.Arsenal_BuildCompleteBG : Color.Transparent;
+						CompletionTime.ForeColor = DateTime.Now.Second % 2 == 0 ? Utility.Configuration.Config.UI.Arsenal_BuildCompleteFG : Utility.Configuration.Config.UI.ForeColor;
 					}
 
 				} else if ( Utility.Configuration.Config.FormArsenal.BlinkAtCompletion && !string.IsNullOrWhiteSpace( CompletionTime.Text ) ) {
 					//完成しているので
-					CompletionTime.BackColor = DateTime.Now.Second % 2 == 0 ? Utility.Configuration.Config.UI.Blink_BackColorLightGreen : Color.Transparent;
-					CompletionTime.ForeColor = DateTime.Now.Second % 2 == 0 ? Utility.Configuration.Config.UI.Blink_ForeColor : Utility.Configuration.Config.UI.ForeColor;
+					CompletionTime.BackColor = DateTime.Now.Second % 2 == 0 ? Utility.Configuration.Config.UI.Arsenal_BuildCompleteBG : Color.Transparent;
+					CompletionTime.ForeColor = DateTime.Now.Second % 2 == 0 ? Utility.Configuration.Config.UI.Arsenal_BuildCompleteFG : Utility.Configuration.Config.UI.ForeColor;
 				}
 			}
 
 
 			public void ConfigurationChanged( FormArsenal parent ) {
+
+				var config = Utility.Configuration.Config.FormArsenal;
+
 				ShipName.Font = parent.Font;
 				CompletionTime.Font = parent.Font;
 				CompletionTime.BackColor = Color.Transparent;
 				ShipName.ForeColor = CompletionTime.ForeColor = Utility.Configuration.Config.UI.ForeColor;
+				ShipName.MaximumSize = new Size( config.MaxShipNameWidth, ShipName.MaximumSize.Height );
 			}
 
 		}

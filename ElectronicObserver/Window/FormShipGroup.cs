@@ -343,7 +343,7 @@ namespace ElectronicObserver.Window {
 				ship.LuckRemain,
 				ship.LuckTotal,
 				ship.BomberTotal,
-				ship.MasterShip.Speed,
+				ship.Speed,
 				ship.Range,
 				ship.AirBattlePower,
 				ship.ShellingPower,
@@ -539,8 +539,14 @@ namespace ElectronicObserver.Window {
 			SelectedTab.BackColor = TabActiveColor;
 
 
-			if ( 0 <= headIndex && headIndex < ShipView.Rows.Count )
-				ShipView.FirstDisplayedScrollingRowIndex = headIndex;
+			if ( 0 <= headIndex && headIndex < ShipView.Rows.Count ) {
+				try {
+					ShipView.FirstDisplayedScrollingRowIndex = headIndex;
+
+				} catch ( InvalidOperationException ) {
+					// 1行も表示できないサイズのときに例外が出るので握りつぶす
+				}
+			}
 
 			if ( selectedIDList.Count > 0 ) {
 				ShipView.ClearSelection();
@@ -1388,7 +1394,7 @@ namespace ElectronicObserver.Window {
 										ship.LuckRemain,
 										ship.LuckTotal,
 										Constants.GetRange( ship.Range ),
-										Constants.GetSpeed( ship.MasterShip.Speed ),
+										Constants.GetSpeed( ship.Speed ),
 										ship.IsLocked ? "●" : ship.IsLockedByEquipment ? "■" : "-",
 										ship.SallyArea,
 										ship.AirBattlePower,
@@ -1456,7 +1462,7 @@ namespace ElectronicObserver.Window {
 										ship.LuckRemain,
 										ship.LuckTotal,
 										ship.Range,
-										ship.MasterShip.Speed,
+										ship.Speed,
 										ship.IsLocked ? 1 : ship.IsLockedByEquipment ? 2 : 0,
 										ship.SallyArea,
 										ship.AirBattlePower,

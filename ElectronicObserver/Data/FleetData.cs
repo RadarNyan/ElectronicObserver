@@ -458,6 +458,21 @@ namespace ElectronicObserver.Data {
 			}
 		}
 
+		// 取得由内部熟练度可能获得的最大制空值
+		public int GetAirSuperiority2() {
+			switch ( Utility.Configuration.Config.FormFleet.AirSuperiorityMethod ) {
+				case 0:
+				default:
+					return 0;
+				case 1:
+					if (Configuration.Config.UI.AirSuperiorityShowRange) {
+						return Calculator.GetAirSuperiority2( this );
+					} else {
+						return 0;
+					}
+			}
+		}
+
 
 		/// <summary>
 		/// 現在の設定に応じて、索敵能力を取得します。
@@ -663,13 +678,15 @@ namespace ElectronicObserver.Data {
 					for ( int i = 0; i < fleet.Members.Count; i++ ) {
 						var ship = fleet.MembersInstance[i];
 						if ( ship != null && ship.HPRate < 1.0 ) {
-							var unittime = Calculator.CalculateDockingUnitTime( ship );
-							var totaltime = Calculator.CalculateDockingTotalTime(ship);
+							//var unittime = Calculator.CalculateDockingUnitTime( ship );
+							//var totaltime = Calculator.CalculateDockingTotalTime(ship);
+							var unittime = Calculator.CalculateDockingUnitTime(ship, 1);
+							var totaltime = Calculator.CalculateDockingUnitTime(ship, (ship.HPMax - ship.HPCurrent));
 							sb.AppendFormat(
 								"#{0} : {1:00}:{2:00}:00 @ {3:00}'{4:00}\" x -{5} HP\r\n",
 								i + 1,
 								(int)totaltime.TotalHours,
-								totaltime.Minutes,
+								totaltime.Seconds != 0 ? totaltime.Minutes + 1 : totaltime.Minutes,
 								unittime.Minutes,
 								unittime.Seconds,
 								ship.HPMax - ship.HPCurrent
@@ -682,23 +699,33 @@ namespace ElectronicObserver.Data {
 						for ( int i = 0; i < fleet.Members.Count; i++ ) {
 							var ship = fleet.MembersInstance[i];
 							if ( ship != null && ship.HPRate < 1.0 ) {
-								sb.AppendFormat("#{0} : ", i + 1);
+								sb.AppendFormat("#{0} :", i + 1);
 								int hpToFix = ship.HPMax - ship.HPCurrent;
 								for (int hp = 1; hp <= hpToFix; hp++) {
 									var perhp = Calculator.CalculateDockingUnitTime(ship, hp);
-									sb.AppendFormat(
-										"{0:00}:{1:00}",
-										(int)perhp.Hours,
-										// (int)perhp.Hours > 0 ? String.Format("{0:00}", (int)perhp.Hours) : "",
-										perhp.Minutes
-									);
+									/*if (hp == 1 && perhp > TimeSpan.FromMinutes(20)) {
+										//sb.Append("(00:20)");
+										sb.Append(" 00:20 ");
+									} else if (perhp < TimeSpan.FromMinutes(20)) {
+										// sb.Append("(00:20)");
+										sb.AppendFormat(
+											"(00:{1:00})",
+											perhp.Minutes
+										);
+									} else {*/
+										sb.AppendFormat(
+											" {0:00}:{1:00} ",
+											(int)perhp.Hours,
+											perhp.Seconds != 0 ? perhp.Minutes + 1 : perhp.Minutes
+										);
+									//}
 									if (hp == hpToFix) {
 										sb.Append("\r\n");
-									} else if (hp == Configuration.Config.UI.MaxAkashiPerHP) {
-										sb.Append(" ...\r\n");
+									} else if (hp == (Configuration.Config.UI.MaxAkashiPerHP)) {
+										sb.Append("...\r\n");
 										break;
 									} else {
-										sb.Append(" | ");
+										sb.Append("|");
 									}
 								}
 							}
@@ -796,31 +823,31 @@ namespace ElectronicObserver.Data {
 			switch ( state ) {
 				case FleetStates.Damaged:
 				case FleetStates.SortieDamaged:
-					label.BackColor = DateTime.Now.Second % 2 == 0 ? Utility.Configuration.Config.UI.Blink_BackColorLightCoral : Color.Transparent;
-					label.ForeColor = DateTime.Now.Second % 2 == 0 ? Utility.Configuration.Config.UI.Blink_ForeColor : Utility.Configuration.Config.UI.ForeColor;
+					label.BackColor = DateTime.Now.Second % 2 == 0 ? Utility.Configuration.Config.UI.FleetOverview_ShipDamagedBG : Color.Transparent;
+					label.ForeColor = DateTime.Now.Second % 2 == 0 ? Utility.Configuration.Config.UI.FleetOverview_ShipDamagedFG : Utility.Configuration.Config.UI.ForeColor;
 					break;
 				case FleetStates.Docking:
 					label.Text = "入渠中 " + DateTimeHelper.ToTimeRemainString( timer );
 					if ( Utility.Configuration.Config.FormFleet.BlinkAtCompletion && ( timer - DateTime.Now ).TotalMilliseconds <= Utility.Configuration.Config.NotifierRepair.AccelInterval )
 					{
-						label.BackColor = DateTime.Now.Second % 2 == 0 ? Utility.Configuration.Config.UI.Blink_BackColorLightGreen : Color.Transparent;
-						label.ForeColor = DateTime.Now.Second % 2 == 0 ? Utility.Configuration.Config.UI.Blink_ForeColor : Utility.Configuration.Config.UI.ForeColor;
+						label.BackColor = DateTime.Now.Second % 2 == 0 ? Utility.Configuration.Config.UI.Dock_RepairFinishedBG : Color.Transparent;
+						label.ForeColor = DateTime.Now.Second % 2 == 0 ? Utility.Configuration.Config.UI.Dock_RepairFinishedFG : Utility.Configuration.Config.UI.ForeColor;
 					}
 					break;
 				case FleetStates.Expedition:
 					label.Text = "远征中 " + DateTimeHelper.ToTimeRemainString( timer );
 					if ( Utility.Configuration.Config.FormFleet.BlinkAtCompletion && ( timer - DateTime.Now ).TotalMilliseconds <= Utility.Configuration.Config.NotifierExpedition.AccelInterval )
 					{
-						label.BackColor = DateTime.Now.Second % 2 == 0 ? Utility.Configuration.Config.UI.Blink_BackColorLightGreen : Color.Transparent;
-						label.ForeColor = DateTime.Now.Second % 2 == 0 ? Utility.Configuration.Config.UI.Blink_ForeColor : Utility.Configuration.Config.UI.ForeColor;
+						label.BackColor = DateTime.Now.Second % 2 == 0 ? Utility.Configuration.Config.UI.FleetOverview_ExpeditionOverBG : Color.Transparent;
+						label.ForeColor = DateTime.Now.Second % 2 == 0 ? Utility.Configuration.Config.UI.FleetOverview_ExpeditionOverFG : Utility.Configuration.Config.UI.ForeColor;
 					}
 					break;
 				case FleetStates.Tired:
 					label.Text = "疲劳 " + DateTimeHelper.ToTimeRemainString( timer );
 					if ( Utility.Configuration.Config.FormFleet.BlinkAtCompletion && ( timer - DateTime.Now ).TotalMilliseconds <= 0 )
 					{
-						label.BackColor = DateTime.Now.Second % 2 == 0 ? Utility.Configuration.Config.UI.Blink_BackColorLightGreen : Color.Transparent;
-						label.ForeColor = DateTime.Now.Second % 2 == 0 ? Utility.Configuration.Config.UI.Blink_ForeColor : Utility.Configuration.Config.UI.ForeColor;
+						label.BackColor = DateTime.Now.Second % 2 == 0 ? Utility.Configuration.Config.UI.FleetOverview_TiredRecoveredBG : Color.Transparent;
+						label.ForeColor = DateTime.Now.Second % 2 == 0 ? Utility.Configuration.Config.UI.FleetOverview_TiredRecoveredFG : Utility.Configuration.Config.UI.ForeColor;
 					}
 					break;
 				case FleetStates.AnchorageRepairing:

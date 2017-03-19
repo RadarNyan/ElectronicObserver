@@ -714,7 +714,10 @@ namespace ElectronicObserver.Window {
 						ToolTipInfo.SetToolTip( TextMapArea, string.Format( "击破 : {0} / {1} 次", mapinfo.CurrentDefeatedCount, mapinfo.RequiredDefeatedCount ) );
 
 					} else if ( mapinfo.MapHPMax > 0 ) {
-						ToolTipInfo.SetToolTip( TextMapArea, string.Format( "{0}: {1} / {2}", mapinfo.GaugeType == 3 ? "TP" : "HP", mapinfo.MapHPCurrent, mapinfo.MapHPMax ) );
+						int current = compass.MapHPCurrent > 0 ? compass.MapHPCurrent : mapinfo.MapHPCurrent;
+						int max = compass.MapHPMax > 0 ? compass.MapHPMax : mapinfo.MapHPMax;
+						
+						ToolTipInfo.SetToolTip( TextMapArea, string.Format( "{0}: {1} / {2}", mapinfo.GaugeType == 3 ? "TP" : "HP", current, max ) );
 
 					} else {
 						ToolTipInfo.SetToolTip( TextMapArea, null );
@@ -834,6 +837,10 @@ namespace ElectronicObserver.Window {
 									eventkind = "能动分歧";
 									TextEventDetail.Text = string.Join( "/", compass.RouteChoices );
 									TextEventDetail.Font = Utility.Configuration.Config.UI.MainFont; // Necssary?
+									break;
+								case 3:		//穏やかな海
+									eventkind = "穏やかな海";
+									TextEventDetail.Text = "";
 									break;
 							}
 							break;
@@ -1133,6 +1140,8 @@ namespace ElectronicObserver.Window {
 			TextDestination.Font =
 			TextEventKind.Font =
 			TextEventDetail.Font = Font;
+
+			AutoScroll = Utility.Configuration.Config.FormCompass.IsScrollable;
 
 			_candidatesDisplayCount = Utility.Configuration.Config.FormCompass.CandidateDisplayCount;
 			_enemyFleetCandidateIndex = 0;

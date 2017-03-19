@@ -29,7 +29,17 @@ namespace ElectronicObserver.Observer.kcsapi.api_req_air_corps {
 				corps[_aircorpsID].LoadFromResponse( APIName, data );
 
 
+			int fuel = KCDatabase.Instance.Material.Fuel;
+			int baux = KCDatabase.Instance.Material.Bauxite;
+
 			KCDatabase.Instance.Material.LoadFromResponse( APIName, data );
+
+			fuel -= KCDatabase.Instance.Material.Fuel;
+			baux -= KCDatabase.Instance.Material.Bauxite;
+
+			if ( corps.ContainsKey( _aircorpsID ) )
+			Utility.Logger.Add(2, "", "对 ", string.Format("#{0}「{1}」", corps[_aircorpsID].MapAreaID, corps[_aircorpsID].Name),
+				string.Format(" 进行了补给。消耗：燃料 x {0}，铝土 x {1}", fuel, baux));
 
 			base.OnResponseReceived( (object)data );
 		}

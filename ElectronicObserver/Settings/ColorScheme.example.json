@@ -4,7 +4,7 @@
 
 [{
   // 定义主题名，启动时会显示在日志中
-  "name": "VS2012 Light",
+  "name": "Scheme Template (VS2012 Light)",
 
 // ######################################################
 // ## 颜色格式支持 #RGB / #RRGGBB 使用其他格式定义无效 ##
@@ -13,17 +13,18 @@
   // 基本颜色 ( 后面的面板颜色优先于基本颜色 )
   // 不排除未来这些基本颜色将被用作其他用途，请勿定义成和名称不符的颜色
   "basicColors": {
-    "red":     "#F00",    // 红色 - 严重疲劳、大破、出击任务、elite 级深海
-    "orange":  "#FFA500", // 橙色 - 中等疲劳、中破、flagship 级深海
-    "yellow":  "#FF0",    // 黄色 - 轻微疲劳、小破、
-    "green":   "#0F0",    // 绿色 - 
-    "cyan":    "#0FF",    // 青色 - 装备改修等级
-    "blue":    "#00F",    // 蓝色 - 战意高扬、满血、任务进度 100%
-    "magenta": "#F0F",    // 洋红 - 航空队全灭 ( 残机数 0 )
-    "violet":  "#EE82EE"  // 紫色 - 改装任务
+    "red":     "#FF0000", // 红色 - 严重疲劳、大破、船位 / 装备位少于出击需求、出击任务、航空队受损、elite 级深海、敌联合舰队战、战败、BOSS 战
+    "orange":  "#FFA500", // 橙色 - 中等疲劳、中破、工厂任务、任务进度小于 50%、flagship 级深海、BOSS 损坏
+    "yellow":  "#FFFF00", // 黄色 - 轻微疲劳、小破、补给任务、后期型 flagship 深海
+    "green":   "#00FF00", // 绿色 - 擦伤、编成任务、演习任务、任务进度小于 80%、航空战
+    "cyan":    "#00FFFF", // 青色 - 装备改修等级、远征任务、任务进度小于 100%
+    "blue":    "#0000FF", // 蓝色 - 战意高扬、无伤、远征返回、疲劳恢复、入渠结束、建造完成、任务进度 100%、改 flagship / 后期型深海、MVP、资源、资材、家具币达到上限
+    "magenta": "#FF00FF", // 洋红 - 造成伤害 ( 血条 )、航空队全灭 ( 残机数 0 )、后期型 elite 深海
+    "violet":  "#EE82EE"  // 紫色 - 改装任务、夜战
   },
-  // 数值条颜色
-  "barColors": [[
+  // 数值条颜色 ( 若省略此项，则根据基本颜色自动定义 )
+  "barColors": [
+  [
     "#FF0000", // 大破
     "#FF0000", // 大破
     "#FF8800", // 中破
@@ -36,8 +37,9 @@
     "#44FF00", // 未使用 ? (_barColorIncrement)
     "#882222", // 造成伤害
     "#888888"  // 背景色
-  ],[
-    // 开启 "更多阶数值条颜色" 时的定义
+  ]
+  // 开启 "更多阶数值条颜色" 时的定义 ( 若不定义则和第一套相同 )
+  ,[
     "#FF0000", // 大破
     "#FF0000", // 大破
     "#FF4400", // 中破
@@ -50,59 +52,117 @@
     "#00FF44", //
     "#882222", // 造成伤害
     "#888888"  // 背景色
-  ]],
+  ]
+  // 不定义第二套也要保留下面的方括号
+  ],
   // 面板颜色
   "panelColors": {
-    "foreground":  "#000000", // 主文字色 - 大部分文字颜色
-    "background":  "#F0F0F0", // 主背景色 - 各面板背景颜色
-    "foreground2": "#000000", // 副文字色 - 副背景色上的文字颜色
-    "background2": "#E3E3E3", // 副背景色 - 状态栏背景、各种分隔线
+    "foreground":  "#000000", // 主文字色 [fg]  - 大部分文字颜色
+    "background":  "#F0F0F0", // 主背景色 [bg]  - 各面板背景颜色
+    "foreground2": "#888888", // 副文字色 [fg2] - 对比度较低 ( 较浅 ) 的文字色
+    "background2": "#E3E3E3", // 副背景色 [bg2] - 状态栏背景、各种分隔线
 
 //  ######################################################
 //  ##  以下颜色均存在默认值，在每行注释后的 [] 内标出  ##
 //  ######################################################
 
-  // 状态栏
-  "statusBarFG" : "#000000", // [foreground2] 状态栏文字色
-  "statusBarBG" : "#E3E3E3", // [background2] 状态栏背景色
+    // 状态栏
+    "statusBarFG": "#000000", // [fg]  状态栏文字色
+    "statusBarBG": "#E3E3E3", // [bg2] 状态栏背景色
 
-    // 主界面 - 标签页
-    // 注：自定义配色刚刚实现，以下三组颜色暂不建议设置为不同颜色
-    "tabActiveFG":    "#FFFFFF", // [foreground2] 活动前台标签页文字色
-    "tabActiveBG":    "#007ACC", // [background2] 活动前台标签页背景色
-    "tabLostFocusFG": "#FFFFFF", // [foreground2] 非活动前台标签页文字色
-    "tabLostFocusBG": "#007ACC", // [background2] 非活动前台标签页背景色
-    "tabHoverFG":     "#FFFFFF", // [foreground2] 光标悬停后台标签页文字色
-    "tabHoverBG":     "#1C97EA", // [background2] 光标悬停后台标签页背景色
+    // 主界面 - 皮肤 ( 标签页等 )
+    "skin": {
+      "panelSplitter":                "#E3E3E3", // [bg2] 面板间分割线
+      // 文档面板 ( 拖动视图至中央按钮创建的面板 )
+      "docTabBarFG":                  "#000000", // [fg2] 后台标签文字色
+      "docTabBarBG":                  "#F0F0F0", // [bg]  后台标签背景色 ( 同时也是标签栏背景色 )
+      "docTabActiveFG":               "#FFFFFF", // [fg]  活动前台标签文字色
+      "docTabActiveBG":               "#007ACC", // [bg2] 活动前台标签背景色
+      "docTabActiveLostFocusFG":      "#6D6D6D", // [fg]  非活动前台标签文字色
+      "docTabActiveLostFocusBG":      "#CCCEDB", // [bg2] 非活动前台标签背景色
+      "docTabInactiveHoverFG":        "#FFFFFF", // [fg]  后台标签鼠标悬停文字色
+      "docTabInactiveHoverBG":        "#1C97EA", // [bg2] 后台标签鼠标悬停背景色
+      "docBtnActiveHoverFG":          "#FFFFFF", // [fg]  活动前台标签关闭按钮鼠标悬停前景色
+      "docBtnActiveHoverBG":          "#1C97EA", // [bg2] 活动前台标签关闭按钮鼠标悬停背景色
+      "docBtnActiveLostFocusHoverFG": "#717171", // [fg]  非活动前台标签关闭按钮鼠标悬停前景色
+      "docBtnActiveLostFocusHoverBG": "#E6E7ED", // [bg2] 非活动前台标签关闭按钮鼠标悬停背景色
+      "docBtnInactiveHoverFG":        "#FFFFFF", // [fg]  后台标签关闭按钮鼠标悬停前景色
+      "docBtnInactiveHoverBG":        "#52B0EF", // [bg2] 后台标签关闭按钮鼠标悬停背景色
+      // 工具面板 ( 拖动视图至四边按钮创建的面板 )
+      "toolTabBarFG":                 "#6D6D6D", // [fg2] 后台标签文字色
+      "toolTabBarBG":                 "#F0F0F0", // [bg]  后台标签背景色 ( 同时也是标签栏背景色 )
+      "toolTabActive":                "#007ACC", // [fg]  前台标签文字色
+      "toolTitleActiveFG":            "#FFFFFF", // [fg]  活动标题栏文字色
+      "toolTitleActiveBG":            "#007ACC", // [bg2] 活动标题栏背景色
+      "toolTitleLostFocusFG":         "#6D6D6D", // [fg2] 非活动标题栏文字色
+      "toolTitleLostFocusBG":         "#F0F0F0", // [bg]  非活动标题栏背景色
+      "toolTitleDotActive":           "#50AADC", // [bg]  活动标题栏纹理色
+      "toolTitleDotLostFocus":        "#A0A0A0", // [bg2] 非活动标题栏纹理色
+      // 自动隐藏面板 ( 点击工具面板上的图钉按钮后转为自动隐藏 )
+      "autoHideTabBarFG":             "#E3E3E3", // [bg2] 非激活标签前景色 ( 指示器颜色 )
+      "autoHideTabBarBG":             "#F0F0F0", // [bg]  非激活标签背景色 ( 同时也是标签栏背景色 )
+      "autoHideTabActive":            "#007ACC", // [fg]  激活 ( 鼠标悬停或点击 ) 标签文字色
+      "autoHideTabInactive":          "#6D6D6D"  // [fg2] 非激活标签文字色
+    },
     // 视图 - 舰队
     "fleet": {
+      "conditionText":        "#000000", // [bg]     疲劳状态文字色
       "conditionVeryTired":   "#F08080", // [red]    严重疲劳
       "conditionTired":       "#FFA07A", // [orange] 中等疲劳
       "conditionLittleTired": "#FFE4B5", // [yellow] 轻微疲劳
       "conditionSparkle":     "#90EE90", // [blue]   战意高扬
       "equipmentLevel":       "#006666"  // [cyan]   装备改修值
     },
+    // 视图 - 舰队一览
+    "fleetOverview": {
+      "shipDamagedFG":    "#000000", // [bg]   大破 / 大破进击文字色
+      "shipDamagedBG":    "#F08080", // [red]  大破 / 大破进击背景色
+      "expeditionOverFG": "#000000", // [bg]   远征返回闪烁文字色
+      "expeditionOverBG": "#90EE90", // [blue] 远征返回闪烁背景色
+      "tiredRecoveredFG": "#000000", // [bg]   疲劳恢复闪烁文字色
+      "tiredRecoveredBG": "#90EE90"  // [blue] 疲劳恢复闪烁背景色
+    },
+    // 视图 - 入渠
+    "dock": {
+      "repairFinishedFG": "#000000", // [bg]   修理完成闪烁文字色
+      "repairFinishedBG": "#90EE90"  // [blue] 修理完成闪烁背景色
+    },
+    // 视图 - 工厂
+    "arsenal": {
+      "buildCompleteFG": "#000000", // [bg]   建造完成闪烁文字色
+      "buildCompleteBG": "#90EE90"  // [blue] 建造完成闪烁背景色
+    },
     // 视图 - 司令部
     "hq": {
-      "empty": "place_holder"
+      "resOverFG":     "#000000", // [fg]   资源储量超过自然回复上限文字色
+      "resOverBG":     "#FFE4B5", // [bg2]  资源储量超过自然回复上限背景色
+      "shipOverFG":    "#000000", // [bg]   剩余船位、装备位不满活动图出击要求文字色
+      "shipOverBG":    "#F08080", // [red]  剩余船位、装备位不满活动图出击要求背景色
+      "materialMaxFG": "#000000", // [bg]   高速修复材、高速建造材、开发资材、改修资材达到 3,000 个时文字色
+      "materialMaxBG": "#F08080", // [blue] 高速修复材、高速建造材、开发资材、改修资材达到 3,000 个时背景色
+      "coinMaxFG":     "#000000", // [bg]   家具币达到 200,000 个时文字色
+      "coinMaxFG":     "#F08080", // [blue] 家具币达到 200,000 个时背景色
+      "resMaxFG":      "#000000", // [bg]   资源储量达到 300,000 时文字色
+      "resMaxBG":      "#F08080"  // [blue] 资源储量达到 300,000 时背景色
     },
     // 视图 - 任务
     "quest": {
-      "typeHensei":     "#AAFFAA", // [green]  编成类任务
-      "typeShutsugeki": "#FFCCCC", // [red]    出击类任务
-      "typeEnshu":      "#DDFFAA", // [green]  演习类任务
-      "typeEnsei":      "#DDFFAA", // [cyan]   远征类任务
-      "typeHokyu":      "#CCFFFF", // [yellow] 补给、入渠类任务
-      "typeKojo":       "#DDCCBB", // [orange] 工厂类任务
-      "typeKaiso":      "#DDCCFF", // [violet] 改装类任务
-      "processLT50":    "#FF8800", // [orange] 任务进度 <50%
-      "processLT80":    "#00CC00", // [green]  任务进度 <80%
-      "processLT100":   "#008800", // [cyan]   任务进度 <100%
-      "processDefault": "#0088FF"  // [blue]   任务进度 100%
+      "typeFG":         "#000000", // [bg]     任务类型文字色
+      "typeHensei":     "#AAFFAA", // [green]  编成类任务背景色
+      "typeShutsugeki": "#FFCCCC", // [red]    出击类任务背景色
+      "typeEnshu":      "#DDFFAA", // [green]  演习类任务背景色
+      "typeEnsei":      "#DDFFAA", // [cyan]   远征类任务背景色
+      "typeHokyu":      "#CCFFFF", // [yellow] 补给、入渠类任务背景色
+      "typeKojo":       "#DDCCBB", // [orange] 工厂类任务背景色
+      "typeKaiso":      "#DDCCFF", // [violet] 改装类任务背景色
+      "processLT50":    "#FF8800", // [orange] 任务进度条 <50%
+      "processLT80":    "#00CC00", // [green]  任务进度条 <80%
+      "processLT100":   "#008800", // [cyan]   任务进度条 <100%
+      "processDefault": "#0088FF"  // [blue]   任务进度条 100%
     },
     // 视图 - 罗盘
     "compass": {
-      "shipClass2": "#F00",    // [red]     elite
+      "shipClass2": "#FF0000", // [red]     elite
       "shipClass3": "#FF8800", // [orange]  flagship
       "shipClass4": "#0088FF", // [blue]    改 flagship / 后期型
       "shipClass5": "#880000", // [magenta] 后期型 elite
@@ -113,9 +173,15 @@
     },
     // 视图 - 战斗
     "battle": {
-      "barBossDamaged": "#FFE4E1", // [orange]      受损状态 BOSS
-      "barMVP":         "#FFE4B5", // [blue]        MVP
-      "barEscaped":     "#C0C0C0"  // [background2] 已退避
+      "barMVP":           "#FFE4B5", // [blue]   MVP
+      "textMVP":          "#000000", // [bg]     MVP 主文字色
+      "textMVP2":         "#888888", // [bg2]    MVP 副文字色
+      "barEscaped":       "#C0C0C0", // [bg2]    已退避
+      "textEscaped":      "#000000", // [fg]     已退避主文字色
+      "textEscaped2":     "#888888", // [fg2]    已退避副文字色
+      "barBossDamaged":   "#FFE4E1", // [orange] 受损状态 BOSS
+      "textBossDamaged":  "#000000", // [bg]     受损状态 BOSS 主文字色
+      "textBossDamaged2": "#888888"  // [bg2]    受损状态 BOSS 副文字色
     }
   }
 }]

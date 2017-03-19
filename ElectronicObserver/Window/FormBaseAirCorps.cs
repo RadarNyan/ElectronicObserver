@@ -127,7 +127,7 @@ namespace ElectronicObserver.Window {
 				KCDatabase db = KCDatabase.Instance;
 				var corps = db.BaseAirCorps[baseAirCorpsID];
 
-				if ( corps == null ) {
+				if ( corps == null || !KCDatabase.Instance.MapArea.ContainsKey(corps.MapAreaID) ) {
 					baseAirCorpsID = -1;
 
 				} else {
@@ -199,14 +199,20 @@ namespace ElectronicObserver.Window {
 
 
 			public void ConfigurationChanged( FormBaseAirCorps parent ) {
-				var mainfont = Utility.Configuration.Config.UI.JapFont;
-				var subfont = Utility.Configuration.Config.UI.JapFont2;
+				var config = Utility.Configuration.Config;
+
+				var mainfont = config.UI.JapFont;
+				var subfont = config.UI.JapFont2;
 
 				Name.Font = mainfont;
 				ActionKind.Font = Utility.Configuration.Config.UI.MainFont;
 				AirSuperiority.Font = mainfont;
 				Distance.Font = mainfont;
 				Squadrons.Font = subfont;
+
+				Squadrons.ShowAircraft = config.FormFleet.ShowAircraft;
+				Squadrons.ShowAircraftLevelByNumber = config.FormFleet.ShowAircraftLevelByNumber;
+				Squadrons.LevelVisibility = config.FormFleet.EquipmentLevelVisibility;
 			}
 
 
@@ -346,6 +352,8 @@ namespace ElectronicObserver.Window {
 				baseaircorps = baseaircorps.Where( c => c.MapAreaID == areaid );
 
 			foreach ( var corps in baseaircorps ) {
+
+				if(!KCDatabase.Instance.MapArea.ContainsKey(corps.MapAreaID)) continue;
 
 				sb.AppendFormat( "{0}\t[{1}] 制空战力 {2} / 战斗行动半径 {3}\r\n",
 					( areaid == -1 ? ( KCDatabase.Instance.MapArea[corps.MapAreaID].Name + "：" ) : "" ) + corps.Name,

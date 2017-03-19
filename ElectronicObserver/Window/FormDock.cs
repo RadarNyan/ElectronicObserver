@@ -131,18 +131,22 @@ namespace ElectronicObserver.Window {
 					RepairTime.Text = DateTimeHelper.ToTimeRemainString( time );
 
 					if ( Utility.Configuration.Config.FormDock.BlinkAtCompletion && ( time - DateTime.Now ).TotalMilliseconds <= Utility.Configuration.Config.NotifierRepair.AccelInterval ) {
-						RepairTime.BackColor = DateTime.Now.Second % 2 == 0 ? Utility.Configuration.Config.UI.Blink_BackColorLightGreen : Color.Transparent;
-						RepairTime.ForeColor = DateTime.Now.Second % 2 == 0 ? Utility.Configuration.Config.UI.Blink_ForeColor : Utility.Configuration.Config.UI.ForeColor;
+						RepairTime.BackColor = DateTime.Now.Second % 2 == 0 ? Utility.Configuration.Config.UI.Dock_RepairFinishedBG : Color.Transparent;
+						RepairTime.ForeColor = DateTime.Now.Second % 2 == 0 ? Utility.Configuration.Config.UI.Dock_RepairFinishedFG : Utility.Configuration.Config.UI.ForeColor;
 					}
 				}
 			}
 
 
 			public void ConfigurationChanged( FormDock parent ) {
+
+				var config = Utility.Configuration.Config.FormDock;
+
 				ShipName.Font = parent.Font;
 				RepairTime.Font = parent.Font;
 				RepairTime.BackColor = Color.Transparent;
 				ShipName.ForeColor = RepairTime.ForeColor = Utility.Configuration.Config.UI.ForeColor;
+				ShipName.MaximumSize = new Size( config.MaxShipNameWidth, ShipName.MaximumSize.Height );
 			}
 		}
 

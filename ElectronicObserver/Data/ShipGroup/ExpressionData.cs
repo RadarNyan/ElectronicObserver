@@ -125,7 +125,8 @@ namespace ElectronicObserver.Data.ShipGroup {
 			{ ".ArmorRemain", "装甲改修剩余" },
 			{ ".LuckRemain", "运改修剩余" },
 			{ ".Range", "射程" },		//現在の射程
-			{ ".MasterShip.Speed", "速度" },
+			{ ".Speed", "速度" },
+			{ ".MasterShip.Speed", "基础速度" },
 			{ ".MasterShip.Rarity", "稀有度" },
 			{ ".IsLocked", "锁定" },
 			{ ".IsLockedByEquipment", "有带锁装备" },
@@ -384,7 +385,7 @@ namespace ElectronicObserver.Data.ShipGroup {
 			} else if ( LeftOperand == ".Range" ) {
 				return Constants.GetRange( (int)RightOperand );
 
-			} else if ( LeftOperand == ".MasterShip.Speed" ) {
+			} else if ( LeftOperand == ".Speed" || LeftOperand == ".MasterShip.Speed" ) {
 				return Constants.GetSpeed( (int)RightOperand );
 
 			} else if ( LeftOperand == ".MasterShip.Rarity" ) {

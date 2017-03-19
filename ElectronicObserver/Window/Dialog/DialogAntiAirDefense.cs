@@ -82,7 +82,7 @@ namespace ElectronicObserver.Window.Dialog {
 		private void Updated() {
 
 			ShipData[] ships = GetShips().ToArray();
-			int formation = Formation.SelectedIndex + 1;
+			int formation = Formation.SelectedItem as FormationComboBoxData;
 			int aaCutinKind = AACutinKind.SelectedItem as AACutinComboBoxData;
 			int enemyAircraftCount = (int)EnemySlotCount.Value;
 
@@ -94,16 +94,24 @@ namespace ElectronicObserver.Window.Dialog {
 			double adjustedFleetAA = Calculator.GetAdjustedFleetAAValue( ships, formation );
 
 			// 割合撃墜
-			double[] proportionalAAs = adjustedAAs.Select( val => Calculator.GetProportionalAirDefense( val ) ).ToArray();
+			double[] proportionalAAs = adjustedAAs.Select( ( val, i ) => Calculator.GetProportionalAirDefense( val, IsCombined ? ( i < 6 ? 1 : 2 ) : -1 ) ).ToArray();
 
 			// 固定撃墜
 			int[] fixedAAs = adjustedAAs.Select( ( val, i ) => Calculator.GetFixedAirDefense( val, adjustedFleetAA, aaCutinKind, IsCombined ? ( i < 6 ? 1 : 2 ) : -1 ) ).ToArray();
 
 
-			int[] shootDownBoth = adjustedAAs.Select( ( val, i ) => Calculator.GetShootDownCount( enemyAircraftCount, proportionalAAs[i], fixedAAs[i], aaCutinKind ) ).ToArray();
-			int[] shootDownProportional = adjustedAAs.Select( ( val, i ) => Calculator.GetShootDownCount( enemyAircraftCount, proportionalAAs[i], 0, aaCutinKind ) ).ToArray();
-			int[] shootDownFixed = adjustedAAs.Select( ( val, i ) => Calculator.GetShootDownCount( enemyAircraftCount, 0, fixedAAs[i], aaCutinKind ) ).ToArray();
-			int[] shootDownFailed = adjustedAAs.Select( ( val, i ) => Calculator.GetShootDownCount( enemyAircraftCount, 0, 0, aaCutinKind ) ).ToArray();
+
+			int[] shootDownBoth = adjustedAAs.Select( ( val, i ) => ships[i] == null ? 0 :
+				Calculator.GetShootDownCount( enemyAircraftCount, proportionalAAs[i], fixedAAs[i], aaCutinKind ) ).ToArray();
+
+			int[] shootDownProportional = adjustedAAs.Select( ( val, i ) => ships[i] == null ? 0 :
+				Calculator.GetShootDownCount( enemyAircraftCount, proportionalAAs[i], 0, aaCutinKind ) ).ToArray();
+
+			int[] shootDownFixed = adjustedAAs.Select( ( val, i ) => ships[i] == null ? 0 :
+				Calculator.GetShootDownCount( enemyAircraftCount, 0, fixedAAs[i], aaCutinKind ) ).ToArray();
+
+			int[] shootDownFailed = adjustedAAs.Select( ( val, i ) => ships[i] == null ? 0 :
+				Calculator.GetShootDownCount( enemyAircraftCount, 0, 0, aaCutinKind ) ).ToArray();
 
 
 
@@ -124,7 +132,7 @@ namespace ElectronicObserver.Window.Dialog {
 			AdjustedFleetAA.Text = adjustedFleetAA.ToString( "0.0" );
 			{
 				var allShootDown = shootDownBoth.Concat( shootDownProportional ).Concat( shootDownFixed ).Concat( shootDownFailed );
-				AnnihilationProbability.Text = ( allShootDown.Count( i => i >= enemyAircraftCount ) / Math.Max( allShootDown.Count(), 1.0 ) ).ToString( "p1" );
+				AnnihilationProbability.Text = ( allShootDown.Count( i => i >= enemyAircraftCount ) / Math.Max( ships.Count( s => s != null ) * 4, 1.0 ) ).ToString( "p1" );
 			}
 		}
 
