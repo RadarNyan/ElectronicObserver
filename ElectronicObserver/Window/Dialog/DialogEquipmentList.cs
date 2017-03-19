@@ -383,21 +383,17 @@ namespace ElectronicObserver.Window.Dialog {
 
 			foreach ( var c in countlist.Values ) {
 
-				var row = new DataGridViewRow();
-				row.CreateCells( DetailView );
+				if ( c.equippedShips.Count() == 0 ) {
+					c.equippedShips.Add( "" );
+				}
 
-				string equippedShips = "";
-				if ( c.equippedShips.Count() != 0 ) {
-					equippedShips = String.Join( "\r\n" , c.equippedShips );
+				foreach ( var s in c.equippedShips ) {
+
+					var row = new DataGridViewRow();
+					row.CreateCells( DetailView );
+					row.SetValues( c.level, c.aircraftLevel, c.countAll, c.countRemain, s );
+					rows.Add( row );
 				}
-				row.SetValues( c.level, c.aircraftLevel, c.countAll, c.countRemain, equippedShips );
-				if ( c.equippedShips.Count() > 1 ) {
-					row.DefaultCellStyle.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-					row.DefaultCellStyle.Alignment = DataGridViewContentAlignment.TopRight;
-					row.Cells[4].Style.Alignment   = DataGridViewContentAlignment.TopLeft;
-					row.DefaultCellStyle.Padding = new Padding( 0, 1, 0, 1 );
-				}
-				rows.Add( row );
 
 			}
 
