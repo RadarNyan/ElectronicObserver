@@ -127,7 +127,7 @@ namespace ElectronicObserver.Window {
 				KCDatabase db = KCDatabase.Instance;
 				var corps = db.BaseAirCorps[baseAirCorpsID];
 
-				if ( corps == null ) {
+				if ( corps == null || !KCDatabase.Instance.MapArea.ContainsKey(corps.MapAreaID) ) {
 					baseAirCorpsID = -1;
 
 				} else {
@@ -346,6 +346,8 @@ namespace ElectronicObserver.Window {
 				baseaircorps = baseaircorps.Where( c => c.MapAreaID == areaid );
 
 			foreach ( var corps in baseaircorps ) {
+
+				if(!KCDatabase.Instance.MapArea.ContainsKey(corps.MapAreaID)) continue;
 
 				sb.AppendFormat( "{0}\t[{1}] 制空战力 {2} / 战斗行动半径 {3}\r\n",
 					( areaid == -1 ? ( KCDatabase.Instance.MapArea[corps.MapAreaID].Name + "：" ) : "" ) + corps.Name,
