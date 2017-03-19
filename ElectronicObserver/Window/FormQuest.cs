@@ -48,7 +48,7 @@ namespace ElectronicObserver.Window {
 				CSCategories[i] = new DataGridViewCellStyle( CSDefaultCenter );
 
 				Color c;
-				CSCategories[i].ForeColor = CSCategories[i].SelectionForeColor = Utility.Configuration.Config.UI.Blink_ForeColor;
+				CSCategories[i].ForeColor = CSCategories[i].SelectionForeColor = Utility.Configuration.Config.UI.Quest_TypeFG;
 				switch ( i + 1 ) {
 					case 1:		//編成
 						c = Utility.Configuration.Config.UI.Quest_Type1Color;

@@ -265,38 +265,9 @@ namespace ElectronicObserver.Utility {
 				[IgnoreDataMember]
 				public Color Color_Violet { get; set; }
 
-				// 待整理
-				public Color Blink_ForeColor { get { return BackColor; } }
-				public Color Blink_SubForeColor { get { return SubBackColor; } }
-				public Color Blink_BackColorLightCoral { get { return Color_Red; } }
-				public Color Blink_BackColorLightGreen { get { return Color_Cyan; } }
-/*
-				public Color Blink_ForeColor { get {
-				switch (ThemeID) {
-					case 0:  return SolarizedBase3.ColorData;
-					case 1:  return SolarizedBase03.ColorData;
-					default: return SystemColors.ControlText;
-				}}}
-				public Color Blink_SubForeColor { get {
-				switch (ThemeID) {
-					//case 0:  return SolarizedBase2.ColorData;
-					//case 1:  return SolarizedBase02.ColorData;
-					default: return SystemColors.ControlText;
-				}}}
-				public Color Blink_BackColorLightCoral { get {
-				switch (ThemeID) {
-					//case 0:  return SolarizedRed.ColorData;
-					//case 1:  return SolarizedRed.ColorData;
-					default: return Color.LightCoral;
-				}}}
-				public Color Blink_BackColorLightGreen { get {
-				switch (ThemeID) {
-					//case 0:  return SolarizedCyan.ColorData;
-					//case 1:  return SolarizedCyan.ColorData;
-					default: return Color.LightGreen;
-				}}}
-*/
 				// 视图 - 舰队
+				[IgnoreDataMember] // 疲劳状态文字色
+				public Color Fleet_ColorConditionText { get; set; }
 				[IgnoreDataMember] // 严重疲劳
 				public Color Fleet_ColorConditionVeryTired { get; set; }
 				[IgnoreDataMember] // 中等疲劳
@@ -306,9 +277,47 @@ namespace ElectronicObserver.Utility {
 				[IgnoreDataMember] // 战意高扬
 				public Color Fleet_ColorConditionSparkle { get; set; }
 				[IgnoreDataMember] // 装备改修值
-				public Color Fleet_equipmentLevelColor { get; set; }
+				public Color Fleet_EquipmentLevelColor { get; set; }
+
+				// 视图 - 舰队一览
+				[IgnoreDataMember] // 大破 / 大破进击文字色
+				public Color FleetOverview_ShipDamagedFG { get; set; }
+				[IgnoreDataMember] // 大破 / 大破进击背景色
+				public Color FleetOverview_ShipDamagedBG { get; set; }
+				[IgnoreDataMember] // 远征返回文字色
+				public Color FleetOverview_ExpeditionOverFG { get; set; }
+				[IgnoreDataMember] // 远征返回背景色
+				public Color FleetOverview_ExpeditionOverBG { get; set; }
+				[IgnoreDataMember] // 疲劳恢复文字色
+				public Color FleetOverview_TiredRecoveredFG { get; set; }
+				[IgnoreDataMember] // 疲劳恢复背景色
+				public Color FleetOverview_TiredRecoveredBG { get; set; }
+
+				// 视图 - 入渠
+				[IgnoreDataMember] // 修理完成文字色
+				public Color Dock_RepairFinishedFG { get; set; }
+				[IgnoreDataMember] // 修理完成背景色
+				public Color Dock_RepairFinishedBG { get; set; }
+
+				// 视图 - 工厂
+				[IgnoreDataMember] // 建造完成文字色
+				public Color Arsenal_BuildCompleteFG { get; set; }
+				[IgnoreDataMember] // 建造完成背景色
+				public Color Arsenal_BuildCompleteBG { get; set; }
+
+				// 视图 - 司令部
+				[IgnoreDataMember] // 资源超过自然回复上限文字色
+				public Color Headquarters_ResourceOverFG { get; set; }
+				[IgnoreDataMember] // 资源超过自然回复上限背景色
+				public Color Headquarters_ResourceOverBG { get; set; }
+				[IgnoreDataMember] // 剩余船位、装备位不满足活动图出击要求时闪烁文字色
+				public Color Headquarters_ShipCountOverFG { get; set; }
+				[IgnoreDataMember] // 剩余船位、装备位不满足活动图出击要求时闪烁背景色
+				public Color Headquarters_ShipCountOverBG { get; set; }
 
 				// 视图 - 任务
+				[IgnoreDataMember] // 任务类型文字色
+				public Color Quest_TypeFG { get; set; }
 				[IgnoreDataMember] // 编成
 				public Color Quest_Type1Color { get; set; }
 				[IgnoreDataMember] // 出击
@@ -354,12 +363,24 @@ namespace ElectronicObserver.Utility {
 				// default: return Color.FromArgb(0xC0, 0xF0, 0xF0, 0xF0);
 
 				// 视图 - 战斗：血条背景色、血条文字色
-				[IgnoreDataMember] // 受损状态 BOSS
-				public Color Battle_ColorHPBarsBossDamaged { get; set; }
 				[IgnoreDataMember] // MVP
 				public Color Battle_ColorHPBarsMVP { get; set; }
+				[IgnoreDataMember] // MVP 主文字色
+				public Color Battle_ColorTextMVP { get; set; }
+				[IgnoreDataMember] // MVP 副文字色
+				public Color Battle_ColorTextMVP2 { get; set; }
 				[IgnoreDataMember] // 已退避
 				public Color Battle_ColorHPBarsEscaped { get; set; }
+				[IgnoreDataMember] // 已退避主文字色
+				public Color Battle_ColorTextEscaped { get; set; }
+				[IgnoreDataMember] // 已退避副文字色
+				public Color Battle_ColorTextEscaped2 { get; set; }
+				[IgnoreDataMember] // 受损状态 BOSS
+				public Color Battle_ColorHPBarsBossDamaged { get; set; }
+				[IgnoreDataMember] // 受损状态 BOSS 主文字色
+				public Color Battle_ColorTextBossDamaged { get; set; }
+				[IgnoreDataMember] // 受损状态 BOSS 副文字色
+				public Color Battle_ColorTextBossDamaged2 { get; set; }
 
 				// 视图 - 舰队：入渠中计时器
 				public Color Battle_ColorHPTextRepair { get {
@@ -1371,8 +1392,150 @@ namespace ElectronicObserver.Utility {
 
 			}
 
-			// 读取配色主题 ( 默认值待编辑 )
-			dynamic json = DynamicJson.Parse(@"[{""name"":""VS2012Light""}]");
+			// 读取配色主题
+			#region dynamic json = 内嵌主题;
+			dynamic json = DynamicJson.Parse(@"[{
+""name"":""VS2012 Light"",
+""basicColors"":{
+""red"":""#FF0000"",
+""orange"":""#FFA500"",
+""yellow"":""#FFFF00"",
+""green"":""#00FF00"",
+""cyan"":""#00FFFF"",
+""blue"":""#0000FF"",
+""magenta"":""#FF00FF"",
+""violet"":""#EE82EE""
+},
+""barColors"":[[
+""#FF0000"",
+""#FF0000"",
+""#FF8800"",
+""#FF8800"",
+""#FFCC00"",
+""#FFCC00"",
+""#00CC00"",
+""#00CC00"",
+""#0044CC"",
+""#44FF00"",
+""#882222"",
+""#888888""
+],[
+""#FF0000"",
+""#FF0000"",
+""#FF4400"",
+""#FF8800"",
+""#FFAA00"",
+""#EEEE00"",
+""#CCEE00"",
+""#00CC00"",
+""#0044CC"",
+""#00FF44"",
+""#882222"",
+""#888888""
+]],
+""panelColors"":{
+""foreground"":""#000000"",
+""background"":""#F0F0F0"",
+""foreground2"":""#888888"",
+""background2"":""#E3E3E3"",
+""statusBarFG"":""#000000"",
+""statusBarBG"":""#E3E3E3"",
+""skin"":{
+""panelSplitter"":""#E3E3E3"",
+""docTabBarFG"":""#000000"",
+""docTabBarBG"":""#F0F0F0"",
+""docTabActiveFG"":""#FFFFFF"",
+""docTabActiveBG"":""#007ACC"",
+""docTabActiveLostFocusFG"":""#6D6D6D"",
+""docTabActiveLostFocusBG"":""#CCCEDB"",
+""docTabInactiveHoverFG"":""#FFFFFF"",
+""docTabInactiveHoverBG"":""#1C97EA"",
+""docBtnActiveHoverFG"":""#FFFFFF"",
+""docBtnActiveHoverBG"":""#1C97EA"",
+""docBtnActiveLostFocusHoverFG"":""#717171"",
+""docBtnActiveLostFocusHoverBG"":""#E6E7ED"",
+""docBtnInactiveHoverFG"":""#FFFFFF"",
+""docBtnInactiveHoverBG"":""#52B0EF"",
+""toolTabBarFG"":""#6D6D6D"",
+""toolTabBarBG"":""#F0F0F0"",
+""toolTabActive"":""#007ACC"",
+""toolTitleActiveFG"":""#FFFFFF"",
+""toolTitleActiveBG"":""#007ACC"",
+""toolTitleLostFocusFG"":""#6D6D6D"",
+""toolTitleLostFocusBG"":""#F0F0F0"",
+""toolTitleDotActive"":""#50AADC"",
+""toolTitleDotLostFocus"":""#A0A0A0"",
+""autoHideTabBarFG"":""#E3E3E3"",
+""autoHideTabBarBG"":""#F0F0F0"",
+""autoHideTabActive"":""#007ACC"",
+""autoHideTabInactive"":""#6D6D6D""
+},
+""fleet"":{
+""conditionText"":""#000000"",
+""conditionVeryTired"":""#F08080"",
+""conditionTired"":""#FFA07A"",
+""conditionLittleTired"":""#FFE4B5"",
+""conditionSparkle"":""#90EE90"",
+""equipmentLevel"":""#006666""
+},
+""fleetOverview"":{
+""shipDamagedFG"":""#000000"",
+""shipDamagedBG"":""#F08080"",
+""expeditionOverFG"":""#000000"",
+""expeditionOverBG"":""#90EE90"",
+""tiredRecoveredFG"":""#000000"",
+""tiredRecoveredBG"":""#90EE90""
+},
+""dock"":{
+""repairFinishedFG"":""#000000"",
+""repairFinishedBG"":""#90EE90""
+},
+""arsenal"":{
+""buildCompleteFG"":""#000000"",
+""buildCompleteBG"":""#90EE90""
+},
+""hq"":{
+""resOverFG"":""#000000"",
+""resOverBG"":""#FFE4B5"",
+""shipOverFG"":""#000000"",
+""shipOverBG"":""#F08080""
+},
+""quest"":{
+""typeFG"":""#000000"",
+""typeHensei"":""#AAFFAA"",
+""typeShutsugeki"":""#FFCCCC"",
+""typeEnshu"":""#DDFFAA"",
+""typeEnsei"":""#DDFFAA"",
+""typeHokyu"":""#CCFFFF"",
+""typeKojo"":""#DDCCBB"",
+""typeKaiso"":""#DDCCFF"",
+""processLT50"":""#FF8800"",
+""processLT80"":""#00CC00"",
+""processLT100"":""#008800"",
+""processDefault"":""#0088FF""
+},
+""compass"":{
+""shipClass2"":""#FF0000"",
+""shipClass3"":""#FF8800"",
+""shipClass4"":""#0088FF"",
+""shipClass5"":""#880000"",
+""shipClass6"":""#884400"",
+""eventKind3"":""#000080"",
+""eventKind6"":""#006400"",
+""eventKind5"":""#8B0000""
+},
+""battle"":{
+""barMVP"":""#FFE4B5"",
+""textMVP"":""#000000"",
+""textMVP2"":""#888888"",
+""barEscaped"":""#C0C0C0"",
+""textEscaped"":""#000000"",
+""textEscaped2"":""#888888"",
+""barBossDamaged"":""#FFE4E1"",
+""textBossDamaged"":""#000000"",
+""textBossDamaged2"":""#888888""
+}}}]");
+			#endregion
 			//if (File.Exists(@"Settings\ColorScheme.json")) {
 			try {
 				string s = String.Empty;
@@ -1418,15 +1581,34 @@ namespace ElectronicObserver.Utility {
 			Config.UI.StatusBarBackColor = ThemeColor("panelColors", "statusBarBG");
 			// 定义 UI (DockPanelSuite) 颜色
 			Config.UI.DockPanelSuiteStyles = new string[] {
-				ThemeColorHex("panelColors", "foreground"),
-				ThemeColorHex("panelColors", "background"),
-				ThemeColorHex("panelColors", "background2"),
-				ThemeColorHex("panelColors", "tabActiveFG"),
-				ThemeColorHex("panelColors", "tabActiveBG"),
-				ThemeColorHex("panelColors", "tabLostFocusFG"),
-				ThemeColorHex("panelColors", "tabLostFocusBG"),
-				ThemeColorHex("panelColors", "tabHoverFG"),
-				ThemeColorHex("panelColors", "tabHoverBG")
+				ThemePanelColorHex("skin", "panelSplitter"),
+				ThemePanelColorHex("skin", "docTabBarFG"),
+				ThemePanelColorHex("skin", "docTabBarBG"),
+				ThemePanelColorHex("skin", "docTabActiveFG"),
+				ThemePanelColorHex("skin", "docTabActiveBG"),
+				ThemePanelColorHex("skin", "docTabActiveLostFocusFG"),
+				ThemePanelColorHex("skin", "docTabActiveLostFocusBG"),
+				ThemePanelColorHex("skin", "docTabInactiveHoverFG"),
+				ThemePanelColorHex("skin", "docTabInactiveHoverBG"),
+				ThemePanelColorHex("skin", "docBtnActiveHoverFG"),
+				ThemePanelColorHex("skin", "docBtnActiveHoverBG"),
+				ThemePanelColorHex("skin", "docBtnActiveLostFocusHoverFG"),
+				ThemePanelColorHex("skin", "docBtnActiveLostFocusHoverBG"),
+				ThemePanelColorHex("skin", "docBtnInactiveHoverFG"),
+				ThemePanelColorHex("skin", "docBtnInactiveHoverBG"),
+				ThemePanelColorHex("skin", "toolTabBarFG"),
+				ThemePanelColorHex("skin", "toolTabBarBG"),
+				ThemePanelColorHex("skin", "toolTabActive"),
+				ThemePanelColorHex("skin", "toolTitleActiveFG"),
+				ThemePanelColorHex("skin", "toolTitleActiveBG"),
+				ThemePanelColorHex("skin", "toolTitleLostFocusFG"),
+				ThemePanelColorHex("skin", "toolTitleLostFocusBG"),
+				ThemePanelColorHex("skin", "toolTitleDotActive"),
+				ThemePanelColorHex("skin", "toolTitleDotLostFocus"),
+				ThemePanelColorHex("skin", "autoHideTabBarFG"),
+				ThemePanelColorHex("skin", "autoHideTabBarBG"),
+				ThemePanelColorHex("skin", "autoHideTabActive"),
+				ThemePanelColorHex("skin", "autoHideTabInactive")
 			};
 			// 定义数值条颜色
 			Config.UI.BarColorSchemes = new List<SerializableColor>[] {
@@ -1461,11 +1643,27 @@ namespace ElectronicObserver.Utility {
 			};
 			Config.UI.SetBarColorScheme();
 			// 设定各面板颜色
+			Config.UI.Fleet_ColorConditionText        = ThemePanelColor("fleet", "conditionText");
 			Config.UI.Fleet_ColorConditionVeryTired   = ThemePanelColor("fleet", "conditionVeryTired");
 			Config.UI.Fleet_ColorConditionTired       = ThemePanelColor("fleet", "conditionTired");
 			Config.UI.Fleet_ColorConditionLittleTired = ThemePanelColor("fleet", "conditionLittleTired");
 			Config.UI.Fleet_ColorConditionSparkle     = ThemePanelColor("fleet", "conditionSparkle");
-			Config.UI.Fleet_equipmentLevelColor = ThemePanelColor("fleet", "equipmentLevel");
+			Config.UI.Fleet_EquipmentLevelColor       = ThemePanelColor("fleet", "equipmentLevel");
+			Config.UI.FleetOverview_ShipDamagedFG    = ThemePanelColor("fleetOverview", "shipDamagedFG");
+			Config.UI.FleetOverview_ShipDamagedBG    = ThemePanelColor("fleetOverview", "shipDamagedBG");
+			Config.UI.FleetOverview_ExpeditionOverFG = ThemePanelColor("fleetOverview", "expeditionOverFG");
+			Config.UI.FleetOverview_ExpeditionOverBG = ThemePanelColor("fleetOverview", "expeditionOverBG");
+			Config.UI.FleetOverview_TiredRecoveredFG = ThemePanelColor("fleetOverview", "tiredRecoveredFG");
+			Config.UI.FleetOverview_TiredRecoveredBG = ThemePanelColor("fleetOverview", "tiredRecoveredBG");
+			Config.UI.Dock_RepairFinishedFG = ThemePanelColor("dock", "repairFinishedFG");
+			Config.UI.Dock_RepairFinishedBG = ThemePanelColor("dock", "repairFinishedBG");
+			Config.UI.Arsenal_BuildCompleteFG = ThemePanelColor("arsenal", "buildCompleteFG");
+			Config.UI.Arsenal_BuildCompleteBG = ThemePanelColor("arsenal", "buildCompleteBG");
+			Config.UI.Headquarters_ResourceOverFG  = ThemePanelColor("hq", "resOverFG");
+			Config.UI.Headquarters_ResourceOverBG  = ThemePanelColor("hq", "resOverBG");
+			Config.UI.Headquarters_ShipCountOverFG = ThemePanelColor("hq", "shipOverFG");
+			Config.UI.Headquarters_ShipCountOverBG = ThemePanelColor("hq", "shipOverBG");
+			Config.UI.Quest_TypeFG     = ThemePanelColor("quest", "typeFG");
 			Config.UI.Quest_Type1Color = ThemePanelColor("quest", "typeHensei");
 			Config.UI.Quest_Type2Color = ThemePanelColor("quest", "typeShutsugeki");
 			Config.UI.Quest_Type3Color = ThemePanelColor("quest", "typeEnshu");
@@ -1486,9 +1684,15 @@ namespace ElectronicObserver.Utility {
 			Config.UI.Compass_ColorTextEventKind6 = ThemePanelColor("compass", "eventKind6");
 			Config.UI.Compass_ColorTextEventKind5 = ThemePanelColor("compass", "eventKind5");
 			Config.UI.Compass_ColoroverlayBrush = ThemePanelColor("compass", "overlayBrush");
-			Config.UI.Battle_ColorHPBarsBossDamaged = ThemePanelColor("battle", "barBossDamaged");
 			Config.UI.Battle_ColorHPBarsMVP = ThemePanelColor("battle", "barMVP");
-			Config.UI.Battle_ColorHPBarsEscaped = ThemePanelColor("battle", "barBossDamaged");
+			Config.UI.Battle_ColorTextMVP   = ThemePanelColor("battle", "textMVP");
+			Config.UI.Battle_ColorTextMVP2  = ThemePanelColor("battle", "textMVP2");
+			Config.UI.Battle_ColorHPBarsEscaped = ThemePanelColor("battle", "barEscaped");
+			Config.UI.Battle_ColorTextEscaped   = ThemePanelColor("battle", "textEscaped");
+			Config.UI.Battle_ColorTextEscaped2  = ThemePanelColor("battle", "textEscaped2");
+			Config.UI.Battle_ColorHPBarsBossDamaged = ThemePanelColor("battle", "barBossDamaged");
+			Config.UI.Battle_ColorTextBossDamaged   = ThemePanelColor("battle", "textBossDamaged");
+			Config.UI.Battle_ColorTextBossDamaged2  = ThemePanelColor("battle", "textBossDamaged2");
 		}
 
 		private dynamic ThemeStyle;
@@ -1519,7 +1723,7 @@ namespace ElectronicObserver.Utility {
 					case "panelColors_background":
 						return SystemColors.Control;
 					case "panelColors_foreground2":
-						return SystemColors.ControlText;
+						return SystemColors.GrayText;
 					case "panelColors_background2":
 						return SystemColors.ControlLight;
 					case "panelColors_statusBarFG":
@@ -1538,6 +1742,8 @@ namespace ElectronicObserver.Utility {
 			} else {
 				switch (form + "_" + name) {
 					// 视图 - 舰队
+					case "fleet_conditionText":
+						return Config.UI.BackColor;
 					case "fleet_conditionVeryTired":
 						return Config.UI.Color_Red;
 					case "fleet_conditionTired":
@@ -1548,8 +1754,41 @@ namespace ElectronicObserver.Utility {
 						return Config.UI.Color_Blue;
 					case "fleet_equipmentLevel":
 						return Config.UI.Color_Cyan;
+					// 视图 - 舰队一览
+					case "fleetOverview_shipDamagedFG":
+						return Config.UI.BackColor;
+					case "fleetOverview_shipDamagedBG":
+						return Config.UI.Color_Red;
+					case "fleetOverview_expeditionOverFG":
+						return Config.UI.BackColor;
+					case "fleetOverview_expeditionOverBG":
+						return Config.UI.Color_Blue;
+					case "fleetOverview_tiredRecoveredFG":
+						return Config.UI.BackColor;
+					case "fleetOverview_tiredRecoveredBG":
+						return Config.UI.Color_Blue;
 					// 视图 - 司令部
+					case "hq_resOverFG":
+						return Config.UI.ForeColor;
+					case "hq_resOverBG":
+						return Config.UI.SubBackColor;
+					case "hq_shipOverFG":
+						return Config.UI.BackColor;
+					case "hq_shipOverBG":
+						return Config.UI.Color_Red;
+					// 视图 - 入渠
+					case "dock_repairFinishedFG":
+						return Config.UI.BackColor;
+					case "dock_repairFinishedBG":
+						return Config.UI.Color_Blue;
+					// 视图 - 工厂
+					case "arsenal_buildCompleteFG":
+						return Config.UI.BackColor;
+					case "arsenal_buildCompleteBG":
+						return Config.UI.Color_Blue;
 					// 视图 - 任务
+					case "quest_typeFG":
+						return Config.UI.BackColor;
 					case "quest_typeHensei":
 						return Config.UI.Color_Green;
 					case "quest_typeShutsugeki":
@@ -1592,12 +1831,25 @@ namespace ElectronicObserver.Utility {
 					case "compass_overlayBrush": // %75 透明度背景色
 						return Color.FromArgb(0xC0, Config.UI.BackColor);
 					// 视图 - 战斗
-					case "battle_barBossDamaged":
-						return Config.UI.Color_Orange;
 					case "battle_barMVP":
 						return Config.UI.Color_Blue;
+					case "battle_textMVP":
+						return Config.UI.BackColor;
+					case "battle_textMVP2":
+						return Config.UI.SubBackColor;
 					case "battle_barEscaped":
 						return Config.UI.SubBackColor;
+					case "battle_textEscaped":
+						return Config.UI.ForeColor;
+					case "battle_textEscaped2":
+						return Config.UI.SubForeColor;
+					case "battle_barBossDamaged":
+						return Config.UI.Color_Orange;
+					case "battle_textBossDamaged":
+						return Config.UI.BackColor;
+					case "battle_textBossDamaged2":
+						return Config.UI.SubBackColor;
+					// 未定义颜色
 					default:
 						return Color.Magenta;
 				}
@@ -1628,59 +1880,128 @@ namespace ElectronicObserver.Utility {
 			}
 		}
 
+		private String ThemePanelColorHex(string form, string name) {
+			if (ThemeStyle.IsDefined("panelColors") && ThemeStyle["panelColors"].IsDefined(form) && ThemeStyle["panelColors"][form].IsDefined(name)) {
+				return ThemeStyle["panelColors"][form][name];
+			} else {
+				switch (form + "_" + name) {
+					// 面板分割线
+					case "skin_panelSplitter":
+						return ThemeColorHex("panelColors", "background2");
+					case "skin_docTabBarFG":
+						return ThemeColorHex("panelColors", "foreground2");
+					case "skin_docTabBarBG":
+						return ThemeColorHex("panelColors", "background");
+					case "skin_docTabActiveFG":
+						return ThemeColorHex("panelColors", "foreground");
+					case "skin_docTabActiveBG":
+						return ThemeColorHex("panelColors", "background2");
+					case "skin_docTabActiveLostFocusFG":
+						return ThemeColorHex("panelColors", "foreground");
+					case "skin_docTabActiveLostFocusBG":
+						return ThemeColorHex("panelColors", "background2");
+					case "skin_docTabInactiveHoverFG":
+						return ThemeColorHex("panelColors", "foreground");
+					case "skin_docTabInactiveHoverBG":
+						return ThemeColorHex("panelColors", "background2");
+					case "skin_docBtnActiveHoverFG":
+						return ThemeColorHex("panelColors", "foreground");
+					case "skin_docBtnActiveHoverBG":
+						return ThemeColorHex("panelColors", "background2");
+					case "skin_docBtnActiveLostFocusHoverFG":
+						return ThemeColorHex("panelColors", "foreground");
+					case "skin_docBtnActiveLostFocusHoverBG":
+						return ThemeColorHex("panelColors", "background2");
+					case "skin_docBtnInactiveHoverFG":
+						return ThemeColorHex("panelColors", "foreground");
+					case "skin_docBtnInactiveHoverBG":
+						return ThemeColorHex("panelColors", "background2");
+					case "skin_toolTabBarFG":
+						return ThemeColorHex("panelColors", "foreground2");
+					case "skin_toolTabBarBG":
+						return ThemeColorHex("panelColors", "background");
+					case "skin_toolTabActive":
+						return ThemeColorHex("panelColors", "foreground");
+					case "skin_toolTitleActiveFG":
+						return ThemeColorHex("panelColors", "foreground");
+					case "skin_toolTitleActiveBG":
+						return ThemeColorHex("panelColors", "background2");
+					case "skin_toolTitleLostFocusFG":
+						return ThemeColorHex("panelColors", "foreground2");
+					case "skin_toolTitleLostFocusBG":
+						return ThemeColorHex("panelColors", "background");
+					case "skin_toolTitleDotActive":
+						return ThemeColorHex("panelColors", "background");
+					case "skin_toolTitleDotLostFocus":
+						return ThemeColorHex("panelColors", "background2");
+					case "skin_autoHideTabBarFG":
+						return ThemeColorHex("panelColors", "background2");
+					case "skin_autoHideTabBarBG":
+						return ThemeColorHex("panelColors", "background");
+					case "skin_autoHideTabActive":
+						return ThemeColorHex("panelColors", "foreground");
+					case "skin_autoHideTabInactive":
+						return ThemeColorHex("panelColors", "foreground2");
+					default:
+						var c = ThemePanelColor(form, name);
+						return "#" + c.R.ToString("X2") + c.G.ToString("X2") + c.B.ToString("X2");
+				}
+			}
+		}
+
 		private Color ThemeBarColor(int type, int index) {
 			if (ThemeStyle.IsDefined("barColors") && ThemeStyle["barColors"].IsDefined(type) && ThemeStyle["barColors"][type].IsDefined(11)) {
 				return ColorTranslator.FromHtml(ThemeStyle["barColors"][type][index]);
 			} else {
 				switch (type + "_" + index) {
 					case "0_0":
-						return ColorTranslator.FromHtml("#FF0000");
+						return Config.UI.Color_Red;
 					case "0_1":
-						return ColorTranslator.FromHtml("#FF0000");
+						return Config.UI.Color_Red;
 					case "0_2":
-						return ColorTranslator.FromHtml("#FF8800");
+						return Config.UI.Color_Orange;
 					case "0_3":
-						return ColorTranslator.FromHtml("#FF8800");
+						return Config.UI.Color_Orange;
 					case "0_4":
-						return ColorTranslator.FromHtml("#FFCC00");
+						return Config.UI.Color_Yellow;
 					case "0_5":
-						return ColorTranslator.FromHtml("#FFCC00");
+						return Config.UI.Color_Yellow;
 					case "0_6":
-						return ColorTranslator.FromHtml("#00CC00");
+						return Config.UI.Color_Green;
 					case "0_7":
-						return ColorTranslator.FromHtml("#00CC00");
+						return Config.UI.Color_Green;
 					case "0_8":
-						return ColorTranslator.FromHtml("#0044CC");
+						return Config.UI.Color_Blue;
 					case "0_9":
-						return ColorTranslator.FromHtml("#44FF00");
+						return Config.UI.Color_Magenta;
 					case "0_10":
-						return ColorTranslator.FromHtml("#882222");
+						return Config.UI.Color_Magenta;
 					case "0_11":
-						return ColorTranslator.FromHtml("#888888");
+						return Config.UI.SubBackColor;
 					case "1_0":
-						return ColorTranslator.FromHtml("#FF0000");
+						return ThemeBarColor(0, 0);
 					case "1_1":
-						return ColorTranslator.FromHtml("#FF0000");
+						return ThemeBarColor(0, 1);
 					case "1_2":
-						return ColorTranslator.FromHtml("#FF4400");
+						return ThemeBarColor(0, 2);
 					case "1_3":
-						return ColorTranslator.FromHtml("#FF8800");
+						return ThemeBarColor(0, 3);
 					case "1_4":
-						return ColorTranslator.FromHtml("#FFAA00");
+						return ThemeBarColor(0, 4);
 					case "1_5":
-						return ColorTranslator.FromHtml("#EEEE00");
+						return ThemeBarColor(0, 5);
 					case "1_6":
-						return ColorTranslator.FromHtml("#CCEE00");
+						return ThemeBarColor(0, 6);
 					case "1_7":
-						return ColorTranslator.FromHtml("#00CC00");
+						return ThemeBarColor(0, 7);
 					case "1_8":
-						return ColorTranslator.FromHtml("#0044CC");
+						return ThemeBarColor(0, 8);
 					case "1_9":
-						return ColorTranslator.FromHtml("#00FF44");
+						return ThemeBarColor(0, 9);
 					case "1_10":
-						return ColorTranslator.FromHtml("#882222");
+						return ThemeBarColor(0, 10);
 					case "1_11":
-						return ColorTranslator.FromHtml("#888888");
+						return ThemeBarColor(0, 11);
 					default:
 						return Color.Magenta;
 				}

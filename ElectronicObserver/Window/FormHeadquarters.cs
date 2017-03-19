@@ -121,13 +121,13 @@ namespace ElectronicObserver.Window {
 			// 点滅しない設定にしたときに消灯状態で固定されるのを防ぐ
 			if ( !Utility.Configuration.Config.FormHeadquarters.BlinkAtMaximum ) {
 				if ( ShipCount.Tag as bool? ?? false ) {
-					ShipCount.BackColor = Utility.Configuration.Config.UI.Blink_BackColorLightCoral;
-					ShipCount.ForeColor = Utility.Configuration.Config.UI.Blink_ForeColor;
+					ShipCount.BackColor = Utility.Configuration.Config.UI.Headquarters_ShipCountOverBG;
+					ShipCount.ForeColor = Utility.Configuration.Config.UI.Headquarters_ShipCountOverFG;
 				}
 
 				if ( EquipmentCount.Tag as bool? ?? false ) {
-					EquipmentCount.BackColor = Utility.Configuration.Config.UI.Blink_BackColorLightCoral;
-					EquipmentCount.ForeColor = Utility.Configuration.Config.UI.Blink_ForeColor;
+					EquipmentCount.BackColor = Utility.Configuration.Config.UI.Headquarters_ShipCountOverBG;
+					EquipmentCount.ForeColor = Utility.Configuration.Config.UI.Headquarters_ShipCountOverFG;
 				}
 			}
 
@@ -274,8 +274,8 @@ namespace ElectronicObserver.Window {
 
 				ShipCount.Text = string.Format( "{0}/{1}", RealShipCount, db.Admiral.MaxShipCount );
 				if ( RealShipCount > db.Admiral.MaxShipCount - 5 ) {
-					ShipCount.BackColor = Utility.Configuration.Config.UI.Blink_BackColorLightCoral;
-					ShipCount.ForeColor = Utility.Configuration.Config.UI.Blink_ForeColor;
+					ShipCount.BackColor = Utility.Configuration.Config.UI.Headquarters_ShipCountOverBG;
+					ShipCount.ForeColor = Utility.Configuration.Config.UI.Headquarters_ShipCountOverFG;
 				} else {
 					ShipCount.BackColor = Color.Transparent;
 					ShipCount.ForeColor = Utility.Configuration.Config.UI.ForeColor;
@@ -284,8 +284,8 @@ namespace ElectronicObserver.Window {
 
 				EquipmentCount.Text = string.Format( "{0}/{1}", RealEquipmentCount, db.Admiral.MaxEquipmentCount );
 				if ( RealEquipmentCount > db.Admiral.MaxEquipmentCount + 3 - 20 ) {
-					EquipmentCount.BackColor = Utility.Configuration.Config.UI.Blink_BackColorLightCoral;
-					EquipmentCount.ForeColor = Utility.Configuration.Config.UI.Blink_ForeColor;
+					EquipmentCount.BackColor = Utility.Configuration.Config.UI.Headquarters_ShipCountOverBG;
+					EquipmentCount.ForeColor = Utility.Configuration.Config.UI.Headquarters_ShipCountOverFG;
 				} else {
 					EquipmentCount.BackColor = Color.Transparent;
 					EquipmentCount.ForeColor = Utility.Configuration.Config.UI.ForeColor;
@@ -348,31 +348,53 @@ namespace ElectronicObserver.Window {
 			//Resources
 			FlowPanelResource.SuspendLayout();
 			{
-				Color overcolor = Utility.Configuration.Config.UI.SubBackColor;
-
 				Fuel.Text = db.Material.Fuel.ToString();
-				Fuel.BackColor = db.Material.Fuel < db.Admiral.MaxResourceRegenerationAmount ? Color.Transparent : overcolor;
+				if (db.Material.Fuel < db.Admiral.MaxResourceRegenerationAmount) {
+					Fuel.ForeColor = Utility.Configuration.Config.UI.Headquarters_ResourceOverFG;
+					Fuel.BackColor = Utility.Configuration.Config.UI.Headquarters_ResourceOverBG;
+				} else {
+					Fuel.ForeColor = Utility.Configuration.Config.UI.ForeColor;
+					Fuel.BackColor = Color.Transparent;
+				}
 				ToolTipInfo.SetToolTip( Fuel, string.Format( "今日 : {0:+##;-##;±0}\n本周 : {1:+##;-##;±0}\n本月 : {2:+##;-##;±0}",
 					resday == null ? 0 : ( db.Material.Fuel - resday.Fuel ),
 					resweek == null ? 0 : ( db.Material.Fuel - resweek.Fuel ),
 					resmonth == null ? 0 : ( db.Material.Fuel - resmonth.Fuel ) ) );
 
 				Ammo.Text = db.Material.Ammo.ToString();
-				Ammo.BackColor = db.Material.Ammo < db.Admiral.MaxResourceRegenerationAmount ? Color.Transparent : overcolor;
+				if (db.Material.Ammo < db.Admiral.MaxResourceRegenerationAmount) {
+					Ammo.ForeColor = Utility.Configuration.Config.UI.Headquarters_ResourceOverFG;
+					Ammo.BackColor = Utility.Configuration.Config.UI.Headquarters_ResourceOverBG;
+				} else {
+					Ammo.ForeColor = Utility.Configuration.Config.UI.ForeColor;
+					Ammo.BackColor = Color.Transparent;
+				}
 				ToolTipInfo.SetToolTip( Ammo, string.Format( "今日 : {0:+##;-##;±0}\n本周 : {1:+##;-##;±0}\n本月 : {2:+##;-##;±0}",
 					resday == null ? 0 : ( db.Material.Ammo - resday.Ammo ),
 					resweek == null ? 0 : ( db.Material.Ammo - resweek.Ammo ),
 					resmonth == null ? 0 : ( db.Material.Ammo - resmonth.Ammo ) ) );
 
 				Steel.Text = db.Material.Steel.ToString();
-				Steel.BackColor = db.Material.Steel < db.Admiral.MaxResourceRegenerationAmount ? Color.Transparent : overcolor;
+				if (db.Material.Steel < db.Admiral.MaxResourceRegenerationAmount) {
+					Steel.ForeColor = Utility.Configuration.Config.UI.Headquarters_ResourceOverFG;
+					Steel.BackColor = Utility.Configuration.Config.UI.Headquarters_ResourceOverBG;
+				} else {
+					Steel.ForeColor = Utility.Configuration.Config.UI.ForeColor;
+					Steel.BackColor = Color.Transparent;
+				}
 				ToolTipInfo.SetToolTip( Steel, string.Format( "今日 : {0:+##;-##;±0}\n本周 : {1:+##;-##;±0}\n本月 : {2:+##;-##;±0}",
 					resday == null ? 0 : ( db.Material.Steel - resday.Steel ),
 					resweek == null ? 0 : ( db.Material.Steel - resweek.Steel ),
 					resmonth == null ? 0 : ( db.Material.Steel - resmonth.Steel ) ) );
 
 				Bauxite.Text = db.Material.Bauxite.ToString();
-				Bauxite.BackColor = db.Material.Bauxite < db.Admiral.MaxResourceRegenerationAmount ? Color.Transparent : overcolor;
+				if (db.Material.Bauxite < db.Admiral.MaxResourceRegenerationAmount) {
+					Bauxite.ForeColor = Utility.Configuration.Config.UI.Headquarters_ResourceOverFG;
+					Bauxite.BackColor = Utility.Configuration.Config.UI.Headquarters_ResourceOverBG;
+				} else {
+					Bauxite.ForeColor = Utility.Configuration.Config.UI.ForeColor;
+					Bauxite.BackColor = Color.Transparent;
+				}
 				ToolTipInfo.SetToolTip( Bauxite, string.Format( "今日 : {0:+##;-##;±0}\n本周 : {1:+##;-##;±0}\n本月 : {2:+##;-##;±0}",
 					resday == null ? 0 : ( db.Material.Bauxite - resday.Bauxite ),
 					resweek == null ? 0 : ( db.Material.Bauxite - resweek.Bauxite ),
@@ -398,13 +420,13 @@ namespace ElectronicObserver.Window {
 
 			if ( Utility.Configuration.Config.FormHeadquarters.BlinkAtMaximum ) {
 				if ( ShipCount.Tag as bool? ?? false ) {
-					ShipCount.BackColor = DateTime.Now.Second % 2 == 0 ? Utility.Configuration.Config.UI.Blink_BackColorLightCoral : Color.Transparent;
-					ShipCount.ForeColor = DateTime.Now.Second % 2 == 0 ? Utility.Configuration.Config.UI.Blink_ForeColor : Utility.Configuration.Config.UI.ForeColor;
+					ShipCount.BackColor = DateTime.Now.Second % 2 == 0 ? Utility.Configuration.Config.UI.Headquarters_ShipCountOverBG : Color.Transparent;
+					ShipCount.ForeColor = DateTime.Now.Second % 2 == 0 ? Utility.Configuration.Config.UI.Headquarters_ShipCountOverFG : Utility.Configuration.Config.UI.ForeColor;
 				}
 
 				if ( EquipmentCount.Tag as bool? ?? false ) {
-					EquipmentCount.BackColor = DateTime.Now.Second % 2 == 0 ? Utility.Configuration.Config.UI.Blink_BackColorLightCoral : Color.Transparent;
-					EquipmentCount.ForeColor = DateTime.Now.Second % 2 == 0 ? Utility.Configuration.Config.UI.Blink_ForeColor : Utility.Configuration.Config.UI.ForeColor;
+					EquipmentCount.BackColor = DateTime.Now.Second % 2 == 0 ? Utility.Configuration.Config.UI.Headquarters_ShipCountOverBG : Color.Transparent;
+					EquipmentCount.ForeColor = DateTime.Now.Second % 2 == 0 ? Utility.Configuration.Config.UI.Headquarters_ShipCountOverFG : Utility.Configuration.Config.UI.ForeColor;
 				}
 			}
 		}

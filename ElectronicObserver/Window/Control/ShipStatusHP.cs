@@ -279,9 +279,15 @@ namespace ElectronicObserver.Window.Control {
 			if (this.BackColor == Utility.Configuration.Config.UI.BackColor) {
 				_mainFontColor = Utility.Configuration.Config.UI.ForeColor;
 				_subFontColor  = Utility.Configuration.Config.UI.SubForeColor;
-			} else {
-				_mainFontColor = Utility.Configuration.Config.UI.Blink_ForeColor;
-				_subFontColor  = Utility.Configuration.Config.UI.Blink_SubForeColor;
+			} else if (this.BackColor == Utility.Configuration.Config.UI.Battle_ColorHPBarsMVP) {
+				_mainFontColor = Utility.Configuration.Config.UI.Battle_ColorTextMVP;
+				_subFontColor  = Utility.Configuration.Config.UI.Battle_ColorTextMVP2;
+			} else if (this.BackColor == Utility.Configuration.Config.UI.Battle_ColorHPBarsEscaped) {
+				_mainFontColor = Utility.Configuration.Config.UI.Battle_ColorTextEscaped;
+				_subFontColor  = Utility.Configuration.Config.UI.Battle_ColorTextEscaped2;
+			} else if (this.BackColor == Utility.Configuration.Config.UI.Battle_ColorHPBarsBossDamaged) {
+				_mainFontColor = Utility.Configuration.Config.UI.Battle_ColorTextBossDamaged;
+				_subFontColor  = Utility.Configuration.Config.UI.Battle_ColorTextBossDamaged2;
 			}
 			this.Refresh();
 		}

@@ -679,17 +679,17 @@ namespace ElectronicObserver.Window {
 					if ( cond < 20 )
 					{
 						Condition.BackColor = Utility.Configuration.Config.UI.Fleet_ColorConditionVeryTired;
-						Condition.ForeColor = Utility.Configuration.Config.UI.Blink_ForeColor;
+						Condition.ForeColor = Utility.Configuration.Config.UI.Fleet_ColorConditionText;
 					}
 					else if ( cond < 30 )
 					{
 						Condition.BackColor = Utility.Configuration.Config.UI.Fleet_ColorConditionTired;
-						Condition.ForeColor = Utility.Configuration.Config.UI.Blink_ForeColor;
+						Condition.ForeColor = Utility.Configuration.Config.UI.Fleet_ColorConditionText;
 					}
 					else if ( cond < 40 )
 					{
 						Condition.BackColor = Utility.Configuration.Config.UI.Fleet_ColorConditionLittleTired;
-						Condition.ForeColor = Utility.Configuration.Config.UI.Blink_ForeColor;
+						Condition.ForeColor = Utility.Configuration.Config.UI.Fleet_ColorConditionText;
 					}
 					else if ( cond < 50 )
 					{
@@ -699,7 +699,7 @@ namespace ElectronicObserver.Window {
 					else
 					{
 						Condition.BackColor = Utility.Configuration.Config.UI.Fleet_ColorConditionSparkle;
-						Condition.ForeColor = Utility.Configuration.Config.UI.Blink_ForeColor;
+						Condition.ForeColor = Utility.Configuration.Config.UI.Fleet_ColorConditionText;
 					}
 
 				} else {

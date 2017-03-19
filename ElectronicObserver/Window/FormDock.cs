@@ -131,8 +131,8 @@ namespace ElectronicObserver.Window {
 					RepairTime.Text = DateTimeHelper.ToTimeRemainString( time );
 
 					if ( Utility.Configuration.Config.FormDock.BlinkAtCompletion && ( time - DateTime.Now ).TotalMilliseconds <= Utility.Configuration.Config.NotifierRepair.AccelInterval ) {
-						RepairTime.BackColor = DateTime.Now.Second % 2 == 0 ? Utility.Configuration.Config.UI.Blink_BackColorLightGreen : Color.Transparent;
-						RepairTime.ForeColor = DateTime.Now.Second % 2 == 0 ? Utility.Configuration.Config.UI.Blink_ForeColor : Utility.Configuration.Config.UI.ForeColor;
+						RepairTime.BackColor = DateTime.Now.Second % 2 == 0 ? Utility.Configuration.Config.UI.Dock_RepairFinishedBG : Color.Transparent;
+						RepairTime.ForeColor = DateTime.Now.Second % 2 == 0 ? Utility.Configuration.Config.UI.Dock_RepairFinishedFG : Utility.Configuration.Config.UI.ForeColor;
 					}
 				}
 			}
