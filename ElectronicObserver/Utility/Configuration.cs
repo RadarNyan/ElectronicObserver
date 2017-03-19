@@ -314,6 +314,18 @@ namespace ElectronicObserver.Utility {
 				public Color Headquarters_ShipCountOverFG { get; set; }
 				[IgnoreDataMember] // 剩余船位、装备位不满足活动图出击要求时闪烁背景色
 				public Color Headquarters_ShipCountOverBG { get; set; }
+				[IgnoreDataMember] // 资材达到 3,000 个时文字色
+				public Color Headquarters_MaterialMaxFG { get; set; }
+				[IgnoreDataMember] // 资材达到 3,000 个时背景色
+				public Color Headquarters_MaterialMaxBG { get; set; }
+				[IgnoreDataMember] // 家具币达到 200,000 个时文字色
+				public Color Headquarters_CoinMaxFG { get; set; }
+				[IgnoreDataMember] // 家具币达到 200,000 个时背景色
+				public Color Headquarters_CoinMaxBG { get; set; }
+				[IgnoreDataMember] // 资源储量达到 300,000 时文字色
+				public Color Headquarters_ResourceMaxFG { get; set; }
+				[IgnoreDataMember] // 资源储量达到 300,000 时背景色
+				public Color Headquarters_ResourceMaxBG { get; set; }
 
 				// 视图 - 任务
 				[IgnoreDataMember] // 任务类型文字色
@@ -1531,7 +1543,13 @@ namespace ElectronicObserver.Utility {
 ""resOverFG"":""#000000"",
 ""resOverBG"":""#FFE4B5"",
 ""shipOverFG"":""#000000"",
-""shipOverBG"":""#F08080""
+""shipOverBG"":""#F08080"",
+""materialMaxFG"":""#000000"",
+""materialMaxBG"":""#F08080"",
+""coinMaxFG"":""#000000"",
+""coinMaxFG"":""#F08080"",
+""resMaxFG"":""#000000"",
+""resMaxBG"":""#F08080""
 },
 ""quest"":{
 ""typeFG"":""#000000"",
@@ -1696,6 +1714,12 @@ namespace ElectronicObserver.Utility {
 			Config.UI.Headquarters_ResourceOverBG  = ThemePanelColor("hq", "resOverBG");
 			Config.UI.Headquarters_ShipCountOverFG = ThemePanelColor("hq", "shipOverFG");
 			Config.UI.Headquarters_ShipCountOverBG = ThemePanelColor("hq", "shipOverBG");
+			Config.UI.Headquarters_MaterialMaxFG   = ThemePanelColor("hq", "materialMaxFG");
+			Config.UI.Headquarters_MaterialMaxBG   = ThemePanelColor("hq", "materialMaxBG");
+			Config.UI.Headquarters_CoinMaxFG       = ThemePanelColor("hq", "coinMaxFG");
+			Config.UI.Headquarters_CoinMaxBG       = ThemePanelColor("hq", "coinMaxBG");
+			Config.UI.Headquarters_ResourceMaxFG   = ThemePanelColor("hq", "resMaxFG");
+			Config.UI.Headquarters_ResourceMaxBG   = ThemePanelColor("hq", "resMaxBG");
 			Config.UI.Quest_TypeFG     = ThemePanelColor("quest", "typeFG");
 			Config.UI.Quest_Type1Color = ThemePanelColor("quest", "typeHensei");
 			Config.UI.Quest_Type2Color = ThemePanelColor("quest", "typeShutsugeki");
@@ -1809,6 +1833,18 @@ namespace ElectronicObserver.Utility {
 						return Config.UI.BackColor;
 					case "hq_shipOverBG":
 						return Config.UI.Color_Red;
+					case "hq_materialMaxFG":
+						return Config.UI.BackColor;
+					case "hq_materialMaxBG":
+						return Config.UI.Color_Blue;
+					case "hq_coinMaxFG":
+						return Config.UI.BackColor;
+					case "hq_coinMaxBG":
+						return Config.UI.Color_Blue;
+					case "hq_resMaxFG":
+						return Config.UI.BackColor;
+					case "hq_resMaxBG":
+						return Config.UI.Color_Blue;
 					// 视图 - 入渠
 					case "dock_repairFinishedFG":
 						return Config.UI.BackColor;

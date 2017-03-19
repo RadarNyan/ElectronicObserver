@@ -202,12 +202,6 @@ namespace ElectronicObserver.Window {
 			if ( !db.Admiral.IsAvailable )
 				return;
 
-
-			// 資源上限超過時の色
-			Color overcolor = Color.Moccasin;
-
-
-
 			FlowPanelMaster.SuspendLayout();
 
 			//Admiral
@@ -311,35 +305,65 @@ namespace ElectronicObserver.Window {
 			FlowPanelUseItem.SuspendLayout();
 
 			InstantRepair.Text = db.Material.InstantRepair.ToString();
-			InstantRepair.BackColor = db.Material.InstantRepair >= 3000 ? overcolor : Color.Transparent;
+			if (db.Material.InstantRepair >= 3000) {
+				InstantRepair.ForeColor = Utility.Configuration.Config.UI.Headquarters_MaterialMaxFG;
+				InstantRepair.BackColor = Utility.Configuration.Config.UI.Headquarters_MaterialMaxBG;
+			} else {
+				InstantRepair.ForeColor = Utility.Configuration.Config.UI.ForeColor;
+				InstantRepair.BackColor = Color.Transparent;
+			}
 			ToolTipInfo.SetToolTip( InstantRepair, string.Format( "今日 : {0:+##;-##;±0}\n本周 : {1:+##;-##;±0}\n本月 : {2:+##;-##;±0}",
 					resday == null ? 0 : ( db.Material.InstantRepair - resday.InstantRepair ),
 					resweek == null ? 0 : ( db.Material.InstantRepair - resweek.InstantRepair ),
 					resmonth == null ? 0 : ( db.Material.InstantRepair - resmonth.InstantRepair ) ) );
 
 			InstantConstruction.Text = db.Material.InstantConstruction.ToString();
-			InstantConstruction.BackColor = db.Material.InstantConstruction >= 3000 ? overcolor : Color.Transparent;
+			if (db.Material.InstantConstruction >= 3000) {
+				InstantConstruction.ForeColor = Utility.Configuration.Config.UI.Headquarters_MaterialMaxFG;
+				InstantConstruction.BackColor = Utility.Configuration.Config.UI.Headquarters_MaterialMaxBG;
+			} else {
+				InstantConstruction.ForeColor = Utility.Configuration.Config.UI.ForeColor;
+				InstantConstruction.BackColor = Color.Transparent;
+			}
 			ToolTipInfo.SetToolTip( InstantConstruction, string.Format( "今日 : {0:+##;-##;±0}\n本周 : {1:+##;-##;±0}\n本月 : {2:+##;-##;±0}",
 					resday == null ? 0 : ( db.Material.InstantConstruction - resday.InstantConstruction ),
 					resweek == null ? 0 : ( db.Material.InstantConstruction - resweek.InstantConstruction ),
 					resmonth == null ? 0 : ( db.Material.InstantConstruction - resmonth.InstantConstruction ) ) );
 
 			DevelopmentMaterial.Text = db.Material.DevelopmentMaterial.ToString();
-			DevelopmentMaterial.BackColor = db.Material.DevelopmentMaterial >= 3000 ? overcolor : Color.Transparent;
+			if (db.Material.DevelopmentMaterial >= 3000) {
+				DevelopmentMaterial.ForeColor = Utility.Configuration.Config.UI.Headquarters_MaterialMaxFG;
+				DevelopmentMaterial.BackColor = Utility.Configuration.Config.UI.Headquarters_MaterialMaxBG;
+			} else {
+				DevelopmentMaterial.ForeColor = Utility.Configuration.Config.UI.ForeColor;
+				DevelopmentMaterial.BackColor = Color.Transparent;
+			}
 			ToolTipInfo.SetToolTip( DevelopmentMaterial, string.Format( "今日 : {0:+##;-##;±0}\n本周 : {1:+##;-##;±0}\n本月 : {2:+##;-##;±0}",
 					resday == null ? 0 : ( db.Material.DevelopmentMaterial - resday.DevelopmentMaterial ),
 					resweek == null ? 0 : ( db.Material.DevelopmentMaterial - resweek.DevelopmentMaterial ),
 					resmonth == null ? 0 : ( db.Material.DevelopmentMaterial - resmonth.DevelopmentMaterial ) ) );
 
 			ModdingMaterial.Text = db.Material.ModdingMaterial.ToString();
-			ModdingMaterial.BackColor = db.Material.ModdingMaterial >= 3000 ? overcolor : Color.Transparent;
+			if (db.Material.ModdingMaterial >= 3000) {
+				ModdingMaterial.ForeColor = Utility.Configuration.Config.UI.Headquarters_MaterialMaxFG;
+				ModdingMaterial.BackColor = Utility.Configuration.Config.UI.Headquarters_MaterialMaxBG;
+			} else {
+				ModdingMaterial.ForeColor = Utility.Configuration.Config.UI.ForeColor;
+				ModdingMaterial.BackColor = Color.Transparent;
+			}
 			ToolTipInfo.SetToolTip( ModdingMaterial, string.Format( "今日 : {0:+##;-##;±0}\n本周 : {1:+##;-##;±0}\n本月 : {2:+##;-##;±0}",
 					resday == null ? 0 : ( db.Material.ModdingMaterial - resday.ModdingMaterial ),
 					resweek == null ? 0 : ( db.Material.ModdingMaterial - resweek.ModdingMaterial ),
 					resmonth == null ? 0 : ( db.Material.ModdingMaterial - resmonth.ModdingMaterial ) ) );
 
 			FurnitureCoin.Text = db.Admiral.FurnitureCoin.ToString();
-			FurnitureCoin.BackColor = db.Admiral.FurnitureCoin >= 200000 ? overcolor : Color.Transparent;
+			if (db.Admiral.FurnitureCoin >= 200000) {
+				FurnitureCoin.ForeColor = Utility.Configuration.Config.UI.Headquarters_CoinMaxFG;
+				FurnitureCoin.BackColor = Utility.Configuration.Config.UI.Headquarters_CoinMaxBG;
+			} else {
+				FurnitureCoin.ForeColor = Utility.Configuration.Config.UI.ForeColor;
+				FurnitureCoin.BackColor = Color.Transparent;
+			}
 			{
 				int small = db.UseItems[10] != null ? db.UseItems[10].Count : 0;
 				int medium = db.UseItems[11] != null ? db.UseItems[11].Count : 0;
@@ -360,7 +384,11 @@ namespace ElectronicObserver.Window {
 			{
 				
 				Fuel.Text = db.Material.Fuel.ToString();
-				if (db.Material.Fuel < db.Admiral.MaxResourceRegenerationAmount) {
+
+				if (db.Material.Fuel >= 300000) {
+					Fuel.ForeColor = Utility.Configuration.Config.UI.Headquarters_ResourceMaxFG;
+					Fuel.BackColor = Utility.Configuration.Config.UI.Headquarters_ResourceMaxBG;
+				} else if (db.Material.Fuel < db.Admiral.MaxResourceRegenerationAmount) {
 					Fuel.ForeColor = Utility.Configuration.Config.UI.Headquarters_ResourceOverFG;
 					Fuel.BackColor = Utility.Configuration.Config.UI.Headquarters_ResourceOverBG;
 				} else {
@@ -373,7 +401,10 @@ namespace ElectronicObserver.Window {
 					resmonth == null ? 0 : ( db.Material.Fuel - resmonth.Fuel ) ) );
 
 				Ammo.Text = db.Material.Ammo.ToString();
-				if (db.Material.Ammo < db.Admiral.MaxResourceRegenerationAmount) {
+				if (db.Material.Ammo >= 300000) {
+					Ammo.ForeColor = Utility.Configuration.Config.UI.Headquarters_ResourceMaxFG;
+					Ammo.BackColor = Utility.Configuration.Config.UI.Headquarters_ResourceMaxBG;
+				} else if (db.Material.Ammo < db.Admiral.MaxResourceRegenerationAmount) {
 					Ammo.ForeColor = Utility.Configuration.Config.UI.Headquarters_ResourceOverFG;
 					Ammo.BackColor = Utility.Configuration.Config.UI.Headquarters_ResourceOverBG;
 				} else {
@@ -386,7 +417,10 @@ namespace ElectronicObserver.Window {
 					resmonth == null ? 0 : ( db.Material.Ammo - resmonth.Ammo ) ) );
 
 				Steel.Text = db.Material.Steel.ToString();
-				if (db.Material.Steel < db.Admiral.MaxResourceRegenerationAmount) {
+				if (db.Material.Steel >= 300000) {
+					Steel.ForeColor = Utility.Configuration.Config.UI.Headquarters_ResourceMaxFG;
+					Steel.BackColor = Utility.Configuration.Config.UI.Headquarters_ResourceMaxBG;
+				} else if (db.Material.Steel < db.Admiral.MaxResourceRegenerationAmount) {
 					Steel.ForeColor = Utility.Configuration.Config.UI.Headquarters_ResourceOverFG;
 					Steel.BackColor = Utility.Configuration.Config.UI.Headquarters_ResourceOverBG;
 				} else {
@@ -399,7 +433,10 @@ namespace ElectronicObserver.Window {
 					resmonth == null ? 0 : ( db.Material.Steel - resmonth.Steel ) ) );
 
 				Bauxite.Text = db.Material.Bauxite.ToString();
-				if (db.Material.Bauxite < db.Admiral.MaxResourceRegenerationAmount) {
+				if (db.Material.Bauxite >= 300000) {
+					Bauxite.ForeColor = Utility.Configuration.Config.UI.Headquarters_ResourceMaxFG;
+					Bauxite.BackColor = Utility.Configuration.Config.UI.Headquarters_ResourceMaxBG;
+				} else if (db.Material.Bauxite < db.Admiral.MaxResourceRegenerationAmount) {
 					Bauxite.ForeColor = Utility.Configuration.Config.UI.Headquarters_ResourceOverFG;
 					Bauxite.BackColor = Utility.Configuration.Config.UI.Headquarters_ResourceOverBG;
 				} else {
