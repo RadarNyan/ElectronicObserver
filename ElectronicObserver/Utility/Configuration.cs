@@ -2355,18 +2355,58 @@ namespace ElectronicObserver.Utility {
 			}
 
 
-			// version 2.5.5.1 or earlier
-			if ( dt <= DateTimeHelper.CSVStringToTime( "2017/03/30 00:00:00" ) ) {
 
-				if ( MessageBox.Show( "艦これ本体の仕様変更に伴い、レコードデータを変換する必要があります。\r\n変換を実行しますか？\r\n(変換しない場合、動作に問題が発生する可能性があります。)", "バージョンアップに伴う確認(～2.5.5.1)",
+			// version RN-2.5.4.1-m1 or earlier
+			if ( dt <= DateTimeHelper.CSVStringToTime( "2017/03/19 16:08:50" ) ) {
+
+				if ( MessageBox.Show(
+					"由于「艦これ」的更新，需要转换记录文件。\r\n要进行转换吗？\r\n( 若不进行转换，可能导致工作不正常。)\r\n\r\n转换前请备份：\r\nEnemyFleetRecord.csv\r\nShipDropRecord.csv\r\nShipParameterRecord.csv", "由 2.5.4.1-m1-patch1 或更早版本的更新确认",
 					MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1 ) == DialogResult.Yes ) {
 
 					// 敵編成レコードの敵編成ID再計算とドロップレコードの敵編成ID振りなおし
 					try {
-						var enemyFleetRecord = new EnemyFleetRecord();
 						var convertPair = new Dictionary<uint, uint>();
-
+						var enemyFleetRecord = new EnemyFleetRecord();
+						var shipDropRecord = new ShipDropRecord();
 						enemyFleetRecord.Load( RecordManager.Instance.MasterPath );
+						shipDropRecord.Load( RecordManager.Instance.MasterPath );
+
+						if (MessageBox.Show(
+							"是否已经运行过包含 patch1 的 2.5.4.1-m1 ?\r\n( 若不确定的情况，请选择「是」 )", "确认 patch1 应用状态",
+							MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1 ) == DialogResult.Yes) {
+							// 将敌舰 ID 转换回 501 起、修复 patch1 导致的 999 / 1999 错误、移除重复项
+							List<uint> ids = new List<uint>();
+							List<uint> keys_to_remove = new List<uint>();
+							foreach (var record in enemyFleetRecord.Record) {
+								uint drop_key = record.Value.FleetID;
+								record.Value.FleetMember = record.Value.FleetMember.Select(id => {
+									if (id == 999 || id == 1999) {
+										return -1;
+									} else if (id > 1500) {
+										return id - 1000;
+									} else {
+										return id;
+									}
+								}).ToArray();
+								uint temp_id = record.Value.FleetID;
+								if (ids.Contains(temp_id)) {
+									keys_to_remove.Add(record.Key);
+								} else {
+									ids.Add(temp_id);
+								}
+								convertPair[drop_key] = record.Value.FleetID;
+							}
+							foreach (uint key in keys_to_remove) {
+								enemyFleetRecord.Record.Remove(key);
+							}
+							// 修复掉落记录中的错误项
+							foreach ( var record in shipDropRecord.Record ) {
+								if ( convertPair.ContainsKey( record.EnemyFleetID ) )
+									record.EnemyFleetID = convertPair[record.EnemyFleetID];
+							}
+							// 清空转换表
+							convertPair.Clear();
+						}
 
 						foreach ( var record in enemyFleetRecord.Record.Values ) {
 							uint key = record.FleetID;
@@ -2374,16 +2414,12 @@ namespace ElectronicObserver.Utility {
 							convertPair.Add( key, record.FleetID );
 						}
 
-						enemyFleetRecord.Save( RecordManager.Instance.MasterPath );
-
-						var shipDropRecord = new ShipDropRecord();
-						shipDropRecord.Load( RecordManager.Instance.MasterPath );
-
 						foreach ( var record in shipDropRecord.Record ) {
 							if ( convertPair.ContainsKey( record.EnemyFleetID ) )
 								record.EnemyFleetID = convertPair[record.EnemyFleetID];
 						}
 
+						enemyFleetRecord.Save( RecordManager.Instance.MasterPath );
 						shipDropRecord.Save( RecordManager.Instance.MasterPath );
 
 					} catch ( Exception ex ) {
