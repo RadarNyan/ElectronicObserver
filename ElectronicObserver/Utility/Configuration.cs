@@ -201,6 +201,12 @@ namespace ElectronicObserver.Utility {
 				public int HqResLowAlertBauxite { get; set; }
 				public int HqResLowAlertBucket { get; set; }
 
+				/// <summary>
+				/// 舰队编成 - 新增排序列 ( Lv 序, 舰种序, NEW 序 )
+				/// | true: 开启此功能 ( 默认 ) | false: 禁用此功能 ( 若过分拖慢可关闭 )
+				/// </summary>
+				public bool AllowSortIndexing { get; set; }
+
 				[IgnoreDataMember]
 				private bool _barColorMorphing;
 
@@ -431,6 +437,7 @@ namespace ElectronicObserver.Utility {
 					HqResLowAlertSteel   = 0;
 					HqResLowAlertBauxite = 0;
 					HqResLowAlertBucket  = 0;
+					AllowSortIndexing = true;
 					BarColorMorphing = false;
 				}
 			}

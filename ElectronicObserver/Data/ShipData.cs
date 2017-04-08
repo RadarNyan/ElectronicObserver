@@ -673,7 +673,9 @@ namespace ElectronicObserver.Data {
 
 		}
 
-		// 远征中判定
+		/// <summary>
+		/// 远征中判定
+		/// </summary>
 		public bool InExpedition {
 			get {
 				FleetManager fm = KCDatabase.Instance.Fleet;
@@ -690,6 +692,46 @@ namespace ElectronicObserver.Data {
 			}
 		}
 
+		private string GetIndexString(int index)
+		{
+			if (index == 0)
+				return "";
+			int p = index / 10;
+			int n = index % 10;
+			return string.Format("{0}_{1:D2}",
+				n == 0 ? p : p + 1,
+				n == 0 ? 10 : n);
+		}
+
+		/// <summary>
+		/// 以舰种排序时的位置
+		/// </summary>
+		public string TypeSortIndex
+		{
+			get {
+				int[] indexes;
+				if (KCDatabase.Instance.ShipsOrder.TryGetValue(this.MasterID, out indexes)) {
+					return GetIndexString(indexes[0]);
+				} else {
+					return "";
+				}
+			}
+		}
+
+		/// <summary>
+		/// 改装「他」列表中的舰娘位置
+		/// </summary>
+		public string KaisouSortIndex
+		{
+			get {
+				int[] indexes;
+				if (KCDatabase.Instance.ShipsOrder.TryGetValue(this.MasterID, out indexes)) {
+					return GetIndexString(indexes[2]);
+				} else {
+					return "";
+				}
+			}
+		}
 
 		/// <summary>
 		/// ケッコン済みかどうか

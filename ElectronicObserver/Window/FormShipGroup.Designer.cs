@@ -34,6 +34,8 @@
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.ShipView = new System.Windows.Forms.DataGridView();
 			this.ShipView_ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.ShipView_TypeSortIndex = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.ShipView_KaisouSortIndex = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.ShipView_ShipType = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.ShipView_Name = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.ShipView_Level = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -93,6 +95,7 @@
 			this.ShipView_Locked = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.ShipView_SallyArea = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.MenuMember = new System.Windows.Forms.ContextMenuStrip(this.components);
+			this.MenuMember_PopIndexWindow = new System.Windows.Forms.ToolStripMenuItem();
 			this.MenuMember_AddToGroup = new System.Windows.Forms.ToolStripMenuItem();
 			this.MenuMember_CreateGroup = new System.Windows.Forms.ToolStripMenuItem();
 			this.MenuMember_Exclude = new System.Windows.Forms.ToolStripMenuItem();
@@ -136,6 +139,8 @@
 			this.ShipView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
 			this.ShipView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ShipView_ID,
+            this.ShipView_TypeSortIndex,
+            this.ShipView_KaisouSortIndex,
             this.ShipView_ShipType,
             this.ShipView_Name,
             this.ShipView_Level,
@@ -224,6 +229,20 @@
 			this.ShipView_ID.Name = "ShipView_ID";
 			this.ShipView_ID.ReadOnly = true;
 			this.ShipView_ID.Width = 50;
+			// 
+			// ShipView_TypeSortIndex
+			// 
+			this.ShipView_TypeSortIndex.HeaderText = "编成序";
+			this.ShipView_TypeSortIndex.Name = "ShipView_TypeSortIndex";
+			this.ShipView_TypeSortIndex.ReadOnly = true;
+			this.ShipView_TypeSortIndex.Width = 60;
+			// 
+			// ShipView_KaisouSortIndex
+			// 
+			this.ShipView_KaisouSortIndex.HeaderText = "改装序";
+			this.ShipView_KaisouSortIndex.Name = "ShipView_KaisouSortIndex";
+			this.ShipView_KaisouSortIndex.ReadOnly = true;
+			this.ShipView_KaisouSortIndex.Width = 60;
 			// 
 			// ShipView_ShipType
 			// 
@@ -653,6 +672,7 @@
 			// MenuMember
 			// 
 			this.MenuMember.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.MenuMember_PopIndexWindow,
             this.MenuMember_AddToGroup,
             this.MenuMember_CreateGroup,
             this.MenuMember_Exclude,
@@ -665,6 +685,13 @@
 			this.MenuMember.Name = "MenuMember";
 			this.MenuMember.Size = new System.Drawing.Size(202, 170);
 			this.MenuMember.Opening += new System.ComponentModel.CancelEventHandler(this.MenuMember_Opening);
+			// 
+			// MenuMember_PopIndexWindow
+			// 
+			this.MenuMember_PopIndexWindow.Name = "MenuMember_PopIndexWindow";
+			this.MenuMember_PopIndexWindow.Size = new System.Drawing.Size(201, 22);
+			this.MenuMember_PopIndexWindow.Text = "弹出定位窗口(&I)...";
+			this.MenuMember_PopIndexWindow.Click += new System.EventHandler(this.MenuMember_PopIndexWindow_Click);
 			// 
 			// MenuMember_AddToGroup
 			// 
@@ -906,6 +933,8 @@
 		private System.Windows.Forms.ToolStripMenuItem MenuMember_Filter;
 		private System.Windows.Forms.ToolStripMenuItem MenuMember_SortOrder;
 		private System.Windows.Forms.DataGridViewTextBoxColumn ShipView_ID;
+		private System.Windows.Forms.DataGridViewTextBoxColumn ShipView_TypeSortIndex;
+		private System.Windows.Forms.DataGridViewTextBoxColumn ShipView_KaisouSortIndex;
 		private System.Windows.Forms.DataGridViewTextBoxColumn ShipView_ShipType;
 		private System.Windows.Forms.DataGridViewTextBoxColumn ShipView_Name;
 		private System.Windows.Forms.DataGridViewTextBoxColumn ShipView_Level;
@@ -965,6 +994,7 @@
 		private System.Windows.Forms.DataGridViewTextBoxColumn ShipView_Locked;
 		private System.Windows.Forms.DataGridViewTextBoxColumn ShipView_SallyArea;
 		private System.Windows.Forms.ToolStripMenuItem MenuGroup_Copy;
+		private System.Windows.Forms.ToolStripMenuItem MenuMember_PopIndexWindow;
 		private System.Windows.Forms.ToolStripMenuItem MenuMember_AddToGroup;
 		private System.Windows.Forms.ToolStripMenuItem MenuMember_CreateGroup;
 		private System.Windows.Forms.ToolStripMenuItem MenuMember_Exclude;
