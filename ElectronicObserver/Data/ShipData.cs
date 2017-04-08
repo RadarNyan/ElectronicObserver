@@ -673,7 +673,9 @@ namespace ElectronicObserver.Data {
 
 		}
 
-		// 远征中判定
+		/// <summary>
+		/// 远征中判定
+		/// </summary>
 		public bool InExpedition {
 			get {
 				FleetManager fm = KCDatabase.Instance.Fleet;
@@ -690,6 +692,46 @@ namespace ElectronicObserver.Data {
 			}
 		}
 
+		private string GetIndexString(int index)
+		{
+			if (index == 0)
+				return "";
+			int p = index / 10;
+			int n = index % 10;
+			return string.Format("{0}_{1:D2}",
+				n == 0 ? p : p + 1,
+				n == 0 ? 10 : n);
+		}
+
+		/// <summary>
+		/// 以舰种排序时的位置
+		/// </summary>
+		public string TypeSortIndex
+		{
+			get {
+				int[] indexes;
+				if (KCDatabase.Instance.ShipsOrder.TryGetValue(this.MasterID, out indexes)) {
+					return GetIndexString(indexes[0]);
+				} else {
+					return "";
+				}
+			}
+		}
+
+		/// <summary>
+		/// 改装「他」列表中的舰娘位置
+		/// </summary>
+		public string KaisouSortIndex
+		{
+			get {
+				int[] indexes;
+				if (KCDatabase.Instance.ShipsOrder.TryGetValue(this.MasterID, out indexes)) {
+					return GetIndexString(indexes[2]);
+				} else {
+					return "";
+				}
+			}
+		}
 
 		/// <summary>
 		/// ケッコン済みかどうか
@@ -1139,7 +1181,7 @@ namespace ElectronicObserver.Data {
 			basepower += GetLightCruiserDamageBonus();
 
 			//キャップ
-			basepower = Math.Floor( CapDamage( basepower, 150 ) );
+			basepower = Math.Floor( CapDamage( basepower, 180 ) );
 
 			//弾着
 			switch ( Calculator.GetDayAttackKind( AllSlotMaster.ToArray(), ShipID, -1 ) ) {
@@ -1174,7 +1216,7 @@ namespace ElectronicObserver.Data {
 			basepower *= GetHPDamageBonus() * GetEngagementFormDamageRate( engagementForm );
 
 			//キャップ
-			basepower = Math.Floor( CapDamage( basepower, 150 ) );
+			basepower = Math.Floor( CapDamage( basepower, 180 ) );
 
 			return (int)( basepower * GetAmmoDamageRate() );
 		}
@@ -1262,8 +1304,19 @@ namespace ElectronicObserver.Data {
 					basepower *= 1.3;
 					break;
 				case 3:	//魚雷x2
-					basepower *= 1.5;
-					break;
+					{
+						switch ( Calculator.GetNightTorpedoCutinKind( AllSlotMaster.ToArray(), ShipID, -1 ) ) {
+							case 1:
+								basepower *= 1.75;
+								break;
+							case 2:
+								basepower *= 1.6;
+								break;
+							default:
+								basepower *= 1.5;
+								break;
+						}
+					} break;
 				case 4:	//主砲x2/副砲
 					basepower *= 1.75;
 					break;

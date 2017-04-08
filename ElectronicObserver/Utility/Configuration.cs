@@ -193,6 +193,20 @@ namespace ElectronicObserver.Utility {
 				// 制空值显示范围
 				public bool AirSuperiorityShowRange { get; set; }
 
+				// 司令部各资源储量过低警告值
+				// -1: 自然恢复上限 ( 桶无效 ) | 3000: 小于 3000
+				public int HqResLowAlertFuel { get; set; }
+				public int HqResLowAlertAmmo { get; set; }
+				public int HqResLowAlertSteel { get; set; }
+				public int HqResLowAlertBauxite { get; set; }
+				public int HqResLowAlertBucket { get; set; }
+
+				/// <summary>
+				/// 舰队编成 - 新增排序列 ( Lv 序, 舰种序, NEW 序 )
+				/// | true: 开启此功能 ( 默认 ) | false: 禁用此功能 ( 若过分拖慢可关闭 )
+				/// </summary>
+				public bool AllowSortIndexing { get; set; }
+
 				[IgnoreDataMember]
 				private bool _barColorMorphing;
 
@@ -266,6 +280,8 @@ namespace ElectronicObserver.Utility {
 				public Color Color_Violet { get; set; }
 
 				// 视图 - 舰队
+				[IgnoreDataMember] // 入渠计时器文字色
+				public Color Fleet_ColorRepairTimerText { get; set; }
 				[IgnoreDataMember] // 疲劳状态文字色
 				public Color Fleet_ColorConditionText { get; set; }
 				[IgnoreDataMember] // 严重疲劳
@@ -306,9 +322,9 @@ namespace ElectronicObserver.Utility {
 				public Color Arsenal_BuildCompleteBG { get; set; }
 
 				// 视图 - 司令部
-				[IgnoreDataMember] // 资源超过自然回复上限文字色
+				[IgnoreDataMember] // 资源超过自然恢复上限文字色
 				public Color Headquarters_ResourceOverFG { get; set; }
-				[IgnoreDataMember] // 资源超过自然回复上限背景色
+				[IgnoreDataMember] // 资源超过自然恢复上限背景色
 				public Color Headquarters_ResourceOverBG { get; set; }
 				[IgnoreDataMember] // 剩余船位、装备位不满足活动图出击要求时闪烁文字色
 				public Color Headquarters_ShipCountOverFG { get; set; }
@@ -322,6 +338,10 @@ namespace ElectronicObserver.Utility {
 				public Color Headquarters_CoinMaxFG { get; set; }
 				[IgnoreDataMember] // 家具币达到 200,000 个时背景色
 				public Color Headquarters_CoinMaxBG { get; set; }
+				[IgnoreDataMember] // 资源储量低于警告值文字色
+				public Color Headquarters_ResourceLowFG { get; set; }
+				[IgnoreDataMember] // 资源储量低于警告值背景色
+				public Color Headquarters_ResourceLowBG { get; set; }
 				[IgnoreDataMember] // 资源储量达到 300,000 时文字色
 				public Color Headquarters_ResourceMaxFG { get; set; }
 				[IgnoreDataMember] // 资源储量达到 300,000 时背景色
@@ -394,11 +414,6 @@ namespace ElectronicObserver.Utility {
 				[IgnoreDataMember] // 受损状态 BOSS 副文字色
 				public Color Battle_ColorTextBossDamaged2 { get; set; }
 
-				// 视图 - 舰队：入渠中计时器
-				public Color Battle_ColorHPTextRepair { get {
-					return SubBackColor;
-					// return Color.FromArgb(0x00, 0x00, 0x88);
-				}}
 				public bool RemoveBarShadow { get {
 				switch (ThemeID) {
 					case 0:  return true;
@@ -417,6 +432,12 @@ namespace ElectronicObserver.Utility {
 					ShowGrowthInsteadOfNextInHQ = false;
 					MaxAkashiPerHP = 5;
 					AirSuperiorityShowRange = false;
+					HqResLowAlertFuel    = 0;
+					HqResLowAlertAmmo    = 0;
+					HqResLowAlertSteel   = 0;
+					HqResLowAlertBauxite = 0;
+					HqResLowAlertBucket  = 0;
+					AllowSortIndexing = true;
 					BarColorMorphing = false;
 				}
 			}
@@ -1516,6 +1537,7 @@ namespace ElectronicObserver.Utility {
 ""autoHideTabInactive"":""#6D6D6D""
 },
 ""fleet"":{
+""repairTimerText"":""#888888"",
 ""conditionText"":""#000000"",
 ""conditionVeryTired"":""#F08080"",
 ""conditionTired"":""#FFA07A"",
@@ -1548,6 +1570,8 @@ namespace ElectronicObserver.Utility {
 ""materialMaxBG"":""#F08080"",
 ""coinMaxFG"":""#000000"",
 ""coinMaxFG"":""#F08080"",
+""resLowFG"":""#000000"",
+""resLowBG"":""#F08080"",
 ""resMaxFG"":""#000000"",
 ""resMaxBG"":""#F08080""
 },
@@ -1694,6 +1718,7 @@ namespace ElectronicObserver.Utility {
 			};
 			Config.UI.SetBarColorScheme();
 			// 设定各面板颜色
+			Config.UI.Fleet_ColorRepairTimerText      = ThemePanelColor("fleet", "repairTimerText");
 			Config.UI.Fleet_ColorConditionText        = ThemePanelColor("fleet", "conditionText");
 			Config.UI.Fleet_ColorConditionVeryTired   = ThemePanelColor("fleet", "conditionVeryTired");
 			Config.UI.Fleet_ColorConditionTired       = ThemePanelColor("fleet", "conditionTired");
@@ -1718,6 +1743,8 @@ namespace ElectronicObserver.Utility {
 			Config.UI.Headquarters_MaterialMaxBG   = ThemePanelColor("hq", "materialMaxBG");
 			Config.UI.Headquarters_CoinMaxFG       = ThemePanelColor("hq", "coinMaxFG");
 			Config.UI.Headquarters_CoinMaxBG       = ThemePanelColor("hq", "coinMaxBG");
+			Config.UI.Headquarters_ResourceLowFG   = ThemePanelColor("hq", "resLowFG");
+			Config.UI.Headquarters_ResourceLowBG   = ThemePanelColor("hq", "resLowBG");
 			Config.UI.Headquarters_ResourceMaxFG   = ThemePanelColor("hq", "resMaxFG");
 			Config.UI.Headquarters_ResourceMaxBG   = ThemePanelColor("hq", "resMaxBG");
 			Config.UI.Quest_TypeFG     = ThemePanelColor("quest", "typeFG");
@@ -1799,6 +1826,8 @@ namespace ElectronicObserver.Utility {
 			} else {
 				switch (form + "_" + name) {
 					// 视图 - 舰队
+					case "fleet_repairTimerText":
+						return Config.UI.SubForeColor;
 					case "fleet_conditionText":
 						return Config.UI.BackColor;
 					case "fleet_conditionVeryTired":
@@ -1841,6 +1870,10 @@ namespace ElectronicObserver.Utility {
 						return Config.UI.BackColor;
 					case "hq_coinMaxBG":
 						return Config.UI.Color_Blue;
+					case "hq_resLowFG":
+						return Config.UI.BackColor;
+					case "hq_resLowBG":
+						return Config.UI.Color_Red;
 					case "hq_resMaxFG":
 						return Config.UI.BackColor;
 					case "hq_resMaxBG":
@@ -2319,6 +2352,128 @@ namespace ElectronicObserver.Utility {
 
 					}
 				}
+			}
+
+
+
+			// version RN-2.5.4.1-m1 or earlier
+			if ( dt <= DateTimeHelper.CSVStringToTime( "2017/03/19 16:08:50" ) ) {
+
+				if ( MessageBox.Show(
+					"由于「艦これ」的更新，需要转换记录文件。\r\n要进行转换吗？\r\n( 若不进行转换，可能导致工作不正常。)\r\n\r\n转换前请备份：\r\nEnemyFleetRecord.csv\r\nShipDropRecord.csv\r\nShipParameterRecord.csv", "由 2.5.4.1-m1-patch1 或更早版本的更新确认",
+					MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1 ) == DialogResult.Yes ) {
+
+					// 敵編成レコードの敵編成ID再計算とドロップレコードの敵編成ID振りなおし
+					try {
+						var convertPair = new Dictionary<uint, uint>();
+						var enemyFleetRecord = new EnemyFleetRecord();
+						var shipDropRecord = new ShipDropRecord();
+						enemyFleetRecord.Load( RecordManager.Instance.MasterPath );
+						shipDropRecord.Load( RecordManager.Instance.MasterPath );
+
+						if (MessageBox.Show(
+							"是否已经运行过包含 patch1 的 2.5.4.1-m1 ?\r\n( 若不确定的情况，请选择「是」 )", "确认 patch1 应用状态",
+							MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1 ) == DialogResult.Yes) {
+							// 将敌舰 ID 转换回 501 起、修复 patch1 导致的 999 / 1999 错误、移除重复项
+							List<uint> ids = new List<uint>();
+							List<uint> keys_to_remove = new List<uint>();
+							foreach (var record in enemyFleetRecord.Record) {
+								uint drop_key = record.Value.FleetID;
+								record.Value.FleetMember = record.Value.FleetMember.Select(id => {
+									if (id == 999 || id == 1999) {
+										return -1;
+									} else if (id > 1500) {
+										return id - 1000;
+									} else {
+										return id;
+									}
+								}).ToArray();
+								uint temp_id = record.Value.FleetID;
+								if (ids.Contains(temp_id)) {
+									keys_to_remove.Add(record.Key);
+								} else {
+									ids.Add(temp_id);
+								}
+								convertPair[drop_key] = record.Value.FleetID;
+							}
+							foreach (uint key in keys_to_remove) {
+								enemyFleetRecord.Record.Remove(key);
+							}
+							// 修复掉落记录中的错误项
+							foreach ( var record in shipDropRecord.Record ) {
+								if ( convertPair.ContainsKey( record.EnemyFleetID ) )
+									record.EnemyFleetID = convertPair[record.EnemyFleetID];
+							}
+							// 清空转换表
+							convertPair.Clear();
+						}
+
+						foreach ( var record in enemyFleetRecord.Record.Values ) {
+							uint key = record.FleetID;
+							record.FleetMember = record.FleetMember.Select( id => 500 < id && id < 1000 ? id + 1000 : id ).ToArray();
+							convertPair.Add( key, record.FleetID );
+						}
+
+						foreach ( var record in shipDropRecord.Record ) {
+							if ( convertPair.ContainsKey( record.EnemyFleetID ) )
+								record.EnemyFleetID = convertPair[record.EnemyFleetID];
+						}
+
+						enemyFleetRecord.Save( RecordManager.Instance.MasterPath );
+						shipDropRecord.Save( RecordManager.Instance.MasterPath );
+
+					} catch ( Exception ex ) {
+						ErrorReporter.SendErrorReport( ex, "CheckUpdate: ドロップレコードのID振りなおしに失敗しました。" );
+					}
+
+
+					// パラメータレコードの移動と破損データのダウンロード
+					try {
+
+						var currentRecord = new ShipParameterRecord();
+						currentRecord.Load( RecordManager.Instance.MasterPath );
+
+						foreach ( var record in currentRecord.Record.Values ) {
+							if ( 500 < record.ShipID && record.ShipID <= 1000 ) {
+								record.ShipID += 1000;
+							}
+						}
+
+						string defaultRecordPath = Path.Combine( Path.GetTempPath(), Path.GetRandomFileName() );
+						while ( Directory.Exists( defaultRecordPath ) )
+							defaultRecordPath = Path.Combine( Path.GetTempPath(), Path.GetRandomFileName() );
+
+						Directory.CreateDirectory( defaultRecordPath );
+
+						ElectronicObserver.Resource.ResourceManager.CopyFromArchive( "Record/" + currentRecord.FileName, Path.Combine( defaultRecordPath, currentRecord.FileName ) );
+
+						var defaultRecord = new ShipParameterRecord();
+						defaultRecord.Load( defaultRecordPath );
+						var changed = new List<int>();
+
+						foreach ( var pair in defaultRecord.Record.Keys.GroupJoin( currentRecord.Record.Keys, i => i, i => i, ( id, list ) => new { id, list } ) ) {
+							if ( defaultRecord[pair.id].HPMin > 0 && ( pair.list == null || defaultRecord[pair.id].SaveLine() != currentRecord[pair.id].SaveLine() ) )
+								changed.Add( pair.id );
+						}
+
+						foreach ( var id in changed ) {
+							if ( currentRecord[id] == null )
+								currentRecord.Update( new ShipParameterRecord.ShipParameterElement() );
+							currentRecord[id].LoadLine( defaultRecord.Record[id].SaveLine() );
+						}
+
+						currentRecord.Save( RecordManager.Instance.MasterPath );
+
+						Directory.Delete( defaultRecordPath, true );
+
+
+					} catch ( Exception ex ) {
+						ErrorReporter.SendErrorReport( ex, "パラメータレコードの再編に失敗しました。" );
+					}
+
+				}
+
+
 			}
 
 

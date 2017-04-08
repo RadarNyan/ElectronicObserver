@@ -295,6 +295,8 @@ namespace ElectronicObserver.Window {
 
 			row.SetValues(
 				ship.MasterID,
+				ship.TypeSortIndex,
+				ship.KaisouSortIndex,
 				ship.MasterShip.ShipType,
 				ship.MasterShip.Name,
 				ship.Level,
@@ -515,6 +517,7 @@ namespace ElectronicObserver.Window {
 				return;
 			}
 
+			KCDatabase.Instance.UpdateSortShips(); // Wonder if there's a better way to fire this.
 			if ( currentGroup != null ) {
 
 				UpdateMembers( currentGroup );
@@ -701,7 +704,28 @@ namespace ElectronicObserver.Window {
 				e.SortResult = (int)e.CellValue1 - (int)e.CellValue2;
 				if ( e.SortResult == 0 )	//for Lv.99-100
 					e.SortResult = (int)ShipView[ShipView_Level.Index, e.RowIndex1].Value - (int)ShipView[ShipView_Level.Index, e.RowIndex2].Value;
-
+			} else if (
+				e.Column.Index == ShipView_TypeSortIndex.Index ||
+				e.Column.Index == ShipView_KaisouSortIndex.Index) {
+				string s1 = (string)e.CellValue1;
+				string s2 = (string)e.CellValue2;
+				//int num1 = int.Parse(s1.Split('#')[0].Substring(1)) * 10 + int.Parse(s1.Split('#')[1]);
+				//int num2 = int.Parse(s2.Split('#')[0].Substring(1)) * 10 + int.Parse(s2.Split('#')[1]);
+				if (s1 == "") {
+					if (s2 == "") {
+						e.SortResult = 0;
+					} else {
+						e.SortResult = 1;
+					}
+				} else {
+					if (s2 == "") {
+						e.SortResult = -1;
+					} else {
+						int num1 = int.Parse(s1.Replace("_", ""));
+						int num2 = int.Parse(s2.Replace("_", ""));
+						e.SortResult = num1 - num2;
+					}
+				}
 			} else if (
 				e.Column.Index == ShipView_HP.Index ||
 				e.Column.Index == ShipView_Fuel.Index ||
@@ -955,11 +979,13 @@ namespace ElectronicObserver.Window {
 			}
 
 			if ( ShipView.Rows.GetRowCount( DataGridViewElementStates.Selected ) == 0 ) {
+				MenuMember_PopIndexWindow.Enabled = false;
 				MenuMember_AddToGroup.Enabled = false;
 				MenuMember_CreateGroup.Enabled = false;
 				MenuMember_Exclude.Enabled = false;
 
 			} else {
+				MenuMember_PopIndexWindow.Enabled = true;
 				MenuMember_AddToGroup.Enabled = true;
 				MenuMember_CreateGroup.Enabled = true;
 				MenuMember_Exclude.Enabled = true;
@@ -1115,6 +1141,22 @@ namespace ElectronicObserver.Window {
 
 
 
+		private void MenuMember_PopIndexWindow_Click( object sender, EventArgs e ) {
+			StringBuilder sb = new StringBuilder();
+			sb.Append("改装序\t编成序\t舰娘\r\n");
+			foreach (var row in ShipView.SelectedRows.Cast<DataGridViewRow>().OrderBy(r => r.Index)) {
+				sb.AppendFormat("{0}\t{1}\t{2} Lv.{3}\r\n",
+					row.Cells[ShipView_KaisouSortIndex.Index].Value,
+					row.Cells[ShipView_TypeSortIndex.Index].Value,
+					row.Cells[ShipView_Name.Index].Value, row.Cells[ShipView_Level.Index].Value
+				);
+			}
+			// This is NOT a good practice
+			new System.Threading.Thread(() => { using (Form tempForm = new Form()) {
+				tempForm.TopMost = true; // ensure TopMost
+				MessageBox.Show(tempForm, sb.ToString(), "定位舰娘", MessageBoxButtons.OK);
+			}}){ IsBackground = true }.Start();
+		}
 
 		private void MenuMember_AddToGroup_Click( object sender, EventArgs e ) {
 
@@ -1360,6 +1402,8 @@ namespace ElectronicObserver.Window {
 										ship.ExpTotal,
 										ship.ExpNext,
 										ship.ExpNextRemodel,
+										ship.TypeSortIndex,
+										ship.KaisouSortIndex,
 										ship.HPCurrent,
 										ship.HPMax,
 										ship.Condition,
@@ -1415,6 +1459,8 @@ namespace ElectronicObserver.Window {
 										ship.ExpTotal,
 										ship.ExpNext,
 										ship.ExpNextRemodel,
+										ship.TypeSortIndex,
+										ship.KaisouSortIndex,
 										ship.HPCurrent,
 										ship.HPMax,
 										ship.Condition,
