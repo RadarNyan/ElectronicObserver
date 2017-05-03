@@ -2,3 +2,6 @@
 	path = DockPanelSuite
 	url = https://github.com/RadarNyan/dockpanelsuite.git
 	branch = 74eo-rn
+[submodule "SwfExtractor"]
+	path = SwfExtractor
+	url = https://github.com/andanteyk/SwfExtractor.git

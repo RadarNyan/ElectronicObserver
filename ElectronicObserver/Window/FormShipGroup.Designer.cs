@@ -34,11 +34,11 @@
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.ShipView = new System.Windows.Forms.DataGridView();
 			this.ShipView_ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.ShipView_TypeSortIndex = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.ShipView_KaisouSortIndex = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.ShipView_ShipType = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.ShipView_Name = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.ShipView_Level = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.ShipView_TypeSortIndex = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.ShipView_KaisouSortIndex = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.ShipView_Exp = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.ShipView_Next = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.ShipView_NextRemodel = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -139,11 +139,11 @@
 			this.ShipView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
 			this.ShipView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ShipView_ID,
-            this.ShipView_TypeSortIndex,
-            this.ShipView_KaisouSortIndex,
             this.ShipView_ShipType,
             this.ShipView_Name,
             this.ShipView_Level,
+            this.ShipView_TypeSortIndex,
+            this.ShipView_KaisouSortIndex,
             this.ShipView_Exp,
             this.ShipView_Next,
             this.ShipView_NextRemodel,
@@ -230,20 +230,6 @@
 			this.ShipView_ID.ReadOnly = true;
 			this.ShipView_ID.Width = 50;
 			// 
-			// ShipView_TypeSortIndex
-			// 
-			this.ShipView_TypeSortIndex.HeaderText = "编成序";
-			this.ShipView_TypeSortIndex.Name = "ShipView_TypeSortIndex";
-			this.ShipView_TypeSortIndex.ReadOnly = true;
-			this.ShipView_TypeSortIndex.Width = 60;
-			// 
-			// ShipView_KaisouSortIndex
-			// 
-			this.ShipView_KaisouSortIndex.HeaderText = "改装序";
-			this.ShipView_KaisouSortIndex.Name = "ShipView_KaisouSortIndex";
-			this.ShipView_KaisouSortIndex.ReadOnly = true;
-			this.ShipView_KaisouSortIndex.Width = 60;
-			// 
 			// ShipView_ShipType
 			// 
 			dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
@@ -267,6 +253,20 @@
 			this.ShipView_Level.Name = "ShipView_Level";
 			this.ShipView_Level.ReadOnly = true;
 			this.ShipView_Level.Width = 40;
+			// 
+			// ShipView_TypeSortIndex
+			// 
+			this.ShipView_TypeSortIndex.HeaderText = "编成序";
+			this.ShipView_TypeSortIndex.Name = "ShipView_TypeSortIndex";
+			this.ShipView_TypeSortIndex.ReadOnly = true;
+			this.ShipView_TypeSortIndex.Width = 60;
+			// 
+			// ShipView_KaisouSortIndex
+			// 
+			this.ShipView_KaisouSortIndex.HeaderText = "改装序";
+			this.ShipView_KaisouSortIndex.Name = "ShipView_KaisouSortIndex";
+			this.ShipView_KaisouSortIndex.ReadOnly = true;
+			this.ShipView_KaisouSortIndex.Width = 60;
 			// 
 			// ShipView_Exp
 			// 
@@ -933,11 +933,11 @@
 		private System.Windows.Forms.ToolStripMenuItem MenuMember_Filter;
 		private System.Windows.Forms.ToolStripMenuItem MenuMember_SortOrder;
 		private System.Windows.Forms.DataGridViewTextBoxColumn ShipView_ID;
-		private System.Windows.Forms.DataGridViewTextBoxColumn ShipView_TypeSortIndex;
-		private System.Windows.Forms.DataGridViewTextBoxColumn ShipView_KaisouSortIndex;
 		private System.Windows.Forms.DataGridViewTextBoxColumn ShipView_ShipType;
 		private System.Windows.Forms.DataGridViewTextBoxColumn ShipView_Name;
 		private System.Windows.Forms.DataGridViewTextBoxColumn ShipView_Level;
+		private System.Windows.Forms.DataGridViewTextBoxColumn ShipView_TypeSortIndex;
+		private System.Windows.Forms.DataGridViewTextBoxColumn ShipView_KaisouSortIndex;
 		private System.Windows.Forms.DataGridViewTextBoxColumn ShipView_Exp;
 		private System.Windows.Forms.DataGridViewTextBoxColumn ShipView_Next;
 		private System.Windows.Forms.DataGridViewTextBoxColumn ShipView_NextRemodel;

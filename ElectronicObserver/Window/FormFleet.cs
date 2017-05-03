@@ -7,6 +7,7 @@ using ElectronicObserver.Utility.Mathematics;
 using ElectronicObserver.Window.Control;
 using ElectronicObserver.Window.Dialog;
 using ElectronicObserver.Window.Support;
+using SwfExtractor;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -193,13 +194,8 @@ namespace ElectronicObserver.Window {
 				//制空戦力計算	
 				{
 					int airSuperiority = fleet.GetAirSuperiority();
-					int airSuperiority2 = fleet.GetAirSuperiority2();
 					bool includeLevel = Utility.Configuration.Config.FormFleet.AirSuperiorityMethod == 1;
-					if (airSuperiority2 != 0 && airSuperiority2 != airSuperiority) {
-						AirSuperiority.Text = String.Format("{0}~{1}", airSuperiority, airSuperiority2);
-					} else {
-						AirSuperiority.Text = airSuperiority.ToString();
-					}
+					AirSuperiority.Text = fleet.GetAirSuperiorityString();
 					ToolTipInfo.SetToolTip( AirSuperiority,
 						string.Format( "确保 : {0}\r\n优势 : {1}\r\n均衡 : {2}\r\n劣势 : {3}\r\n({4}: {5})\r\n",
 						(int)( airSuperiority / 3.0 ),
@@ -651,18 +647,29 @@ namespace ElectronicObserver.Window {
 				}
 
 				{
-					int airsup;
-					if ( Utility.Configuration.Config.FormFleet.AirSuperiorityMethod == 1 )
-						airsup = Calculator.GetAirSuperiority( ship );
-					else
-						airsup = Calculator.GetAirSuperiorityIgnoreLevel( ship );
+					int airsup_min;
+					int airsup_max;
+					if ( Utility.Configuration.Config.FormFleet.AirSuperiorityMethod == 1 ) {
+						airsup_min = Calculator.GetAirSuperiority( ship, false );
+						airsup_max = Calculator.GetAirSuperiority( ship, true );
+					} else {
+						airsup_min = airsup_max = Calculator.GetAirSuperiorityIgnoreLevel( ship );
+					}
 
 					int airbattle = ship.AirBattlePower;
-					if ( airsup > 0 ) {
+					if ( airsup_min > 0 ) {
+
+						string airsup_str;
+						if ( Utility.Configuration.Config.FormFleet.ShowAirSuperiorityRange && airsup_min < airsup_max ) {
+							airsup_str = string.Format( "{0} ～ {1}", airsup_min, airsup_max );
+						} else {
+							airsup_str = airsup_min.ToString();
+						}
+
 						if ( airbattle > 0 )
-							sb.AppendFormat( "制空战力 : {0} / 航空威力 : {1}\r\n", airsup, airbattle );
+							sb.AppendFormat( "制空战力 : {0} / 航空威力 : {1}\r\n", airsup_str, airbattle );
 						else
-							sb.AppendFormat( "制空战力 : {0}\r\n", airsup );
+							sb.AppendFormat( "制空战力 : {0}\r\n", airsup_str );
 					} else if ( airbattle > 0 )
 						sb.AppendFormat( "航空威力 : {0}\r\n", airbattle );
 				}
@@ -1106,6 +1113,13 @@ namespace ElectronicObserver.Window {
 		}
 
 
+		private void ContextMenuFleet_OutputFleetImage_Click( object sender, EventArgs e ) {
+
+			using ( var dialog = new DialogFleetImageGenerator( FleetID ) ) {
+				dialog.ShowDialog( this );
+			}
+		}
+
 
 
 		void ConfigurationChanged() {
@@ -1175,7 +1189,6 @@ namespace ElectronicObserver.Window {
 		protected override string GetPersistString() {
 			return "Fleet #" + FleetID.ToString();
 		}
-
 
 
 	}

@@ -206,46 +206,211 @@ namespace ElectronicObserver.Resource.Record {
 		}
 
 		/// <summary>
-		/// 前回の戦果更新以降の最も古い記録を返します。
+		/// 战果时间范围 (e.g. 4/30 22:00 ~ 5/1 14:00)
 		/// </summary>
-		public ResourceElement GetRecordPrevious() {
+		public string RankingPeriodString { get; private set; }
 
-			DateTime now = DateTime.Now;
-			DateTime target;
-			if ( now.TimeOfDay.Hours < 2 ) {
-				target = new DateTime( now.Year, now.Month, now.Day, 14, 0, 0 ).Subtract( TimeSpan.FromDays( 1 ) );
-			} else if ( now.TimeOfDay.Hours < 14 ) {
-				target = new DateTime( now.Year, now.Month, now.Day, 2, 0, 0 );
-			} else {
-				target = new DateTime( now.Year, now.Month, now.Day, 14, 0, 0 );
+		/// <summary>
+		/// 每月战果作战名 (e.g. "五月作战")
+		/// </summary>
+		private int rankingMonth;
+		public string MonthString { get {
+			switch(rankingMonth) {
+				case 1:
+					return "一月作战";
+				case 2:
+					return "二月作战";
+				case 3:
+					return "三月作战";
+				case 4:
+					return "四月作战";
+				case 5:
+					return "五月作战";
+				case 6:
+					return "六月作战";
+				case 7:
+					return "七月作战";
+				case 8:
+					return "八月作战";
+				case 9:
+					return "九月作战";
+				case 10:
+					return "十月作战";
+				case 11:
+					return "十一月作战";
+				case 12:
+					return "十二月作战";
+				default:
+					return "战果黑洞"; // 年末 22:00 ~ 次年初 00:00 获得的经验值不会计入战果 * not used
 			}
+		} }
 
-			return GetRecord( target );
+		/// <summary>
+		/// 半日提督经验 ( previous = true 时返回上次结算总经验，否则返回上次结算时经验值 )
+		/// </summary>
+		public int GetExpHalfDay(bool previous = false) {
+			DateTime now = DateTime.Now;
+			// 确定日期 ( date 的时间仅以 02:00 / 14:00 表示上午 / 下午，并不一定是记录的起始时间 )
+			DateTime date;
+			if (now.Hour < 2) {
+				if (now.Day == 1) {
+					date = previous ? new DateTime(now.Year, now.Month, now.Day, 14, 0, 0).AddDays(-1) : new DateTime(now.Year, now.Month, now.Day, 2, 0, 0);
+				} else {
+					date = previous ? new DateTime(now.Year, now.Month, now.Day, 2, 0, 0).AddDays(-1) : new DateTime(now.Year, now.Month, now.Day, 14, 0, 0).AddDays(-1);
+				}
+			} else if (now.Hour < 14) {
+				date = previous ? new DateTime(now.Year, now.Month, now.Day, 14, 0, 0).AddDays(-1) : new DateTime(now.Year, now.Month, now.Day, 2, 0, 0);
+			} else {
+				if (now.Hour >= 22 && now.Day == DateTime.DaysInMonth(now.Year, now.Month)) {
+					if (previous) {
+						date = new DateTime(now.Year, now.Month, now.Day, 14, 0, 0);
+					} else {
+						if (now.Month == 12) {
+							date = new DateTime(2013, 4, 23, 14, 0, 0); // 『艦これ』开始运营日期，时间是假的
+						} else {
+							date = new DateTime(now.Year, now.Month, now.Day, 2, 0, 0).AddDays(1);
+						}
+					}
+				} else {
+					date = previous ? new DateTime(now.Year, now.Month, now.Day, 2, 0, 0) : new DateTime(now.Year, now.Month, now.Day, 14, 0, 0);
+				}
+			}
+			// 确定记录范围
+			DateTime begins; DateTime ends;
+			if (date.Hour < 14) {
+				if (date.Day == 1) {
+					if (date.DayOfYear == 1) {
+						// 年初上午：00:00 ~ 14:00 (14h)
+						begins = new DateTime(date.Year, date.Month, date.Day, 0, 0, 0);
+					} else {
+						// 月初上午：上月末 22:00 ~ 今日 14:00 (16h)
+						begins = new DateTime(date.Year, date.Month, date.Day, 22, 0, 0).AddDays(-1);
+					}
+				} else {
+					// 一般上午：02:00 ~ 14:00 (12h)
+					begins = date;
+				}
+				ends = new DateTime(date.Year, date.Month, date.Day, 14, 0, 0);
+			} else {
+				// 判断年末战果黑洞
+				if (date.Year == 2013) { return 0; }
+				begins = date;
+				if (date.Day == DateTime.DaysInMonth(date.Year, date.Month)) {
+					// 月末下午：14:00 ~ 22:00 (8h)
+					ends = new DateTime(date.Year, date.Month, date.Day, 22, 0, 0);
+				} else {
+					// 一般下午：14:00 ~ 次日 02:00 (12h)
+					ends = new DateTime(date.Year, date.Month, date.Day, 2, 0, 0).AddDays(1);
+				}
+			}
+			rankingMonth = date.Month;
+			// 返回记录值
+			var recordBegins = GetRecord(begins);
+			var recordEnds = GetRecord(ends);
+			if (recordBegins != null) {
+				if (begins.Date == ends.Date) {
+					RankingPeriodString = string.Format("{0} ~ {1}", begins.ToString("M'/'d HH':'mm"), ends.ToString("HH':'mm"));
+				} else {
+					RankingPeriodString = string.Format("{0} ~ {1}", begins.ToString("M'/'d HH':'mm"), ends.ToString("M'/'d HH':'mm"));
+				}
+				if (previous && recordEnds != null) {
+					return recordEnds.HQExp - recordBegins.HQExp;
+				} else {
+					return recordBegins.HQExp;
+				}
+			}
+			return -1;
 		}
 
 		/// <summary>
-		/// 今日の戦果更新以降の最も古い記録を返します。
+		/// 单日提督经验 ( previous = true 时返回昨日总经验，否则返回本日初经验值 )
 		/// </summary>
-		public ResourceElement GetRecordDay() {
-
+		public int GetExpDay(bool previous = false) {
 			DateTime now = DateTime.Now;
-			DateTime target;
-			if ( now.TimeOfDay.Hours < 2 ) {
-				target = new DateTime( now.Year, now.Month, now.Day, 2, 0, 0 ).Subtract( TimeSpan.FromDays( 1 ) );
+			// 确定日期
+			DateTime date;
+			if (now.Day != 1 && now.Hour < 2) {
+				date = previous ? now.AddDays(-2) : now.AddDays(-1);
+			} else if (now.Day == DateTime.DaysInMonth(now.Year, now.Month) && now.Hour >= 22) {
+				date = previous ? now : now.AddDays(1);
 			} else {
-				target = new DateTime( now.Year, now.Month, now.Day, 2, 0, 0 );
+				date = previous ? now.AddDays(-1) : now;
 			}
-
-			return GetRecord( target );
+			// 确定记录范围
+			DateTime begins; DateTime ends;
+			if (date.Day == 1) {
+				if (date.DayOfYear == 1) {
+					// 年初：1/1 00:00 ~ 1/2 02:00 (26h)
+					begins = new DateTime(date.Year, 1, 1, 0, 0, 0);
+					ends = new DateTime(date.Year, 1, 2, 2, 0, 0);
+				} else {
+					// 月初：上月末 22:00 ~ 次日(2nd) 02:00 (28h)
+					begins = new DateTime(date.Year, date.Month, 1, 22, 0, 0).AddDays(-1);
+					ends = new DateTime(date.Year, date.Month, 2, 2, 0, 0);
+				}
+			} else {
+				begins = new DateTime(date.Year, date.Month, date.Day, 2, 0, 0);
+				if (date.Day == DateTime.DaysInMonth(date.Year, date.Month)) {
+					// 月末：02:00 ~ 22:00 (20h)
+					ends = new DateTime(date.Year, date.Month, date.Day, 22, 0, 0);
+				} else {
+					// 一般：02:00 ~ 次日 02:00 (24h)
+					ends = new DateTime(date.Year, date.Month, date.Day, 2, 0, 0).AddDays(1);
+				}
+			}
+			// 返回记录值
+			var recordBegins = GetRecord(begins);
+			var recordEnds = GetRecord(ends);
+			if (recordBegins != null) {
+				if (begins.Date == ends.Date) {
+					RankingPeriodString = string.Format("{0} ~ {1}", begins.ToString("M'/'d HH':'mm"), ends.ToString("HH':'mm"));
+				} else {
+					RankingPeriodString = string.Format("{0} ~ {1}", begins.ToString("M'/'d HH':'mm"), ends.ToString("M'/'d HH':'mm"));
+				}
+				if (previous && recordEnds != null) {
+					return recordEnds.HQExp - recordBegins.HQExp;
+				} else {
+					return recordBegins.HQExp;
+				}
+			}
+			return -1;
 		}
 
 		/// <summary>
-		/// 今月の戦果更新以降の最も古い記録を返します。
+		/// 单月提督经验 ( previous = true 时返回上月总经验，否则返回本月初经验值 )
 		/// </summary>
-		public ResourceElement GetRecordMonth() {
+		public int GetExpMonth(bool previous = false) {
 			DateTime now = DateTime.Now;
-
-			return GetRecord( new DateTime( now.Year, now.Month, 1 ) );
+			// 确定月份
+			DateTime date;
+			if (now.Hour < 22) {
+				date = previous ? now.AddMonths(-1) : now;
+			} else {
+				date = previous ? now : now.AddMonths(1);
+			}
+			// 确定记录范围
+			DateTime begins; DateTime ends;
+			if (date.Month == 1) {
+				// 一月：1/1 00:00 ~ 1/31 22:00
+				begins = new DateTime(date.Year, 1, 1, 0, 0, 0);
+				ends   = new DateTime(date.Year, 1, 31, 22, 0, 0);
+			} else {
+				// 一般：上月末 22:00 ~ 本月末 22：00
+				begins = new DateTime(date.Year, date.Month, 1, 0, 0, 0).AddHours(-2);
+				ends   = new DateTime(date.Year, date.Month, DateTime.DaysInMonth(date.Year, date.Month), 22, 0, 0);
+			}
+			// 返回记录值
+			var recordBegins = GetRecord(begins);
+			var recordEnds = GetRecord(ends);
+			if (recordBegins != null) {
+				RankingPeriodString = string.Format("{0} ~ {1}", begins.ToString("M'/'d HH':'mm"), ends.ToString("M'/'d HH':'mm"));
+				if (previous && recordEnds != null) {
+					return recordEnds.HQExp - recordBegins.HQExp;
+				} else {
+					return recordBegins.HQExp;
+				}
+			}
+			return -1;
 		}
 
 

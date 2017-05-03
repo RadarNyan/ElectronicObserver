@@ -217,13 +217,20 @@ namespace ElectronicObserver.Window {
 				StringBuilder tooltip = new StringBuilder();
 				if ( Utility.Configuration.Config.UI.ShowGrowthInsteadOfNextInHQ ) {
 					HQLevel.TextNext = "Growth:";
-					var res1 = RecordManager.Instance.Resource.GetRecordPrevious();
-					var res2 = RecordManager.Instance.Resource.GetRecordDay();
-					if ( res1 != null && res2 != null ) {
+					int exp1 = RecordManager.Instance.Resource.GetExpHalfDay();
+					int exp2;
+					if ( exp1 == 0 ) { // 战果黑洞期，显示上次
+						exp1 = RecordManager.Instance.Resource.GetExpHalfDay(true);
+						exp2 = RecordManager.Instance.Resource.GetExpDay(true);
+					} else {
+						exp1 = db.Admiral.Exp - exp1;
+						exp2 = db.Admiral.Exp - RecordManager.Instance.Resource.GetExpDay();
+					}
+					if ( exp1 >= 0 && exp2 >= 0 ) {
 						HQLevel.TextValueNext = String.Format(
 							"{0:n2} / {1:n2}",
-							(db.Admiral.Exp - res1.HQExp) * 7 / 10000.0,
-							(db.Admiral.Exp - res2.HQExp) * 7 / 10000.0
+							exp1 * 7 / 10000.0,
+							exp2 * 7 / 10000.0
 						);
 					} else {
 						HQLevel.TextValueNext = "N/A";
@@ -239,30 +246,43 @@ namespace ElectronicObserver.Window {
 					}
 				}
 
-
-
 				//戦果ツールチップ
-				//fixme: もっとましな書き方はなかっただろうか
+				StringBuilder tooltipAppend = new StringBuilder();
+				double rankingPointsPreviousHalfDay;
+				double rankingPointsPreviousDay;
+				double rankingPointsPreviousMonth;
 				{
-					var res = RecordManager.Instance.Resource.GetRecordPrevious();
-					if ( res != null ) {
-						int diff = db.Admiral.Exp - res.HQExp;
-						tooltip.AppendFormat( "本次 : +{0} exp. / 战果 {1:n2}\r\n", diff, diff * 7 / 10000.0 );
-					}
+					tooltipAppend.Append("\r\n上次结算战果 \r\n");
+					int diff = RecordManager.Instance.Resource.GetExpHalfDay(true);
+					rankingPointsPreviousHalfDay = diff * 7 / 10000.0;
+					tooltipAppend.AppendFormat("半日 {0:0.00} ({1})\r\n", rankingPointsPreviousHalfDay, RecordManager.Instance.Resource.RankingPeriodString);
+					diff = RecordManager.Instance.Resource.GetExpDay(true);
+					rankingPointsPreviousDay = diff * 7 / 10000.0;
+					tooltipAppend.AppendFormat("单日 {0:0.00} ({1})\r\n", rankingPointsPreviousDay, RecordManager.Instance.Resource.RankingPeriodString);
+					diff = RecordManager.Instance.Resource.GetExpMonth(true);
+					rankingPointsPreviousMonth = diff * 7 / 10000.0;
+					tooltipAppend.AppendFormat("单月 {0:0.00} ({1})\r\n", rankingPointsPreviousMonth, RecordManager.Instance.Resource.RankingPeriodString);
 				}
 				{
-					var res = RecordManager.Instance.Resource.GetRecordDay();
-					if ( res != null ) {
-						int diff = db.Admiral.Exp - res.HQExp;
-						tooltip.AppendFormat( "今日 : +{0} exp. / 战果 {1:n2}\r\n", diff, diff * 7 / 10000.0 );
+					int diff = RecordManager.Instance.Resource.GetExpHalfDay();
+					if (diff == 0) {
+						DateTime now = DateTime.Now;
+						DateTime begins = new DateTime(now.Year, now.Month, now.Day, 22, 0, 0);
+						DateTime ends = new DateTime(now.Year, now.Month, now.Day, 0, 0, 0).AddDays(1);
+						tooltip.AppendFormat("年末战果黑洞期\r\n( {0} ~ {1} )\r\n", begins.ToString("yyyy'/'M'/'d HH':'mm"), ends.ToString("yyyy'/'M'/'d HH':'mm"));
+					} else {
+						tooltip.AppendFormat("当前战果 ( {0} )\r\n", RecordManager.Instance.Resource.MonthString);
+						diff = db.Admiral.Exp - diff;
+						double rankingPointsHalfDay = diff * 7 / 10000.0;
+						tooltip.AppendFormat("半日 {0:0.00} ({1}) ({2:↑0.00;↓0.00;±0})\r\n", rankingPointsHalfDay, RecordManager.Instance.Resource.RankingPeriodString, rankingPointsHalfDay - rankingPointsPreviousHalfDay);
+						diff = db.Admiral.Exp - RecordManager.Instance.Resource.GetExpDay();
+						double rankingPointsDay = diff * 7 / 10000.0;
+						tooltip.AppendFormat("单日 {0:0.00} ({1}) ({2:↑0.00;↓0.00;±0})\r\n", rankingPointsDay, RecordManager.Instance.Resource.RankingPeriodString, rankingPointsDay - rankingPointsPreviousDay);
+						diff = db.Admiral.Exp - RecordManager.Instance.Resource.GetExpMonth();
+						double rankingPointsMonth = diff * 7 / 10000.0;
+						tooltip.AppendFormat("单月 {0:0.00} ({1}) ({2:↑0.00;↓0.00;±0})\r\n", rankingPointsMonth, RecordManager.Instance.Resource.RankingPeriodString, rankingPointsMonth - rankingPointsPreviousMonth);
 					}
-				}
-				{
-					var res = RecordManager.Instance.Resource.GetRecordMonth();
-					if ( res != null ) {
-						int diff = db.Admiral.Exp - res.HQExp;
-						tooltip.AppendFormat( "本月 : +{0} exp. / 战果 {1:n2}\r\n", diff, diff * 7 / 10000.0 );
-					}
+					tooltip.Append(tooltipAppend.ToString());
 				}
 
 				ToolTipInfo.SetToolTip( HQLevel, tooltip.ToString() );

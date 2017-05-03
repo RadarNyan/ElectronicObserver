@@ -251,15 +251,23 @@ namespace ElectronicObserver.Window {
 			if ( KCDatabase.Instance.Fleet.CombinedFlag > 0 ) {
 				CombinedTag.Text = Constants.GetCombinedFleet( KCDatabase.Instance.Fleet.CombinedFlag );
 
+				var fleet1 = KCDatabase.Instance.Fleet[1];
+				var fleet2 = KCDatabase.Instance.Fleet[2];
 
-				int tp = Calculator.GetTPDamage( KCDatabase.Instance.Fleet[1] ) + Calculator.GetTPDamage( KCDatabase.Instance.Fleet[2] );
+				int tp = Calculator.GetTPDamage( fleet1 ) + Calculator.GetTPDamage( fleet2 );
 
-				ToolTipInfo.SetToolTip( CombinedTag, string.Format( "载有运输桶: {0}個\r\n载有大发动艇: {1}個\r\n运输量 (TP): S {2} / A {3}\r\n",
-					KCDatabase.Instance.Fleet[1].MembersWithoutEscaped.Sum( s => s == null ? 0 : s.AllSlotInstanceMaster.Count( eq => eq != null && eq.CategoryType == 30 ) ) +
-					KCDatabase.Instance.Fleet[2].MembersWithoutEscaped.Sum( s => s == null ? 0 : s.AllSlotInstanceMaster.Count( eq => eq != null && eq.CategoryType == 30 ) ),
-					KCDatabase.Instance.Fleet[1].MembersWithoutEscaped.Sum( s => s == null ? 0 : s.AllSlotInstanceMaster.Count( eq => eq != null && eq.CategoryType == 24 ) ) +
-					KCDatabase.Instance.Fleet[2].MembersWithoutEscaped.Sum( s => s == null ? 0 : s.AllSlotInstanceMaster.Count( eq => eq != null && eq.CategoryType == 24 ) ),
-					tp, (int)Math.Floor( tp * 0.7 )
+				ToolTipInfo.SetToolTip( CombinedTag, string.Format( "载有运输桶 : {0}個\r\n载有大发动艇 : {1}個\r\n运输量 (TP) : S {2} / A {3}\r\n\r\n总制空值 : {4}\r\n总索敌值 : {5:f2}\r\n新判定式(33) :\r\n　分歧点系数 1 : {6:f2}\r\n　分歧点系数 3 : {7:f2}\r\n　分歧点系数 4 : {8:f2}",
+					fleet1.MembersWithoutEscaped.Sum( s => s == null ? 0 : s.AllSlotInstanceMaster.Count( eq => eq != null && eq.CategoryType == 30 ) ) +
+					fleet2.MembersWithoutEscaped.Sum( s => s == null ? 0 : s.AllSlotInstanceMaster.Count( eq => eq != null && eq.CategoryType == 30 ) ),
+					fleet1.MembersWithoutEscaped.Sum( s => s == null ? 0 : s.AllSlotInstanceMaster.Count( eq => eq != null && eq.CategoryType == 24 ) ) +
+					fleet2.MembersWithoutEscaped.Sum( s => s == null ? 0 : s.AllSlotInstanceMaster.Count( eq => eq != null && eq.CategoryType == 24 ) ),
+					tp,
+					(int)Math.Floor( tp * 0.7 ),
+					Calculator.GetAirSuperiority( fleet1 ) + Calculator.GetAirSuperiority( fleet2 ),
+					Math.Floor( fleet1.GetSearchingAbility() * 100 ) / 100 + Math.Floor( fleet2.GetSearchingAbility() * 100 ) / 100,
+					Math.Floor( Calculator.GetSearchingAbility_New33( fleet1, 1 ) * 100 ) / 100 + Math.Floor( Calculator.GetSearchingAbility_New33( fleet2, 1 ) * 100 ) / 100,
+					Math.Floor( Calculator.GetSearchingAbility_New33( fleet1, 3 ) * 100 ) / 100 + Math.Floor( Calculator.GetSearchingAbility_New33( fleet2, 3 ) * 100 ) / 100,
+					Math.Floor( Calculator.GetSearchingAbility_New33( fleet1, 4 ) * 100 ) / 100 + Math.Floor( Calculator.GetSearchingAbility_New33( fleet2, 4 ) * 100 ) / 100
 					) );
 
 

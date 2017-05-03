@@ -91,6 +91,9 @@
 			this.StripMenu_Help_Help = new System.Windows.Forms.ToolStripMenuItem();
 			this.SeparatorWhitecap = new System.Windows.Forms.ToolStripSeparator();
 			this.StripMenu_Help_Version = new System.Windows.Forms.ToolStripMenuItem();
+			this.StripMenu_RN = new System.Windows.Forms.ToolStripMenuItem();
+			this.StripMenu_RN_Config = new System.Windows.Forms.ToolStripMenuItem();
+			this.StripMenu_RN_Version = new System.Windows.Forms.ToolStripMenuItem();
 			this.StripStatus = new System.Windows.Forms.StatusStrip();
 			this.StripStatus_InfoPadding = new System.Windows.Forms.ToolStripStatusLabel();
 			this.StripStatus_Information = new System.Windows.Forms.ToolStripStatusLabel();
@@ -116,7 +119,8 @@
             this.StripMenu_View,
             this.StripMenu_Tool,
             this.StripMenu_Debug,
-            this.StripMenu_Help});
+            this.StripMenu_Help,
+            this.StripMenu_RN});
 			this.StripMenu.Location = new System.Drawing.Point(0, 0);
 			this.StripMenu.Name = "StripMenu";
 			this.StripMenu.Size = new System.Drawing.Size(640, 24);
@@ -626,6 +630,29 @@
 			this.StripMenu_Help_Version.Size = new System.Drawing.Size(178, 22);
 			this.StripMenu_Help_Version.Text = "版本信息(&V)";
 			this.StripMenu_Help_Version.Click += new System.EventHandler(this.StripMenu_Help_Version_Click);
+ 			// 
+			// StripMenu_RN
+			// 
+			this.StripMenu_RN.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.StripMenu_RN_Config,
+            this.StripMenu_RN_Version});
+			this.StripMenu_RN.Name = "StripMenu_RN";
+			this.StripMenu_RN.Size = new System.Drawing.Size(64, 20);
+			this.StripMenu_RN.Text = "〄";
+			// 
+			// StripMenu_RN_Config
+			// 
+			this.StripMenu_RN_Config.Enabled = false;
+			this.StripMenu_RN_Config.Name = "StripMenu_RN_Config";
+			this.StripMenu_RN_Config.Size = new System.Drawing.Size(152, 22);
+			this.StripMenu_RN_Config.Text = "汉化版设置";
+			// 
+			// StripMenu_RN_Version
+			// 
+			this.StripMenu_RN_Version.Enabled = false;
+			this.StripMenu_RN_Version.Name = "StripMenu_RN_Version";
+			this.StripMenu_RN_Version.Size = new System.Drawing.Size(152, 22);
+			this.StripMenu_RN_Version.Text = "RN_VERSION";
 			// 
 			// StripStatus
 			// 
@@ -737,7 +764,7 @@
 			this.Font = new System.Drawing.Font("Meiryo UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
 			this.MainMenuStrip = this.StripMenu;
 			this.Name = "FormMain";
-			this.Text = "試製七四式電子観測儀";
+			this.Text = "七四式电子观测仪";
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormMain_FormClosing);
 			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormMain_FormClosed);
 			this.Load += new System.EventHandler(this.FormMain_Load);
@@ -834,5 +861,8 @@
 		private System.Windows.Forms.ToolStripMenuItem StripMenu_View_Json;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator11;
 		private System.Windows.Forms.ToolStripMenuItem StripMenu_Tool_AntiAirDefense;
+		private System.Windows.Forms.ToolStripMenuItem StripMenu_RN;
+		private System.Windows.Forms.ToolStripMenuItem StripMenu_RN_Config;
+		private System.Windows.Forms.ToolStripMenuItem StripMenu_RN_Version;
 	}
 }

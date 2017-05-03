@@ -295,11 +295,11 @@ namespace ElectronicObserver.Window {
 
 			row.SetValues(
 				ship.MasterID,
-				ship.TypeSortIndex,
-				ship.KaisouSortIndex,
 				ship.MasterShip.ShipType,
 				ship.MasterShip.Name,
 				ship.Level,
+				ship.TypeSortIndex,
+				ship.KaisouSortIndex,
 				ship.ExpTotal,
 				ship.ExpNext,
 				ship.ExpNextRemodel,
@@ -1142,6 +1142,7 @@ namespace ElectronicObserver.Window {
 
 
 		private void MenuMember_PopIndexWindow_Click( object sender, EventArgs e ) {
+			/*
 			StringBuilder sb = new StringBuilder();
 			sb.Append("改装序\t编成序\t舰娘\r\n");
 			foreach (var row in ShipView.SelectedRows.Cast<DataGridViewRow>().OrderBy(r => r.Index)) {
@@ -1156,6 +1157,19 @@ namespace ElectronicObserver.Window {
 				tempForm.TopMost = true; // ensure TopMost
 				MessageBox.Show(tempForm, sb.ToString(), "定位舰娘", MessageBoxButtons.OK);
 			}}){ IsBackground = true }.Start();
+			*/
+			var dialog = new Dialog.DialogShipGroupLocateShip();
+			dialog.DataClear();
+			foreach (var row in ShipView.SelectedRows.Cast<DataGridViewRow>().OrderBy(r => r.Index)) {
+				dialog.DataAdd(
+					row.Cells[ShipView_Name.Index].Value.ToString(),
+					row.Cells[ShipView_Level.Index].Value.ToString(),
+					row.Cells[ShipView_TypeSortIndex.Index].Value.ToString(),
+					row.Cells[ShipView_KaisouSortIndex.Index].Value.ToString()
+				);
+			}
+			dialog.Location = MenuMember.Location;
+			dialog.Show( this );
 		}
 
 		private void MenuMember_AddToGroup_Click( object sender, EventArgs e ) {
@@ -1399,11 +1413,11 @@ namespace ElectronicObserver.Window {
 										ship.MasterShip.ShipTypeName,
 										ship.MasterShip.NameWithClass,
 										ship.Level,
+										ship.TypeSortIndex,
+										ship.KaisouSortIndex,
 										ship.ExpTotal,
 										ship.ExpNext,
 										ship.ExpNextRemodel,
-										ship.TypeSortIndex,
-										ship.KaisouSortIndex,
 										ship.HPCurrent,
 										ship.HPMax,
 										ship.Condition,
@@ -1456,11 +1470,11 @@ namespace ElectronicObserver.Window {
 										ship.MasterShip.NameWithClass,
 										ship.ShipID,
 										ship.Level,
+										ship.TypeSortIndex,
+										ship.KaisouSortIndex,
 										ship.ExpTotal,
 										ship.ExpNext,
 										ship.ExpNextRemodel,
-										ship.TypeSortIndex,
-										ship.KaisouSortIndex,
 										ship.HPCurrent,
 										ship.HPMax,
 										ship.Condition,

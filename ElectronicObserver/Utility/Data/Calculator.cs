@@ -48,9 +48,7 @@ namespace ElectronicObserver.Utility.Data {
 		/// 艦載機熟練度の内部値テーブル(仮)
 		/// </summary>
 		private static readonly List<int> AircraftExpTable = new List<int>() {
-			//0, 10, 25, 40, 55, 70, 85, 100, 120
-			0, 10, 25, 40, 55, 70, 85, 100, 0, 0, // 内部熟练度可能达到的下限值 index = 0~7
-			9, 24, 39, 54, 69, 84, 99, 120, 0, 0  // 内部熟练度可能达到的上限值 (index + 10)
+			0, 10, 25, 40, 55, 70, 85, 100, 120
 		};
 
 		/// <summary>
@@ -59,6 +57,7 @@ namespace ElectronicObserver.Utility.Data {
 		private static readonly Dictionary<int, double> LevelBonus = new Dictionary<int, double>() { 
 			{ 6, 0.2 },		// 艦上戦闘機
 			{ 7, 0.25 },	// 艦上爆撃機
+			{ 45, 0.2 },	// 水上戦闘機
 		};
 
 
@@ -71,8 +70,9 @@ namespace ElectronicObserver.Utility.Data {
 		/// <param name="aircraftLevel">艦載機熟練度。既定値は 0 です。</param>
 		/// <param name="level">改修レベル。既定値は 0 です。</param>
 		/// <param name="isAirDefense">基地航空隊による防空戦かどうか。</param>
+		/// <param name="isAircraftExpMaximum">艦載機の内部熟練度が当該レベルで最大値であるとして計算するか。falseなら最小値として計算します。</param>
 		/// <returns></returns>
-		public static int GetAirSuperiority( int equipmentID, int count, int aircraftLevel = 0, int level = 0, bool isAirDefense = false ) {
+		public static int GetAirSuperiority( int equipmentID, int count, int aircraftLevel = 0, int level = 0, bool isAirDefense = false, bool isAircraftExpMaximum = false ) {
 
 			if ( count <= 0 )
 				return 0;
@@ -94,16 +94,19 @@ namespace ElectronicObserver.Utility.Data {
 					interceptorBonus = eq.Evasion * 1.5;
 			}
 
-			if (aircraftLevel < 10) {
-				return (int)( ( eq.AA + levelBonus * level + interceptorBonus ) * Math.Sqrt( count )
-					+ Math.Sqrt( AircraftExpTable[aircraftLevel] / 10.0 )
-					+ ( AircraftLevelBonus.ContainsKey( category ) ? AircraftLevelBonus[category][aircraftLevel] : 0 ) );
+			int aircraftExp;
+			if ( isAircraftExpMaximum ) {
+				if ( aircraftLevel < 7 )
+					aircraftExp = AircraftExpTable[aircraftLevel + 1] - 1;
+				else
+					aircraftExp = AircraftExpTable.Last();
 			} else {
-				return (int)( ( eq.AA + levelBonus * level + interceptorBonus ) * Math.Sqrt( count )
-					+ Math.Sqrt( AircraftExpTable[aircraftLevel] / 10.0 )
-					+ ( AircraftLevelBonus.ContainsKey( category ) ? AircraftLevelBonus[category][aircraftLevel - 10] : 0 ) );
+				aircraftExp = AircraftExpTable[aircraftLevel];
 			}
 
+			return (int)( ( eq.AA + levelBonus * level + interceptorBonus ) * Math.Sqrt( count )
+				+ Math.Sqrt( aircraftExp / 10.0 )
+				+ ( AircraftLevelBonus.ContainsKey( category ) ? AircraftLevelBonus[category][aircraftLevel] : 0 ) );
 		}
 
 
@@ -118,17 +121,6 @@ namespace ElectronicObserver.Utility.Data {
 			return slot.Select( ( eq, i ) => GetAirSuperiority( eq, aircraft[i] ) ).Sum();
 		}
 
-		/// <summary>
-		/// 制空戦力を求めます。
-		/// </summary>
-		/// <param name="slot">各スロットの装備IDリスト。</param>
-		/// <param name="aircraft">艦載機搭載量。</param>
-		/// <param name="level">各スロットの艦載機熟練度。</param>
-		/// <returns></returns>
-		public static int GetAirSuperiority( int[] slot, int[] aircraft, int[] level ) {
-
-			return slot.Select( ( eq, i ) => GetAirSuperiority( eq, aircraft[i], level[i] ) ).Sum();
-		}
 
 
 		/// <summary>
@@ -167,11 +159,12 @@ namespace ElectronicObserver.Utility.Data {
 		/// 制空戦力を求めます。
 		/// </summary>
 		/// <param name="ship">対象の艦船。</param>
-		public static int GetAirSuperiority( ShipData ship ) {
+		public static int GetAirSuperiority( ShipData ship, bool isAircraftLevelMaximum = false ) {
 
 			if ( ship == null ) return 0;
 
-			return ship.SlotInstance.Select( ( eq, i ) => eq == null ? 0 : GetAirSuperiority( eq.EquipmentID, ship.Aircraft[i], eq.AircraftLevel, eq.Level ) ).Sum();
+			return ship.SlotInstance.Select( ( eq, i ) => eq == null ? 0 :
+				GetAirSuperiority( eq.EquipmentID, ship.Aircraft[i], eq.AircraftLevel, eq.Level, false, isAircraftLevelMaximum ) ).Sum();
 		}
 
 		/// <summary>
@@ -189,29 +182,18 @@ namespace ElectronicObserver.Utility.Data {
 		/// 制空戦力を求めます。
 		/// </summary>
 		/// <param name="fleet">対象の艦隊。</param>
-		public static int GetAirSuperiority( FleetData fleet ) {
+		public static int GetAirSuperiority( FleetData fleet, bool isAircraftLevelMaximum = false ) {
 			if ( fleet == null )
 				return 0;
-			return fleet.MembersWithoutEscaped.Select( ship => GetAirSuperiority( ship ) ).Sum();
+			return fleet.MembersWithoutEscaped.Select( ship => GetAirSuperiority( ship, isAircraftLevelMaximum ) ).Sum();
 		}
 
-		// 计算由内部熟练度可能获得的最大制空值
-		public static int GetAirSuperiority2( FleetData fleet ) {
-			if ( fleet == null )
-				return 0;
-			return fleet.MembersWithoutEscaped.Select( ship => GetAirSuperiority2( ship ) ).Sum();
-		}
-
-		public static int GetAirSuperiority2( ShipData ship ) {
-			if ( ship == null ) return 0;
-			return ship.SlotInstance.Select( ( eq, i ) => eq == null ? 0 : GetAirSuperiority( eq.EquipmentID, ship.Aircraft[i], (eq.AircraftLevel + 10 ), eq.Level ) ).Sum();
-		}
 
 		/// <summary>
 		/// 基地航空隊の制空戦力を求めます。
 		/// </summary>
 		/// <param name="aircorps">対象の基地航空隊。</param>
-		public static int GetAirSuperiority( BaseAirCorpsData aircorps ) {
+		public static int GetAirSuperiority( BaseAirCorpsData aircorps, bool isAircraftLevelMaximum = false ) {
 			if ( aircorps == null )
 				return 0;
 
@@ -222,7 +204,7 @@ namespace ElectronicObserver.Utility.Data {
 				if ( sq == null || sq.State != 1 )
 					continue;
 
-				air += GetAirSuperiority( sq, aircorps.ActionKind == 2 );
+				air += GetAirSuperiority( sq, aircorps.ActionKind == 2, isAircraftLevelMaximum );
 
 				if ( aircorps.ActionKind != 2 )
 					continue;
@@ -250,7 +232,7 @@ namespace ElectronicObserver.Utility.Data {
 		/// 基地航空中隊の制空戦力を求めます。
 		/// </summary>
 		/// <param name="squadron">対象の基地航空中隊。</param>
-		public static int GetAirSuperiority( BaseAirCorpsSquadron squadron, bool isAirDefense = false ) {
+		public static int GetAirSuperiority( BaseAirCorpsSquadron squadron, bool isAirDefense = false, bool isAircraftLevelMaximum = false ) {
 			if ( squadron == null || squadron.State != 1 )
 				return 0;
 
@@ -258,7 +240,7 @@ namespace ElectronicObserver.Utility.Data {
 			if ( eq == null )
 				return 0;
 
-			return GetAirSuperiority( eq.EquipmentID, squadron.AircraftCurrent, eq.AircraftLevel, eq.Level, isAirDefense );
+			return GetAirSuperiority( eq.EquipmentID, squadron.AircraftCurrent, eq.AircraftLevel, eq.Level, isAirDefense, isAircraftLevelMaximum );
 		}
 
 
@@ -270,12 +252,13 @@ namespace ElectronicObserver.Utility.Data {
 		/// <returns></returns>
 		public static int GetAirSuperiorityAtMaxLevel( int[] fleet, int[][] slot ) {
 			return fleet.Select( id => KCDatabase.Instance.MasterShips[id] )
-				.Select( ( ship, i ) => ship == null ? 0 : GetAirSuperiority( slot[i], ship.Aircraft.ToArray(), new int[] { 8, 8, 8, 8, 8 } ) ).Sum();
+				.Select( ( ship, i ) => ship == null ? 0 :
+					slot[i].Select( ( eqid, k ) => GetAirSuperiority( eqid, ship.Aircraft[k], 7, 10, false, true ) ).Sum() ).Sum();
 		}
 
 
 		/// <summary>
-		/// 艦載機熟練度を無視した制空戦力を求めます。
+		/// 艦載機熟練度・改修レベルを無視した制空戦力を求めます。
 		/// </summary>
 		/// <param name="ship">対象の艦船。</param>
 		public static int GetAirSuperiorityIgnoreLevel( ShipData ship ) {
@@ -285,7 +268,7 @@ namespace ElectronicObserver.Utility.Data {
 		}
 
 		/// <summary>
-		/// 艦載機熟練度を無視した制空戦力を求めます。
+		/// 艦載機熟練度・改修レベルを無視した制空戦力を求めます。
 		/// </summary>
 		/// <param name="fleet">対象の艦隊。</param>
 		public static int GetAirSuperiorityIgnoreLevel( FleetData fleet ) {
@@ -942,7 +925,7 @@ namespace ElectronicObserver.Utility.Data {
 						mainguncnt++;
 						break;
 					case 4:		//副砲
-						subguncnt++; 
+						subguncnt++;
 						break;
 					case 5:
 					case 32:	//魚雷

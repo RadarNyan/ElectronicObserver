@@ -458,21 +458,26 @@ namespace ElectronicObserver.Data {
 			}
 		}
 
-		// 取得由内部熟练度可能获得的最大制空值
-		public int GetAirSuperiority2() {
+		/// <summary>
+		/// 現在の設定に応じて、制空戦力を表す文字列を取得します。
+		/// </summary>
+		/// <returns></returns>
+		public string GetAirSuperiorityString() {
 			switch ( Utility.Configuration.Config.FormFleet.AirSuperiorityMethod ) {
 				case 0:
 				default:
-					return 0;
-				case 1:
-					if (Configuration.Config.UI.AirSuperiorityShowRange) {
-						return Calculator.GetAirSuperiority2( this );
-					} else {
-						return 0;
+					return Calculator.GetAirSuperiorityIgnoreLevel( this ).ToString();
+				case 1: {
+						int min = Calculator.GetAirSuperiority( this, false );
+						int max = Calculator.GetAirSuperiority( this, true );
+
+						if ( Utility.Configuration.Config.FormFleet.ShowAirSuperiorityRange && min < max )
+							return string.Format( "{0} ～ {1}", min, max );
+						else
+							return min.ToString();
 					}
 			}
 		}
-
 
 		/// <summary>
 		/// 現在の設定に応じて、索敵能力を取得します。

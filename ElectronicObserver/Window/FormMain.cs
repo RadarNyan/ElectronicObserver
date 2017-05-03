@@ -69,6 +69,9 @@ namespace ElectronicObserver.Window {
 
 		public FormMain() {
 			InitializeComponent();
+
+			this.Text = SoftwareInformation.VersionJapanese;
+			this.StripMenu_RN_Version.Text = string.Format("v{0}-{1}", SoftwareInformation.VersionEnglish, SoftwareInformation.VersionRN);
 		}
 
 		private async void FormMain_Load( object sender, EventArgs e ) {
@@ -100,8 +103,6 @@ namespace ElectronicObserver.Window {
 
 			Utility.Logger.Add( 2, "", SoftwareInformation.SoftwareNameJapanese + " 启动中 ..." );
 
-
-			this.Text = SoftwareInformation.VersionJapanese;
 
 			ResourceManager.Instance.Load();
 			RecordManager.Instance.Load();
@@ -221,6 +222,11 @@ namespace ElectronicObserver.Window {
 			ShowInTaskbar = true;
 		}
 
+		// Toggle TopMost of Main Form back and forth to workaround a .Net Bug: KB2756203 (~win7) / KB2769674 (win8~)
+		private void FormMain_RefreshTopMost() {
+			TopMost = !TopMost;
+			TopMost = !TopMost;
+		}
 
 
 		private void ConfigurationChanged() {
@@ -881,7 +887,9 @@ namespace ElectronicObserver.Window {
 				MessageBox.Show( "艦船データが読み込まれていません。", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error );
 
 			} else {
-				new DialogAlbumMasterShip().Show( this );
+				var dialogAlbumMasterShip = new DialogAlbumMasterShip();
+				FormMain_RefreshTopMost();
+				dialogAlbumMasterShip.Show(this);
 			}
 
 		}
@@ -892,7 +900,9 @@ namespace ElectronicObserver.Window {
 				MessageBox.Show( "装備データが読み込まれていません。", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error );
 
 			} else {
-				new DialogAlbumMasterEquipment().Show( this );
+				var dialogAlbumMasterEquipment = new DialogAlbumMasterEquipment();
+				FormMain_RefreshTopMost();
+				dialogAlbumMasterEquipment.Show(this);
 			}
 
 		}
@@ -958,7 +968,9 @@ namespace ElectronicObserver.Window {
 
 		private void StripMenu_Tool_EquipmentList_Click( object sender, EventArgs e ) {
 
-			new DialogEquipmentList().Show( this );
+			var dialogEquipmentList = new DialogEquipmentList();
+			FormMain_RefreshTopMost();
+			dialogEquipmentList.Show(this);
 
 		}
 
@@ -1143,7 +1155,9 @@ namespace ElectronicObserver.Window {
 
 		private void StripMenu_Tool_ResourceChart_Click( object sender, EventArgs e ) {
 
-			new Dialog.DialogResourceChart().Show( this );
+			var dialogResourceChart = new DialogResourceChart();
+			FormMain_RefreshTopMost();
+			dialogResourceChart.Show(this);
 
 		}
 
