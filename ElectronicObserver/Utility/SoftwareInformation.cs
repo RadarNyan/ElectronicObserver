@@ -53,7 +53,7 @@ namespace ElectronicObserver.Utility {
 		/// </summary>
 		public static string VersionRN {
 			get {
-				return "m1";
+				return "m2";
 			}
 		}
 
@@ -63,7 +63,7 @@ namespace ElectronicObserver.Utility {
 		/// </summary>
 		public static DateTime UpdateTime {
 			get {
-				return DateTimeHelper.CSVStringToTime( "2017/05/03 21:36:21" );
+				return DateTimeHelper.CSVStringToTime( "2017/05/03 22:27:03" );
 			}
 		}
 
