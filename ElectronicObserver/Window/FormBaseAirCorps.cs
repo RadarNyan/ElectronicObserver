@@ -172,7 +172,16 @@ namespace ElectronicObserver.Window {
 
 					{
 						int airSuperiority = Calculator.GetAirSuperiority( corps );
-						AirSuperiority.Text = airSuperiority.ToString();
+						if ( Utility.Configuration.Config.FormFleet.ShowAirSuperiorityRange ) {
+							int airSuperiority_max = Calculator.GetAirSuperiority( corps, true );
+							if ( airSuperiority < airSuperiority_max )
+								AirSuperiority.Text = string.Format( "{0} ～ {1}", airSuperiority, airSuperiority_max );
+							else
+								AirSuperiority.Text = airSuperiority.ToString();
+						} else {
+							AirSuperiority.Text = airSuperiority.ToString();
+						}
+
 						ToolTipInfo.SetToolTip( AirSuperiority,
 							string.Format( "确保 : {0}\r\n优势 : {1}\r\n均衡 : {2}\r\n劣势 : {3}\r\n",
 							(int)( airSuperiority / 3.0 ),

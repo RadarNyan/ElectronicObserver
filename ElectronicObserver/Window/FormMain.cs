@@ -69,6 +69,8 @@ namespace ElectronicObserver.Window {
 
 		public FormMain() {
 			InitializeComponent();
+
+			this.Text = SoftwareInformation.VersionJapanese;
 		}
 
 		private async void FormMain_Load( object sender, EventArgs e ) {
@@ -100,8 +102,6 @@ namespace ElectronicObserver.Window {
 
 			Utility.Logger.Add( 2, "", SoftwareInformation.SoftwareNameJapanese + " 启动中 ..." );
 
-
-			this.Text = SoftwareInformation.VersionJapanese;
 
 			ResourceManager.Instance.Load();
 			RecordManager.Instance.Load();
