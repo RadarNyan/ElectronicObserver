@@ -48,6 +48,15 @@ namespace ElectronicObserver.Utility {
 			}
 		}
 
+		/// <summary>
+		/// 汉化版版本号
+		/// </summary>
+		public static string VersionRN {
+			get {
+				return "m1";
+			}
+		}
+
 
 		/// <summary>
 		/// 更新日時

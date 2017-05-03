@@ -71,6 +71,7 @@ namespace ElectronicObserver.Window {
 			InitializeComponent();
 
 			this.Text = SoftwareInformation.VersionJapanese;
+			this.StripMenu_RN_Version.Text = string.Format("v{0}-{1}", SoftwareInformation.VersionEnglish, SoftwareInformation.VersionRN);
 		}
 
 		private async void FormMain_Load( object sender, EventArgs e ) {
