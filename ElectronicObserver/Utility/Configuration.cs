@@ -190,8 +190,6 @@ namespace ElectronicObserver.Utility {
 				// 明石 ToolTip 每 HP 耗时最大显示数量
 				public int MaxAkashiPerHP { get; set; }
 
-				// 制空值显示范围
-				public bool AirSuperiorityShowRange { get; set; }
 
 				// 司令部各资源储量过低警告值
 				// -1: 自然恢复上限 ( 桶无效 ) | 3000: 小于 3000
@@ -431,7 +429,6 @@ namespace ElectronicObserver.Utility {
 					ThemeID = 0;
 					ShowGrowthInsteadOfNextInHQ = false;
 					MaxAkashiPerHP = 5;
-					AirSuperiorityShowRange = false;
 					HqResLowAlertFuel    = 0;
 					HqResLowAlertAmmo    = 0;
 					HqResLowAlertSteel   = 0;

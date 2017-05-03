@@ -458,21 +458,6 @@ namespace ElectronicObserver.Data {
 			}
 		}
 
-		// 取得由内部熟练度可能获得的最大制空值
-		public int GetAirSuperiority2() {
-			switch ( Utility.Configuration.Config.FormFleet.AirSuperiorityMethod ) {
-				case 0:
-				default:
-					return 0;
-				case 1:
-					if (Configuration.Config.UI.AirSuperiorityShowRange) {
-						return Calculator.GetAirSuperiority2( this );
-					} else {
-						return 0;
-					}
-			}
-		}
-
 
 		/// <summary>
 		/// 現在の設定に応じて、索敵能力を取得します。
