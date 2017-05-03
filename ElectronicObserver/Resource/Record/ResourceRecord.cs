@@ -386,7 +386,7 @@ namespace ElectronicObserver.Resource.Record {
 			if (now.Hour < 22) {
 				date = previous ? now.AddMonths(-1) : now;
 			} else {
-				date = previous ? now : now.AddMonths(1);
+				date = previous ? now.AddDays(1).AddMonths(-1) : now.AddDays(1);
 			}
 			// 确定记录范围
 			DateTime begins; DateTime ends;
