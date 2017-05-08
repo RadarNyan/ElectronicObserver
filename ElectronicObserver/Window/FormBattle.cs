@@ -818,11 +818,10 @@ namespace ElectronicObserver.Window {
 
 					if ( isEscaped ) {
 						HPBars[i].BackColor = Utility.Configuration.Config.UI.Battle_ColorHPBarsEscaped;
-						HPBars[i].RepaintHPtext();
 					} else {
 						HPBars[i].BackColor = Utility.Configuration.Config.UI.BackColor;
-						HPBars[i].RepaintHPtext();
 					}
+					HPBars[i].RepaintHPtext();
 				}
 			}
 
@@ -872,11 +871,10 @@ namespace ElectronicObserver.Window {
 
 						if ( isEscaped ) {
 							HPBars[i + 12].BackColor = Utility.Configuration.Config.UI.Battle_ColorHPBarsEscaped;
-							HPBars[i + 12].RepaintHPtext();
 						} else {
 							HPBars[i + 12].BackColor = Utility.Configuration.Config.UI.BackColor;
-							HPBars[i + 12].RepaintHPtext();
 						}
+						HPBars[i + 12].RepaintHPtext();
 					}
 				}
 
@@ -933,8 +931,8 @@ namespace ElectronicObserver.Window {
 			if ( bd.Initial.IsBossDamaged )
 			{
 				HPBars[6].BackColor = Utility.Configuration.Config.UI.Battle_ColorHPBarsBossDamaged;
-				HPBars[6].RepaintHPtext();
 			}
+			HPBars[6].RepaintHPtext();
 
 			if ( !isBaseAirRaid ) {
 				foreach ( int i in bd.MVPShipIndexes )
@@ -1100,30 +1098,22 @@ namespace ElectronicObserver.Window {
 			for ( int i = 0; i < 6; i++ ) {
 				if ( friend.EscapedShipList.Contains( friend.Members[i] ) ) {
 					HPBars[i].BackColor = Utility.Configuration.Config.UI.Battle_ColorHPBarsEscaped;
-					HPBars[i].RepaintHPtext();
-
 				} else if ( br.MVPIndex == i + 1 ) {
 					HPBars[i].BackColor = Utility.Configuration.Config.UI.Battle_ColorHPBarsMVP;
-					HPBars[i].RepaintHPtext();
-
 				} else {
 					HPBars[i].BackColor = Utility.Configuration.Config.UI.BackColor;
-					HPBars[i].RepaintHPtext();
 				}
+				HPBars[i].RepaintHPtext();
 
 				if ( escort != null ) {
 					if ( escort.EscapedShipList.Contains( escort.Members[i] ) ) {
 						HPBars[i + 12].BackColor = Utility.Configuration.Config.UI.Battle_ColorHPBarsEscaped;
-						HPBars[i + 12].RepaintHPtext();
-
 					} else if ( br.MVPIndexCombined == i + 1 ) {
 						HPBars[i + 12].BackColor = Utility.Configuration.Config.UI.Battle_ColorHPBarsMVP;
-						HPBars[i + 12].RepaintHPtext();
-
 					} else {
 						HPBars[i + 12].BackColor = Utility.Configuration.Config.UI.BackColor;
-						HPBars[i + 12].RepaintHPtext();
 					}
+					HPBars[i + 12].RepaintHPtext();
 				}
 			}
 

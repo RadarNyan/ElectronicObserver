@@ -116,7 +116,7 @@ namespace ElectronicObserver.Window {
 
 
 					ShipName.Text = ship.Name;
-					ShipName.ForeColor = GetShipNameColor( ship );
+					ShipName.ForeColor = ship.GetShipNameColor();
 					ToolTipInfo.SetToolTip( ShipName, GetShipString( shipID, slot ) );
 
 					Equipments.SetSlotList( shipID, slot );
@@ -271,7 +271,7 @@ namespace ElectronicObserver.Window {
 					} else {
 
 						ShipNames[i].Text = ship.Name;
-						ShipNames[i].ForeColor = GetShipNameColor( ship );
+						ShipNames[i].ForeColor = ship.GetShipNameColor();
 						ShipNames[i].Tag = ship.ShipID;
 						ShipNames[i].Cursor = Cursors.Help;
 						ToolTipInfo.SetToolTip( ShipNames[i], GetShipString( ship.ShipID, ship.DefaultSlot != null ? ship.DefaultSlot.ToArray() : null ) );
@@ -312,26 +312,6 @@ namespace ElectronicObserver.Window {
 
 
 		#region ***Control method
-
-		private static Color GetShipNameColor( ShipDataMaster ship ) {
-			switch ( ship.AbyssalShipClass ) {
-				case 0:
-				case 1:		//normal
-				default:
-					return Utility.Configuration.Config.UI.ForeColor;
-				case 2:		//elite
-					return Utility.Configuration.Config.UI.Compass_ShipNameColor2;
-				case 3:		//flagship
-					return Utility.Configuration.Config.UI.Compass_ShipNameColor3;
-				case 4:		//latemodel / flagship kai
-					return Utility.Configuration.Config.UI.Compass_ShipNameColor4;
-				case 5:		//latemodel elite
-					return Utility.Configuration.Config.UI.Compass_ShipNameColor5;
-				case 6:		//latemodel flagship
-					return Utility.Configuration.Config.UI.Compass_ShipNameColor6;
-			}
-		}
-
 
 		private static string GetShipString( int shipID, int[] slot ) {
 
@@ -716,7 +696,7 @@ namespace ElectronicObserver.Window {
 					} else if ( mapinfo.MapHPMax > 0 ) {
 						int current = compass.MapHPCurrent > 0 ? compass.MapHPCurrent : mapinfo.MapHPCurrent;
 						int max = compass.MapHPMax > 0 ? compass.MapHPMax : mapinfo.MapHPMax;
-						
+
 						ToolTipInfo.SetToolTip( TextMapArea, string.Format( "{0}: {1} / {2}", mapinfo.GaugeType == 3 ? "TP" : "HP", current, max ) );
 
 					} else {
@@ -840,6 +820,14 @@ namespace ElectronicObserver.Window {
 									break;
 								case 3:		//穏やかな海
 									eventkind = "穏やかな海";
+									TextEventDetail.Text = "";
+									break;
+								case 4:
+									eventkind = "穏やかな海峡";
+									TextEventDetail.Text = "";
+									break;
+								case 5:
+									eventkind = "警戒が必要";
 									TextEventDetail.Text = "";
 									break;
 							}

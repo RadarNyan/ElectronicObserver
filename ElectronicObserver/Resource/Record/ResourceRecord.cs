@@ -245,11 +245,13 @@ namespace ElectronicObserver.Resource.Record {
 			}
 		} }
 
+		private TimeSpan timeZoneOffset = DateTimeOffset.Now.Offset - new TimeSpan(9, 0, 0);
+
 		/// <summary>
 		/// 半日提督经验 ( previous = true 时返回上次结算总经验，否则返回上次结算时经验值 )
 		/// </summary>
 		public int GetExpHalfDay(bool previous = false) {
-			DateTime now = DateTime.Now;
+			DateTime now = DateTime.UtcNow.AddHours(9);
 			// 确定日期 ( date 的时间仅以 02:00 / 14:00 表示上午 / 下午，并不一定是记录的起始时间 )
 			DateTime date;
 			if (now.Hour < 2) {
@@ -304,6 +306,8 @@ namespace ElectronicObserver.Resource.Record {
 				}
 			}
 			rankingMonth = date.Month;
+			// 修正时区
+			begins += timeZoneOffset; ends += timeZoneOffset;
 			// 返回记录值
 			var recordBegins = GetRecord(begins);
 			var recordEnds = GetRecord(ends);
@@ -326,7 +330,7 @@ namespace ElectronicObserver.Resource.Record {
 		/// 单日提督经验 ( previous = true 时返回昨日总经验，否则返回本日初经验值 )
 		/// </summary>
 		public int GetExpDay(bool previous = false) {
-			DateTime now = DateTime.Now;
+			DateTime now = DateTime.UtcNow.AddHours(9);
 			// 确定日期
 			DateTime date;
 			if (now.Day != 1 && now.Hour < 2) {
@@ -358,6 +362,8 @@ namespace ElectronicObserver.Resource.Record {
 					ends = new DateTime(date.Year, date.Month, date.Day, 2, 0, 0).AddDays(1);
 				}
 			}
+			// 修正时区
+			begins += timeZoneOffset; ends += timeZoneOffset;
 			// 返回记录值
 			var recordBegins = GetRecord(begins);
 			var recordEnds = GetRecord(ends);
@@ -380,7 +386,7 @@ namespace ElectronicObserver.Resource.Record {
 		/// 单月提督经验 ( previous = true 时返回上月总经验，否则返回本月初经验值 )
 		/// </summary>
 		public int GetExpMonth(bool previous = false) {
-			DateTime now = DateTime.Now;
+			DateTime now = DateTime.UtcNow.AddHours(9);
 			// 确定月份
 			DateTime date;
 			if (now.Hour < 22) {
@@ -399,6 +405,8 @@ namespace ElectronicObserver.Resource.Record {
 				begins = new DateTime(date.Year, date.Month, 1, 0, 0, 0).AddHours(-2);
 				ends   = new DateTime(date.Year, date.Month, DateTime.DaysInMonth(date.Year, date.Month), 22, 0, 0);
 			}
+			// 修正时区
+			begins += timeZoneOffset; ends += timeZoneOffset;
 			// 返回记录值
 			var recordBegins = GetRecord(begins);
 			var recordEnds = GetRecord(ends);

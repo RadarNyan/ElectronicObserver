@@ -376,12 +376,16 @@ namespace ElectronicObserver.Utility {
 				public Color Compass_ShipNameColor2 { get; set; }
 				[IgnoreDataMember] // 敌舰名 - flagship
 				public Color Compass_ShipNameColor3 { get; set; }
-				[IgnoreDataMember] // 敌舰名 - 改 flagship / 后期型
+				[IgnoreDataMember] // 敌舰名 - 鬼 / 改 flagship / 后期型
 				public Color Compass_ShipNameColor4 { get; set; }
-				[IgnoreDataMember] // 敌舰名 - 后期型 elite
+				[IgnoreDataMember] // 敌舰名 - 姫 / 后期型 elite
 				public Color Compass_ShipNameColor5 { get; set; }
-				[IgnoreDataMember] // 敌舰名 - 后期型 flagship
+				[IgnoreDataMember] // 敌舰名 - 水鬼 / 后期型 flagship
 				public Color Compass_ShipNameColor6 { get; set; }
+				[IgnoreDataMember] // 敌舰名 - 水姫
+				public Color Compass_ShipNameColor7 { get; set; }
+				[IgnoreDataMember] // 敌舰名 - 壊
+				public Color Compass_ShipNameColorDestroyed { get; set; }
 				[IgnoreDataMember] // 事件类型 - 夜战
 				public Color Compass_ColorTextEventKind3 { get; set; }
 				[IgnoreDataMember] // 事件类型 - 航空战 / 长距离空袭战
@@ -1340,6 +1344,9 @@ namespace ElectronicObserver.Utility {
 				public int OutputType { get; set; }
 				public bool OpenImageAfterOutput { get; set; }
 				public string LastOutputPath { get; set; }
+				public bool DisableOverwritePrompt { get; set; }
+				public bool AutoSetFileNameToDate { get; set; }
+				public bool SyncronizeTitleAndFileName { get; set; }
 
 				public ConfigFleetImageGenerator()
 					: base() {
@@ -1348,6 +1355,9 @@ namespace ElectronicObserver.Utility {
 					OutputType = 0;
 					OpenImageAfterOutput = false;
 					LastOutputPath = "";
+					DisableOverwritePrompt = false;
+					AutoSetFileNameToDate = false;
+					SyncronizeTitleAndFileName = false;
 				}
 			}
 			[DataMember]
@@ -1621,9 +1631,11 @@ namespace ElectronicObserver.Utility {
 ""compass"":{
 ""shipClass2"":""#FF0000"",
 ""shipClass3"":""#FF8800"",
-""shipClass4"":""#0088FF"",
+""shipClass4"":""#006600"",
 ""shipClass5"":""#880000"",
-""shipClass6"":""#884400"",
+""shipClass6"":""#0088FF"",
+""shipClass7"":""#FF00FF"",
+""shipDestroyed"":""#0000FF"",
 ""eventKind3"":""#000080"",
 ""eventKind6"":""#006400"",
 ""eventKind5"":""#8B0000""
@@ -1793,6 +1805,8 @@ namespace ElectronicObserver.Utility {
 			Config.UI.Compass_ShipNameColor4 = ThemePanelColor("compass", "shipClass4");
 			Config.UI.Compass_ShipNameColor5 = ThemePanelColor("compass", "shipClass5");
 			Config.UI.Compass_ShipNameColor6 = ThemePanelColor("compass", "shipClass6");
+			Config.UI.Compass_ShipNameColor7 = ThemePanelColor("compass", "shipClass7");
+			Config.UI.Compass_ShipNameColorDestroyed = ThemePanelColor("compass", "shipDestroyed");
 			Config.UI.Compass_ColorTextEventKind3 = ThemePanelColor("compass", "eventKind3");
 			Config.UI.Compass_ColorTextEventKind6 = ThemePanelColor("compass", "eventKind6");
 			Config.UI.Compass_ColorTextEventKind5 = ThemePanelColor("compass", "eventKind5");
@@ -1948,11 +1962,15 @@ namespace ElectronicObserver.Utility {
 					case "compass_shipClass3":
 						return Config.UI.Color_Orange;
 					case "compass_shipClass4":
-						return Config.UI.Color_Blue;
+						return Config.UI.Color_Green;
 					case "compass_shipClass5":
-						return Config.UI.Color_Magenta;
+						return Config.UI.Color_Violet;
 					case "compass_shipClass6":
-						return Config.UI.Color_Yellow;
+						return Config.UI.Color_Cyan;
+					case "compass_shipClass7":
+						return Config.UI.Color_Blue;
+					case "compass_shipDestroyed":
+						return Config.UI.Color_Magenta;
 					case "compass_eventKind3":
 						return Config.UI.Color_Violet;
 					case "compass_eventKind6":
