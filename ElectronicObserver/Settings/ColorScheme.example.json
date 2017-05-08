@@ -13,14 +13,14 @@
   // 基本颜色 ( 后面的面板颜色优先于基本颜色 )
   // 不排除未来这些基本颜色将被用作其他用途，请勿定义成和名称不符的颜色
   "basicColors": {
-    "red":     "#FF0000", // 红色 - 严重疲劳、大破、船位 / 装备位少于出击需求、出击任务、航空队受损、elite 级深海、敌联合舰队战、战败、BOSS 战
-    "orange":  "#FFA500", // 橙色 - 中等疲劳、中破、工厂任务、任务进度小于 50%、flagship 级深海、BOSS 损坏
-    "yellow":  "#FFFF00", // 黄色 - 轻微疲劳、小破、补给任务、后期型 flagship 深海
-    "green":   "#00FF00", // 绿色 - 擦伤、编成任务、演习任务、任务进度小于 80%、航空战
-    "cyan":    "#00FFFF", // 青色 - 装备改修等级、远征任务、任务进度小于 100%
-    "blue":    "#0000FF", // 蓝色 - 战意高扬、无伤、远征返回、疲劳恢复、入渠结束、建造完成、任务进度 100%、改 flagship / 后期型深海、MVP、资源、资材、家具币达到上限
-    "magenta": "#FF00FF", // 洋红 - 造成伤害 ( 血条 )、航空队全灭 ( 残机数 0 )、后期型 elite 深海
-    "violet":  "#EE82EE"  // 紫色 - 改装任务、夜战
+    "red":     "#FF0000", // 红色 - 严重疲劳、大破、船位 / 装备位少于出击需求、出击任务、航空队受损、深海 elite 级、敌联合舰队战、战败、BOSS 战
+    "orange":  "#FFA500", // 橙色 - 中等疲劳、中破、工厂任务、任务进度小于 50%、深海 flagship 级、BOSS 损坏
+    "yellow":  "#FFFF00", // 黄色 - 轻微疲劳、小破、补给任务
+    "green":   "#00FF00", // 绿色 - 擦伤、编成任务、演习任务、任务进度小于 80%、航空战、深海 鬼 / 改 flagship / 后期型
+    "cyan":    "#00FFFF", // 青色 - 装备改修等级、远征任务、任务进度小于 100%、深海 水鬼 / 后期型 flagship
+    "blue":    "#0000FF", // 蓝色 - 战意高扬、无伤、远征返回、疲劳恢复、入渠结束、建造完成、任务进度 100%、MVP、资源、资材、家具币达到上限、深海水姬
+    "magenta": "#FF00FF", // 洋红 - 造成伤害 ( 血条 )、航空队全灭 ( 残机数 0 )、深海 XXXX-壊
+    "violet":  "#EE82EE"  // 紫色 - 改装任务、夜战、深海 姬 / 后期型 elite
   },
   // 数值条颜色 ( 若省略此项，则根据基本颜色自动定义 )
   "barColors": [
@@ -165,14 +165,16 @@
     },
     // 视图 - 罗盘
     "compass": {
-      "shipClass2": "#FF0000", // [red]     elite
-      "shipClass3": "#FF8800", // [orange]  flagship
-      "shipClass4": "#0088FF", // [blue]    改 flagship / 后期型
-      "shipClass5": "#880000", // [magenta] 后期型 elite
-      "shipClass6": "#884400", // [yellow]  后期型 flagship
-      "eventKind3": "#000080", // [violet]  夜战
-      "eventKind6": "#006400", // [green]   航空战
-      "eventKind5": "#8B0000"  // [violet]  敌联合
+      "shipClass2":    "#FF0000", // [red]     elite
+      "shipClass3":    "#FF8800", // [orange]  flagship
+      "shipClass4":    "#006600", // [green]   鬼 / 改 flagship / 后期型
+      "shipClass5":    "#880000", // [violet]  姬 / 后期型 elite
+      "shipClass6":    "#0088FF", // [cyan]    水鬼 / 后期型 flagship
+      "shipClass7":    "#0000FF", // [blue]    水姬
+      "shipDestroyed": "#FF00FF", // [magenta] XXXX-壊
+      "eventKind3":    "#000080", // [violet]  夜战
+      "eventKind6":    "#006400", // [green]   航空战
+      "eventKind5":    "#8B0000"  // [violet]  敌联合
     },
     // 视图 - 战斗
     "battle": {
