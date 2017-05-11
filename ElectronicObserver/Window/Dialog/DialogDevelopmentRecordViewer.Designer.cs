@@ -173,6 +173,8 @@
 			this.DateEnd.Name = "DateEnd";
 			this.DateEnd.Size = new System.Drawing.Size(140, 23);
 			this.DateEnd.TabIndex = 15;
+			this.DateEnd.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+			this.DateEnd.CustomFormat = "yyyy/MM/dd";
 			// 
 			// DateBegin
 			// 
@@ -180,6 +182,8 @@
 			this.DateBegin.Name = "DateBegin";
 			this.DateBegin.Size = new System.Drawing.Size(140, 23);
 			this.DateBegin.TabIndex = 14;
+			this.DateBegin.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+			this.DateBegin.CustomFormat = "yyyy/MM/dd";
 			// 
 			// label4
 			// 

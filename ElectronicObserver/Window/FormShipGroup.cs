@@ -1577,10 +1577,10 @@ namespace ElectronicObserver.Window {
 			if ( _tempMouse != null ) {
 
 				Rectangle move = new Rectangle(
-					_tempMouse.Value.X - SystemInformation.DragSize.Width / 2,
-					_tempMouse.Value.Y - SystemInformation.DragSize.Height / 2,
-					SystemInformation.DragSize.Width,
-					SystemInformation.DragSize.Height
+					_tempMouse.Value.X - 6,
+					_tempMouse.Value.Y - 3,
+					12,
+					6
 					);
 
 				if ( !move.Contains( TabPanel.PointToClient( e.Location ) ) ) {
