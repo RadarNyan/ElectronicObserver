@@ -59,7 +59,7 @@ namespace ElectronicObserver.Window.Dialog {
 			var includedShipNames = _record.Record
 				.Select( r => r.ShipName )
 				.Distinct()
-				.Except( new[] { NameNotExist, NameFullPort } );
+				.Except( new[] { "(なし)", "(満員)" } );
 
 			var includedShipObjects = includedShipNames
 				.Select( name => KCDatabase.Instance.MasterShips.Values.FirstOrDefault( ship => ship.NameWithClass == name ) )
@@ -71,7 +71,7 @@ namespace ElectronicObserver.Window.Dialog {
 			var includedItemNames = _record.Record
 				.Select( r => r.ItemName )
 				.Distinct()
-				.Except( new[] { NameNotExist } );
+				.Except( new[] { "(なし)" } );
 
 			var includedItemObjects = includedItemNames
 				.Select( name => KCDatabase.Instance.MasterUseItems.Values.FirstOrDefault( item => item.Name == name ) )
@@ -381,7 +381,7 @@ namespace ElectronicObserver.Window.Dialog {
 			row.CreateCells( RecordView );
 
 			var args = new SearchArgument();
-			args.ShipName = (string)ShipName.SelectedItem;
+			args.ShipName = ShipName.Text;
 			args.ItemName = (string)ItemName.SelectedItem;
 			args.EquipmentName = (string)EquipmentName.SelectedItem;
 			args.DateBegin = DateBegin.Value;
@@ -591,6 +591,20 @@ namespace ElectronicObserver.Window.Dialog {
 							);
 
 						row.Cells[1].Tag = GetContentStringForSorting( r );
+						switch (row.Cells[1].Value.ToString())
+						{
+							case "(なし)":
+								row.Cells[1].Style.Font = Utility.Configuration.Config.UI.MainFont;
+								row.Cells[1].Value = "( 无 )";
+								break;
+							case "(満員)":
+								row.Cells[1].Style.Font = Utility.Configuration.Config.UI.MainFont;
+								row.Cells[1].Value = "( 满员 )";
+								break;
+							default:
+								row.Cells[1].Style.Font = Utility.Configuration.Config.UI.JapFont;
+								break;
+						}
 						row.Cells[3].Tag = GetMapSerialID( r.MapAreaID, r.MapInfoID, r.CellID, r.IsBossNode, r.Difficulty );
 
 						rows.AddLast( row );
