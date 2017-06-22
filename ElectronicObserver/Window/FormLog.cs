@@ -17,7 +17,6 @@ namespace ElectronicObserver.Window {
 
 		public FormLog( FormMain parent ) {
 			InitializeComponent();
-
 			ConfigurationChanged();
 		}
 		
@@ -25,9 +24,8 @@ namespace ElectronicObserver.Window {
 
 			foreach ( var log in Utility.Logger.Log ) {
 				if ( log.Priority >= Utility.Configuration.Config.Log.LogLevel )
-					LogList.Items.Add( log.ToString() );
+					AddLogLine(log);
 			}
-			LogList.TopIndex = LogList.Items.Count - 1;
 
 			Utility.Logger.Instance.LogAdded += new Utility.LogAddedEventHandler( ( Utility.Logger.LogData data ) => {
 				if ( InvokeRequired ) {
@@ -47,32 +45,81 @@ namespace ElectronicObserver.Window {
 
 
 		void ConfigurationChanged() {
+			LogTextBox.ForeColor = Utility.Configuration.Config.UI.ForeColor;
+			LogTextBox.BackColor = Utility.Configuration.Config.UI.BackColor;
+			LogTextBox.LanguageOption = RichTextBoxLanguageOptions.UIFonts;
+			LogTextBox.Font = Utility.Configuration.Config.UI.JapFont;
+		}
 
-			LogList.Font = Font = Utility.Configuration.Config.UI.JapFont;
+
+		private void AddLogLine(Utility.Logger.LogData data) {
+			if (LogTextBox.Lines.Length > 0) {
+				if (LogTextBox.Lines.Length > 299) { // Delete first 100 lines once Log reaches 300 lines
+					SuspendDrawLog();
+					LogTextBox.ReadOnly = false;
+					LogTextBox.Select(0, LogTextBox.GetFirstCharIndexFromLine(100));
+					LogTextBox.SelectedText = "";
+					LogTextBox.ReadOnly = true;
+					SuspendDrawLog(false);
+				}
+				LogTextBox.AppendText("\r\n");
+				LogTextBox.ScrollToCaret();
+			}
+			LogTextBox.AppendText(string.Format("[{0}][{1}] : {2}", Utility.Mathematics.DateTimeHelper.TimeToCSVString(data.Time), data.Priority, data.Message));
+			LogTextBox.SelectionFont = Utility.Configuration.Config.UI.MainFont;
+			LogTextBox.AppendText(data.MsgChs1);
+			LogTextBox.SelectionFont = Utility.Configuration.Config.UI.JapFont;
+			LogTextBox.AppendText(data.MsgJap2);
+			LogTextBox.SelectionFont = Utility.Configuration.Config.UI.MainFont;
+			LogTextBox.AppendText(data.MsgChs2);
+			LogTextBox.SelectionFont = Utility.Configuration.Config.UI.JapFont;
+			LogTextBox.AppendText(data.MsgJap3);
+			LogTextBox.SelectionFont = Utility.Configuration.Config.UI.MainFont;
+			LogTextBox.AppendText(data.MsgChs3);
+			HideCaret(LogTextBox.Handle);
 		}
 
 
 		void Logger_LogAdded( Utility.Logger.LogData data ) {
-
-			int index = LogList.Items.Add( data.ToString() );
-			LogList.TopIndex = index;
-
+			AddLogLine(data);
 		}
 
 
 
 		private void ContextMenuLog_Clear_Click( object sender, EventArgs e ) {
 
-			LogList.Items.Clear();
+			LogTextBox.Text = "";
 
 		}
-
-
 
 		protected override string GetPersistString() {
 			return "Log";
 		}
 
-	
+
+		[System.Runtime.InteropServices.DllImport("user32.dll")]
+		private static extern int HideCaret (IntPtr hwnd);
+
+		[System.Runtime.InteropServices.DllImport("user32.dll")]
+		public static extern int SendMessage(IntPtr hWnd, Int32 wMsg, bool wParam, Int32 lParam);
+
+		private const int WM_SETREDRAW = 11;
+
+
+		private void HideCaret(object sender, EventArgs e)
+		{
+			HideCaret(LogTextBox.Handle);
+		}
+
+
+		private void SuspendDrawLog(bool suspend = true)
+		{
+			if (suspend) {
+				SendMessage(LogTextBox.Handle, WM_SETREDRAW, false, 0);
+			} else {
+				SendMessage(LogTextBox.Handle, WM_SETREDRAW, true, 0);
+				LogTextBox.Refresh();
+			}
+		}
 	}
 }
