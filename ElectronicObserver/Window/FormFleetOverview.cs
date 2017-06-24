@@ -256,7 +256,7 @@ namespace ElectronicObserver.Window {
 
 				int tp = Calculator.GetTPDamage( fleet1 ) + Calculator.GetTPDamage( fleet2 );
 
-				ToolTipInfo.SetToolTip( CombinedTag, string.Format( "载有运输桶 : {0}個\r\n载有大发动艇 : {1}個\r\n运输量 (TP) : S {2} / A {3}\r\n\r\n总制空值 : {4}\r\n总索敌值 : {5:f2}\r\n新判定式(33) :\r\n　分歧点系数 1 : {6:f2}\r\n　分歧点系数 3 : {7:f2}\r\n　分歧点系数 4 : {8:f2}",
+				ToolTipInfo.SetToolTip( CombinedTag, string.Format( "载有运输桶 : {0} 个\r\n载有大发动艇 : {1} 艘\r\n运输量 (TP) : S {2} / A {3}\r\n\r\n总制空值 : {4}\r\n总索敌值 : {5:f2}\r\n新判定式(33) :\r\n　分歧点系数 1 : {6:f2}\r\n　分歧点系数 3 : {7:f2}\r\n　分歧点系数 4 : {8:f2}",
 					fleet1.MembersWithoutEscaped.Sum( s => s == null ? 0 : s.AllSlotInstanceMaster.Count( eq => eq != null && eq.CategoryType == 30 ) ) +
 					fleet2.MembersWithoutEscaped.Sum( s => s == null ? 0 : s.AllSlotInstanceMaster.Count( eq => eq != null && eq.CategoryType == 30 ) ),
 					fleet1.MembersWithoutEscaped.Sum( s => s == null ? 0 : s.AllSlotInstanceMaster.Count( eq => eq != null && eq.CategoryType == 24 ) ) +

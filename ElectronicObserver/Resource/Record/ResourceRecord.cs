@@ -250,8 +250,7 @@ namespace ElectronicObserver.Resource.Record {
 		/// <summary>
 		/// 半日提督经验 ( previous = true 时返回上次结算总经验，否则返回上次结算时经验值 )
 		/// </summary>
-		public int GetExpHalfDay(bool previous = false) {
-			DateTime now = DateTime.UtcNow.AddHours(9);
+		public int GetExpHalfDay(DateTime now, bool previous = false) {
 			// 确定日期 ( date 的时间仅以 02:00 / 14:00 表示上午 / 下午，并不一定是记录的起始时间 )
 			DateTime date;
 			if (now.Hour < 2) {
@@ -329,8 +328,7 @@ namespace ElectronicObserver.Resource.Record {
 		/// <summary>
 		/// 单日提督经验 ( previous = true 时返回昨日总经验，否则返回本日初经验值 )
 		/// </summary>
-		public int GetExpDay(bool previous = false) {
-			DateTime now = DateTime.UtcNow.AddHours(9);
+		public int GetExpDay(DateTime now, bool previous = false) {
 			// 确定日期
 			DateTime date;
 			if (now.Day != 1 && now.Hour < 2) {
@@ -385,8 +383,7 @@ namespace ElectronicObserver.Resource.Record {
 		/// <summary>
 		/// 单月提督经验 ( previous = true 时返回上月总经验，否则返回本月初经验值 )
 		/// </summary>
-		public int GetExpMonth(bool previous = false) {
-			DateTime now = DateTime.UtcNow.AddHours(9);
+		public int GetExpMonth(DateTime now, bool previous = false) {
 			// 确定月份
 			DateTime date;
 			if (now.Hour < 22) {

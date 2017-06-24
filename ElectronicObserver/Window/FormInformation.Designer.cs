@@ -41,6 +41,8 @@
 			this.TextInformation.Size = new System.Drawing.Size(294, 194);
 			this.TextInformation.TabIndex = 0;
 			this.TextInformation.Text = "";
+			this.TextInformation.GotFocus += new System.EventHandler(this.HideCaret);
+			this.TextInformation.MouseLeave += new System.EventHandler(this.HideCaret);
 			// 
 			// FormInformation
 			// 
