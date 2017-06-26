@@ -193,6 +193,12 @@ namespace ElectronicObserver.Utility {
 				// 使用旧版熟练度图标
 				public bool UseOldAircraftLevelIcons { get; set; }
 
+				// 日志窗口自动换行
+				public bool TextWrapInLogWindow { get; set; }
+
+				// 日志窗口精简模式
+				public bool CompactModeLogWindow { get; set; }
+
 
 				// 司令部各资源储量过低警告值
 				// -1: 自然恢复上限 ( 桶无效 ) | 3000: 小于 3000
@@ -447,6 +453,8 @@ namespace ElectronicObserver.Utility {
 					ShowGrowthInsteadOfNextInHQ = false;
 					MaxAkashiPerHP = 5;
 					UseOldAircraftLevelIcons = true;
+					TextWrapInLogWindow = false;
+					CompactModeLogWindow = false;
 					HqResLowAlertFuel    = 0;
 					HqResLowAlertAmmo    = 0;
 					HqResLowAlertSteel   = 0;
