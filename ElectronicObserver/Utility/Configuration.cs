@@ -190,6 +190,15 @@ namespace ElectronicObserver.Utility {
 				// 明石 ToolTip 每 HP 耗时最大显示数量
 				public int MaxAkashiPerHP { get; set; }
 
+				// 使用旧版熟练度图标
+				public bool UseOldAircraftLevelIcons { get; set; }
+
+				// 日志窗口自动换行
+				public bool TextWrapInLogWindow { get; set; }
+
+				// 日志窗口精简模式
+				public bool CompactModeLogWindow { get; set; }
+
 
 				// 司令部各资源储量过低警告值
 				// -1: 自然恢复上限 ( 桶无效 ) | 3000: 小于 3000
@@ -306,6 +315,10 @@ namespace ElectronicObserver.Utility {
 				public Color FleetOverview_TiredRecoveredFG { get; set; }
 				[IgnoreDataMember] // 疲劳恢复背景色
 				public Color FleetOverview_TiredRecoveredBG { get; set; }
+				[IgnoreDataMember] // 未远征提醒文字色
+				public Color FleetOverview_AlertNotInExpeditionFG { get; set; }
+				[IgnoreDataMember] // 未远征提醒背景色
+				public Color FleetOverview_AlertNotInExpeditionBG { get; set; }
 
 				// 视图 - 入渠
 				[IgnoreDataMember] // 修理完成文字色
@@ -425,6 +438,12 @@ namespace ElectronicObserver.Utility {
 
 				#endregion
 
+				/// <summary>
+				/// 固定レイアウト(フォントに依存しないレイアウト)を利用するか
+				/// </summary>
+				public bool IsLayoutFixed;
+
+
 				public ConfigUI() {
 					MainFont = new Font( "Microsoft YaHei", 12, FontStyle.Regular, GraphicsUnit.Pixel );
 					SubFont  = new Font( "Microsoft YaHei", 10, FontStyle.Regular, GraphicsUnit.Pixel );
@@ -433,6 +452,9 @@ namespace ElectronicObserver.Utility {
 					ThemeID = 0;
 					ShowGrowthInsteadOfNextInHQ = false;
 					MaxAkashiPerHP = 5;
+					UseOldAircraftLevelIcons = true;
+					TextWrapInLogWindow = false;
+					CompactModeLogWindow = false;
 					HqResLowAlertFuel    = 0;
 					HqResLowAlertAmmo    = 0;
 					HqResLowAlertSteel   = 0;
@@ -440,6 +462,7 @@ namespace ElectronicObserver.Utility {
 					HqResLowAlertBucket  = 0;
 					AllowSortIndexing = true;
 					BarColorMorphing = false;
+					IsLayoutFixed = true;
 				}
 			}
 			/// <summary>UI</summary>
@@ -516,6 +539,12 @@ namespace ElectronicObserver.Utility {
 				/// </summary>
 				public bool SaveBattleLog { get; set; }
 
+				/// <summary>
+				/// ログを即時保存するか
+				/// </summary>
+				public bool SaveLogImmediately { get; set; }
+
+
 				public ConfigLog() {
 					LogLevel = 2;
 					SaveLogFlag = true;
@@ -525,6 +554,7 @@ namespace ElectronicObserver.Utility {
 					PlayTime = 0;
 					PlayTimeIgnoreInterval = 10 * 60;
 					SaveBattleLog = false;
+					SaveLogImmediately = false;
 				}
 
 			}
@@ -545,7 +575,7 @@ namespace ElectronicObserver.Utility {
 
 				/// <summary>
 				/// レコードを自動保存するか
-				/// 0=しない、1=1時間ごと、2=1日ごと
+				/// 0=しない、1=1時間ごと、2=1日ごと, 3=即時
 				/// </summary>
 				public int RecordAutoSaving { get; set; }
 
@@ -730,7 +760,7 @@ namespace ElectronicObserver.Utility {
 
 				public ConfigFormDock() {
 					BlinkAtCompletion = true;
-					MaxShipNameWidth = 60;
+					MaxShipNameWidth = 64;
 				}
 			}
 			/// <summary>[入渠]ウィンドウ</summary>
@@ -845,6 +875,22 @@ namespace ElectronicObserver.Utility {
 				/// </summary>
 				public bool ShowAirSuperiorityRange { get; set; }
 
+				/// <summary>
+				/// 泊地修理によるHP回復を表示に反映するか
+				/// </summary>
+				public bool ReflectAnchorageRepairHealing { get; set; }
+
+				/// <summary>
+				/// 遠征艦隊が母港にいるとき強調表示
+				/// </summary>
+				public bool EmphasizesSubFleetInPort { get; set; }
+
+				/// <summary>
+				/// 大破時に点滅させる
+				/// </summary>
+				public bool BlinkAtDamaged { get; set; }
+
+
 				public ConfigFormFleet() {
 					ShowAircraft = true;
 					SearchingAbilityMethod = 4;
@@ -860,6 +906,9 @@ namespace ElectronicObserver.Utility {
 					ShowConditionIcon = true;
 					FixedShipNameWidth = 40;
 					ShowAirSuperiorityRange = false;
+					ReflectAnchorageRepairHealing = true;
+					EmphasizesSubFleetInPort = false;
+					BlinkAtDamaged = true;
 				}
 			}
 			/// <summary>[艦隊]ウィンドウ</summary>
@@ -1036,6 +1085,11 @@ namespace ElectronicObserver.Utility {
 				public bool IsDMMreloadDialogDestroyable { get; set; }
 
 				/// <summary>
+				/// Twitter の画像圧縮を回避するか
+				/// </summary>
+				public bool AvoidTwitterDeterioration { get; set; }
+
+				/// <summary>
 				/// ツールメニューの配置
 				/// </summary>
 				public DockStyle ToolMenuDockStyle { get; set; }
@@ -1072,6 +1126,7 @@ namespace ElectronicObserver.Utility {
 					IsScrollable = false;
 					AppliesStyleSheet = true;
 					IsDMMreloadDialogDestroyable = false;
+					AvoidTwitterDeterioration = false;
 					ToolMenuDockStyle = DockStyle.Top;
 					IsToolMenuVisible = true;
 					ConfirmAtRefresh = true;
@@ -1099,9 +1154,16 @@ namespace ElectronicObserver.Utility {
 				/// </summary>
 				public bool IsScrollable { get; set; }
 
+				/// <summary>
+				/// 艦名表示の最大幅
+				/// </summary>
+				public int MaxShipNameWidth { get; set; }
+
+
 				public ConfigFormCompass() {
 					CandidateDisplayCount = 4;
 					IsScrollable = false;
+					MaxShipNameWidth = 60;
 				}
 			}
 			/// <summary>[羅針盤]ウィンドウ</summary>
@@ -1156,9 +1218,15 @@ namespace ElectronicObserver.Utility {
 				/// </summary>
 				public bool HideDuringBattle { get; set; }
 
+				/// <summary>
+				/// HP バーを表示するか
+				/// </summary>
+				public bool ShowHPBar { get; set; }
+
 				public ConfigFormBattle() {
 					IsScrollable = false;
 					HideDuringBattle = false;
+					ShowHPBar = true;
 				}
 			}
 
@@ -1590,7 +1658,9 @@ namespace ElectronicObserver.Utility {
 ""expeditionOverFG"":""#000000"",
 ""expeditionOverBG"":""#90EE90"",
 ""tiredRecoveredFG"":""#000000"",
-""tiredRecoveredBG"":""#90EE90""
+""tiredRecoveredBG"":""#90EE90"",
+""alertNotInExpeditionFG"":""#000000"",
+""alertNotInExpeditionBG"":""#90EE90""
 },
 ""dock"":{
 ""repairFinishedFG"":""#000000"",
@@ -1772,6 +1842,8 @@ namespace ElectronicObserver.Utility {
 			Config.UI.FleetOverview_ExpeditionOverBG = ThemePanelColor("fleetOverview", "expeditionOverBG");
 			Config.UI.FleetOverview_TiredRecoveredFG = ThemePanelColor("fleetOverview", "tiredRecoveredFG");
 			Config.UI.FleetOverview_TiredRecoveredBG = ThemePanelColor("fleetOverview", "tiredRecoveredBG");
+			Config.UI.FleetOverview_AlertNotInExpeditionFG = ThemePanelColor("fleetOverview", "alertNotInExpeditionFG");
+			Config.UI.FleetOverview_AlertNotInExpeditionBG = ThemePanelColor("fleetOverview", "alertNotInExpeditionBG");
 			Config.UI.Dock_RepairFinishedFG = ThemePanelColor("dock", "repairFinishedFG");
 			Config.UI.Dock_RepairFinishedBG = ThemePanelColor("dock", "repairFinishedBG");
 			Config.UI.Arsenal_BuildCompleteFG = ThemePanelColor("arsenal", "buildCompleteFG");
@@ -1895,6 +1967,10 @@ namespace ElectronicObserver.Utility {
 					case "fleetOverview_tiredRecoveredFG":
 						return Config.UI.BackColor;
 					case "fleetOverview_tiredRecoveredBG":
+						return Config.UI.Color_Blue;
+					case "fleetOverview_alertNotInExpeditionFG":
+						return Config.UI.BackColor;
+					case "fleetOverview_alertNotInExpeditionBG":
 						return Config.UI.Color_Blue;
 					// 视图 - 司令部
 					case "hq_resOverFG":
@@ -2466,8 +2542,8 @@ namespace ElectronicObserver.Utility {
 								record.EnemyFleetID = convertPair[record.EnemyFleetID];
 						}
 
-						enemyFleetRecord.Save( RecordManager.Instance.MasterPath );
-						shipDropRecord.Save( RecordManager.Instance.MasterPath );
+						enemyFleetRecord.SaveAll( RecordManager.Instance.MasterPath );
+						shipDropRecord.SaveAll( RecordManager.Instance.MasterPath );
 
 					} catch ( Exception ex ) {
 						ErrorReporter.SendErrorReport( ex, "CheckUpdate: ドロップレコードのID振りなおしに失敗しました。" );
@@ -2501,15 +2577,15 @@ namespace ElectronicObserver.Utility {
 						foreach ( var pair in defaultRecord.Record.Keys.GroupJoin( currentRecord.Record.Keys, i => i, i => i, ( id, list ) => new { id, list } ) ) {
 							if ( defaultRecord[pair.id].HPMin > 0 && ( pair.list == null || defaultRecord[pair.id].SaveLine() != currentRecord[pair.id].SaveLine() ) )
 								changed.Add( pair.id );
-					}
+						}
 
 						foreach ( var id in changed ) {
 							if ( currentRecord[id] == null )
 								currentRecord.Update( new ShipParameterRecord.ShipParameterElement() );
 							currentRecord[id].LoadLine( defaultRecord.Record[id].SaveLine() );
-				}
+						}
 
-						currentRecord.Save( RecordManager.Instance.MasterPath );
+						currentRecord.SaveAll( RecordManager.Instance.MasterPath );
 
 						Directory.Delete( defaultRecordPath, true );
 
@@ -2524,6 +2600,50 @@ namespace ElectronicObserver.Utility {
 			}
 
 
+			// version 2.6.2 or earlier
+			if ( dt <= DateTimeHelper.CSVStringToTime( "2017/06/24 17:35:44" ) ) {
+
+				// 開発レコードを重複記録してしまう不具合があったため、重複行の削除を行う
+
+				try {
+
+					var dev = new DevelopmentRecord();
+					string path = RecordManager.Instance.MasterPath + "\\" + dev.FileName;
+
+
+					string backupPath = RecordManager.Instance.MasterPath + "\\Backup_" + DateTimeHelper.GetTimeStamp();
+					Directory.CreateDirectory( backupPath );
+					File.Copy( path, backupPath + "\\" + dev.FileName );
+
+
+					if ( File.Exists( path ) ) {
+
+						var lines = new List<string>();
+						using ( StreamReader sr = new StreamReader( path, Utility.Configuration.Config.Log.FileEncoding ) ) {
+							sr.ReadLine();		// skip header row
+							while ( !sr.EndOfStream )
+								lines.Add( sr.ReadLine() );
+						}
+
+						int beforeCount = lines.Count;
+						lines = lines.Distinct().ToList();
+						int afterCount = lines.Count;
+
+						using ( StreamWriter sw = new StreamWriter( path, false, Utility.Configuration.Config.Log.FileEncoding ) ) {
+							sw.WriteLine( dev.RecordHeader );
+							foreach ( var line in lines ) {
+								sw.WriteLine( line );
+							}
+						}
+
+						Utility.Logger.Add(2, "", "<= ver. 2.6.2 开发记录重复 BUG 对应：处理完成。删除了 " + ( beforeCount - afterCount ) + " 条重复记录。" );
+
+					}
+
+				} catch ( Exception ex ) {
+					ErrorReporter.SendErrorReport( ex, "<= ver. 2.6.2 開発レコード重複不具合対応: 失敗しました。" );
+				}
+			}
 
 
 			Config.VersionUpdateTime = DateTimeHelper.TimeToCSVString( SoftwareInformation.UpdateTime );

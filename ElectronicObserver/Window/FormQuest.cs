@@ -178,6 +178,18 @@ namespace ElectronicObserver.Window {
 				column.SortMode = c.FormQuest.AllowUserToSortRows ? DataGridViewColumnSortMode.Automatic : DataGridViewColumnSortMode.NotSortable;
 			}
 
+			if ( c.UI.IsLayoutFixed ) {
+				QuestView.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.None;
+				QuestView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+			} else {
+				QuestView.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCellsExceptHeaders;
+				QuestView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+			}
+
+			foreach ( DataGridViewRow row in QuestView.Rows ) {
+				row.Height = 21;
+			}
+
 			Updated();
 
 		}
@@ -238,7 +250,7 @@ namespace ElectronicObserver.Window {
 
 				DataGridViewRow row = new DataGridViewRow();
 				row.CreateCells( QuestView );
-
+				row.Height = 21;
 
 				row.Cells[QuestView_State.Index].Value = ( q.State == 3 ) ? ( (bool?)null ) : ( q.State == 2 );
 				row.Cells[QuestView_Type.Index].Value = q.Type;
@@ -535,7 +547,7 @@ namespace ElectronicObserver.Window {
 						Updated();
 
 					} catch ( Exception ) {
-						Utility.Logger.Add(3, "", "无法修改此任务的进度。");
+						Utility.Logger.Add(3, "", "无法修改任务", string.Format("『{0}』", quest.Name), "的进度。");
 						System.Media.SystemSounds.Hand.Play();
 					}
 				}
@@ -560,7 +572,7 @@ namespace ElectronicObserver.Window {
 						Updated();
 
 					} catch ( Exception ) {
-						Utility.Logger.Add(3, "", "无法修改此任务的进度。");
+						Utility.Logger.Add(3, "", "无法修改任务", string.Format("『{0}』", quest.Name), "的进度。");
 						System.Media.SystemSounds.Hand.Play();
 					}
 				}
@@ -593,6 +605,31 @@ namespace ElectronicObserver.Window {
 					}
 				}
 			}
+		}
+
+
+		// デフォルトのツールチップは消える時間が速すぎるので、自分で制御する
+		private void QuestView_CellMouseEnter( object sender, DataGridViewCellEventArgs e ) {
+
+			if ( e.RowIndex < 0 || e.ColumnIndex < 0 || e.RowIndex >= QuestView.RowCount || e.ColumnIndex >= QuestView.ColumnCount ) {
+				ToolTipInfo.SetToolTip( QuestView, null );
+				return;
+			}
+
+			if ( !string.IsNullOrWhiteSpace( QuestView[e.ColumnIndex, e.RowIndex].ToolTipText ) ) {
+				ToolTipInfo.SetToolTip( QuestView, QuestView[e.ColumnIndex, e.RowIndex].ToolTipText );
+
+			} else if ( e.ColumnIndex == QuestView_Progress.Index && QuestView[e.ColumnIndex, e.RowIndex].Value != null ) {
+				ToolTipInfo.SetToolTip( QuestView, QuestView[e.ColumnIndex, e.RowIndex].Value.ToString() );
+
+			} else {
+				ToolTipInfo.SetToolTip( QuestView, null );
+			}
+
+		}
+
+		private void QuestView_CellMouseLeave( object sender, DataGridViewCellEventArgs e ) {
+			ToolTipInfo.SetToolTip( QuestView, null );
 		}
 
 

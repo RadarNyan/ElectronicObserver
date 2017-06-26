@@ -49,6 +49,8 @@ namespace ElectronicObserver.Window {
 			LogTextBox.BackColor = Utility.Configuration.Config.UI.BackColor;
 			LogTextBox.LanguageOption = RichTextBoxLanguageOptions.UIFonts;
 			LogTextBox.Font = Utility.Configuration.Config.UI.JapFont;
+			ContextMenuLog_WrapText.Checked = Utility.Configuration.Config.UI.TextWrapInLogWindow;
+			ContextMenuLog_CompactMode.Checked = Utility.Configuration.Config.UI.CompactModeLogWindow;
 		}
 
 
@@ -65,7 +67,12 @@ namespace ElectronicObserver.Window {
 				LogTextBox.AppendText("\r\n");
 				LogTextBox.ScrollToCaret();
 			}
-			LogTextBox.AppendText(string.Format("[{0}][{1}] : {2}", Utility.Mathematics.DateTimeHelper.TimeToCSVString(data.Time), data.Priority, data.Message));
+			LogTextBox.SelectionFont = Utility.Configuration.Config.UI.JapFont;
+			if (ContextMenuLog_CompactMode.Checked) {
+				LogTextBox.AppendText(string.Format("[{0:HH:mm:ss}] {1}", data.Time, data.Message));
+			} else {
+				LogTextBox.AppendText(string.Format("[{0}][{1}] : {2}", Utility.Mathematics.DateTimeHelper.TimeToCSVString(data.Time), data.Priority, data.Message));
+			}
 			LogTextBox.SelectionFont = Utility.Configuration.Config.UI.MainFont;
 			LogTextBox.AppendText(data.MsgChs1);
 			LogTextBox.SelectionFont = Utility.Configuration.Config.UI.JapFont;
@@ -119,6 +126,32 @@ namespace ElectronicObserver.Window {
 			} else {
 				SendMessage(LogTextBox.Handle, WM_SETREDRAW, true, 0);
 				LogTextBox.Refresh();
+			}
+		}
+
+
+		private void ContextMenuLog_WrapText_CheckedChanged(object sender, EventArgs e)
+		{
+			LogTextBox.WordWrap = ContextMenuLog_WrapText.Checked;
+			Utility.Configuration.Config.UI.TextWrapInLogWindow = LogTextBox.WordWrap;
+			ReloadLog();
+		}
+
+
+		private void ContextMenuLog_CompactMode_CheckedChanged(object sender, EventArgs e)
+		{
+			LogTextBox.ScrollBars = ContextMenuLog_CompactMode.Checked ? RichTextBoxScrollBars.None : RichTextBoxScrollBars.Both;
+			Utility.Configuration.Config.UI.CompactModeLogWindow = ContextMenuLog_CompactMode.Checked;
+			ReloadLog();
+		}
+
+
+		private void ReloadLog()
+		{
+			LogTextBox.Text = "";
+			foreach (var log in Utility.Logger.Log) {
+				if (log.Priority >= Utility.Configuration.Config.Log.LogLevel)
+					AddLogLine(log);
 			}
 		}
 	}

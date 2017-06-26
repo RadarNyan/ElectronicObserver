@@ -27,15 +27,19 @@
 			this.ContextMenuLog = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.ContextMenuLog_Clear = new System.Windows.Forms.ToolStripMenuItem();
 			this.LogTextBox = new System.Windows.Forms.RichTextBox();
+			this.ContextMenuLog_WrapText = new System.Windows.Forms.ToolStripMenuItem();
+			this.ContextMenuLog_CompactMode = new System.Windows.Forms.ToolStripMenuItem();
 			this.ContextMenuLog.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// ContextMenuLog
 			// 
 			this.ContextMenuLog.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ContextMenuLog_Clear});
+            this.ContextMenuLog_Clear,
+            this.ContextMenuLog_WrapText,
+            this.ContextMenuLog_CompactMode});
 			this.ContextMenuLog.Name = "ContextMenuLog";
-			this.ContextMenuLog.Size = new System.Drawing.Size(131, 26);
+			this.ContextMenuLog.Size = new System.Drawing.Size(153, 92);
 			// 
 			// ContextMenuLog_Clear
 			// 
@@ -59,6 +63,22 @@
 			this.LogTextBox.GotFocus += new System.EventHandler(this.HideCaret);
 			this.LogTextBox.MouseLeave += new System.EventHandler(this.HideCaret);
 			// 
+			// ContextMenuLog_WrapText
+			// 
+			this.ContextMenuLog_WrapText.CheckOnClick = true;
+			this.ContextMenuLog_WrapText.Name = "ContextMenuLog_WrapText";
+			this.ContextMenuLog_WrapText.Size = new System.Drawing.Size(152, 22);
+			this.ContextMenuLog_WrapText.Text = "自动换行(&W)";
+			this.ContextMenuLog_WrapText.CheckedChanged += new System.EventHandler(this.ContextMenuLog_WrapText_CheckedChanged);
+			// 
+			// ContextMenuLog_CompactMode
+			// 
+			this.ContextMenuLog_CompactMode.CheckOnClick = true;
+			this.ContextMenuLog_CompactMode.Name = "ContextMenuLog_CompactMode";
+			this.ContextMenuLog_CompactMode.Size = new System.Drawing.Size(152, 22);
+			this.ContextMenuLog_CompactMode.Text = "精简模式(&C)";
+			this.ContextMenuLog_CompactMode.CheckedChanged += new System.EventHandler(this.ContextMenuLog_CompactMode_CheckedChanged);
+			// 
 			// FormLog
 			// 
 			this.AutoHidePortion = 150D;
@@ -81,5 +101,7 @@
 		private System.Windows.Forms.ContextMenuStrip ContextMenuLog;
 		private System.Windows.Forms.ToolStripMenuItem ContextMenuLog_Clear;
 		private System.Windows.Forms.RichTextBox LogTextBox;
+		private System.Windows.Forms.ToolStripMenuItem ContextMenuLog_WrapText;
+		private System.Windows.Forms.ToolStripMenuItem ContextMenuLog_CompactMode;
 	}
 }

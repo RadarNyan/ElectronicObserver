@@ -79,6 +79,9 @@
 			this.toolStripSeparator15 = new System.Windows.Forms.ToolStripSeparator();
 			this.StripMenu_Tool_AlbumMasterShip = new System.Windows.Forms.ToolStripMenuItem();
 			this.StripMenu_Tool_AlbumMasterEquipment = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator11 = new System.Windows.Forms.ToolStripSeparator();
+			this.StripMenu_Tool_AntiAirDefense = new System.Windows.Forms.ToolStripMenuItem();
+			this.StripMenu_Tool_FleetImageGenerator = new System.Windows.Forms.ToolStripMenuItem();
 			this.StripMenu_Debug = new System.Windows.Forms.ToolStripMenuItem();
 			this.StripMenu_Debug_LoadAPIFromFile = new System.Windows.Forms.ToolStripMenuItem();
 			this.StripMenu_Debug_LoadInitialAPI = new System.Windows.Forms.ToolStripMenuItem();
@@ -106,8 +109,6 @@
 			this.StripStatus_Clock = new System.Windows.Forms.ToolStripStatusLabel();
 			this.UIUpdateTimer = new System.Windows.Forms.Timer(this.components);
 			this.MainDockPanel = new WeifenLuo.WinFormsUI.Docking.DockPanel();
-			this.toolStripSeparator11 = new System.Windows.Forms.ToolStripSeparator();
-			this.StripMenu_Tool_AntiAirDefense = new System.Windows.Forms.ToolStripMenuItem();
 			this.StripMenu.SuspendLayout();
 			this.StripStatus.SuspendLayout();
 			this.SuspendLayout();
@@ -476,7 +477,8 @@
             this.StripMenu_Tool_AlbumMasterShip,
             this.StripMenu_Tool_AlbumMasterEquipment,
             this.toolStripSeparator11,
-            this.StripMenu_Tool_AntiAirDefense});
+            this.StripMenu_Tool_AntiAirDefense,
+            this.StripMenu_Tool_FleetImageGenerator});
 			this.StripMenu_Tool.Name = "StripMenu_Tool";
 			this.StripMenu_Tool.Size = new System.Drawing.Size(66, 20);
 			this.StripMenu_Tool.Text = "工具(&T)";
@@ -539,6 +541,25 @@
 			this.StripMenu_Tool_AlbumMasterEquipment.Size = new System.Drawing.Size(164, 22);
 			this.StripMenu_Tool_AlbumMasterEquipment.Text = "装备图鉴(&E)";
 			this.StripMenu_Tool_AlbumMasterEquipment.Click += new System.EventHandler(this.StripMenu_Tool_AlbumMasterEquipment_Click);
+			// 
+			// toolStripSeparator11
+			// 
+			this.toolStripSeparator11.Name = "toolStripSeparator11";
+			this.toolStripSeparator11.Size = new System.Drawing.Size(161, 6);
+			// 
+			// StripMenu_Tool_AntiAirDefense
+			// 
+			this.StripMenu_Tool_AntiAirDefense.Name = "StripMenu_Tool_AntiAirDefense";
+			this.StripMenu_Tool_AntiAirDefense.Size = new System.Drawing.Size(164, 22);
+			this.StripMenu_Tool_AntiAirDefense.Text = "对空炮火详情(&A)";
+			this.StripMenu_Tool_AntiAirDefense.Click += new System.EventHandler(this.StripMenu_Tool_AntiAirDefense_Click);
+			// 
+			// StripMenu_Tool_FleetImageGenerator
+			// 
+			this.StripMenu_Tool_FleetImageGenerator.Name = "StripMenu_Tool_FleetImageGenerator";
+			this.StripMenu_Tool_FleetImageGenerator.Size = new System.Drawing.Size(164, 22);
+			this.StripMenu_Tool_FleetImageGenerator.Text = "输出编成图片(&F)";
+			this.StripMenu_Tool_FleetImageGenerator.Click += new System.EventHandler(this.StripMenu_Tool_FleetImageGenerator_Click);
 			// 
 			// StripMenu_Debug
 			// 
@@ -741,18 +762,6 @@
 			this.MainDockPanel.Size = new System.Drawing.Size(640, 434);
 			this.MainDockPanel.TabIndex = 0;
 			// 
-			// toolStripSeparator11
-			// 
-			this.toolStripSeparator11.Name = "toolStripSeparator11";
-			this.toolStripSeparator11.Size = new System.Drawing.Size(161, 6);
-			// 
-			// StripMenu_Tool_AntiAirDefense
-			// 
-			this.StripMenu_Tool_AntiAirDefense.Name = "StripMenu_Tool_AntiAirDefense";
-			this.StripMenu_Tool_AntiAirDefense.Size = new System.Drawing.Size(164, 22);
-			this.StripMenu_Tool_AntiAirDefense.Text = "对空炮火详情(&A)";
-			this.StripMenu_Tool_AntiAirDefense.Click += new System.EventHandler(this.StripMenu_Tool_AntiAirDefense_Click);
-			// 
 			// FormMain
 			// 
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -861,6 +870,7 @@
 		private System.Windows.Forms.ToolStripMenuItem StripMenu_View_Json;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator11;
 		private System.Windows.Forms.ToolStripMenuItem StripMenu_Tool_AntiAirDefense;
+		private System.Windows.Forms.ToolStripMenuItem StripMenu_Tool_FleetImageGenerator;
 		private System.Windows.Forms.ToolStripMenuItem StripMenu_RN;
 		private System.Windows.Forms.ToolStripMenuItem StripMenu_RN_Config;
 		private System.Windows.Forms.ToolStripMenuItem StripMenu_RN_Version;
