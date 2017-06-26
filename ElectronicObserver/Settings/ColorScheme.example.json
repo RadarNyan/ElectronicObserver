@@ -116,12 +116,14 @@
     },
     // 视图 - 舰队一览
     "fleetOverview": {
-      "shipDamagedFG":    "#000000", // [bg]   大破 / 大破进击文字色
-      "shipDamagedBG":    "#F08080", // [red]  大破 / 大破进击背景色
-      "expeditionOverFG": "#000000", // [bg]   远征返回闪烁文字色
-      "expeditionOverBG": "#90EE90", // [blue] 远征返回闪烁背景色
-      "tiredRecoveredFG": "#000000", // [bg]   疲劳恢复闪烁文字色
-      "tiredRecoveredBG": "#90EE90"  // [blue] 疲劳恢复闪烁背景色
+      "shipDamagedFG":          "#000000", // [bg]   大破 / 大破进击文字色
+      "shipDamagedBG":          "#F08080", // [red]  大破 / 大破进击背景色
+      "expeditionOverFG":       "#000000", // [bg]   远征返回闪烁文字色
+      "expeditionOverBG":       "#90EE90", // [blue] 远征返回闪烁背景色
+      "tiredRecoveredFG":       "#000000", // [bg]   疲劳恢复闪烁文字色
+      "tiredRecoveredBG":       "#90EE90", // [blue] 疲劳恢复闪烁背景色
+      "alertNotInExpeditionFG": "#000000", // [bg]   未远征提醒文字色
+      "alertNotInExpeditionBG": "#90EE90"  // [blue] 未远征提醒背景色
     },
     // 视图 - 入渠
     "dock": {

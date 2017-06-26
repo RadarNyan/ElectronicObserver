@@ -651,6 +651,8 @@ namespace ElectronicObserver.Data {
 					return "高角炮 / 集中机枪";
 				case 20:
 					return "集中机枪";
+				case 21:
+					return "高角炮 / 电探";
 				default:
 					return "不明";
 			}

@@ -25,6 +25,7 @@
 		private void InitializeComponent() {
 			this.components = new System.ComponentModel.Container();
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+			ElectronicObserver.Window.Control.StatusBarModule statusBarModule1 = new ElectronicObserver.Window.Control.StatusBarModule();
 			this.tabControl1 = new System.Windows.Forms.TabControl();
 			this.tabPage1 = new System.Windows.Forms.TabPage();
 			this.Connection_UpstreamProxyAddress = new System.Windows.Forms.TextBox();
@@ -49,9 +50,10 @@
 			this.Connection_Port = new System.Windows.Forms.NumericUpDown();
 			this.label1 = new System.Windows.Forms.Label();
 			this.tabPage2 = new System.Windows.Forms.TabPage();
+			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+			this.UI_RenderingTestChanger = new System.Windows.Forms.TrackBar();
+			this.UI_IsLayoutFixed = new System.Windows.Forms.CheckBox();
 			this.UI_BarColorMorphing = new System.Windows.Forms.CheckBox();
-			this.UI_SubFontApply = new System.Windows.Forms.Button();
-			this.UI_MainFontApply = new System.Windows.Forms.Button();
 			this.UI_SubFontSelect = new System.Windows.Forms.Button();
 			this.UI_SubFont = new System.Windows.Forms.TextBox();
 			this.label8 = new System.Windows.Forms.Label();
@@ -59,6 +61,7 @@
 			this.UI_MainFont = new System.Windows.Forms.TextBox();
 			this.label5 = new System.Windows.Forms.Label();
 			this.tabPage3 = new System.Windows.Forms.TabPage();
+			this.Log_SaveLogImmediately = new System.Windows.Forms.CheckBox();
 			this.Log_SaveBattleLog = new System.Windows.Forms.CheckBox();
 			this.Log_ShowSpoiler = new System.Windows.Forms.CheckBox();
 			this.label12 = new System.Windows.Forms.Label();
@@ -98,6 +101,10 @@
 			this.tabPage7 = new System.Windows.Forms.TabPage();
 			this.tabControl2 = new System.Windows.Forms.TabControl();
 			this.tabPage8 = new System.Windows.Forms.TabPage();
+			this.FormFleet_EmphasizesSubFleetInPort = new System.Windows.Forms.CheckBox();
+			this.FormFleet_BlinkAtDamaged = new System.Windows.Forms.CheckBox();
+			this.FormFleet_ReflectAnchorageRepairHealing = new System.Windows.Forms.CheckBox();
+			this.FormFleet_ShowAirSuperiorityRange = new System.Windows.Forms.CheckBox();
 			this.FormFleet_ShowAircraftLevelByNumber = new System.Windows.Forms.CheckBox();
 			this.label35 = new System.Windows.Forms.Label();
 			this.FormFleet_FixedShipNameWidth = new System.Windows.Forms.NumericUpDown();
@@ -133,6 +140,9 @@
 			this.FormHeadquarters_Visibility = new System.Windows.Forms.CheckedListBox();
 			this.FormHeadquarters_BlinkAtMaximum = new System.Windows.Forms.CheckBox();
 			this.tabPage18 = new System.Windows.Forms.TabPage();
+			this.label40 = new System.Windows.Forms.Label();
+			this.label41 = new System.Windows.Forms.Label();
+			this.FormCompass_MaxShipNameWidth = new System.Windows.Forms.NumericUpDown();
 			this.FormCompass_IsScrollable = new System.Windows.Forms.CheckBox();
 			this.FormCompass_CandidateDisplayCount = new System.Windows.Forms.NumericUpDown();
 			this.label2 = new System.Windows.Forms.Label();
@@ -163,6 +173,7 @@
 			this.FormBrowser_AppliesStyleSheet = new System.Windows.Forms.CheckBox();
 			this.FormBrowser_ConfirmAtRefresh = new System.Windows.Forms.CheckBox();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
+			this.FormBrowser_ScreenShotFormat_AvoidTwitterDeterioration = new System.Windows.Forms.CheckBox();
 			this.label18 = new System.Windows.Forms.Label();
 			this.FormBrowser_ScreenShotFormat_PNG = new System.Windows.Forms.RadioButton();
 			this.FormBrowser_ScreenShotPathSearch = new System.Windows.Forms.Button();
@@ -230,13 +241,16 @@
 			this.APIListBrowser = new System.Windows.Forms.OpenFileDialog();
 			this.Log_PlayTime = new System.Windows.Forms.Label();
 			this.PlayTimeTimer = new System.Windows.Forms.Timer(this.components);
-			this.FormFleet_ShowAirSuperiorityRange = new System.Windows.Forms.CheckBox();
+			this.FormBattle_ShowHPBar = new System.Windows.Forms.CheckBox();
+			this.UI_RenderingTest = new ElectronicObserver.Window.Control.ShipStatusHP();
 			this.tabControl1.SuspendLayout();
 			this.tabPage1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.Connection_UpstreamProxyPort)).BeginInit();
 			this.Connection_PanelSaveData.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.Connection_Port)).BeginInit();
 			this.tabPage2.SuspendLayout();
+			this.tableLayoutPanel1.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.UI_RenderingTestChanger)).BeginInit();
 			this.tabPage3.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.Log_LogLevel)).BeginInit();
 			this.tabPage4.SuspendLayout();
@@ -254,6 +268,7 @@
 			((System.ComponentModel.ISupportInitialize)(this.FormDock_MaxShipNameWidth)).BeginInit();
 			this.tabPage16.SuspendLayout();
 			this.tabPage18.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.FormCompass_MaxShipNameWidth)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.FormCompass_CandidateDisplayCount)).BeginInit();
 			this.tabPage10.SuspendLayout();
 			this.groupBox1.SuspendLayout();
@@ -352,6 +367,7 @@
 			// Connection_UseSystemProxy
 			// 
 			this.Connection_UseSystemProxy.AutoSize = true;
+			this.Connection_UseSystemProxy.Enabled = false;
 			this.Connection_UseSystemProxy.Location = new System.Drawing.Point(147, 7);
 			this.Connection_UseSystemProxy.Name = "Connection_UseSystemProxy";
 			this.Connection_UseSystemProxy.Size = new System.Drawing.Size(135, 19);
@@ -359,6 +375,7 @@
 			this.Connection_UseSystemProxy.Text = "使用系统代理";
 			this.ToolTipInfo.SetToolTip(this.Connection_UseSystemProxy, "使用系统 (IE) 代理设置。");
 			this.Connection_UseSystemProxy.UseVisualStyleBackColor = true;
+			this.Connection_UseSystemProxy.Visible = false;
 			// 
 			// Connection_UpstreamProxyPort
 			// 
@@ -388,6 +405,7 @@
 			// Connection_RegisterAsSystemProxy
 			// 
 			this.Connection_RegisterAsSystemProxy.AutoSize = true;
+			this.Connection_RegisterAsSystemProxy.Enabled = false;
 			this.Connection_RegisterAsSystemProxy.Location = new System.Drawing.Point(288, 7);
 			this.Connection_RegisterAsSystemProxy.Name = "Connection_RegisterAsSystemProxy";
 			this.Connection_RegisterAsSystemProxy.Size = new System.Drawing.Size(152, 19);
@@ -556,22 +574,63 @@
 			// 
 			// tabPage2
 			// 
+			this.tabPage2.Controls.Add(this.tableLayoutPanel1);
+			this.tabPage2.Controls.Add(this.UI_IsLayoutFixed);
 			this.tabPage2.Controls.Add(this.UI_BarColorMorphing);
-			this.tabPage2.Controls.Add(this.UI_SubFontApply);
-			this.tabPage2.Controls.Add(this.UI_MainFontApply);
 			this.tabPage2.Controls.Add(this.UI_SubFontSelect);
 			this.tabPage2.Controls.Add(this.UI_SubFont);
 			this.tabPage2.Controls.Add(this.label8);
 			this.tabPage2.Controls.Add(this.UI_MainFontSelect);
 			this.tabPage2.Controls.Add(this.UI_MainFont);
 			this.tabPage2.Controls.Add(this.label5);
-			this.tabPage2.Location = new System.Drawing.Point(4, 24);
+			this.tabPage2.Location = new System.Drawing.Point(4, 22);
 			this.tabPage2.Name = "tabPage2";
 			this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage2.Size = new System.Drawing.Size(576, 292);
+			this.tabPage2.Size = new System.Drawing.Size(576, 294);
 			this.tabPage2.TabIndex = 1;
 			this.tabPage2.Text = "UI";
 			this.tabPage2.UseVisualStyleBackColor = true;
+			// 
+			// tableLayoutPanel1
+			// 
+			this.tableLayoutPanel1.AutoSize = true;
+			this.tableLayoutPanel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			this.tableLayoutPanel1.ColumnCount = 1;
+			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+			this.tableLayoutPanel1.Controls.Add(this.UI_RenderingTestChanger, 0, 1);
+			this.tableLayoutPanel1.Controls.Add(this.UI_RenderingTest, 0, 0);
+			this.tableLayoutPanel1.Location = new System.Drawing.Point(250, 64);
+			this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+			this.tableLayoutPanel1.RowCount = 2;
+			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tableLayoutPanel1.Size = new System.Drawing.Size(168, 57);
+			this.tableLayoutPanel1.TabIndex = 15;
+			// 
+			// UI_RenderingTestChanger
+			// 
+			this.UI_RenderingTestChanger.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.UI_RenderingTestChanger.AutoSize = false;
+			this.UI_RenderingTestChanger.BackColor = System.Drawing.SystemColors.Window;
+			this.UI_RenderingTestChanger.Location = new System.Drawing.Point(3, 29);
+			this.UI_RenderingTestChanger.Name = "UI_RenderingTestChanger";
+			this.UI_RenderingTestChanger.Size = new System.Drawing.Size(162, 25);
+			this.UI_RenderingTestChanger.TabIndex = 14;
+			this.UI_RenderingTestChanger.TickStyle = System.Windows.Forms.TickStyle.None;
+			this.UI_RenderingTestChanger.Scroll += new System.EventHandler(this.UI_RenderingTestChanger_Scroll);
+			// 
+			// UI_IsLayoutFixed
+			// 
+			this.UI_IsLayoutFixed.AutoSize = true;
+			this.UI_IsLayoutFixed.Location = new System.Drawing.Point(8, 89);
+			this.UI_IsLayoutFixed.Name = "UI_IsLayoutFixed";
+			this.UI_IsLayoutFixed.Size = new System.Drawing.Size(112, 19);
+			this.UI_IsLayoutFixed.TabIndex = 13;
+			this.UI_IsLayoutFixed.Text = "固定行高";
+			this.ToolTipInfo.SetToolTip(this.UI_IsLayoutFixed, "选中时各 UI 的行高无视字体设定 ( 同 ver. 2.6.2 之前相同 )\r\n取消选中时，根据字体设定行高会发生变化 ( 可能比固定时更高 )");
+			this.UI_IsLayoutFixed.UseVisualStyleBackColor = true;
 			// 
 			// UI_BarColorMorphing
 			// 
@@ -583,30 +642,7 @@
 			this.UI_BarColorMorphing.Text = "更多阶数值条颜色";
 			this.ToolTipInfo.SetToolTip(this.UI_BarColorMorphing, "让 HP、资源等数值条和『艦これ』 的 UI 一样拥有更多阶的颜色。\r\n如: 启用后满血到小破之间会逐渐显示绿到黄的中间色，不启用在小破之前都显示绿色。");
 			this.UI_BarColorMorphing.UseVisualStyleBackColor = true;
-			// 
-			// UI_SubFontApply
-			// 
-			this.UI_SubFontApply.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.UI_SubFontApply.Location = new System.Drawing.Point(498, 35);
-			this.UI_SubFontApply.Name = "UI_SubFontApply";
-			this.UI_SubFontApply.Size = new System.Drawing.Size(32, 23);
-			this.UI_SubFontApply.TabIndex = 6;
-			this.UI_SubFontApply.Text = "⇒";
-			this.ToolTipInfo.SetToolTip(this.UI_SubFontApply, "应用现在选定的字体。");
-			this.UI_SubFontApply.UseVisualStyleBackColor = true;
-			this.UI_SubFontApply.Click += new System.EventHandler(this.UI_SubFontApply_Click);
-			// 
-			// UI_MainFontApply
-			// 
-			this.UI_MainFontApply.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.UI_MainFontApply.Location = new System.Drawing.Point(498, 6);
-			this.UI_MainFontApply.Name = "UI_MainFontApply";
-			this.UI_MainFontApply.Size = new System.Drawing.Size(32, 23);
-			this.UI_MainFontApply.TabIndex = 2;
-			this.UI_MainFontApply.Text = "⇒";
-			this.ToolTipInfo.SetToolTip(this.UI_MainFontApply, "应用现在选定的字体。");
-			this.UI_MainFontApply.UseVisualStyleBackColor = true;
-			this.UI_MainFontApply.Click += new System.EventHandler(this.UI_MainFontApply_Click);
+			this.UI_BarColorMorphing.CheckedChanged += new System.EventHandler(this.UI_BarColorMorphing_CheckedChanged);
 			// 
 			// UI_SubFontSelect
 			// 
@@ -625,8 +661,11 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.UI_SubFont.Location = new System.Drawing.Point(92, 35);
 			this.UI_SubFont.Name = "UI_SubFont";
-			this.UI_SubFont.Size = new System.Drawing.Size(400, 23);
+			this.UI_SubFont.Size = new System.Drawing.Size(438, 23);
 			this.UI_SubFont.TabIndex = 5;
+			this.UI_SubFont.KeyDown += new System.Windows.Forms.KeyEventHandler(this.UI_SubFont_KeyDown);
+			this.UI_SubFont.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.UI_SubFont_PreviewKeyDown);
+			this.UI_SubFont.Validating += new System.ComponentModel.CancelEventHandler(this.UI_SubFont_Validating);
 			// 
 			// label8
 			// 
@@ -654,8 +693,11 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.UI_MainFont.Location = new System.Drawing.Point(92, 6);
 			this.UI_MainFont.Name = "UI_MainFont";
-			this.UI_MainFont.Size = new System.Drawing.Size(400, 23);
+			this.UI_MainFont.Size = new System.Drawing.Size(438, 23);
 			this.UI_MainFont.TabIndex = 1;
+			this.UI_MainFont.KeyDown += new System.Windows.Forms.KeyEventHandler(this.UI_MainFont_KeyDown);
+			this.UI_MainFont.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.UI_MainFont_PreviewKeyDown);
+			this.UI_MainFont.Validating += new System.ComponentModel.CancelEventHandler(this.UI_MainFont_Validating);
 			// 
 			// label5
 			// 
@@ -668,6 +710,7 @@
 			// 
 			// tabPage3
 			// 
+			this.tabPage3.Controls.Add(this.Log_SaveLogImmediately);
 			this.tabPage3.Controls.Add(this.Log_SaveBattleLog);
 			this.tabPage3.Controls.Add(this.Log_ShowSpoiler);
 			this.tabPage3.Controls.Add(this.label12);
@@ -677,13 +720,24 @@
 			this.tabPage3.Controls.Add(this.Log_SaveLogFlag);
 			this.tabPage3.Controls.Add(this.Log_LogLevel);
 			this.tabPage3.Controls.Add(this.label6);
-			this.tabPage3.Location = new System.Drawing.Point(4, 24);
+			this.tabPage3.Location = new System.Drawing.Point(4, 22);
 			this.tabPage3.Name = "tabPage3";
 			this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage3.Size = new System.Drawing.Size(576, 292);
+			this.tabPage3.Size = new System.Drawing.Size(576, 294);
 			this.tabPage3.TabIndex = 2;
 			this.tabPage3.Text = "日志";
 			this.tabPage3.UseVisualStyleBackColor = true;
+			// 
+			// Log_SaveLogImmediately
+			// 
+			this.Log_SaveLogImmediately.AutoSize = true;
+			this.Log_SaveLogImmediately.Location = new System.Drawing.Point(153, 6);
+			this.Log_SaveLogImmediately.Name = "Log_SaveLogImmediately";
+			this.Log_SaveLogImmediately.Size = new System.Drawing.Size(140, 19);
+			this.Log_SaveLogImmediately.TabIndex = 9;
+			this.Log_SaveLogImmediately.Text = "即时写入日志";
+			this.ToolTipInfo.SetToolTip(this.Log_SaveLogImmediately, "设置是否在产生日志同时写入日志文件。\r\n不启用的话将在程序退出时统一写入。\r\n启用的话，异常退出时也能够留下日志，可能会导致程序卡顿。\r\n另外，不启用「将日志保存为文件」时本选项无效。");
+			this.Log_SaveLogImmediately.UseVisualStyleBackColor = true;
 			// 
 			// Log_SaveBattleLog
 			// 
@@ -793,10 +847,10 @@
 			this.tabPage4.Controls.Add(this.label9);
 			this.tabPage4.Controls.Add(this.Control_ConditionBorder);
 			this.tabPage4.Controls.Add(this.label7);
-			this.tabPage4.Location = new System.Drawing.Point(4, 24);
+			this.tabPage4.Location = new System.Drawing.Point(4, 22);
 			this.tabPage4.Name = "tabPage4";
 			this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage4.Size = new System.Drawing.Size(576, 292);
+			this.tabPage4.Size = new System.Drawing.Size(576, 294);
 			this.tabPage4.TabIndex = 3;
 			this.tabPage4.Text = "行为";
 			this.tabPage4.UseVisualStyleBackColor = true;
@@ -843,7 +897,8 @@
 			this.Control_RecordAutoSaving.Items.AddRange(new object[] {
             "不自动保存",
             "每小时",
-            "每天"});
+            "每天",
+            "即时"});
 			this.Control_RecordAutoSaving.Location = new System.Drawing.Point(124, 35);
 			this.Control_RecordAutoSaving.Name = "Control_RecordAutoSaving";
 			this.Control_RecordAutoSaving.Size = new System.Drawing.Size(121, 23);
@@ -885,10 +940,10 @@
 			this.tabPage5.Controls.Add(this.Debug_AlertOnError);
 			this.tabPage5.Controls.Add(this.Debug_SealingPanel);
 			this.tabPage5.Controls.Add(this.Debug_EnableDebugMenu);
-			this.tabPage5.Location = new System.Drawing.Point(4, 24);
+			this.tabPage5.Location = new System.Drawing.Point(4, 22);
 			this.tabPage5.Name = "tabPage5";
 			this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage5.Size = new System.Drawing.Size(576, 292);
+			this.tabPage5.Size = new System.Drawing.Size(576, 294);
 			this.tabPage5.TabIndex = 4;
 			this.tabPage5.Text = "DEBUG";
 			this.tabPage5.UseVisualStyleBackColor = true;
@@ -913,7 +968,7 @@
 			this.Debug_SealingPanel.Controls.Add(this.Debug_APIListPathSearch);
 			this.Debug_SealingPanel.Location = new System.Drawing.Point(0, 56);
 			this.Debug_SealingPanel.Name = "Debug_SealingPanel";
-			this.Debug_SealingPanel.Size = new System.Drawing.Size(576, 235);
+			this.Debug_SealingPanel.Size = new System.Drawing.Size(576, 217);
 			this.Debug_SealingPanel.TabIndex = 1;
 			// 
 			// Debug_APIListPath
@@ -973,10 +1028,10 @@
 			this.tabPage6.Controls.Add(this.label14);
 			this.tabPage6.Controls.Add(this.Life_TopMost);
 			this.tabPage6.Controls.Add(this.Life_ConfirmOnClosing);
-			this.tabPage6.Location = new System.Drawing.Point(4, 24);
+			this.tabPage6.Location = new System.Drawing.Point(4, 22);
 			this.tabPage6.Name = "tabPage6";
 			this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage6.Size = new System.Drawing.Size(576, 292);
+			this.tabPage6.Size = new System.Drawing.Size(576, 294);
 			this.tabPage6.TabIndex = 5;
 			this.tabPage6.Text = "窗口";
 			this.tabPage6.UseVisualStyleBackColor = true;
@@ -1127,6 +1182,9 @@
 			// 
 			// tabPage8
 			// 
+			this.tabPage8.Controls.Add(this.FormFleet_EmphasizesSubFleetInPort);
+			this.tabPage8.Controls.Add(this.FormFleet_BlinkAtDamaged);
+			this.tabPage8.Controls.Add(this.FormFleet_ReflectAnchorageRepairHealing);
 			this.tabPage8.Controls.Add(this.FormFleet_ShowAirSuperiorityRange);
 			this.tabPage8.Controls.Add(this.FormFleet_ShowAircraftLevelByNumber);
 			this.tabPage8.Controls.Add(this.label35);
@@ -1153,13 +1211,57 @@
 			this.tabPage8.Text = "舰队";
 			this.tabPage8.UseVisualStyleBackColor = true;
 			// 
+			// FormFleet_EmphasizesSubFleetInPort
+			// 
+			this.FormFleet_EmphasizesSubFleetInPort.AutoSize = true;
+			this.FormFleet_EmphasizesSubFleetInPort.Location = new System.Drawing.Point(358, 163);
+			this.FormFleet_EmphasizesSubFleetInPort.Name = "FormFleet_EmphasizesSubFleetInPort";
+			this.FormFleet_EmphasizesSubFleetInPort.Size = new System.Drawing.Size(179, 19);
+			this.FormFleet_EmphasizesSubFleetInPort.TabIndex = 20;
+			this.FormFleet_EmphasizesSubFleetInPort.Text = "强调显示未出击远征舰队";
+			this.ToolTipInfo.SetToolTip(this.FormFleet_EmphasizesSubFleetInPort, "第 2~4 舰队在母港的情况，标签附加背景色。");
+			this.FormFleet_EmphasizesSubFleetInPort.UseVisualStyleBackColor = true;
+			// 
+			// FormFleet_BlinkAtDamaged
+			// 
+			this.FormFleet_BlinkAtDamaged.AutoSize = true;
+			this.FormFleet_BlinkAtDamaged.Location = new System.Drawing.Point(358, 138);
+			this.FormFleet_BlinkAtDamaged.Name = "FormFleet_BlinkAtDamaged";
+			this.FormFleet_BlinkAtDamaged.Size = new System.Drawing.Size(122, 19);
+			this.FormFleet_BlinkAtDamaged.TabIndex = 19;
+			this.FormFleet_BlinkAtDamaged.Text = "大破时闪烁";
+			this.ToolTipInfo.SetToolTip(this.FormFleet_BlinkAtDamaged, "设置当在母港时如果存在大破舰是否闪烁标签。\r\n出击时会强制闪烁。");
+			this.FormFleet_BlinkAtDamaged.UseVisualStyleBackColor = true;
+			// 
+			// FormFleet_ReflectAnchorageRepairHealing
+			// 
+			this.FormFleet_ReflectAnchorageRepairHealing.AutoSize = true;
+			this.FormFleet_ReflectAnchorageRepairHealing.Location = new System.Drawing.Point(159, 163);
+			this.FormFleet_ReflectAnchorageRepairHealing.Name = "FormFleet_ReflectAnchorageRepairHealing";
+			this.FormFleet_ReflectAnchorageRepairHealing.Size = new System.Drawing.Size(193, 19);
+			this.FormFleet_ReflectAnchorageRepairHealing.TabIndex = 16;
+			this.FormFleet_ReflectAnchorageRepairHealing.Text = "显示泊地修理回复的 HP";
+			this.ToolTipInfo.SetToolTip(this.FormFleet_ReflectAnchorageRepairHealing, "启用时，当泊地修理开始 20 分后将在 HP 条上显示回复量。");
+			this.FormFleet_ReflectAnchorageRepairHealing.UseVisualStyleBackColor = true;
+			// 
+			// FormFleet_ShowAirSuperiorityRange
+			// 
+			this.FormFleet_ShowAirSuperiorityRange.AutoSize = true;
+			this.FormFleet_ShowAirSuperiorityRange.Location = new System.Drawing.Point(6, 213);
+			this.FormFleet_ShowAirSuperiorityRange.Name = "FormFleet_ShowAirSuperiorityRange";
+			this.FormFleet_ShowAirSuperiorityRange.Size = new System.Drawing.Size(150, 19);
+			this.FormFleet_ShowAirSuperiorityRange.TabIndex = 14;
+			this.FormFleet_ShowAirSuperiorityRange.Text = "制空值显示可能范围";
+			this.ToolTipInfo.SetToolTip(this.FormFleet_ShowAirSuperiorityRange, "设置制空值是否显示为「内部熟练度最小~最大」的范围。\r\n不开启制空值将按照内部熟练度最低值进行计算。\r\n译注：最大值不一定是真实情况，不建议一般玩家开启此功能。");
+			this.FormFleet_ShowAirSuperiorityRange.UseVisualStyleBackColor = true;
+			// 
 			// FormFleet_ShowAircraftLevelByNumber
 			// 
 			this.FormFleet_ShowAircraftLevelByNumber.AutoSize = true;
-			this.FormFleet_ShowAircraftLevelByNumber.Location = new System.Drawing.Point(159, 188);
+			this.FormFleet_ShowAircraftLevelByNumber.Location = new System.Drawing.Point(159, 213);
 			this.FormFleet_ShowAircraftLevelByNumber.Name = "FormFleet_ShowAircraftLevelByNumber";
 			this.FormFleet_ShowAircraftLevelByNumber.Size = new System.Drawing.Size(184, 19);
-			this.FormFleet_ShowAircraftLevelByNumber.TabIndex = 16;
+			this.FormFleet_ShowAircraftLevelByNumber.TabIndex = 18;
 			this.FormFleet_ShowAircraftLevelByNumber.Text = "使用数字表示舰载机熟练度";
 			this.ToolTipInfo.SetToolTip(this.FormFleet_ShowAircraftLevelByNumber, "设置是否不使用符号（|, || 等）而使用数字（1, 2 等）表示熟练度。");
 			this.FormFleet_ShowAircraftLevelByNumber.UseVisualStyleBackColor = true;
@@ -1170,7 +1272,7 @@
 			this.label35.Location = new System.Drawing.Point(225, 114);
 			this.label35.Name = "label35";
 			this.label35.Size = new System.Drawing.Size(21, 15);
-			this.label35.TabIndex = 8;
+			this.label35.TabIndex = 10;
 			this.label35.Text = "px";
 			// 
 			// FormFleet_FixedShipNameWidth
@@ -1188,7 +1290,7 @@
             0});
 			this.FormFleet_FixedShipNameWidth.Name = "FormFleet_FixedShipNameWidth";
 			this.FormFleet_FixedShipNameWidth.Size = new System.Drawing.Size(60, 23);
-			this.FormFleet_FixedShipNameWidth.TabIndex = 7;
+			this.FormFleet_FixedShipNameWidth.TabIndex = 9;
 			this.FormFleet_FixedShipNameWidth.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			this.ToolTipInfo.SetToolTip(this.FormFleet_FixedShipNameWidth, "设置舰名固定宽度。");
 			this.FormFleet_FixedShipNameWidth.Value = new decimal(new int[] {
@@ -1203,7 +1305,7 @@
 			this.FormFleet_ShowConditionIcon.Location = new System.Drawing.Point(6, 188);
 			this.FormFleet_ShowConditionIcon.Name = "FormFleet_ShowConditionIcon";
 			this.FormFleet_ShowConditionIcon.Size = new System.Drawing.Size(149, 19);
-			this.FormFleet_ShowConditionIcon.TabIndex = 11;
+			this.FormFleet_ShowConditionIcon.TabIndex = 13;
 			this.FormFleet_ShowConditionIcon.Text = "显示疲劳度图标";
 			this.ToolTipInfo.SetToolTip(this.FormFleet_ShowConditionIcon, "是否显示疲劳度图标。\r\n不显示的情况，将用背景色来区分。");
 			this.FormFleet_ShowConditionIcon.UseVisualStyleBackColor = true;
@@ -1218,11 +1320,12 @@
             "只显示舰载机熟练度",
             "改修等级优先",
             "舰载机熟练度优先",
-            "同时显示"});
+            "同时显示",
+            "叠加显示熟练度"});
 			this.FormFleet_EquipmentLevelVisibility.Location = new System.Drawing.Point(253, 86);
 			this.FormFleet_EquipmentLevelVisibility.Name = "FormFleet_EquipmentLevelVisibility";
 			this.FormFleet_EquipmentLevelVisibility.Size = new System.Drawing.Size(160, 23);
-			this.FormFleet_EquipmentLevelVisibility.TabIndex = 13;
+			this.FormFleet_EquipmentLevelVisibility.TabIndex = 7;
 			this.ToolTipInfo.SetToolTip(this.FormFleet_EquipmentLevelVisibility, "选择显示装备改修值还是舰载机熟练度。\r\n选择「不显示」的情况二者都不会显示。\r\n选择「～优先」的情况，二者都存在的情况优先显示其中一种。\r\n选择「同时显示」的情况二者都始终显示。");
 			// 
 			// label28
@@ -1231,17 +1334,18 @@
 			this.label28.Location = new System.Drawing.Point(156, 89);
 			this.label28.Name = "label28";
 			this.label28.Size = new System.Drawing.Size(91, 15);
-			this.label28.TabIndex = 12;
+			this.label28.TabIndex = 6;
 			this.label28.Text = "显示装备信息 :";
 			// 
 			// FormFleet_BlinkAtCompletion
 			// 
 			this.FormFleet_BlinkAtCompletion.AutoSize = true;
-			this.FormFleet_BlinkAtCompletion.Location = new System.Drawing.Point(159, 163);
+			this.FormFleet_BlinkAtCompletion.Location = new System.Drawing.Point(159, 188);
 			this.FormFleet_BlinkAtCompletion.Name = "FormFleet_BlinkAtCompletion";
 			this.FormFleet_BlinkAtCompletion.Size = new System.Drawing.Size(158, 19);
-			this.FormFleet_BlinkAtCompletion.TabIndex = 15;
+			this.FormFleet_BlinkAtCompletion.TabIndex = 17;
 			this.FormFleet_BlinkAtCompletion.Text = "计时完成时闪烁";
+			this.ToolTipInfo.SetToolTip(this.FormFleet_BlinkAtCompletion, "设置当远征、入渠完成时，是否闪烁对应标签。");
 			this.FormFleet_BlinkAtCompletion.UseVisualStyleBackColor = true;
 			// 
 			// FormFleet_ShowAnchorageRepairingTimer
@@ -1250,7 +1354,7 @@
 			this.FormFleet_ShowAnchorageRepairingTimer.Location = new System.Drawing.Point(159, 138);
 			this.FormFleet_ShowAnchorageRepairingTimer.Name = "FormFleet_ShowAnchorageRepairingTimer";
 			this.FormFleet_ShowAnchorageRepairingTimer.Size = new System.Drawing.Size(152, 19);
-			this.FormFleet_ShowAnchorageRepairingTimer.TabIndex = 14;
+			this.FormFleet_ShowAnchorageRepairingTimer.TabIndex = 15;
 			this.FormFleet_ShowAnchorageRepairingTimer.Text = "显示泊地修理计时器";
 			this.ToolTipInfo.SetToolTip(this.FormFleet_ShowAnchorageRepairingTimer, "是否在舰队一览中显示额外的泊地修理计时器。");
 			this.FormFleet_ShowAnchorageRepairingTimer.UseVisualStyleBackColor = true;
@@ -1261,7 +1365,7 @@
 			this.FormFleet_AirSuperiorityMethod.FormattingEnabled = true;
 			this.FormFleet_AirSuperiorityMethod.Items.AddRange(new object[] {
             "无视熟练度",
-            "考虑熟练度 ( 暂定 )"});
+            "考虑熟练度"});
 			this.FormFleet_AirSuperiorityMethod.Location = new System.Drawing.Point(115, 59);
 			this.FormFleet_AirSuperiorityMethod.Name = "FormFleet_AirSuperiorityMethod";
 			this.FormFleet_AirSuperiorityMethod.Size = new System.Drawing.Size(127, 23);
@@ -1282,7 +1386,7 @@
 			this.FormFleet_ShowNextExp.Location = new System.Drawing.Point(6, 163);
 			this.FormFleet_ShowNextExp.Name = "FormFleet_ShowNextExp";
 			this.FormFleet_ShowNextExp.Size = new System.Drawing.Size(112, 19);
-			this.FormFleet_ShowNextExp.TabIndex = 10;
+			this.FormFleet_ShowNextExp.TabIndex = 12;
 			this.FormFleet_ShowNextExp.Text = "显示 next.";
 			this.ToolTipInfo.SetToolTip(this.FormFleet_ShowNextExp, "是否显示升到下一级所需的经验值。\r\n不显示的情况可以节约空间。");
 			this.FormFleet_ShowNextExp.UseVisualStyleBackColor = true;
@@ -1293,7 +1397,7 @@
 			this.FormFleet_ShortenHPBar.Location = new System.Drawing.Point(6, 138);
 			this.FormFleet_ShortenHPBar.Name = "FormFleet_ShortenHPBar";
 			this.FormFleet_ShortenHPBar.Size = new System.Drawing.Size(114, 19);
-			this.FormFleet_ShortenHPBar.TabIndex = 9;
+			this.FormFleet_ShortenHPBar.TabIndex = 11;
 			this.FormFleet_ShortenHPBar.Text = "缩短 HP 条";
 			this.ToolTipInfo.SetToolTip(this.FormFleet_ShortenHPBar, "缩短 HP 条，节约空间。");
 			this.FormFleet_ShortenHPBar.UseVisualStyleBackColor = true;
@@ -1304,7 +1408,7 @@
 			this.FormFleet_FixShipNameWidth.Location = new System.Drawing.Point(6, 113);
 			this.FormFleet_FixShipNameWidth.Name = "FormFleet_FixShipNameWidth";
 			this.FormFleet_FixShipNameWidth.Size = new System.Drawing.Size(136, 19);
-			this.FormFleet_FixShipNameWidth.TabIndex = 6;
+			this.FormFleet_FixShipNameWidth.TabIndex = 8;
 			this.FormFleet_FixShipNameWidth.Text = "固定舰名宽度";
 			this.ToolTipInfo.SetToolTip(this.FormFleet_FixShipNameWidth, "固定舰名显示宽度，节约空间。\r\n相应的，名字很长的舰娘名字会被切断。");
 			this.FormFleet_FixShipNameWidth.UseVisualStyleBackColor = true;
@@ -1563,6 +1667,9 @@
 			// 
 			// tabPage18
 			// 
+			this.tabPage18.Controls.Add(this.label40);
+			this.tabPage18.Controls.Add(this.label41);
+			this.tabPage18.Controls.Add(this.FormCompass_MaxShipNameWidth);
 			this.tabPage18.Controls.Add(this.FormCompass_IsScrollable);
 			this.tabPage18.Controls.Add(this.FormCompass_CandidateDisplayCount);
 			this.tabPage18.Controls.Add(this.label2);
@@ -1573,6 +1680,48 @@
 			this.tabPage18.TabIndex = 7;
 			this.tabPage18.Text = "罗盘";
 			this.tabPage18.UseVisualStyleBackColor = true;
+			// 
+			// label40
+			// 
+			this.label40.AutoSize = true;
+			this.label40.Location = new System.Drawing.Point(6, 62);
+			this.label40.Name = "label40";
+			this.label40.Size = new System.Drawing.Size(101, 15);
+			this.label40.TabIndex = 15;
+			this.label40.Text = "舰名最大宽度 :";
+			// 
+			// label41
+			// 
+			this.label41.AutoSize = true;
+			this.label41.Location = new System.Drawing.Point(179, 62);
+			this.label41.Name = "label41";
+			this.label41.Size = new System.Drawing.Size(21, 15);
+			this.label41.TabIndex = 14;
+			this.label41.Text = "px";
+			// 
+			// FormCompass_MaxShipNameWidth
+			// 
+			this.FormCompass_MaxShipNameWidth.Location = new System.Drawing.Point(113, 60);
+			this.FormCompass_MaxShipNameWidth.Maximum = new decimal(new int[] {
+            999,
+            0,
+            0,
+            0});
+			this.FormCompass_MaxShipNameWidth.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+			this.FormCompass_MaxShipNameWidth.Name = "FormCompass_MaxShipNameWidth";
+			this.FormCompass_MaxShipNameWidth.Size = new System.Drawing.Size(60, 23);
+			this.FormCompass_MaxShipNameWidth.TabIndex = 13;
+			this.FormCompass_MaxShipNameWidth.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.ToolTipInfo.SetToolTip(this.FormCompass_MaxShipNameWidth, "设置舰名的最大宽度值。");
+			this.FormCompass_MaxShipNameWidth.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
 			// 
 			// FormCompass_IsScrollable
 			// 
@@ -1797,12 +1946,13 @@
 			// 
 			// tabPage20
 			// 
+			this.tabPage20.Controls.Add(this.FormBattle_ShowHPBar);
 			this.tabPage20.Controls.Add(this.FormBattle_HideDuringBattle);
 			this.tabPage20.Controls.Add(this.FormBattle_IsScrollable);
-			this.tabPage20.Location = new System.Drawing.Point(4, 22);
+			this.tabPage20.Location = new System.Drawing.Point(4, 24);
 			this.tabPage20.Name = "tabPage20";
 			this.tabPage20.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage20.Size = new System.Drawing.Size(562, 260);
+			this.tabPage20.Size = new System.Drawing.Size(562, 258);
 			this.tabPage20.TabIndex = 10;
 			this.tabPage20.Text = "战斗";
 			this.tabPage20.UseVisualStyleBackColor = true;
@@ -1924,6 +2074,7 @@
 			// 
 			this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+			this.groupBox2.Controls.Add(this.FormBrowser_ScreenShotFormat_AvoidTwitterDeterioration);
 			this.groupBox2.Controls.Add(this.label18);
 			this.groupBox2.Controls.Add(this.FormBrowser_ScreenShotFormat_PNG);
 			this.groupBox2.Controls.Add(this.FormBrowser_ScreenShotPathSearch);
@@ -1935,6 +2086,18 @@
 			this.groupBox2.TabIndex = 0;
 			this.groupBox2.TabStop = false;
 			this.groupBox2.Text = "截图";
+			// 
+			// FormBrowser_ScreenShotFormat_AvoidTwitterDeterioration
+			// 
+			this.FormBrowser_ScreenShotFormat_AvoidTwitterDeterioration.AutoSize = true;
+			this.FormBrowser_ScreenShotFormat_AvoidTwitterDeterioration.Enabled = false;
+			this.FormBrowser_ScreenShotFormat_AvoidTwitterDeterioration.Location = new System.Drawing.Point(123, 22);
+			this.FormBrowser_ScreenShotFormat_AvoidTwitterDeterioration.Name = "FormBrowser_ScreenShotFormat_AvoidTwitterDeterioration";
+			this.FormBrowser_ScreenShotFormat_AvoidTwitterDeterioration.Size = new System.Drawing.Size(182, 19);
+			this.FormBrowser_ScreenShotFormat_AvoidTwitterDeterioration.TabIndex = 13;
+			this.FormBrowser_ScreenShotFormat_AvoidTwitterDeterioration.Text = "回避 Twitter 压缩图片 (hack)";
+			this.ToolTipInfo.SetToolTip(this.FormBrowser_ScreenShotFormat_AvoidTwitterDeterioration, "当在 Twitter 上传 PNG 格式的图片时，会自动压缩为 JPEG 导致画质劣化。\\r\\n此选项设置是否修改图片已避免被压缩 ( 译注：会加入伪造的 alpha 通道，若无需求不建议开启 )");
+			this.FormBrowser_ScreenShotFormat_AvoidTwitterDeterioration.UseVisualStyleBackColor = true;
 			// 
 			// label18
 			// 
@@ -1955,6 +2118,7 @@
 			this.FormBrowser_ScreenShotFormat_PNG.TabStop = true;
 			this.FormBrowser_ScreenShotFormat_PNG.Text = "PNG";
 			this.FormBrowser_ScreenShotFormat_PNG.UseVisualStyleBackColor = true;
+			this.FormBrowser_ScreenShotFormat_PNG.CheckedChanged += new System.EventHandler(this.FormBrowser_ScreenShotFormat_PNG_CheckedChanged);
 			// 
 			// FormBrowser_ScreenShotPathSearch
 			// 
@@ -1986,6 +2150,7 @@
 			this.FormBrowser_ScreenShotFormat_JPEG.TabStop = true;
 			this.FormBrowser_ScreenShotFormat_JPEG.Text = "JPEG";
 			this.FormBrowser_ScreenShotFormat_JPEG.UseVisualStyleBackColor = true;
+			this.FormBrowser_ScreenShotFormat_JPEG.CheckedChanged += new System.EventHandler(this.FormBrowser_ScreenShotFormat_JPEG_CheckedChanged);
 			// 
 			// label17
 			// 
@@ -2304,10 +2469,10 @@
 			this.tabPage11.Controls.Add(this.Notification_Repair);
 			this.tabPage11.Controls.Add(this.Notification_Construction);
 			this.tabPage11.Controls.Add(this.Notification_Expedition);
-			this.tabPage11.Location = new System.Drawing.Point(4, 24);
+			this.tabPage11.Location = new System.Drawing.Point(4, 22);
 			this.tabPage11.Name = "tabPage11";
 			this.tabPage11.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage11.Size = new System.Drawing.Size(576, 292);
+			this.tabPage11.Size = new System.Drawing.Size(576, 294);
 			this.tabPage11.TabIndex = 7;
 			this.tabPage11.Text = "通知";
 			this.tabPage11.UseVisualStyleBackColor = true;
@@ -2407,10 +2572,10 @@
 			// tabPage15
 			// 
 			this.tabPage15.Controls.Add(this.groupBox5);
-			this.tabPage15.Location = new System.Drawing.Point(4, 24);
+			this.tabPage15.Location = new System.Drawing.Point(4, 22);
 			this.tabPage15.Name = "tabPage15";
 			this.tabPage15.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage15.Size = new System.Drawing.Size(576, 292);
+			this.tabPage15.Size = new System.Drawing.Size(576, 294);
 			this.tabPage15.TabIndex = 8;
 			this.tabPage15.Text = "发送数据";
 			this.tabPage15.UseVisualStyleBackColor = true;
@@ -2486,10 +2651,10 @@
 			this.tabPage17.Controls.Add(this.BGMPlayer_VolumeAll);
 			this.tabPage17.Controls.Add(this.BGMPlayer_Enabled);
 			this.tabPage17.Controls.Add(this.BGMPlayer_ControlGrid);
-			this.tabPage17.Location = new System.Drawing.Point(4, 24);
+			this.tabPage17.Location = new System.Drawing.Point(4, 22);
 			this.tabPage17.Name = "tabPage17";
 			this.tabPage17.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage17.Size = new System.Drawing.Size(576, 292);
+			this.tabPage17.Size = new System.Drawing.Size(576, 294);
 			this.tabPage17.TabIndex = 9;
 			this.tabPage17.Text = "BGM";
 			this.tabPage17.UseVisualStyleBackColor = true;
@@ -2605,7 +2770,7 @@
 			// 
 			// ToolTipInfo
 			// 
-			this.ToolTipInfo.AutoPopDelay = 60000;
+			this.ToolTipInfo.AutoPopDelay = 30000;
 			this.ToolTipInfo.InitialDelay = 500;
 			this.ToolTipInfo.ReshowDelay = 100;
 			this.ToolTipInfo.ShowAlways = true;
@@ -2665,16 +2830,40 @@
 			this.PlayTimeTimer.Interval = 1000;
 			this.PlayTimeTimer.Tick += new System.EventHandler(this.PlayTimeTimer_Tick);
 			// 
-			// FormFleet_ShowAirSuperiorityRange
+			// FormBattle_ShowHPBar
 			// 
-			this.FormFleet_ShowAirSuperiorityRange.AutoSize = true;
-			this.FormFleet_ShowAirSuperiorityRange.Location = new System.Drawing.Point(6, 213);
-			this.FormFleet_ShowAirSuperiorityRange.Name = "FormFleet_ShowAirSuperiorityRange";
-			this.FormFleet_ShowAirSuperiorityRange.Size = new System.Drawing.Size(150, 19);
-			this.FormFleet_ShowAirSuperiorityRange.TabIndex = 17;
-			this.FormFleet_ShowAirSuperiorityRange.Text = "制空值显示可能范围";
-			this.ToolTipInfo.SetToolTip(this.FormFleet_ShowAirSuperiorityRange, "设置制空值是否显示为「内部熟练度最小~最大」的范围。\r\n不开启制空值将按照内部熟练度最低值进行计算。\r\n译注：最大值不一定是真实情况，不建议一般玩家开启此功能。");
-			this.FormFleet_ShowAirSuperiorityRange.UseVisualStyleBackColor = true;
+			this.FormBattle_ShowHPBar.AutoSize = true;
+			this.FormBattle_ShowHPBar.Location = new System.Drawing.Point(6, 56);
+			this.FormBattle_ShowHPBar.Name = "FormBattle_ShowHPBar";
+			this.FormBattle_ShowHPBar.Size = new System.Drawing.Size(114, 19);
+			this.FormBattle_ShowHPBar.TabIndex = 8;
+			this.FormBattle_ShowHPBar.Text = "显示 HP 条";
+			this.ToolTipInfo.SetToolTip(this.FormBattle_ShowHPBar, "不显示的话可以稍微节约一些宽度。");
+			this.FormBattle_ShowHPBar.UseVisualStyleBackColor = true;
+			// 
+			// UI_RenderingTest
+			// 
+			this.UI_RenderingTest.AutoSize = true;
+			this.UI_RenderingTest.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			statusBarModule1.BarColor0Begin = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+			statusBarModule1.BarColor0End = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+			statusBarModule1.MaximumValue = 500;
+			statusBarModule1.PrevValue = 401;
+			statusBarModule1.Value = 401;
+			this.UI_RenderingTest.HPBar = statusBarModule1;
+			this.UI_RenderingTest.Location = new System.Drawing.Point(16, 3);
+			this.UI_RenderingTest.MainFontColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+			this.UI_RenderingTest.Margin = new System.Windows.Forms.Padding(16, 3, 16, 3);
+			this.UI_RenderingTest.MaximumValue = 500;
+			this.UI_RenderingTest.Name = "UI_RenderingTest";
+			this.UI_RenderingTest.PrevValue = 401;
+			this.UI_RenderingTest.RepairTime = new System.DateTime(2017, 6, 18, 0, 0, 59, 159);
+			this.UI_RenderingTest.RepairTimeShowMode = ElectronicObserver.Window.Control.ShipStatusHPRepairTimeShowMode.Invisible;
+			this.UI_RenderingTest.Size = new System.Drawing.Size(136, 20);
+			this.UI_RenderingTest.TabIndex = 12;
+			this.UI_RenderingTest.Text = "数值条绘制测试 :";
+			this.ToolTipInfo.SetToolTip(this.UI_RenderingTest, "绘制测试。\r\n可以通过下面的滑块调整数值。");
+			this.UI_RenderingTest.Value = 401;
 			// 
 			// DialogConfiguration
 			// 
@@ -2705,6 +2894,9 @@
 			((System.ComponentModel.ISupportInitialize)(this.Connection_Port)).EndInit();
 			this.tabPage2.ResumeLayout(false);
 			this.tabPage2.PerformLayout();
+			this.tableLayoutPanel1.ResumeLayout(false);
+			this.tableLayoutPanel1.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.UI_RenderingTestChanger)).EndInit();
 			this.tabPage3.ResumeLayout(false);
 			this.tabPage3.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.Log_LogLevel)).EndInit();
@@ -2732,6 +2924,7 @@
 			this.tabPage16.PerformLayout();
 			this.tabPage18.ResumeLayout(false);
 			this.tabPage18.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.FormCompass_MaxShipNameWidth)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.FormCompass_CandidateDisplayCount)).EndInit();
 			this.tabPage10.ResumeLayout(false);
 			this.tabPage10.PerformLayout();
@@ -2794,8 +2987,6 @@
 		private System.Windows.Forms.Button UI_MainFontSelect;
 		private System.Windows.Forms.Label label5;
 		private System.Windows.Forms.FontDialog FontSelector;
-		private System.Windows.Forms.Button UI_SubFontApply;
-		private System.Windows.Forms.Button UI_MainFontApply;
 		private System.Windows.Forms.Button Connection_OutputConnectionScript;
 		private System.Windows.Forms.TabPage tabPage7;
 		private System.Windows.Forms.TabControl tabControl2;
@@ -2977,5 +3168,18 @@
 		private System.Windows.Forms.Label label38;
 		private System.Windows.Forms.Label label39;
 		private System.Windows.Forms.CheckBox FormFleet_ShowAirSuperiorityRange;
+		private System.Windows.Forms.CheckBox FormBrowser_ScreenShotFormat_AvoidTwitterDeterioration;
+		private System.Windows.Forms.CheckBox FormFleet_ReflectAnchorageRepairHealing;
+		private System.Windows.Forms.CheckBox FormFleet_EmphasizesSubFleetInPort;
+		private System.Windows.Forms.CheckBox FormFleet_BlinkAtDamaged;
+		private System.Windows.Forms.CheckBox Log_SaveLogImmediately;
+		private System.Windows.Forms.CheckBox UI_IsLayoutFixed;
+		private Control.ShipStatusHP UI_RenderingTest;
+		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+		private System.Windows.Forms.TrackBar UI_RenderingTestChanger;
+		private System.Windows.Forms.Label label40;
+		private System.Windows.Forms.Label label41;
+		private System.Windows.Forms.NumericUpDown FormCompass_MaxShipNameWidth;
+		private System.Windows.Forms.CheckBox FormBattle_ShowHPBar;
 	}
 }

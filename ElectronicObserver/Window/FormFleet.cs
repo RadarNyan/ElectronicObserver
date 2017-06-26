@@ -34,7 +34,7 @@ namespace ElectronicObserver.Window {
 			public ImageLabel SearchingAbility;
 			public ImageLabel AntiAirPower;
 			public ToolTip ToolTipInfo;
-			public FleetData.FleetStates State;
+			public FleetStates State;
 			public DateTime Timer;
 
 			public TableFleetControl( FormFleet parent ) {
@@ -91,7 +91,7 @@ namespace ElectronicObserver.Window {
 				ConfigurationChanged( parent );
 
 				ToolTipInfo = parent.ToolTipInfo;
-				State = FleetData.FleetStates.NoShip;
+				State = FleetStates.NoShip;
 				Timer = DateTime.Now;
 
 				#endregion
@@ -113,16 +113,6 @@ namespace ElectronicObserver.Window {
 				table.Controls.Add( AntiAirPower, 4, 0 );
 				table.ResumeLayout();
 
-				int row = 0;
-				#region set RowStyle
-				RowStyle rs = new RowStyle( SizeType.Absolute, 21 );
-
-				if ( table.RowStyles.Count > row )
-					table.RowStyles[row] = rs;
-				else
-					while ( table.RowStyles.Count <= row )
-						table.RowStyles.Add( rs );
-				#endregion
 			}
 
 			private int SearchingAbilityNew33BranchWeight = 1; // can only be 1, 4, 3
@@ -188,7 +178,7 @@ namespace ElectronicObserver.Window {
 				}
 
 
-				State = FleetData.UpdateFleetState( fleet, StateMain, ToolTipInfo, State, ref Timer );
+				State = UpdateFleetState( fleet, StateMain, ToolTipInfo, State, ref Timer );
 
 
 				//制空戦力計算	
@@ -279,12 +269,12 @@ namespace ElectronicObserver.Window {
 
 
 			public void ResetState() {
-				State = FleetData.FleetStates.NoShip;
+				State = FleetStates.NoShip;
 			}
 
 			public void Refresh() {
 
-				FleetData.RefreshFleetState( StateMain, State, Timer );
+				RefreshFleetState( StateMain, State, Timer );
 
 			}
 
@@ -293,9 +283,10 @@ namespace ElectronicObserver.Window {
 				StateMain.Font = Utility.Configuration.Config.UI.MainFont;
 				StateMain.BackColor = Color.Transparent;
 				AirSuperiority.Font = parent.MainFont;
-				AirSuperiority.Font = parent.MainFont;
 				SearchingAbility.Font = parent.MainFont;
+				AntiAirPower.Font = parent.MainFont;
 
+				ControlHelper.SetTableRowStyles( parent.TableFleet, ControlHelper.GetDefaultRowStyle() );
 			}
 
 		}
@@ -324,8 +315,8 @@ namespace ElectronicObserver.Window {
 				Name.TextAlign = ContentAlignment.MiddleLeft;
 				Name.ImageAlign = ContentAlignment.MiddleCenter;
 				Name.ForeColor = parent.MainFontColor;
-				Name.Padding = new Padding( 0, 1, 0, 1 );
-				Name.Margin = new Padding( 2, 0, 2, 0 );
+				Name.Padding = new Padding( 2, 1, 2, 1 );
+				Name.Margin = new Padding( 2, 1, 2, 1 );
 				Name.AutoSize = true;
 				//Name.AutoEllipsis = true;
 				Name.Visible = false;
@@ -349,7 +340,7 @@ namespace ElectronicObserver.Window {
 				Level.ResumeLayout();
 
 				HP = new ShipStatusHP();
-				HP.SuspendLayout();
+				HP.SuspendUpdate();
 				HP.Anchor = AnchorStyles.Left;
 				HP.Value = 0;
 				HP.MaximumValue = 0;
@@ -360,8 +351,9 @@ namespace ElectronicObserver.Window {
 				HP.Padding = new Padding( 0, 0, 0, 0 );
 				HP.Margin = new Padding( 2, 1, 2, 2 );
 				HP.AutoSize = true;
+				HP.AutoSizeMode = AutoSizeMode.GrowAndShrink;
 				HP.Visible = false;
-				HP.ResumeLayout();
+				HP.ResumeUpdate();
 
 				Condition = new ImageLabel();
 				Condition.SuspendLayout();
@@ -371,8 +363,8 @@ namespace ElectronicObserver.Window {
 				Condition.TextAlign = ContentAlignment.BottomRight;
 				Condition.ImageAlign = ContentAlignment.MiddleLeft;
 				Condition.ImageList = ResourceManager.Instance.Icons;
-				Condition.Padding = new Padding( 2, 2, 2, 2 );
-				Condition.Margin = new Padding( 2, 0, 2, 0 );
+				Condition.Padding = new Padding( 2, 1, 2, 1 );
+				Condition.Margin = new Padding( 2, 1, 2, 1 );
 				Condition.Size = new Size( 40, 20 );
 				Condition.AutoSize = true;
 				Condition.Visible = false;
@@ -385,22 +377,23 @@ namespace ElectronicObserver.Window {
 				ShipResource.AmmoCurrent = 0;
 				ShipResource.AmmoMax = 0;
 				ShipResource.Anchor = AnchorStyles.Left;
-				ShipResource.Padding = new Padding( 0, 2, 0, 1 );
-				ShipResource.Margin = new Padding( 2, 0, 2, 0 );
+				ShipResource.Padding = new Padding( 0, 2, 0, 0 );
+				ShipResource.Margin = new Padding( 2, 0, 2, 1 );
 				ShipResource.Size = new Size( 30, 20 );
 				ShipResource.AutoSize = false;
 				ShipResource.Visible = false;
 				ShipResource.ResumeLayout();
 
 				Equipments = new ShipStatusEquipment();
-				Equipments.SuspendLayout();
+				Equipments.SuspendUpdate();
 				Equipments.Anchor = AnchorStyles.Left;
-				Equipments.Padding = new Padding( 0, 2, 0, 1 );
-				Equipments.Margin = new Padding( 2, 0, 2, 0 );
+				Equipments.Padding = new Padding( 0, 1, 0, 1 );
+				Equipments.Margin = new Padding( 2, 0, 2, 1 );
 				Equipments.Size = new Size( 40, 20 );
 				Equipments.AutoSize = true;
+				Equipments.AutoSizeMode = AutoSizeMode.GrowAndShrink;
 				Equipments.Visible = false;
-				Equipments.ResumeLayout();
+				Equipments.ResumeUpdate();
 
 				ConfigurationChanged( parent );
 
@@ -414,29 +407,24 @@ namespace ElectronicObserver.Window {
 			public TableMemberControl( FormFleet parent, TableLayoutPanel table, int row )
 				: this( parent ) {
 				AddToTable( table, row );
+
+				Equipments.Name = string.Format( "{0}_{1}", parent.FleetID, row + 1 );
 			}
 
 
 			public void AddToTable( TableLayoutPanel table, int row ) {
 
 				table.SuspendLayout();
+
 				table.Controls.Add( Name, 0, row );
 				table.Controls.Add( Level, 1, row );
 				table.Controls.Add( HP, 2, row );
 				table.Controls.Add( Condition, 3, row );
 				table.Controls.Add( ShipResource, 4, row );
 				table.Controls.Add( Equipments, 5, row );
+
 				table.ResumeLayout();
 
-				#region set RowStyle
-				RowStyle rs = new RowStyle( SizeType.Absolute, 21 );
-
-				if ( table.RowStyles.Count > row )
-					table.RowStyles[row] = rs;
-				else
-					while ( table.RowStyles.Count <= row )
-						table.RowStyles.Add( rs );
-				#endregion
 			}
 
 			public void Update( int shipMasterID ) {
@@ -493,16 +481,22 @@ namespace ElectronicObserver.Window {
 					}
 
 
-					HP.Value = ship.HPCurrent;
+					HP.SuspendUpdate();
+					HP.Value = HP.PrevValue = ship.HPCurrent;
 					HP.MaximumValue = ship.HPMax;
+					HP.UsePrevValue = false;
+					HP.ShowDifference = false;
 					{
 						int dockID = ship.RepairingDockID;
 
-						HP.RepairTime = null;
 						if ( dockID != -1 ) {
 							HP.RepairTime = db.Docks[dockID].CompletionTime;
+							HP.RepairTimeShowMode = ShipStatusHPRepairTimeShowMode.Visible;
+						} else {
+							HP.RepairTimeShowMode = ShipStatusHPRepairTimeShowMode.Invisible;
 						}
 					}
+					HP.Tag = ( ship.RepairingDockID == -1 && 0.5 < ship.HPRate && ship.HPRate < 1.0 ) ? DateTimeHelper.FromAPITimeSpan( ship.RepairTime ).TotalSeconds : 0.0;
 					if ( isEscaped ) {
 						HP.BackColor = Utility.Configuration.Config.UI.SubBackColor;
 					} else {
@@ -537,7 +531,7 @@ namespace ElectronicObserver.Window {
 
 						ToolTipInfo.SetToolTip( HP, sb.ToString() );
 					}
-
+					HP.ResumeUpdate();
 
 
 					Condition.Text = ship.Condition.ToString();
@@ -624,13 +618,21 @@ namespace ElectronicObserver.Window {
 				{
 					int torpedo = ship.TorpedoPower;
 					int asw = ship.AntiSubmarinePower;
+
 					if ( torpedo > 0 ) {
-						if ( asw > 0 )
-							sb.AppendFormat( "雷击 : {0} / 对潜 : {1}\r\n", torpedo, asw );
-						else
-							sb.AppendFormat( "雷击 : {0}\r\n", torpedo );
-					} else if ( asw > 0 )
-						sb.AppendFormat( "对潜 : {0}\r\n", asw );
+						sb.AppendFormat( "雷击 : {0}", torpedo );
+					}
+					if ( asw > 0 ) {
+						if ( torpedo > 0 )
+							sb.Append( " / " );
+
+						sb.AppendFormat( "对潜 : {0}", asw );
+
+						if ( Calculator.CanOpeningASW( ship ) )
+							sb.Append( " ( 可以先制 )" );
+					}
+					if ( torpedo > 0 || asw > 0 )
+						sb.AppendLine();
 				}
 
 				{
@@ -753,6 +755,7 @@ namespace ElectronicObserver.Window {
 		private TableFleetControl ControlFleet;
 		private TableMemberControl[] ControlMember;
 
+		private int AnchorageRepairBound;
 
 
 		public FormFleet( FormMain parent, int fleetID ) {
@@ -767,6 +770,7 @@ namespace ElectronicObserver.Window {
 			MainFontColor = Utility.Configuration.Config.UI.ForeColor;
 			SubFontColor = Utility.Configuration.Config.UI.SubForeColor;
 
+			AnchorageRepairBound = 0;
 
 			//ui init
 
@@ -874,7 +878,10 @@ namespace ElectronicObserver.Window {
 			TableFleet.Visible = true;
 			TableFleet.ResumeLayout();
 
+			AnchorageRepairBound = fleet.CanAnchorageRepair ? 2 + fleet.MembersInstance[0].SlotInstance.Count( eq => eq != null && eq.MasterEquipment.CategoryType == 31 ) : 0;
+
 			TableMember.SuspendLayout();
+			TableMember.RowCount = fleet.Members.Count( id => id > 0 );
 			for ( int i = 0; i < ControlMember.Length; i++ ) {
 				ControlMember[i].Update( fleet.Members[i] );
 			}
@@ -902,9 +909,10 @@ namespace ElectronicObserver.Window {
 
 		void UpdateTimerTick() {
 
+			FleetData fleet = KCDatabase.Instance.Fleet.Fleets[FleetID];
+
 			TableFleet.SuspendLayout();
 			{
-				FleetData fleet = KCDatabase.Instance.Fleet.Fleets[FleetID];
 				if ( fleet != null )
 					ControlFleet.Refresh();
 
@@ -917,6 +925,39 @@ namespace ElectronicObserver.Window {
 			}
 			TableMember.ResumeLayout();
 
+
+			// anchorage repairing
+			if ( fleet != null && Utility.Configuration.Config.FormFleet.ReflectAnchorageRepairHealing ) {
+				TimeSpan elapsed = DateTime.Now - KCDatabase.Instance.Fleet.AnchorageRepairingTimer;
+
+				if ( elapsed.TotalMinutes >= 20 && AnchorageRepairBound > 0 ) {
+
+					for ( int i = 0; i < AnchorageRepairBound; i++ ) {
+						var hpbar = ControlMember[i].HP;
+
+						double dockingSeconds = hpbar.Tag as double? ?? 0.0;
+
+						if ( dockingSeconds <= 0.0 )
+							continue;
+
+						hpbar.SuspendUpdate();
+
+						if ( !hpbar.UsePrevValue ) {
+							hpbar.UsePrevValue = true;
+							hpbar.ShowDifference = true;
+						}
+
+						int damage = hpbar.MaximumValue - hpbar.PrevValue;
+						int healAmount = Math.Min( Calculator.CalculateAnchorageRepairHealAmount( damage, dockingSeconds, elapsed ), damage );
+
+						hpbar.RepairTimeShowMode = ShipStatusHPRepairTimeShowMode.MouseOver;
+						hpbar.RepairTime = KCDatabase.Instance.Fleet.AnchorageRepairingTimer + Calculator.CalculateAnchorageRepairTime( damage, dockingSeconds, Math.Min( healAmount + 1, damage ) );
+						hpbar.Value = hpbar.PrevValue + healAmount;
+
+						hpbar.ResumeUpdate();
+					}
+				}
+			}
 		}
 
 
@@ -1131,12 +1172,16 @@ namespace ElectronicObserver.Window {
 
 			AutoScroll = c.FormFleet.IsScrollable;
 
+			var fleet = KCDatabase.Instance.Fleet[FleetID];
 
-			if ( ControlFleet != null && KCDatabase.Instance.Fleet[FleetID] != null ) {
+			TableFleet.SuspendLayout();
+			if ( ControlFleet != null && fleet != null ) {
 				ControlFleet.ConfigurationChanged( this );
-				ControlFleet.Update( KCDatabase.Instance.Fleet[FleetID] );
+				ControlFleet.Update( fleet );
 			}
+			TableFleet.ResumeLayout();
 
+			TableMember.SuspendLayout();
 			if ( ControlMember != null ) {
 				bool showAircraft = c.FormFleet.ShowAircraft;
 				bool fixShipNameWidth = c.FormFleet.FixShipNameWidth;
@@ -1148,36 +1193,381 @@ namespace ElectronicObserver.Window {
 				var levelVisibility = c.FormFleet.EquipmentLevelVisibility;
 				bool showAircraftLevelByNumber = c.FormFleet.ShowAircraftLevelByNumber;
 				int fixedShipNameWidth = c.FormFleet.FixedShipNameWidth;
+				bool isLayoutFixed = c.UI.IsLayoutFixed;
 
 				for ( int i = 0; i < ControlMember.Length; i++ ) {
-					ControlMember[i].Equipments.ShowAircraft = showAircraft;
+					var member = ControlMember[i];
+
+					member.Equipments.ShowAircraft = showAircraft;
 					if ( fixShipNameWidth ) {
-						ControlMember[i].Name.AutoSize = false;
-						ControlMember[i].Name.Size = new Size( fixedShipNameWidth, 20 );
+						member.Name.AutoSize = false;
+						member.Name.Size = new Size( fixedShipNameWidth, 20 );
 					} else {
-						ControlMember[i].Name.AutoSize = true;
+						member.Name.AutoSize = true;
 					}
 
-					ControlMember[i].HP.Text = shortHPBar ? "" : "HP:";
-					ControlMember[i].HP.HPBar.ColorMorphing = colorMorphing;
-					ControlMember[i].HP.HPBar.SetBarColorScheme( colorScheme );
-					ControlMember[i].Level.TextNext = showNext ? "next:" : null;
-					ControlMember[i].Condition.ImageAlign = showConditionIcon ? ContentAlignment.MiddleLeft : ContentAlignment.MiddleCenter;
-					ControlMember[i].Equipments.LevelVisibility = levelVisibility;
-					ControlMember[i].Equipments.ShowAircraftLevelByNumber = showAircraftLevelByNumber;
-					ControlMember[i].ShipResource.BarFuel.ColorMorphing =
-					ControlMember[i].ShipResource.BarAmmo.ColorMorphing = colorMorphing;
-					ControlMember[i].ShipResource.BarFuel.SetBarColorScheme( colorScheme );
-					ControlMember[i].ShipResource.BarAmmo.SetBarColorScheme( colorScheme );
+					member.HP.SuspendUpdate();
+					member.HP.Text = shortHPBar ? "" : "HP:";
+					member.HP.HPBar.ColorMorphing = colorMorphing;
+					member.HP.HPBar.SetBarColorScheme( colorScheme );
+					member.HP.MaximumSize = isLayoutFixed ? new Size( int.MaxValue, (int)ControlHelper.GetDefaultRowStyle().Height - member.HP.Margin.Vertical ) : Size.Empty;
+					member.HP.ResumeUpdate();
+					member.Level.TextNext = showNext ? "next:" : null;
+					member.Condition.ImageAlign = showConditionIcon ? ContentAlignment.MiddleLeft : ContentAlignment.MiddleCenter;
+					member.Equipments.LevelVisibility = levelVisibility;
+					member.Equipments.ShowAircraftLevelByNumber = showAircraftLevelByNumber;
+					member.Equipments.MaximumSize = isLayoutFixed ? new Size( int.MaxValue, (int)ControlHelper.GetDefaultRowStyle().Height - member.Equipments.Margin.Vertical ) : Size.Empty;
+					member.ShipResource.BarFuel.ColorMorphing =
+					member.ShipResource.BarAmmo.ColorMorphing = colorMorphing;
+					member.ShipResource.BarFuel.SetBarColorScheme( colorScheme );
+					member.ShipResource.BarAmmo.SetBarColorScheme( colorScheme );
 
-					ControlMember[i].ConfigurationChanged( this );
+					member.ConfigurationChanged( this );
+					if ( fleet != null )
+						member.Update( fleet.Members[i] );
 				}
 			}
+
+			ControlHelper.SetTableRowStyles( TableMember, ControlHelper.GetDefaultRowStyle() );
+			TableMember.ResumeLayout();
+
+			TableMember.Location = new Point( TableMember.Location.X, TableFleet.Bottom /*+ Math.Max( TableFleet.Margin.Bottom, TableMember.Margin.Top )*/ );
+
 			TableMember.PerformLayout();		//fixme:サイズ変更に親パネルが追随しない
 
 		}
 
 
+
+
+		/// <summary>
+		/// 艦隊の状態を表します。
+		/// </summary>
+		public enum FleetStates {
+			NoShip,
+			Docking,
+			SortieDamaged,
+			Sortie,
+			Expedition,
+			Damaged,
+			NotReplenished,
+			Tired,
+			Sparkled,
+			AnchorageRepairing,
+			Ready,
+		}
+
+
+		/// <summary>
+		/// 艦隊の状態の情報をラベルに適用します。
+		/// </summary>
+		/// <param name="fleet">艦隊データ。</param>
+		/// <param name="label">適用するラベル。</param>
+		/// <param name="tooltip">適用するツールチップ。</param>
+		/// <param name="prevstate">前回の状態。</param>
+		/// <param name="timer">日時。</param>
+		/// <returns>艦隊の状態を表す定数。</returns>
+		public static FleetStates UpdateFleetState( FleetData fleet, ImageLabel label, ToolTip tooltip, FleetStates prevstate, ref DateTime timer ) {
+
+			KCDatabase db = KCDatabase.Instance;
+
+
+			//初期化
+			tooltip.SetToolTip( label, null );
+			label.BackColor = Color.Transparent;
+			label.ForeColor = Utility.Configuration.Config.UI.ForeColor;
+
+			bool emphasizesSubFleetInPort = Utility.Configuration.Config.FormFleet.EmphasizesSubFleetInPort &&
+				( db.Fleet.CombinedFlag > 0 ? fleet.FleetID >= 3 : fleet.FleetID >= 2 );
+
+
+			//所属艦なし
+			if ( fleet == null || fleet.Members.Count( id => id != -1 ) == 0 ) {
+				label.Text = "无所属舰";
+				label.ImageIndex = (int)ResourceManager.IconContent.FleetNoShip;
+
+				return FleetStates.NoShip;
+			}
+
+			{	//入渠中
+				long ntime = db.Docks.Values.Max(
+						dock => {
+							if ( dock.State == 1 && fleet.Members.Count( ( id => id == dock.ShipID ) ) > 0 )
+								return dock.CompletionTime.Ticks;
+							else return 0;
+						}
+						);
+
+				if ( ntime > 0 ) {	//入渠中
+
+					timer = new DateTime( ntime );
+					label.Text = "入渠中 " + DateTimeHelper.ToTimeRemainString( timer );
+					label.ImageIndex = (int)ResourceManager.IconContent.FleetDocking;
+
+					tooltip.SetToolTip( label, "完成时间 : " + DateTimeHelper.TimeToCSVString( timer ) );
+
+					return FleetStates.Docking;
+				}
+
+			}
+
+
+			if ( fleet.IsInSortie ) {
+
+				//大破出撃中
+				if ( fleet.MembersInstance.Count( s =>
+						( s != null && !fleet.EscapedShipList.Contains( s.MasterID ) && (double)s.HPCurrent / s.HPMax <= 0.25 )
+					 ) > 0 ) {
+
+					label.Text = "！！大破进击中！！";
+					label.ImageIndex = (int)ResourceManager.IconContent.FleetSortieDamaged;
+					label.BackColor = Utility.Configuration.Config.UI.FleetOverview_ShipDamagedBG;
+					label.ForeColor = Utility.Configuration.Config.UI.FleetOverview_ShipDamagedFG;
+
+					return FleetStates.SortieDamaged;
+
+				} else {	//出撃中
+
+					label.Text = "出击中";
+					label.ImageIndex = (int)ResourceManager.IconContent.FleetSortie;
+
+					return FleetStates.Sortie;
+				}
+
+			}
+
+
+			//遠征中
+			if ( fleet.ExpeditionState != 0 ) {
+
+				timer = fleet.ExpeditionTime;
+				label.Text = "远征中 " + DateTimeHelper.ToTimeRemainString( timer );
+				label.ImageIndex = (int)ResourceManager.IconContent.FleetExpedition;
+
+				tooltip.SetToolTip( label, string.Format( "{0} : {1}\r\n完成时间 : {2}",
+					db.Mission[fleet.ExpeditionDestination].ID,
+					db.Mission[fleet.ExpeditionDestination].Name,
+					DateTimeHelper.TimeToCSVString( timer ) ) );
+
+				return FleetStates.Expedition;
+			}
+
+			//大破艦あり
+			if ( fleet.MembersInstance.Count( s =>
+				( s != null && !fleet.EscapedShipList.Contains( s.MasterID ) && (double)s.HPCurrent / s.HPMax <= 0.25 )
+			 ) > 0 ) {
+
+				label.Text = "有舰娘大破！";
+				label.ImageIndex = (int)ResourceManager.IconContent.FleetDamaged;
+				label.BackColor = Utility.Configuration.Config.UI.FleetOverview_ShipDamagedBG;
+				label.ForeColor = Utility.Configuration.Config.UI.FleetOverview_ShipDamagedFG;
+
+				return FleetStates.Damaged;
+			}
+
+			//泊地修理中
+			{
+				if ( fleet.CanAnchorageRepair ) {
+
+					label.Text = "修理中 " + DateTimeHelper.ToTimeElapsedString( KCDatabase.Instance.Fleet.AnchorageRepairingTimer );
+					label.ImageIndex = (int)ResourceManager.IconContent.FleetAnchorageRepairing;
+
+					StringBuilder sb = new StringBuilder();
+					sb.AppendFormat( "开始时间 :\r\n{0}\r\n",
+						DateTimeHelper.TimeToCSVString( KCDatabase.Instance.Fleet.AnchorageRepairingTimer ) );
+
+					sb.Append("修理耗时 :\r\n");
+					for ( int i = 0; i < fleet.Members.Count; i++ ) {
+						var ship = fleet.MembersInstance[i];
+						if ( ship != null && ship.HPRate < 1.0 ) {
+							var unittime = Calculator.CalculateDockingUnitTime(ship, 1);
+							var totaltime = Calculator.CalculateDockingUnitTime(ship, (ship.HPMax - ship.HPCurrent));
+							sb.AppendFormat(
+								"#{0} : {1:00}:{2:00}:00 @ {3:00}'{4:00}\" x -{5} HP\r\n",
+								i + 1,
+								(int)totaltime.TotalHours,
+								totaltime.Seconds != 0 ? totaltime.Minutes + 1 : totaltime.Minutes,
+								unittime.Minutes,
+								unittime.Seconds,
+								ship.HPMax - ship.HPCurrent
+							);
+						}
+					}
+
+					if (Utility.Configuration.Config.UI.MaxAkashiPerHP != 0) {
+						sb.Append("每 HP 耗时 : (hh:mm)\r\n");
+						for ( int i = 0; i < fleet.Members.Count; i++ ) {
+							var ship = fleet.MembersInstance[i];
+							if ( ship != null && ship.HPRate < 1.0 ) {
+								sb.AppendFormat("#{0} :", i + 1);
+								int hpToFix = ship.HPMax - ship.HPCurrent;
+								for (int hp = 1; hp <= hpToFix; hp++) {
+									var perhp = Calculator.CalculateDockingUnitTime(ship, hp);
+									sb.AppendFormat(
+										" {0:00}:{1:00} ",
+										(int)perhp.Hours,
+										perhp.Seconds != 0 ? perhp.Minutes + 1 : perhp.Minutes
+									);
+									if (hp == hpToFix) {
+										sb.Append("\r\n");
+									} else if (hp == (Utility.Configuration.Config.UI.MaxAkashiPerHP)) {
+										sb.Append("...\r\n");
+										break;
+									} else {
+										sb.Append("|");
+									}
+								}
+							}
+						}
+					}
+
+					tooltip.SetToolTip( label, sb.ToString() );
+
+					return FleetStates.AnchorageRepairing;
+				}
+			}
+
+			//未補給
+			{
+				int fuel = fleet.MembersInstance.Sum( ship => ship == null ? 0 : (int)( ( ship.FuelMax - ship.Fuel ) * ( ship.IsMarried ? 0.85 : 1.00 ) ) );
+				int ammo = fleet.MembersInstance.Sum( ship => ship == null ? 0 : (int)( ( ship.AmmoMax - ship.Ammo ) * ( ship.IsMarried ? 0.85 : 1.00 ) ) );
+				int aircraft = fleet.MembersInstance.Sum(
+					ship => {
+						if ( ship == null ) return 0;
+						else {
+							int c = 0;
+							for ( int i = 0; i < ship.Slot.Count; i++ ) {
+								c += ship.MasterShip.Aircraft[i] - ship.Aircraft[i];
+							}
+							return c;
+						}
+					} );
+				int bauxite = aircraft * 5;
+
+				if ( fuel > 0 || ammo > 0 || bauxite > 0 ) {
+
+					label.Text = "未补给";
+					label.ImageIndex = (int)ResourceManager.IconContent.FleetNotReplenished;
+
+					tooltip.SetToolTip( label, string.Format( "油 : {0}\r\n弹 : {1}\r\n铝 : {2} ( 舰载机 {3} 架 )", fuel, ammo, bauxite, aircraft ) );
+
+					if (emphasizesSubFleetInPort) {
+						label.ForeColor = Utility.Configuration.Config.UI.FleetOverview_AlertNotInExpeditionFG;
+						label.BackColor = Utility.Configuration.Config.UI.FleetOverview_AlertNotInExpeditionBG;
+					}
+
+					return FleetStates.NotReplenished;
+				}
+			}
+
+			//疲労
+			{
+				int cond = fleet.MembersInstance.Min( s => s == null ? 100 : s.Condition );
+
+				if ( cond < Utility.Configuration.Config.Control.ConditionBorder && fleet.ConditionTime != null ) {
+
+					timer = (DateTime)fleet.ConditionTime;
+
+
+					label.Text = "疲劳 " + DateTimeHelper.ToTimeRemainString( timer );
+
+					if ( cond < 20 )
+						label.ImageIndex = (int)ResourceManager.IconContent.ConditionVeryTired;
+					else if ( cond < 30 )
+						label.ImageIndex = (int)ResourceManager.IconContent.ConditionTired;
+					else
+						label.ImageIndex = (int)ResourceManager.IconContent.ConditionLittleTired;
+
+
+					tooltip.SetToolTip( label, string.Format( "预计恢复时间 : {0}\r\n( 预测误差 : {1})", 
+						DateTimeHelper.TimeToCSVString( timer ), DateTimeHelper.ToTimeRemainString( TimeSpan.FromSeconds( db.Fleet.ConditionBorderAccuracy ) ) ) );
+
+					if (emphasizesSubFleetInPort) {
+						label.ForeColor = Utility.Configuration.Config.UI.FleetOverview_AlertNotInExpeditionFG;
+						label.BackColor = Utility.Configuration.Config.UI.FleetOverview_AlertNotInExpeditionBG;
+					}
+
+					return FleetStates.Tired;
+
+
+				} else if ( cond >= 50 ) {		//戦意高揚
+
+					label.Text = "战意高扬！";
+					label.ImageIndex = (int)ResourceManager.IconContent.ConditionSparkle;
+					tooltip.SetToolTip( label, string.Format( "最低 cond: {0}\r\n还可以远征 {1} 次", cond, Math.Ceiling( ( cond - 49 ) / 3.0 ) ) );
+
+					if (emphasizesSubFleetInPort) {
+						label.ForeColor = Utility.Configuration.Config.UI.FleetOverview_AlertNotInExpeditionFG;
+						label.BackColor = Utility.Configuration.Config.UI.FleetOverview_AlertNotInExpeditionBG;
+					}
+
+					return FleetStates.Sparkled;
+
+				}
+
+			}
+
+			//出撃可能！
+			{
+				label.Text = "可以出击！";
+				label.ImageIndex = (int)ResourceManager.IconContent.FleetReady;
+				if (emphasizesSubFleetInPort) {
+					label.ForeColor = Utility.Configuration.Config.UI.FleetOverview_AlertNotInExpeditionFG;
+					label.BackColor = Utility.Configuration.Config.UI.FleetOverview_AlertNotInExpeditionBG;
+				}
+
+				return FleetStates.Ready;
+			}
+
+		}
+
+
+		/// <summary>
+		/// 艦隊の状態の情報をもとにラベルを更新します。
+		/// </summary>
+		/// <param name="label">更新するラベル。</param>
+		/// <param name="state">艦隊の状態。</param>
+		/// <param name="timer">日時。</param>
+		public static void RefreshFleetState( ImageLabel label, FleetStates state, DateTime timer ) {
+
+			switch ( state ) {
+				case FleetStates.Damaged:
+					if (Utility.Configuration.Config.FormFleet.BlinkAtDamaged) {
+						label.BackColor = DateTime.Now.Second % 2 == 0 ? Utility.Configuration.Config.UI.FleetOverview_ShipDamagedBG : Color.Transparent;
+						label.ForeColor = DateTime.Now.Second % 2 == 0 ? Utility.Configuration.Config.UI.FleetOverview_ShipDamagedFG : Utility.Configuration.Config.UI.ForeColor;
+					}
+					break;
+				case FleetStates.SortieDamaged:
+					label.BackColor = DateTime.Now.Second % 2 == 0 ? Utility.Configuration.Config.UI.FleetOverview_ShipDamagedBG : Color.Transparent;
+					label.ForeColor = DateTime.Now.Second % 2 == 0 ? Utility.Configuration.Config.UI.FleetOverview_ShipDamagedFG : Utility.Configuration.Config.UI.ForeColor;
+					break;
+				case FleetStates.Docking:
+					label.Text = "入渠中 " + DateTimeHelper.ToTimeRemainString( timer );
+					if (Utility.Configuration.Config.FormFleet.BlinkAtCompletion && (timer - DateTime.Now).TotalMilliseconds <= Utility.Configuration.Config.NotifierRepair.AccelInterval) {
+						label.BackColor = DateTime.Now.Second % 2 == 0 ? Utility.Configuration.Config.UI.Dock_RepairFinishedBG : Color.Transparent;
+						label.ForeColor = DateTime.Now.Second % 2 == 0 ? Utility.Configuration.Config.UI.Dock_RepairFinishedFG : Utility.Configuration.Config.UI.ForeColor;
+					}
+					break;
+				case FleetStates.Expedition:
+					label.Text = "远征中 " + DateTimeHelper.ToTimeRemainString( timer );
+					if (Utility.Configuration.Config.FormFleet.BlinkAtCompletion && (timer - DateTime.Now).TotalMilliseconds <= Utility.Configuration.Config.NotifierExpedition.AccelInterval) {
+						label.BackColor = DateTime.Now.Second % 2 == 0 ? Utility.Configuration.Config.UI.FleetOverview_ExpeditionOverBG : Color.Transparent;
+						label.ForeColor = DateTime.Now.Second % 2 == 0 ? Utility.Configuration.Config.UI.FleetOverview_ExpeditionOverFG : Utility.Configuration.Config.UI.ForeColor;
+					}
+					break;
+				case FleetStates.Tired:
+					label.Text = "疲劳 " + DateTimeHelper.ToTimeRemainString( timer );
+					if (Utility.Configuration.Config.FormFleet.BlinkAtCompletion && (timer - DateTime.Now).TotalMilliseconds <= 0) {
+						label.BackColor = DateTime.Now.Second % 2 == 0 ? Utility.Configuration.Config.UI.FleetOverview_TiredRecoveredBG : Color.Transparent;
+						label.ForeColor = DateTime.Now.Second % 2 == 0 ? Utility.Configuration.Config.UI.FleetOverview_TiredRecoveredFG : Utility.Configuration.Config.UI.ForeColor;
+					}
+					break;
+				case FleetStates.AnchorageRepairing:
+					label.Text = "修理中 " + DateTimeHelper.ToTimeElapsedString( KCDatabase.Instance.Fleet.AnchorageRepairingTimer );
+					break;
+			}
+
+		}
 
 
 
