@@ -53,6 +53,8 @@ namespace ElectronicObserver.Window {
 			o["api_req_practice/battle"].ResponseReceived += Updated;
 
 			Utility.Configuration.Instance.ConfigurationChanged += ConfigurationChanged;
+
+			HideCaret(TextInformation.Handle);
 		}
 
 

@@ -199,6 +199,9 @@ namespace ElectronicObserver.Utility {
 				// 日志窗口精简模式
 				public bool CompactModeLogWindow { get; set; }
 
+				// 日志窗口反向滚动 ( 新日志在顶端 )
+				public bool InvertedLogWindow { get; set; }
+
 
 				// 司令部各资源储量过低警告值
 				// -1: 自然恢复上限 ( 桶无效 ) | 3000: 小于 3000
@@ -455,6 +458,7 @@ namespace ElectronicObserver.Utility {
 					UseOldAircraftLevelIcons = true;
 					TextWrapInLogWindow = false;
 					CompactModeLogWindow = false;
+					InvertedLogWindow = false;
 					HqResLowAlertFuel    = 0;
 					HqResLowAlertAmmo    = 0;
 					HqResLowAlertSteel   = 0;
