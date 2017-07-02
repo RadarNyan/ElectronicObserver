@@ -2118,7 +2118,6 @@
 			this.FormBrowser_ScreenShotFormat_PNG.TabStop = true;
 			this.FormBrowser_ScreenShotFormat_PNG.Text = "PNG";
 			this.FormBrowser_ScreenShotFormat_PNG.UseVisualStyleBackColor = true;
-			this.FormBrowser_ScreenShotFormat_PNG.CheckedChanged += new System.EventHandler(this.FormBrowser_ScreenShotFormat_PNG_CheckedChanged);
 			// 
 			// FormBrowser_ScreenShotPathSearch
 			// 
@@ -2150,7 +2149,6 @@
 			this.FormBrowser_ScreenShotFormat_JPEG.TabStop = true;
 			this.FormBrowser_ScreenShotFormat_JPEG.Text = "JPEG";
 			this.FormBrowser_ScreenShotFormat_JPEG.UseVisualStyleBackColor = true;
-			this.FormBrowser_ScreenShotFormat_JPEG.CheckedChanged += new System.EventHandler(this.FormBrowser_ScreenShotFormat_JPEG_CheckedChanged);
 			// 
 			// label17
 			// 

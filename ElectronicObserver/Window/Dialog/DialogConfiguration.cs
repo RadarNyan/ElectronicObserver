@@ -856,15 +856,6 @@ namespace ElectronicObserver.Window.Dialog {
 			FormFleet_FixedShipNameWidth.Enabled = FormFleet_FixShipNameWidth.Checked;
 		}
 
-		private void FormBrowser_ScreenShotFormat_PNG_CheckedChanged( object sender, EventArgs e ) {
-			FormBrowser_ScreenShotFormat_AvoidTwitterDeterioration.Enabled = true;
-		}
-
-		private void FormBrowser_ScreenShotFormat_JPEG_CheckedChanged( object sender, EventArgs e ) {
-			FormBrowser_ScreenShotFormat_AvoidTwitterDeterioration.Enabled = false;
-		}
-
-
 		private void UI_MainFont_Validating( object sender, CancelEventArgs e ) {
 
 			var newfont = SerializableFont.StringToFont( UI_MainFont.Text, true );
