@@ -1379,7 +1379,7 @@ namespace ElectronicObserver.Window {
 					sb.Append("修理耗时 :\r\n");
 					for ( int i = 0; i < fleet.Members.Count; i++ ) {
 						var ship = fleet.MembersInstance[i];
-						if ( ship != null && ship.HPRate < 1.0 ) {
+						if ( ship != null && ship.HPRate < 1.0 && ship.HPRate > 0.5 ) {
 							var unittime = Calculator.CalculateDockingUnitTime(ship, 1);
 							var totaltime = Calculator.CalculateDockingUnitTime(ship, (ship.HPMax - ship.HPCurrent));
 							sb.AppendFormat(
@@ -1398,7 +1398,7 @@ namespace ElectronicObserver.Window {
 						sb.Append("每 HP 耗时 : (hh:mm)\r\n");
 						for ( int i = 0; i < fleet.Members.Count; i++ ) {
 							var ship = fleet.MembersInstance[i];
-							if ( ship != null && ship.HPRate < 1.0 ) {
+							if ( ship != null && ship.HPRate < 1.0 && ship.HPRate > 0.5 ) {
 								sb.AppendFormat("#{0} :", i + 1);
 								int hpToFix = ship.HPMax - ship.HPCurrent;
 								for (int hp = 1; hp <= hpToFix; hp++) {
