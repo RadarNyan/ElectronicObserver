@@ -199,7 +199,9 @@ namespace ElectronicObserver.Window {
 		private void ReloadLog()
 		{
 			LogTextBox.Text = "";
-			foreach (var log in Utility.Logger.Log) {
+			int logCount = Utility.Logger.Log.Count();
+			for (int i = Math.Max(0, logCount - 100); i < logCount; ++i) {
+				var log = Utility.Logger.Log[i];
 				if (log.Priority >= Utility.Configuration.Config.Log.LogLevel)
 					AddLogLine(log);
 			}
