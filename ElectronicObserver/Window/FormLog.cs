@@ -22,11 +22,6 @@ namespace ElectronicObserver.Window {
 		
 		private void FormLog_Load( object sender, EventArgs e ) {
 
-			foreach ( var log in Utility.Logger.Log ) {
-				if ( log.Priority >= Utility.Configuration.Config.Log.LogLevel )
-					AddLogLine(log);
-			}
-
 			Utility.Logger.Instance.LogAdded += new Utility.LogAddedEventHandler( ( Utility.Logger.LogData data ) => {
 				if ( InvokeRequired ) {
 					// Invokeはメッセージキューにジョブを投げて待つので、別のBeginInvokeされたジョブが既にキューにあると、
@@ -42,7 +37,8 @@ namespace ElectronicObserver.Window {
 
 			Icon = ResourceManager.ImageToIcon( ResourceManager.Instance.Icons.Images[(int)ResourceManager.IconContent.FormLog] );
 
-			HideCaret(LogTextBox.Handle);
+			if (LogTextBox.Text == "")
+				ReloadLog();
 		}
 
 
