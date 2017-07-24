@@ -69,6 +69,7 @@
 			this.ShipView_Torpedo = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.ShipView_TorpedoRemain = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.ShipView_TorpedoTotal = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.ShipView_FirepowerAndTorpedoBase = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.ShipView_AA = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.ShipView_AARemain = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.ShipView_AATotal = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -182,6 +183,7 @@
             this.ShipView_Torpedo,
             this.ShipView_TorpedoRemain,
             this.ShipView_TorpedoTotal,
+            this.ShipView_FirepowerAndTorpedoBase,
             this.ShipView_AA,
             this.ShipView_AARemain,
             this.ShipView_AATotal,
@@ -495,6 +497,13 @@
 			this.ShipView_TorpedoTotal.Name = "ShipView_TorpedoTotal";
 			this.ShipView_TorpedoTotal.ReadOnly = true;
 			this.ShipView_TorpedoTotal.Width = 40;
+			// 
+			// ShipView_FirepowerAndTorpedoBase
+			// 
+			this.ShipView_FirepowerAndTorpedoBase.HeaderText = "基本火雷";
+			this.ShipView_FirepowerAndTorpedoBase.Name = "ShipView_FirepowerAndTorpedoBase";
+			this.ShipView_FirepowerAndTorpedoBase.ReadOnly = true;
+			this.ShipView_FirepowerAndTorpedoBase.Width = 40;
 			// 
 			// ShipView_AA
 			// 
@@ -976,6 +985,7 @@
 		private System.Windows.Forms.DataGridViewTextBoxColumn ShipView_Torpedo;
 		private System.Windows.Forms.DataGridViewTextBoxColumn ShipView_TorpedoRemain;
 		private System.Windows.Forms.DataGridViewTextBoxColumn ShipView_TorpedoTotal;
+		private System.Windows.Forms.DataGridViewTextBoxColumn ShipView_FirepowerAndTorpedoBase;
 		private System.Windows.Forms.DataGridViewTextBoxColumn ShipView_AA;
 		private System.Windows.Forms.DataGridViewTextBoxColumn ShipView_AARemain;
 		private System.Windows.Forms.DataGridViewTextBoxColumn ShipView_AATotal;
