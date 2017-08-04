@@ -192,23 +192,15 @@ namespace ElectronicObserver.Resource.Record {
 		/// 指定した日時以降の最も古い記録を返します。
 		/// </summary>
 		public ResourceElement GetRecord( DateTime target ) {
-
-			int i;
-			for ( i = Record.Count - 1; i >= 0; i-- ) {
-				if ( Record[i].Date < target ) {
-					i++;
-					break;
-				}
-			}
-			// Record内の全ての記録がtarget以降だった
-			if ( i < 0 )
-				i = 0;
-
-			if ( 0 <= i && i < Record.Count ) {
-				return Record[i];
-			} else {
+			if ( Record.Count == 0 || Record.Last().Date < target ) {
 				return null;
 			}
+			for ( int i = Record.Count - 2; i >= 0; i-- ) {
+				if ( Record[i].Date < target ) {
+					return Record[i + 1];
+				}
+			}
+			return Record[0];
 		}
 
 		/// <summary>
