@@ -493,6 +493,15 @@ namespace ElectronicObserver.Data {
 		}
 
 		/// <summary>
+		/// 火力基本値 + 雷装基本値
+		/// </summary>
+		public int FirepowerAndTorpedoBase {
+			get {
+				return MasterShip.FirepowerMin + FirepowerModernized + MasterShip.TorpedoMin + TorpedoModernized;
+			}
+		}
+
+		/// <summary>
 		/// 対空基本値
 		/// </summary>
 		public int AABase {

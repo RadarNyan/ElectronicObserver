@@ -69,6 +69,7 @@
 			this.ShipView_Torpedo = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.ShipView_TorpedoRemain = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.ShipView_TorpedoTotal = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.ShipView_FirepowerAndTorpedoBase = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.ShipView_AA = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.ShipView_AARemain = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.ShipView_AATotal = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -137,14 +138,6 @@
 			this.ShipView.AllowUserToOrderColumns = true;
 			this.ShipView.AllowUserToResizeRows = false;
 			this.ShipView.BackgroundColor = System.Drawing.SystemColors.Control;
-			dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-			dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-			dataGridViewCellStyle1.Font = new System.Drawing.Font("Meiryo UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-			dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-			dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-			dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-			dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-			this.ShipView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
 			this.ShipView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
 			this.ShipView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ShipView_ID,
@@ -182,6 +175,7 @@
             this.ShipView_Torpedo,
             this.ShipView_TorpedoRemain,
             this.ShipView_TorpedoTotal,
+            this.ShipView_FirepowerAndTorpedoBase,
             this.ShipView_AA,
             this.ShipView_AARemain,
             this.ShipView_AATotal,
@@ -495,6 +489,13 @@
 			this.ShipView_TorpedoTotal.Name = "ShipView_TorpedoTotal";
 			this.ShipView_TorpedoTotal.ReadOnly = true;
 			this.ShipView_TorpedoTotal.Width = 40;
+			// 
+			// ShipView_FirepowerAndTorpedoBase
+			// 
+			this.ShipView_FirepowerAndTorpedoBase.HeaderText = "基本火雷";
+			this.ShipView_FirepowerAndTorpedoBase.Name = "ShipView_FirepowerAndTorpedoBase";
+			this.ShipView_FirepowerAndTorpedoBase.ReadOnly = true;
+			this.ShipView_FirepowerAndTorpedoBase.Width = 40;
 			// 
 			// ShipView_AA
 			// 
@@ -976,6 +977,7 @@
 		private System.Windows.Forms.DataGridViewTextBoxColumn ShipView_Torpedo;
 		private System.Windows.Forms.DataGridViewTextBoxColumn ShipView_TorpedoRemain;
 		private System.Windows.Forms.DataGridViewTextBoxColumn ShipView_TorpedoTotal;
+		private System.Windows.Forms.DataGridViewTextBoxColumn ShipView_FirepowerAndTorpedoBase;
 		private System.Windows.Forms.DataGridViewTextBoxColumn ShipView_AA;
 		private System.Windows.Forms.DataGridViewTextBoxColumn ShipView_AARemain;
 		private System.Windows.Forms.DataGridViewTextBoxColumn ShipView_AATotal;

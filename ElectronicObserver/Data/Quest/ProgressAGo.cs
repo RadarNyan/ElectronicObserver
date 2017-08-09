@@ -215,17 +215,17 @@ namespace ElectronicObserver.Data.Quest {
 
 		public override string ToString() {
 			var list = new List<DSPair>();
-			list.Add( new DSPair( Math.Min( (double)sortieCount / sortieMax, 1.0 ), string.Format( "出撃 {0}/{1}", sortieCount, sortieMax ) ) );
-			list.Add( new DSPair( Math.Min( (double)sWinCount / sWinMax, 1.0 ), string.Format( "S勝利 {0}/{1}", sWinCount, sWinMax ) ) );
-			list.Add( new DSPair( Math.Min( (double)bossCount / bossMax, 1.0 ), string.Format( "ボス {0}/{1}", bossCount, bossMax ) ) );
-			list.Add( new DSPair( Math.Min( (double)bossWinCount / bossWinMax, 1.0 ), string.Format( "ボス勝利 {0}/{1}", bossWinCount, bossWinMax ) ) );
+			list.Add( new DSPair( Math.Min( (double)sortieCount / sortieMax, 1.0 ), string.Format( "出击 {0}/{1}", sortieCount, sortieMax ) ) );
+			list.Add( new DSPair( Math.Min( (double)sWinCount / sWinMax, 1.0 ), string.Format( "S 胜 {0}/{1}", sWinCount, sWinMax ) ) );
+			list.Add( new DSPair( Math.Min( (double)bossCount / bossMax, 1.0 ), string.Format( "BOSS {0}/{1}", bossCount, bossMax ) ) );
+			list.Add( new DSPair( Math.Min( (double)bossWinCount / bossWinMax, 1.0 ), string.Format( "BOSS 胜 {0}/{1}", bossWinCount, bossWinMax ) ) );
 
 			var slist = list.Where( elem => elem.Key < 1.0 ).OrderBy( elem => elem.Key ).Select( elem => elem.Value );
-			return string.Format( "{0:p1} ({1})", ProgressPercentage, slist.Count() > 0 ? string.Join( ", ", slist ) : "達成" );
+			return string.Format( "{0:p1} ( {1} )", ProgressPercentage, slist.Count() > 0 ? string.Join( ", ", slist ) : "完成" );
 		}
 
 		public override string GetClearCondition() {
-			return string.Format( "出撃 {0}, S勝利 {1}, ボス {2}, ボス勝利 {3}", sortieMax, sWinMax, bossMax, bossWinMax );
+			return string.Format( "出击 {0}, S 胜 {1}, BOSS {2}, BOSS 胜 {3}", sortieMax, sWinMax, bossMax, bossWinMax );
 		}
 	}
 

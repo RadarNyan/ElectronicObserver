@@ -218,10 +218,12 @@ namespace ElectronicObserver.Window {
 			int rowHeight;
 			if ( config.UI.IsLayoutFixed ) {
 				ShipView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+				ShipView.ColumnHeadersDefaultCellStyle.WrapMode = DataGridViewTriState.True;
 				rowHeight = 21;
 			} else {
 				ShipView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-
+				ShipView.ColumnHeadersDefaultCellStyle.WrapMode = DataGridViewTriState.False;
+				
 				if ( ShipView.Rows.Count > 0 )
 					rowHeight = ShipView.Rows[0].GetPreferredHeight( 0, DataGridViewAutoSizeRowMode.AllCellsExceptHeader, false );
 				else
@@ -350,6 +352,7 @@ namespace ElectronicObserver.Window {
 				ship.TorpedoBase,
 				ship.TorpedoRemain,
 				ship.TorpedoTotal,
+				ship.FirepowerAndTorpedoBase,
 				ship.AABase,
 				ship.AARemain,
 				ship.AATotal,
@@ -1302,6 +1305,7 @@ namespace ElectronicObserver.Window {
 			"雷装",
 			"雷装改修",
 			"雷装合計",
+			"基本火雷",
 			"対空",
 			"対空改修",
 			"対空合計",
@@ -1369,6 +1373,7 @@ namespace ElectronicObserver.Window {
 			"雷装",
 			"雷装改修",
 			"雷装合計",
+			"基本火雷",
 			"対空",
 			"対空改修",
 			"対空合計",
@@ -1467,6 +1472,7 @@ namespace ElectronicObserver.Window {
 										ship.TorpedoBase,
 										ship.TorpedoRemain,
 										ship.TorpedoTotal,
+										ship.FirepowerAndTorpedoBase,
 										ship.AABase,
 										ship.AARemain,
 										ship.AATotal,
@@ -1537,6 +1543,7 @@ namespace ElectronicObserver.Window {
 										ship.TorpedoBase,
 										ship.TorpedoRemain,
 										ship.TorpedoTotal,
+										ship.FirepowerAndTorpedoBase,
 										ship.AABase,
 										ship.AARemain,
 										ship.AATotal,

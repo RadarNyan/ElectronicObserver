@@ -27,9 +27,9 @@ namespace ElectronicObserver.Utility.Data {
 				originalHasher = System.Security.Cryptography.MD5.Create();
 
 
-			} catch ( InvalidOperationException ) {
+			} catch ( Exception ex ) {
 
-				Utility.Logger.Add( 1, "RecordHash: System.Security.Cryptography.MD5 ハッシュが利用できません。独自実装を利用します。" );
+				Utility.Logger.Add(3, "", "无法使用系统 MD5 函数，将使用 74EO 自带实现。" + ex.Message);
 
 				k = new uint[64];
 

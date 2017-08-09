@@ -29,6 +29,7 @@
 			this.LogTextBox = new System.Windows.Forms.RichTextBox();
 			this.ContextMenuLog_WrapText = new System.Windows.Forms.ToolStripMenuItem();
 			this.ContextMenuLog_CompactMode = new System.Windows.Forms.ToolStripMenuItem();
+			this.ContextMenuLog_Inverted = new System.Windows.Forms.ToolStripMenuItem();
 			this.ContextMenuLog.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -37,9 +38,10 @@
 			this.ContextMenuLog.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ContextMenuLog_Clear,
             this.ContextMenuLog_WrapText,
-            this.ContextMenuLog_CompactMode});
+            this.ContextMenuLog_CompactMode,
+            this.ContextMenuLog_Inverted});
 			this.ContextMenuLog.Name = "ContextMenuLog";
-			this.ContextMenuLog.Size = new System.Drawing.Size(153, 92);
+			this.ContextMenuLog.Size = new System.Drawing.Size(153, 114);
 			// 
 			// ContextMenuLog_Clear
 			// 
@@ -78,6 +80,14 @@
 			this.ContextMenuLog_CompactMode.Size = new System.Drawing.Size(152, 22);
 			this.ContextMenuLog_CompactMode.Text = "精简模式(&C)";
 			this.ContextMenuLog_CompactMode.CheckedChanged += new System.EventHandler(this.ContextMenuLog_CompactMode_CheckedChanged);
+ 			// 
+			// ContextMenuLog_Inverted
+			// 
+			this.ContextMenuLog_Inverted.CheckOnClick = true;
+			this.ContextMenuLog_Inverted.Name = "ContextMenuLog_Inverted";
+			this.ContextMenuLog_Inverted.Size = new System.Drawing.Size(152, 22);
+			this.ContextMenuLog_Inverted.Text = "反向滚动(&I)";
+			this.ContextMenuLog_Inverted.CheckedChanged += new System.EventHandler(this.ContextMenuLog_Inverted_CheckedChanged);
 			// 
 			// FormLog
 			// 
@@ -103,5 +113,6 @@
 		private System.Windows.Forms.RichTextBox LogTextBox;
 		private System.Windows.Forms.ToolStripMenuItem ContextMenuLog_WrapText;
 		private System.Windows.Forms.ToolStripMenuItem ContextMenuLog_CompactMode;
+		private System.Windows.Forms.ToolStripMenuItem ContextMenuLog_Inverted;
 	}
 }

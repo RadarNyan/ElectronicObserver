@@ -190,6 +190,9 @@ namespace ElectronicObserver.Utility {
 				// 明石 ToolTip 每 HP 耗时最大显示数量
 				public int MaxAkashiPerHP { get; set; }
 
+				// 修理时间偏移值 ( 暂定 +30s, 待验证 )
+				public int DockingUnitTimeOffset { get; set; }
+
 				// 使用旧版熟练度图标
 				public bool UseOldAircraftLevelIcons { get; set; }
 
@@ -198,6 +201,9 @@ namespace ElectronicObserver.Utility {
 
 				// 日志窗口精简模式
 				public bool CompactModeLogWindow { get; set; }
+
+				// 日志窗口反向滚动 ( 新日志在顶端 )
+				public bool InvertedLogWindow { get; set; }
 
 
 				// 司令部各资源储量过低警告值
@@ -452,9 +458,11 @@ namespace ElectronicObserver.Utility {
 					ThemeID = 0;
 					ShowGrowthInsteadOfNextInHQ = false;
 					MaxAkashiPerHP = 5;
+					DockingUnitTimeOffset = 30;
 					UseOldAircraftLevelIcons = true;
 					TextWrapInLogWindow = false;
 					CompactModeLogWindow = false;
+					InvertedLogWindow = false;
 					HqResLowAlertFuel    = 0;
 					HqResLowAlertAmmo    = 0;
 					HqResLowAlertSteel   = 0;
