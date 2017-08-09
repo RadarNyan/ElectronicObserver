@@ -1729,16 +1729,7 @@ namespace ElectronicObserver.Utility.Data {
 					break;
 			}
 
-			return TimeSpan.FromSeconds((int)(shipLevel * hp * shipScnt) * 5);
-		}
-
-		public static TimeSpan CalculateDockingTotalTime(ShipData ship) {
-			return RoundUpToOneMinute(new TimeSpan(DateTimeHelper.FromAPITimeSpan(ship.RepairTime).Add(TimeSpan.FromSeconds(-30)).Ticks));
-		}
-
-		private static TimeSpan RoundUpToOneMinute (TimeSpan time) {
-			var oneMinuteTicks = TimeSpan.FromSeconds(60).Ticks;
-			return new TimeSpan(((time.Ticks + oneMinuteTicks - 1) / oneMinuteTicks) * oneMinuteTicks);
+			return TimeSpan.FromSeconds((int)(shipLevel * hp * shipScnt) * 5 + Utility.Configuration.Config.UI.DockingUnitTimeOffset);
 		}
 
 	}
