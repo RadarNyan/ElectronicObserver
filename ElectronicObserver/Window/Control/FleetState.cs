@@ -242,7 +242,7 @@ namespace ElectronicObserver.Window.Control {
 					for ( int i = 0; i < fleet.Members.Count; i++ ) {
 						var ship = fleet.MembersInstance[i];
 						if ( ship != null && ship.HPRate < 1.0 && ship.HPRate > 0.5 ) {
-							var unittime = Calculator.CalculateDockingUnitTime(ship, 1);
+							var unittime = Calculator.CalculateDockingUnitTime(ship, 1, false);
 							var totaltime = Calculator.CalculateDockingUnitTime(ship, (ship.HPMax - ship.HPCurrent));
 							sb.AppendFormat( "#{0} : {1:00}:{2:00}:00 @ {3:00}'{4:00}\" x -{5} HP\r\n", i + 1,
 								(int)totaltime.TotalHours, totaltime.Seconds != 0 ? totaltime.Minutes + 1 : totaltime.Minutes,

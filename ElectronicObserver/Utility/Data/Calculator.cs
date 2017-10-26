@@ -1696,7 +1696,7 @@ namespace ElectronicObserver.Utility.Data {
 		}
 
 		// 泊地修理单位 HP 所需时间
-		public static TimeSpan CalculateDockingUnitTime(ShipData ship, int hp) {
+		public static TimeSpan CalculateDockingUnitTime(ShipData ship, int hp, bool useOffset = true) {
 			// return RoundUpToOneMinute(new TimeSpan(DateTimeHelper.FromAPITimeSpan(ship.RepairTime).Add(TimeSpan.FromSeconds(-30)).Ticks / (ship.HPMax - ship.HPCurrent) * hp));
 
 			double shipLevel = ship.Level; // 等级倍率
@@ -1727,6 +1727,10 @@ namespace ElectronicObserver.Utility.Data {
 				default:
 					shipScnt = 2.0;
 					break;
+			}
+
+			if (!useOffset) {
+				return TimeSpan.FromSeconds((int)(shipLevel * hp * shipScnt) * 5);
 			}
 
 			return TimeSpan.FromSeconds((int)(shipLevel * hp * shipScnt) * 5 + Utility.Configuration.Config.UI.DockingUnitTimeOffset);
