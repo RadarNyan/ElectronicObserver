@@ -287,6 +287,8 @@ namespace ElectronicObserver.Window.Dialog {
 
 				HPMin.Text = ship.HPMin.ToString();
 				HPMax.Text = ship.HPMaxMarried.ToString();
+				ToolTipInfo.SetToolTip( HPMin, string.Format( "改修後: {0} (+{1})", ship.HPMaxModernized, ship.HPMaxModernizable ) );
+				ToolTipInfo.SetToolTip( HPMax, string.Format( "改修後: {0} (+{1})\r\n(内部最大耐久: {2})", ship.HPMaxMarriedModernized, ship.HPMaxMarriedModernizable, ship.HPMax ) );
 
 				FirepowerMin.Text = ship.FirepowerMin.ToString();
 				FirepowerMax.Text = ship.FirepowerMax.ToString();
@@ -346,6 +348,8 @@ namespace ElectronicObserver.Window.Dialog {
 
 				HPMin.Text = ship.HPMin > 0 ? ship.HPMin.ToString() : "???";
 				HPMax.Text = hp > 0 ? hp.ToString() : "???";
+				ToolTipInfo.SetToolTip( HPMin, null );
+				ToolTipInfo.SetToolTip( HPMax, null );
 
 				FirepowerMin.Text = ship.FirepowerMax.ToString();
 				FirepowerMax.Text = firepower.ToString();
@@ -1355,7 +1359,7 @@ namespace ElectronicObserver.Window.Dialog {
 				var arg = pathlist.Where( p => p != null ).ToArray();
 				if ( arg.Length > 0 ) {
 					new DialogShipGraphicViewer( arg ).Show( Owner );
-			
+
 				} else {
 
 					MessageBox.Show( "画像リソースが存在しません。以下の手順を踏んでください。\r\n1. 設定→通信→通信内容を保存する 及び SWF を有効にする。\r\n2. キャッシュをクリアし、再読み込みする。\r\n3. 艦これ本体で当該艦を表示させる（図鑑画面を開くなど）。", "ビューア：画像リソース不足", MessageBoxButtons.OK, MessageBoxIcon.Exclamation );
@@ -1363,6 +1367,24 @@ namespace ElectronicObserver.Window.Dialog {
 				}
 			} else {
 				MessageBox.Show( "対象艦船を指定してください。", "ビューア：対象未指定", MessageBoxButtons.OK, MessageBoxIcon.Exclamation );
+			}
+		}
+
+
+		private void StripMenu_Edit_GoogleShipName_Click( object sender, EventArgs e ) {
+			var ship = KCDatabase.Instance.MasterShips[_shipID];
+			if ( ship == null ) {
+				System.Media.SystemSounds.Exclamation.Play();
+				return;
+			}
+
+			try {
+
+				// google <艦船名> 艦これ
+				System.Diagnostics.Process.Start( @"https://www.google.co.jp/search?q=" + Uri.EscapeDataString( ship.NameWithClass ) + "+%E8%89%A6%E3%81%93%E3%82%8C" );
+
+			} catch ( Exception ex ) {
+				Utility.ErrorReporter.SendErrorReport( ex, "艦船名の Google 検索に失敗しました。" );
 			}
 		}
 

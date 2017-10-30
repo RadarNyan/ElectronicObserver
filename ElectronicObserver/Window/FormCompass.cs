@@ -785,30 +785,36 @@ namespace ElectronicObserver.Window {
 
 								case 0:		//気のせいだった
 								default:
-									TextEventDetail.Text = "";
 									break;
-								case 1:		//敵影を見ず
+								case 1:
 									eventkind = "不见敌影";
-									TextEventDetail.Text = "";
 									break;
-								case 2:		//能動分岐
+								case 2:
 									eventkind = "能动分歧";
-									TextEventDetail.Text = string.Join( "/", compass.RouteChoices );
-									TextEventDetail.Font = Utility.Configuration.Config.UI.MainFont; // Necssary?
 									break;
-								case 3:		//穏やかな海
-									eventkind = "穏やかな海";
-									TextEventDetail.Text = "";
+								case 3:
+									eventkind = "平稳的海面";
 									break;
 								case 4:
-									eventkind = "穏やかな海峡";
-									TextEventDetail.Text = "";
+									eventkind = "平稳的海峡";
 									break;
 								case 5:
-									eventkind = "警戒が必要";
-									TextEventDetail.Text = "";
+									eventkind = "需要提高警惕";
+									break;
+								case 6:
+									eventkind = "安静的海洋";
+									break;
+								case 7:
+									eventkind = "向多佛尔海峡推进中";
 									break;
 							}
+							if ( compass.RouteChoices != null ) {
+								TextEventDetail.Text = string.Join( "/", compass.RouteChoices );
+								TextEventDetail.Font = Utility.Configuration.Config.UI.MainFont;
+							} else {
+								TextEventDetail.Text = "";
+							}
+
 							break;
 
 						case 7:		//航空戦or航空偵察

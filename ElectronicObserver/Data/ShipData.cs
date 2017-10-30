@@ -338,39 +338,54 @@ namespace ElectronicObserver.Data {
 		 * 基本値：装備なしでのパラメータ(初期値+強化値)
 		 ********************************************************/
 
+		private int[] _modernized;
 		/// <summary>
 		/// 火力強化値
 		/// </summary>
 		public int FirepowerModernized {
-			get { return (int)RawData.api_kyouka[0]; }
+			get { return _modernized.Length >= 5 ? _modernized[0] : 0; }
 		}
 
 		/// <summary>
 		/// 雷装強化値
 		/// </summary>
 		public int TorpedoModernized {
-			get { return (int)RawData.api_kyouka[1]; }
+			get { return _modernized.Length >= 5 ? _modernized[1] : 0; }
 		}
 
 		/// <summary>
 		/// 対空強化値
 		/// </summary>
 		public int AAModernized {
-			get { return (int)RawData.api_kyouka[2]; }
+			get { return _modernized.Length >= 5 ? _modernized[2] : 0; }
 		}
 
 		/// <summary>
 		/// 装甲強化値
 		/// </summary>
 		public int ArmorModernized {
-			get { return (int)RawData.api_kyouka[3]; }
+			get { return _modernized.Length >= 5 ? _modernized[3] : 0; }
 		}
 
 		/// <summary>
 		/// 運強化値
 		/// </summary>
 		public int LuckModernized {
-			get { return (int)RawData.api_kyouka[4]; }
+			get { return _modernized.Length >= 5 ? _modernized[4] : 0; }
+		}
+
+		/// <summary>
+		/// 耐久強化値
+		/// </summary>
+		public int HPMaxModernized {
+			get { return _modernized.Length >= 7 ? _modernized[5] : 0; }
+		}
+
+		/// <summary>
+		/// 対潜強化値
+		/// </summary>
+		public int ASWModernized {
+			get { return _modernized.Length >= 7 ? _modernized[6] : 0; }
 		}
 
 
@@ -407,6 +422,20 @@ namespace ElectronicObserver.Data {
 		/// </summary>
 		public int LuckRemain {
 			get { return ( MasterShip.LuckMax - MasterShip.LuckMin ) - LuckModernized; }
+		}
+
+		/// <summary>
+		/// 耐久改修残り
+		/// </summary>
+		public int HPMaxRemain {
+			get { return ( IsMarried ? MasterShip.HPMaxMarriedModernizable : MasterShip.HPMaxModernizable ) - HPMaxModernized; }
+		}
+
+		/// <summary>
+		/// 対潜改修残り
+		/// </summary>
+		public int ASWRemain {
+			get { return ASWMax <= 0 ? 0 : MasterShip.ASWModernizable - ASWModernized; }
 		}
 
 
@@ -622,7 +651,7 @@ namespace ElectronicObserver.Data {
 				return RawData.api_sally_area() ? (int)RawData.api_sally_area : -1;
 			}
 		}
-		
+
 
 		/// <summary>
 		/// 艦船のマスターデータへの参照
@@ -1145,7 +1174,7 @@ namespace ElectronicObserver.Data {
 				case 449:		// Pola
 				case 361:		// 改
 					return Math.Sqrt( AllSlotMaster.Count( id => id == 162 ) );		// √( 203mm/53 連装砲 装備数 )
-			
+
 				default:
 					return 0;
 			}
@@ -1283,10 +1312,41 @@ namespace ElectronicObserver.Data {
 
 			basepower *= GetHPDamageBonus() * GetEngagementFormDamageRate( engagementForm );
 
+
 			//対潜シナジー
-			if ( AllSlotInstanceMaster.Where( s => s != null && ( s.CategoryType == 14 || s.CategoryType == 40 ) ).Any() &&		//ソナー or 大型ソナー
-				 AllSlotInstanceMaster.Where( s => s != null && s.CategoryType == 15 ).Any() )			//爆雷
-				basepower *= 1.15;
+
+			int depthChargeCount = 0;
+			int depthChargeThrowerCount = 0;
+			int sonarCount = 0;			// ソナーと大型ソナーの合算
+			int largeSonarCount = 0;
+
+			foreach ( var slot in AllSlotInstanceMaster ) {
+				if ( slot == null )
+					continue;
+
+				switch ( slot.CategoryType ) {
+					case 14:	// ソナー
+						sonarCount++;
+						break;
+					case 15:	// 爆雷/投射機
+						if ( Calculator.DepthChargeList.Contains( slot.EquipmentID ) )
+							depthChargeCount++;
+						else
+							depthChargeThrowerCount++;
+						break;
+					case 40:	// 大型ソナー
+						largeSonarCount++;
+						sonarCount++;
+						break;
+				}
+			}
+
+			double thrower_sonar = depthChargeThrowerCount > 0 && sonarCount > 0 ? 1.15 : 1;
+			double charge_thrower = depthChargeCount > 0 && depthChargeThrowerCount > 0 ? 1.1 : 1;
+			double charge_sonar = ( !( thrower_sonar > 1 && charge_thrower > 1 && largeSonarCount > 0 ) && depthChargeCount > 0 && sonarCount > 0 ) ? 0.15 : 0;
+
+			basepower *= thrower_sonar * ( charge_thrower + charge_sonar );
+
 
 			//キャップ
 			basepower = Math.Floor( CapDamage( basepower, 100 ) );
@@ -1399,6 +1459,7 @@ namespace ElectronicObserver.Data {
 					_slot = (int[])RawData.api_slot;
 					ExpansionSlot = (int)RawData.api_slot_ex;
 					_aircraft = (int[])RawData.api_onslot;
+					_modernized = (int[])RawData.api_kyouka;
 					break;
 
 				case "api_req_hokyu/charge":

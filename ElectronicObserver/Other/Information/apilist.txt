@@ -330,6 +330,8 @@ api_start2	：艦娘・装備固有データその他
 				42=潜水艦装備
 				43=水上戦闘機
 				44=陸軍戦闘機
+				45=夜間戦闘機
+				46=夜間攻撃機
 
 			[4]: 航空機カテゴリ
 				 0=非航空機
@@ -354,6 +356,8 @@ api_start2	：艦娘・装備固有データその他
 				25=伊水上機
 				26=強風改
 				27=一式戦
+				28=英攻撃機
+				29=英戦闘機
 
 		api_taik		：耐久(0)
 		api_souk		：装甲
@@ -364,9 +368,9 @@ api_start2	：艦娘・装備固有データその他
 		api_tyku		：対空
 		api_tais		：対潜
 		api_atap		：(0)
-		api_houm		：命中
+		api_houm		：命中 または 対爆(局地戦闘機の場合)
 		api_raim		：雷撃命中(0)
-		api_houk		：回避
+		api_houk		：回避 または 迎撃(局地戦闘機の場合)
 		api_raik		：雷撃回避(0)
 		api_bakk		：爆撃回避(0)
 		api_saku		：索敵
@@ -504,7 +508,7 @@ api_get_member/require_info	：起動時情報群
 	api_slot_item		：保有装備リスト slot_item と同じ
 	api_unsetslot		：カテゴリ別未装備品リスト unsetslot と同じ
 	api_kdock			：工廠ドック状態 kdock と同じ
-	api_useitem			：消費アイテムリスト useitem と同じ
+	api_useitem			：消費アイテムリスト useitem と同じ　アイテムを1つも保有していない場合は存在しない
 	api_furniture		：家具リスト furniture と同じ
 
 api_get_member/basic		：艦隊司令部情報
@@ -562,7 +566,7 @@ api_port/port		：母港情報
 		api_slot			：装備　-1=空き
 		api_onslot			：艦載機搭載数
 		api_slot_ex			：補強スロット 0=未解放, -1=未装備
-		api_kyouka			：近代化改修状態　[0]=火力, [1]=雷装, [2]=対空, [3]=装甲, [4]=運
+		api_kyouka			：近代化改修状態　[0]=火力, [1]=雷装, [2]=対空, [3]=装甲, [4]=運, [5]=耐久, [6]=対潜
 		api_backs			：レアリティ？
 		api_fuel			：搭載燃料
 		api_bull			：搭載弾薬
@@ -636,7 +640,7 @@ api_get_member/unsetslot	：カテゴリ別の装備されていない装備リ�
 		<装備固有IDリスト>
 
 
-api_get_member/useitem		：アイテム情報
+api_get_member/useitem		：アイテム情報　アイテムを1つも保有していない場合は api_data=null
 	api_id				：アイテムID
 	api_count			：所有個数
 
@@ -991,6 +995,9 @@ api_get_member/picture_book	：艦船図鑑　図鑑登録済みのもののみ�
 			75=春日丸級
 			76=大鷹型
 			77=択捉型
+			78=Ark Royal級
+			79=Richelieu級
+			80=Guglielmo Marconi級
 		api_cnum			：艦番
 		api_taik			：耐久
 		api_souk			：装甲
@@ -1371,6 +1378,7 @@ api_req_map/start		：出撃　同じメンバはnextのほうが情報が新し
 		api_now_maphp	：ゲージ現在値
 		api_dmg			：＊ダメージ倍率? =6だとHP90の旗艦撃沈で540減少?
 	api_airsearch		：
+	api_eventmap		：
 	api_from_no			：スタート地点のセルID
 	api_distance_data	：各セルの距離データ　基地航空隊出撃時のみ存在？
 		api_mapcell_id	：マスターセルID（マップ別ではなく全海域間固有ID）
@@ -1401,7 +1409,15 @@ api_req_map/next		：進撃
 							10=長距離空襲戦
 	api_event_kind		：イベント種別　
 							0=非戦闘セル, 1=通常戦闘, 2=夜戦, 3=夜昼戦, 4=航空戦, 5=敵連合艦隊戦, 6=長距離空襲戦
-							api_event_id=6(気のせいだった)時は　0="気のせいだった。", 1="敵影を見ず。", 2=能動分岐, 3="穏やかな海です。", 4="穏やかな海峡です。", 5="警戒が必要です。"
+							api_event_id=6(気のせいだった)時は　
+								0="気のせいだった。"
+								1="敵影を見ず。"
+								2=能動分岐
+								3="穏やかな海です。"
+								4="穏やかな海峡です。"
+								5="警戒が必要です。"
+								6="静かな海です。"
+								7="我が「連合艦隊」はドーバー海峡を進撃中です。"
 							api_event_id=7(航空戦)時は　0=航空偵察, 4=航空戦
 	api_next			：次のマスでのルート分岐の本数 0=行き止まり
 	api_bosscell_no		：ボスセルID
@@ -1486,6 +1502,7 @@ api_req_map/next		：進撃
 			3=「空襲により基地航空隊に地上撃破の損害が発生しました！」
 			4=「空襲による基地の損害はありません。」
 		api_m1		：('16秋イベ) 1=スタート地点解放ギミック発動　それ以外の場合は存在しない
+	api_m1		：('17夏イベ) 1=ルート解放など　通常は存在しない
 
 Request.api_req_sortie/battle	：戦闘(昼戦)
 	api_formation		：陣形
@@ -1671,7 +1688,7 @@ api_req_sortie/battle	：戦闘(昼戦)
 	api_hourai_flag	：砲雷撃戦フラグ　[n]=0のときapi_hougeki<n>及びapi_raigeki=nullになる
 	api_hougeki1	：砲撃戦1巡目　api_hourai_flag[0]=0だとnull
 		api_at_list		：行動順
-		api_at_type		：特殊砲撃　0=通常, 1=レーザー攻撃, 2=連撃, 3=カットイン(主砲/副砲), 4=カットイン(主砲/電探), 5=カットイン(主砲/徹甲), 6=カットイン(主砲/主砲)
+		api_at_type		：特殊砲撃　0=通常攻撃, 1=レーザー攻撃, 2=連撃, 3=カットイン(主砲/副砲), 4=カットイン(主砲/電探), 5=カットイン(主砲/徹甲), 6=カットイン(主砲/主砲), 7=空母カットイン
 		api_df_list		：防御側ID　-1から始まる　連撃は2個
 		api_si_list		：表示装備ID　カットインだと[0]=偵察機, [1]=主砲, [2]=砲|電探|徹甲弾|その他, 連撃だと[0]=砲1, [1]=砲2, 通常砲撃は[0]=装備1, etc. 非表示は-1
 							注：爆雷や艦載機など、本来表示されない装備が含まれていることがある　対潜攻撃時？
@@ -1695,12 +1712,13 @@ api_req_battle_midnight/battle		：戦闘(夜戦)
 	api_touch_plane		：夜間触接装備ID [0]=味方, [1]=敵　文字列型になることがある
 	api_flare_pos		：照明弾発射艦 [0]=味方, [1]=敵　敵でも1-6
 	api_hougeki			：夜間砲雷撃戦
-		api_at_list		：行動順
-		api_df_list		：防御側ID　-1から始まる　連撃とカットイン((主砲|魚雷)/魚雷)は2個, カットイン(主砲/(副砲|主砲))は3個(但し[1], [2]=-1)
-		api_si_list		：表示装備ID 昼戦のそれに準ずる 非表示は-1
-		api_cl_list		：クリティカルフラグ 0=ミス, 1=命中, 2=クリティカル
-		api_sp_list		：夜戦攻撃種別 0=通常攻撃, 1=連撃, 2=カットイン(主砲/魚雷), 3=カットイン(魚雷/魚雷), 4=カットイン(主砲/副砲), 5=カットイン(主砲/主砲)
-		api_damage		：ダメージ(実ダメージ) 砲撃カットインの場合[1], [2]=-1となるため注意
+		api_at_list			：行動順
+		api_n_mother_list	：空母夜間空撃フラグ 0=それ以外, 1=夜間空撃可能
+		api_df_list			：防御側ID　-1から始まる　連撃とカットイン((主砲|魚雷)/魚雷)は2個, カットイン(主砲/(副砲|主砲))は3個(但し[1], [2]=-1)
+		api_si_list			：表示装備ID 昼戦のそれに準ずる 非表示は-1
+		api_cl_list			：クリティカルフラグ 0=ミス, 1=命中, 2=クリティカル
+		api_sp_list			：夜戦攻撃種別 0=通常攻撃, 1=連撃, 2=カットイン(主砲/魚雷), 3=カットイン(魚雷/魚雷), 4=カットイン(主砲/副砲), 5=カットイン(主砲/主砲), 6=空母カットイン
+		api_damage			：ダメージ(実ダメージ) 砲撃カットインの場合[1], [2]=-1となるため注意
 
 
 api_req_battle_midnight/sp_midnight		：開幕夜戦
@@ -2320,6 +2338,35 @@ api_req_combined_battle/each_battle_water	：連合艦隊(水上部隊) vs 敵�
 	api_midnight_flag
 	api_search
 	api_formation				：味方陣形のみ文字列型、ほかは数値型
+	api_air_base_attack
+		api_base_id
+		api_stage_flag
+		api_plane_from		：[1]
+		api_squadron_plane
+			api_mst_id
+			api_count
+		api_stage1
+			api_f_count
+			api_f_lostcount
+			api_e_count
+			api_e_lostcount
+			api_disp_seiku
+			api_touch_plane	：[2]
+		api_stage2
+			api_f_count
+			api_f_lostcount
+			api_e_count
+			api_e_lostcount
+		api_stage3
+			api_erai_flag
+			api_ebak_flag
+			api_ecl_flag
+			api_edam
+		api_stage3_combined
+			api_erai_flag
+			api_ebak_flag
+			api_ecl_flag
+			api_edam
 	api_stage_flag
 	api_kouku
 		api_plane_from

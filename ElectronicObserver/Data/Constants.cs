@@ -206,6 +206,61 @@ namespace ElectronicObserver.Data {
 			}
 		}
 
+
+		/// <summary>
+		/// 艦種略号を取得します。
+		/// </summary>
+		public static string GetShipClassClassification( int shiptype ) {
+			switch ( shiptype ) {
+				case 1:
+					return "DE";
+				case 2:
+					return "DD";
+				case 3:
+					return "CL";
+				case 4:
+					return "CLT";
+				case 5:
+					return "CA";
+				case 6:
+					return "CAV";
+				case 7:
+					return "CVL";
+				case 8:
+					return "BC";	// ? FBB, CC?
+				case 9:
+					return "BB";
+				case 10:
+					return "BBV";
+				case 11:
+					return "CV";
+				case 12:
+					return "BB";
+				case 13:
+					return "SS";
+				case 14:
+					return "SSV";
+				case 15:
+					return "AP";	// ? AO?
+				case 16:
+					return "AV";
+				case 17:
+					return "LHA";
+				case 18:
+					return "CVB";
+				case 19:
+					return "AR";
+				case 20:
+					return "AS";
+				case 21:
+					return "CT";
+				case 22:
+					return "AO";
+				default:
+					return "IX";
+			}
+		}
+
 		#endregion
 
 
@@ -525,29 +580,33 @@ namespace ElectronicObserver.Data {
 		/// </summary>
 		public static string GetDayAttackKind( DayAttackKind id ) {
 			switch ( id ) {
-				case  DayAttackKind.Shelling:
-					return "炮击";
-				case  DayAttackKind.Laser:
+				case DayAttackKind.NormalAttack:
+					return "一般攻击";
+				case DayAttackKind.Laser:
 					return "レーザー攻撃";
-				case  DayAttackKind.DoubleShelling:
+				case DayAttackKind.DoubleShelling:
 					return "连续射击";
-				case  DayAttackKind.CutinMainSub:
+				case DayAttackKind.CutinMainSub:
 					return "CI ( 主炮 / 副炮 )";
-				case  DayAttackKind.CutinMainLadar:
+				case DayAttackKind.CutinMainLadar:
 					return "CI ( 主炮 / 电探 )";
-				case  DayAttackKind.CutinMainAP:
-					return "CI ( 主炮 / 穿甲弹 )";
-				case  DayAttackKind.CutinMainMain:
+				case DayAttackKind.CutinMainAP:
+					return "CI ( 主炮 / 穿甲 )";
+				case DayAttackKind.CutinMainMain:
 					return "CI ( 主炮 / 主炮 )";
-				case  DayAttackKind.AirAttack:
+				case DayAttackKind.CutinAirAttack:
+					return "空母 CI";
+				case DayAttackKind.Shelling:
+					return "炮击";
+				case DayAttackKind.AirAttack:
 					return "空袭";
-				case  DayAttackKind.DepthCharge:
+				case DayAttackKind.DepthCharge:
 					return "爆雷攻击";
-				case  DayAttackKind.Torpedo:
+				case DayAttackKind.Torpedo:
 					return "雷击";
-				case  DayAttackKind.Rocket:
+				case DayAttackKind.Rocket:
 					return "火箭炮炮击";
-				case  DayAttackKind.LandingDaihatsu:
+				case DayAttackKind.LandingDaihatsu:
 					return "登陆攻击 ( 大发动艇 )";
 				case DayAttackKind.LandingTokuDaihatsu:
 					return "登陆攻击 ( 特大发动艇 )";
@@ -555,7 +614,7 @@ namespace ElectronicObserver.Data {
 					return "登陆攻击 ( 大发战车 )";
 				case DayAttackKind.LandingAmphibious:
 					return "登陆攻击 ( 内火艇 )";
-				case  DayAttackKind.LandingTokuDaihatsuTank:
+				case DayAttackKind.LandingTokuDaihatsuTank:
 					return "登陆攻击 ( 特大发战车 )";
 				default:
 					return "不明";
@@ -568,20 +627,22 @@ namespace ElectronicObserver.Data {
 		/// </summary>
 		public static string GetNightAttackKind( NightAttackKind id ) {
 			switch ( id ) {
-				case  NightAttackKind.Shelling:
-					return "炮击";
-				case  NightAttackKind.DoubleShelling:
+				case NightAttackKind.NormalAttack:
+					return "一般攻击";
+				case NightAttackKind.DoubleShelling:
 					return "连续射击";
-				case  NightAttackKind.CutinMainTorpedo:
-					return "CI ( 主炮 / 鱼雷 )";
-				case  NightAttackKind.CutinTorpedoTorpedo:
-					return "CI ( 鱼雷 x 2 )";
-				case  NightAttackKind.CutinMainSub:
+				case NightAttackKind.CutinMainTorpedo:
+					return "CI ( 主炮 / 魚雷)";
+				case NightAttackKind.CutinTorpedoTorpedo:
+					return "CI ( 主炮 x 2 )";
+				case NightAttackKind.CutinMainSub:
 					return "CI ( 主炮 x 2 / 副炮 )";
 				case NightAttackKind.CutinMainMain:
 					return "CI ( 主炮 x 3 )";
-				case NightAttackKind.Reserved:
-					return "不明";
+				case NightAttackKind.CutinAirAttack:
+					return "空母 CI";
+				case NightAttackKind.Shelling:
+					return "炮击";
 				case NightAttackKind.AirAttack:
 					return "空袭";
 				case NightAttackKind.DepthCharge:
@@ -648,13 +709,15 @@ namespace ElectronicObserver.Data {
 				case 18:
 					return "集中机枪 ( 皐月 )";
 				case 19:
-					return "高角炮 / 集中机枪 ( 鬼怒 )";
+					return "高角炮 ( 无高射装置 ) / 集中机枪 ( 鬼怒 )";
 				case 20:
 					return "集中机枪 ( 鬼怒 )";
 				case 21:
 					return "高角炮 / 电探 ( 由良 )";
 				case 22:
 					return "集中机枪 ( 文月 )";
+				case 23:
+					return "机枪 ( 非集中 ) ( UIT-25 )";
 				default:
 					return "不明";
 			}
