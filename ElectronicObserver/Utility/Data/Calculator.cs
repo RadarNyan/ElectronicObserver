@@ -1798,6 +1798,7 @@ namespace ElectronicObserver.Utility.Data {
 				case 19: // 工作艦
 					shipScnt = 4.0;
 					break;
+				case 1:  // 海防艦
 				case 13: // 潜水艦
 					shipScnt = 1.0;
 					break;
