@@ -797,6 +797,7 @@ namespace ElectronicObserver.Window.Dialog {
 			}
 
 			ClientSize = tableLayoutPanel2.PreferredSize;
+			this.CenterToScreen();
 			this.Icon = ResourceManager.ImageToIcon( ResourceManager.Instance.Icons.Images[(int)ResourceManager.IconContent.FormBaseAirCorps] );
 
 		}
@@ -839,6 +840,7 @@ namespace ElectronicObserver.Window.Dialog {
 
 		private void TopMenu_Edit_MapArea_Click( int mapAreaID ) {
 
+			GroupBox[] airCorpsNames = { groupBox1, groupBox2, groupBox3 };
 			for ( int i = 0; i < BaseAirCorpsUIList.Length; i++ ) {
 
 				var ui = BaseAirCorpsUIList[i];
@@ -851,6 +853,7 @@ namespace ElectronicObserver.Window.Dialog {
 						ui.Squadrons[x].AircraftCategory.SelectedItem = null;
 						ui.Squadrons[x].Aircraft.SelectedItem = null;
 					}
+					airCorpsNames[i].Text = " ー ";
 					continue;
 				}
 
@@ -865,6 +868,7 @@ namespace ElectronicObserver.Window.Dialog {
 						ui.Squadrons[x].Aircraft.SelectedItem = ui.Squadrons[x].Aircraft.Items.OfType<ComboBoxEquipment>().FirstOrDefault( eq => eq.UniqueID == sq.EquipmentMasterID );
 						ui.Squadrons[x].AircraftCount.Value = sq.AircraftCurrent;
 					}
+					airCorpsNames[i].Text = baseAirCorps.Name;
 				}
 			}
 
@@ -873,6 +877,10 @@ namespace ElectronicObserver.Window.Dialog {
 		private void TopMenu_Edit_Clear_Click( object sender, EventArgs e ) {
 			if ( MessageBox.Show( "将清空所有航空队编成。\r\n确认清空吗？", "清空编成", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1 )
 				== System.Windows.Forms.DialogResult.Yes ) {
+
+				groupBox1.Text = "第一基地航空隊";
+				groupBox2.Text = "第二基地航空隊";
+				groupBox3.Text = "第三基地航空隊";
 
 				for ( int i  =0; i < BaseAirCorpsUIList.Length; i++ ) {
 					var ui = BaseAirCorpsUIList[i];

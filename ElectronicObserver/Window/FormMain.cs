@@ -1226,7 +1226,10 @@ namespace ElectronicObserver.Window {
 
 		private void StripMenu_Tool_BaseAirCorpsSimulation_Click( object sender, EventArgs e ) {
 
-			new Dialog.DialogBaseAirCorpsSimulation().Show( this );
+			var dialogBaseAirCorpsSimulation = new DialogBaseAirCorpsSimulation();
+			FormMain_RefreshTopMost();
+			dialogBaseAirCorpsSimulation.Show( this );
+
 		}
 
 
