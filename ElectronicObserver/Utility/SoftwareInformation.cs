@@ -63,7 +63,7 @@ namespace ElectronicObserver.Utility {
 		/// </summary>
 		public static DateTime UpdateTime {
 			get {
-				return DateTimeHelper.CSVStringToTime( "2017/10/17 20:30:00" );
+				return DateTimeHelper.CSVStringToTime( "2017/10/31 07:50:29" );
 			}
 		}
 
