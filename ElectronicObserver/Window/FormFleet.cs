@@ -885,7 +885,7 @@ namespace ElectronicObserver.Window {
 
 		}
 
-		
+
 		void UpdateTimerTick() {
 
 			FleetData fleet = KCDatabase.Instance.Fleet.Fleets[FleetID];
@@ -948,7 +948,7 @@ namespace ElectronicObserver.Window {
 			FleetData fleet = db.Fleet[FleetID];
 			if ( fleet == null ) return;
 
-			sb.AppendFormat( "{0}\t制空战力 {1} / 索敌能力 {2}\r\n", fleet.Name, fleet.GetAirSuperiority(), fleet.GetSearchingAbilityString() );
+			sb.AppendFormat( "{0}\t制空战力 {1} / 索敌能力 {2} / 运输能力 {3}\r\n", fleet.Name, fleet.GetAirSuperiority(), fleet.GetSearchingAbilityString(), Calculator.GetTPDamage( fleet ) );
 			for ( int i = 0; i < fleet.Members.Count; i++ ) {
 				if ( fleet[i] == -1 )
 					continue;

@@ -531,80 +531,65 @@ namespace ElectronicObserver.Window {
 
 		private void MenuProgress_Increment_Click( object sender, EventArgs e ) {
 
-			var rows = QuestView.SelectedRows;
+			int id = GetSelectedRowQuestID();
 
-			if ( rows != null && rows.Count > 0 && rows[0].Index != -1 ) {
+			var quest = KCDatabase.Instance.Quest[id];
+			var progress = KCDatabase.Instance.QuestProgress[id];
 
-				int id = rows[0].Cells[QuestView_Name.Index].Value as int? ?? -1;
+			if ( id != -1 && quest != null && progress != null ) {
 
-				var quest = KCDatabase.Instance.Quest[id];
-				var progress = KCDatabase.Instance.QuestProgress[id];
+				try {
+					progress.Increment();
+					Updated();
 
-				if ( id != -1 && quest != null && progress != null ) {
-
-					try {
-						progress.Increment();
-						Updated();
-
-					} catch ( Exception ) {
-						Utility.Logger.Add(3, "", "无法修改任务", string.Format("『{0}』", quest.Name), "的进度。");
-						System.Media.SystemSounds.Hand.Play();
-					}
+				} catch ( Exception ) {
+					Utility.Logger.Add(3, "", "无法修改任务", string.Format("『{0}』", quest.Name), "的进度。");
+					System.Media.SystemSounds.Hand.Play();
 				}
 			}
 		}
 
 		private void MenuProgress_Decrement_Click( object sender, EventArgs e ) {
 
-			var rows = QuestView.SelectedRows;
+			int id = GetSelectedRowQuestID();
+			var quest = KCDatabase.Instance.Quest[id];
+			var progress = KCDatabase.Instance.QuestProgress[id];
 
-			if ( rows != null && rows.Count > 0 && rows[0].Index != -1 ) {
+			if ( id != -1 && quest != null && progress != null ) {
 
-				int id = rows[0].Cells[QuestView_Name.Index].Value as int? ?? -1;
+				try {
+					progress.Decrement();
+					Updated();
 
-				var quest = KCDatabase.Instance.Quest[id];
-				var progress = KCDatabase.Instance.QuestProgress[id];
-
-				if ( id != -1 && quest != null && progress != null ) {
-
-					try {
-						progress.Decrement();
-						Updated();
-
-					} catch ( Exception ) {
-						Utility.Logger.Add(3, "", "无法修改任务", string.Format("『{0}』", quest.Name), "的进度。");
-						System.Media.SystemSounds.Hand.Play();
-					}
+				} catch ( Exception ) {
+					Utility.Logger.Add(3, "", "无法修改任务", string.Format("『{0}』", quest.Name), "的进度。");
+					System.Media.SystemSounds.Hand.Play();
 				}
 			}
 		}
 
 		private void MenuProgress_Reset_Click( object sender, EventArgs e ) {
 
-			var rows = QuestView.SelectedRows;
+			int id = GetSelectedRowQuestID();
 
-			if ( rows != null && rows.Count > 0 && rows[0].Index != -1 ) {
+			var quest = KCDatabase.Instance.Quest[id];
+			var progress = KCDatabase.Instance.QuestProgress[id];
 
-				int id = rows[0].Cells[QuestView_Name.Index].Value as int? ?? -1;
+			if ( id != -1 && ( quest != null || progress != null ) ) {
 
-				var quest = KCDatabase.Instance.Quest[id];
-				var progress = KCDatabase.Instance.QuestProgress[id];
-
-				if ( id != -1 && ( quest != null || progress != null ) ) {
-
-					if ( MessageBox.Show( "将任务" + ( quest != null ? ( "『" + quest.Name + "』" ) : ( "ID: " + id.ToString() + " " ) ) + "从列表中删除，并重置进度。\r\n确认删除吗？\r\n( 在『艦これ』游戏里打开任务画面可以重新读取。 )", "任务删除确认",
+				if ( MessageBox.Show( "将任务" + ( quest != null ? ( "『" + quest.Name + "』" ) : ( "ID: " + id.ToString() + " " ) ) + "从列表中删除，并重置进度。\r\n确认删除吗？\r\n( 在『艦これ』游戏里打开任务画面可以重新读取。 )", "任务删除确认",
 						MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1 ) == System.Windows.Forms.DialogResult.Yes ) {
 
-						if ( quest != null )
-							KCDatabase.Instance.Quest.Quests.Remove( quest );
+					if ( quest != null )
+						KCDatabase.Instance.Quest.Quests.Remove( quest );
 
-						if ( progress != null )
-							KCDatabase.Instance.QuestProgress.Progresses.Remove( progress );
+					if ( progress != null )
+						KCDatabase.Instance.QuestProgress.Progresses.Remove( progress );
 
-						Updated();
-					}
+					Updated();
 				}
 			}
+
 		}
 
 
@@ -633,10 +618,51 @@ namespace ElectronicObserver.Window {
 		}
 
 
+		private void MenuMain_Opening( object sender, CancelEventArgs e ) {
+
+			var quest =  KCDatabase.Instance.Quest[GetSelectedRowQuestID()];
+
+			if ( quest != null ) {
+				MenuMain_GoogleQuest.Enabled = true;
+				MenuMain_GoogleQuest.Text = string.Format( "使用 Google 搜索『{0}』(&G)", quest.Name );
+			} else {
+				MenuMain_GoogleQuest.Enabled = false;
+				MenuMain_GoogleQuest.Text = "使用 Google 搜索任务名(&G)";
+			}
+		}
+
+		private void MenuMain_GoogleQuest_Click( object sender, EventArgs e ) {
+			var quest = KCDatabase.Instance.Quest[GetSelectedRowQuestID()];
+
+			if ( quest != null ) {
+				try {
+
+					// google <任務名> 艦これ
+					System.Diagnostics.Process.Start( @"https://www.google.co.jp/search?q=" + Uri.EscapeDataString( quest.Name ) + "+%E8%89%A6%E3%81%93%E3%82%8C" );
+
+				} catch ( Exception ex ) {
+					Utility.ErrorReporter.SendErrorReport( ex, "调用 Google 搜索失败。" );
+				}
+			}
+
+		}
+
+		private int GetSelectedRowQuestID() {
+			var rows = QuestView.SelectedRows;
+
+			if ( rows != null && rows.Count > 0 && rows[0].Index != -1 ) {
+
+				return rows[0].Cells[QuestView_Name.Index].Value as int? ?? -1;
+			}
+
+			return -1;
+		}
+
 
 		protected override string GetPersistString() {
 			return "Quest";
 		}
+
 
 	}
 }

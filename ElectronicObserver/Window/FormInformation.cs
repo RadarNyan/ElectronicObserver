@@ -51,6 +51,7 @@ namespace ElectronicObserver.Window {
 			o["api_req_hokyu/charge"].ResponseReceived += Updated;
 			o["api_req_map/start"].ResponseReceived += Updated;
 			o["api_req_practice/battle"].ResponseReceived += Updated;
+			o["api_get_member/sortie_conditions"].ResponseReceived += Updated;
 
 			Utility.Configuration.Instance.ConfigurationChanged += ConfigurationChanged;
 
@@ -143,6 +144,10 @@ namespace ElectronicObserver.Window {
 					UpdateInfoText(GetSupplyInformation(data));
 					break;
 
+				case "api_get_member/sortie_conditions":
+					CheckSallyArea();
+					break;
+
 				case "api_req_map/start":
 					_inSortie = KCDatabase.Instance.Fleet.Fleets.Values.Where( f => f.IsInSortie || f.ExpeditionState == 1 ).Select( f => f.FleetID ).ToList();
 
@@ -152,6 +157,7 @@ namespace ElectronicObserver.Window {
 				case "api_req_practice/battle":
 					_inSortie = new List<int>() { KCDatabase.Instance.Battle.BattleDay.Initial.FriendFleetID };
 					break;
+
 			}
 
 		}
@@ -388,6 +394,11 @@ namespace ElectronicObserver.Window {
 			sb.AppendFormat( "胜负判定 : {0}\r\n", data.api_win_rank );
 			sb.AppendFormat( "提督经验值 : +{0}\r\n", (int)data.api_get_exp );
 
+			if ( data.api_m1() && data.api_m1 == 1 ) {
+				Utility.Logger.Add(2, "已确认海域变化！" );
+				UpdateInfoText("\r\n[FontChs]＊解谜成功＊", true);
+			}
+
 			return sb.ToString();
 		}
 
@@ -439,6 +450,30 @@ namespace ElectronicObserver.Window {
 				bauxite_diff - bauxite, bauxite_diff, bauxite, bauxite / 5 );
 
 			return sb.ToString();
+		}
+
+
+		private void CheckSallyArea() {
+			if ( KCDatabase.Instance.Ships.Values.First().SallyArea == -1 )	// そもそも札情報がなければやる必要はない
+				return;
+
+			int[] targetFleet = KCDatabase.Instance.Fleet.CombinedFlag != 0 ? new int[] { 1, 2 } : new int[] { 1 };
+
+			var targetShips = targetFleet
+				.Select( f => KCDatabase.Instance.Fleet[f] )
+				.SelectMany( f => f.MembersInstance )
+				.Where( s => s != null );
+
+			var freeships = targetShips.Where( s => s.SallyArea == 0 );
+			bool isAreaMixed = targetShips.Select( s => s.SallyArea ).Where( area => area > 0 ).Distinct().Count() > 1;		// 札が複数ある場合、おそらく自由出撃海域なので警告しなくてもいいはず
+
+			if ( freeships.Any() && !isAreaMixed ) {
+				UpdateInfoText("[FontChs][ 误出击警告 ]\r\n未贴条舰娘 :\r\n" + string.Join("\r\n",freeships.Select(s => s.NameWithLevel)));
+
+				if ( Utility.Configuration.Config.Control.ShowSallyAreaAlertDialog )
+					MessageBox.Show( "编成阵容存在未贴条的舰娘。\r\n出击前请注意确认。\r\n\r\n( 本对话框可于 [设置]-[行为] 关闭，不影响信息窗口警报。 )", "误出击警告",
+						MessageBoxButtons.OK, MessageBoxIcon.Warning );
+			}
 		}
 
 
