@@ -907,11 +907,16 @@ namespace ElectronicObserver.Window {
 
 			// anchorage repairing
 			if ( fleet != null && Utility.Configuration.Config.FormFleet.ReflectAnchorageRepairHealing ) {
-				TimeSpan elapsed = DateTime.Now - KCDatabase.Instance.Fleet.AnchorageRepairingTimer;
+				TimeSpan elapsedTime = DateTime.Now - KCDatabase.Instance.Fleet.AnchorageRepairingTimer;
+				int elapsedMinutes = (int)elapsedTime.TotalMinutes;
 
-				if ( elapsed.TotalMinutes >= 20 && AnchorageRepairBound > 0 ) {
+				if ( elapsedMinutes >= 20 && elapsedMinutes != KCDatabase.Instance.Fleet.AnchorageRepairingLastElapsedMinutes && AnchorageRepairBound > 0) {
 
 					for ( int i = 0; i < AnchorageRepairBound; i++ ) {
+						ShipData ship = fleet.MembersInstance[i];
+						if (ship == null)
+							continue;
+
 						var hpbar = ControlMember[i].HP;
 
 						double dockingSeconds = hpbar.Tag as double? ?? 0.0;
@@ -926,15 +931,16 @@ namespace ElectronicObserver.Window {
 							hpbar.ShowDifference = true;
 						}
 
-						int damage = hpbar.MaximumValue - hpbar.PrevValue;
-						int healAmount = Math.Min( Calculator.CalculateAnchorageRepairHealAmount( damage, dockingSeconds, elapsed ), damage );
+						int[] healstatus = Calculator.CalculateAnchorageRepairHealAmountAndMinutesToNextHP(ship, elapsedMinutes);
 
 						hpbar.RepairTimeShowMode = ShipStatusHPRepairTimeShowMode.MouseOver;
-						hpbar.RepairTime = KCDatabase.Instance.Fleet.AnchorageRepairingTimer + Calculator.CalculateAnchorageRepairTime( damage, dockingSeconds, Math.Min( healAmount + 1, damage ) );
-						hpbar.Value = hpbar.PrevValue + healAmount;
+						hpbar.RepairTime = KCDatabase.Instance.Fleet.AnchorageRepairingTimer + TimeSpan.FromMinutes(healstatus[1]);
+						hpbar.Value = hpbar.PrevValue + healstatus[0];
 
 						hpbar.ResumeUpdate();
 					}
+
+					KCDatabase.Instance.Fleet.AnchorageRepairingLastElapsedMinutes = elapsedMinutes;
 				}
 			}
 		}

@@ -24,6 +24,7 @@ namespace ElectronicObserver.Data {
 		/// 泊地修理タイマ
 		/// </summary>
 		public DateTime AnchorageRepairingTimer { get; private set; }
+		public int AnchorageRepairingLastElapsedMinutes { get; set; }
 
 
 
@@ -52,7 +53,7 @@ namespace ElectronicObserver.Data {
 		public FleetManager() {
 			Fleets = new IDDictionary<FleetData>();
 			AnchorageRepairingTimer = DateTime.MinValue;
-
+			AnchorageRepairingLastElapsedMinutes = 0;
 			ConditionPredictMin = 0;
 			ConditionPredictMax = ConditionHealingSpan.TotalSeconds * 2;
 			LastConditionUpdated = DateTime.Now;
@@ -178,6 +179,7 @@ namespace ElectronicObserver.Data {
 		/// </summary>
 		public void StartAnchorageRepairingTimer() {
 			AnchorageRepairingTimer = DateTime.Now;
+			AnchorageRepairingLastElapsedMinutes = 0;
 		}
 
 		/// <summary>

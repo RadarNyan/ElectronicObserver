@@ -1690,6 +1690,31 @@ namespace ElectronicObserver.Utility.Data {
 			return Math.Min( Math.Max( heal, 1 ), damage );
 		}
 
+		public static int[] CalculateAnchorageRepairHealAmountAndMinutesToNextHP( ShipData ship, int repairMinutes ) {
+			if (ship.HPRate < 1.0 && ship.HPRate > 0.5) {
+				int repairedHP = 0;
+				int minutesToNextHP = 0;
+				int hpToFix = ship.HPMax - ship.HPCurrent;
+				for (int hp = 1; hp <= hpToFix; ++hp) {
+					var perhp = Calculator.CalculateDockingUnitTime(ship, hp);
+					int perhpMinutes = (int)Math.Ceiling(perhp.TotalMinutes);
+					if (repairMinutes >= perhpMinutes) {
+						repairedHP = hp;
+					} else {
+						if (hp == 1) { // over 20min
+							repairedHP = hp;
+						} else {
+							minutesToNextHP = perhpMinutes;
+							break;
+						}
+					}
+				}
+				return new int[] { repairedHP, minutesToNextHP };
+			} else {
+				return new int[] { 0, 0 };
+			}
+		}
+
 
 		/// <summary>
 		/// 泊地修理において、指定した量の HP を回復するために必要な時間を求めます。
