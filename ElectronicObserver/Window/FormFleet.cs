@@ -208,12 +208,12 @@ namespace ElectronicObserver.Window {
 							case 4:
 								SearchingAbility.Text = String.Format("(4) {0:f2}", Math.Floor(Calculator.GetSearchingAbility_New33(fleet, SearchingAbilityNew33BranchWeight) * 100) / 100);
 								sb.Append("分歧点系数 4 ( 点击切换 3 / 1 )\r\n");
-								sb.Append("　3-5-G->BOSS	23 / 28\r\n　6-1-E->F	12 / 16 (大鯨)\r\n　6-1-F->K	20 / 25\r\n");
+								sb.Append("　3-5-G->BOSS	23 / 28\r\n　6-1-E->F	12 / 16 (大鯨)\r\n　6-1-F->K	20 / 25 (大鯨) / 36\r\n");
 								break;
 							case 3:
 								SearchingAbility.Text = String.Format("(3) {0:f2}", Math.Floor(Calculator.GetSearchingAbility_New33(fleet, SearchingAbilityNew33BranchWeight) * 100) / 100);
 								sb.Append("分歧点系数 3 ( 点击切换 1 / 4 )\r\n");
-								sb.Append("　6-2-F->I	43 / ?\r\n　6-2-H->BOSS	? / 40\r\n　6-3-H->BOSS	36 / 38\r\n");
+								sb.Append("　1-6-M->J	? / 30\r\n　6-2-F->I	43 / 50\r\n　6-2-H->BOSS	? / 40\r\n　6-3-H->BOSS	36 / 38\r\n　6-5-G->BOSS	? / 50\r\n");
 								break;
 						}
 						sb.AppendFormat("\r\n2-5 旧 / 秋 / 新秋简易式\r\n　{0} / {1} / {2}\r\n",

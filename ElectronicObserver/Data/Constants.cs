@@ -632,7 +632,7 @@ namespace ElectronicObserver.Data {
 				case NightAttackKind.DoubleShelling:
 					return "连续射击";
 				case NightAttackKind.CutinMainTorpedo:
-					return "CI ( 主炮 / 魚雷)";
+					return "CI ( 主炮 / 鱼雷 )";
 				case NightAttackKind.CutinTorpedoTorpedo:
 					return "CI ( 主炮 x 2 )";
 				case NightAttackKind.CutinMainSub:
