@@ -5,46 +5,44 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ElectronicObserver.Data.Battle {
+namespace ElectronicObserver.Data.Battle
+{
 
 	/// <summary>
 	/// 演習昼戦
 	/// </summary>
-	public class BattlePracticeDay : BattleDay {
+	public class BattlePracticeDay : BattleDay
+	{
 
-		public override void LoadFromResponse( string apiname, dynamic data ) {
-			base.LoadFromResponse( apiname, (object)data );
+		public override void LoadFromResponse(string apiname, dynamic data)
+		{
+			base.LoadFromResponse(apiname, (object)data);
 
-			JetAirBattle = new PhaseJetAirBattle( this, "喷式航空战" );
-			AirBattle = new PhaseAirBattle( this, "航空战" );
-			OpeningASW = new PhaseOpeningASW( this, "先制对潜", false );
-			OpeningTorpedo = new PhaseTorpedo( this, "开幕雷击", 0 );
-			Shelling1 = new PhaseShelling( this, "第一次炮击战", 1, "1", false );
-			Shelling2 = new PhaseShelling( this, "第二次炮击战", 2, "2", false );
-			Shelling3 = new PhaseShelling( this, "第三次炮击战", 3, "3", false );
-			Torpedo = new PhaseTorpedo( this, "雷击战", 4 );
+			JetAirBattle = new PhaseJetAirBattle(this, "喷式航空战");
+			AirBattle = new PhaseAirBattle(this, "航空战");
+			OpeningASW = new PhaseOpeningASW(this, "先制对潜", false);
+			OpeningTorpedo = new PhaseTorpedo(this, "开幕雷击", 0);
+			Shelling1 = new PhaseShelling(this, "第一次炮击战", 1, "1", false);
+			Shelling2 = new PhaseShelling(this, "第二次炮击战", 2, "2", false);
+			Shelling3 = new PhaseShelling(this, "第三次炮击战", 3, "3", false);
+			Torpedo = new PhaseTorpedo(this, "雷击战", 4);
 
 
-			foreach ( var phase in GetPhases() )
-				phase.EmulateBattle( _resultHPs, _attackDamages );
+			foreach (var phase in GetPhases())
+				phase.EmulateBattle(_resultHPs, _attackDamages);
 
 		}
 
 
-		public override string APIName {
-			get { return "api_req_practice/battle"; }
-		}
+		public override string APIName => "api_req_practice/battle";
 
-		public override string BattleName {
-			get { return "演习 昼战"; }
-		}
+		public override string BattleName => "演习 昼战";
 
-		public override BattleTypeFlag BattleType {
-			get { return BattleTypeFlag.Day | BattleTypeFlag.Practice; }
-		}
+		public override BattleTypeFlag BattleType => BattleTypeFlag.Day | BattleTypeFlag.Practice;
 
 
-		public override IEnumerable<PhaseBase> GetPhases() {
+		public override IEnumerable<PhaseBase> GetPhases()
+		{
 			yield return Initial;
 			yield return Searching;
 			yield return JetAirBattle;

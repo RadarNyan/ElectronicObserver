@@ -8,14 +8,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ElectronicObserver.Resource.Record {
+namespace ElectronicObserver.Resource.Record
+{
 
 	/// <summary>
 	/// 資源のレコードを保持します。
 	/// </summary>
-	public class ResourceRecord : RecordBase {
+	public class ResourceRecord : RecordBase
+	{
 
-		public class ResourceElement : RecordElementBase {
+		public sealed class ResourceElement : RecordElementBase
+		{
 
 			/// <summary>
 			/// 記録日時
@@ -74,15 +77,20 @@ namespace ElectronicObserver.Resource.Record {
 			public int HQExp { get; set; }
 
 
-			public ResourceElement() {
+			public ResourceElement()
+			{
 				Date = DateTime.Now;
 			}
 
-			public ResourceElement( string line )
-				: base( line ) { }
+			public ResourceElement(string line)
+				: this()
+			{
+				LoadLine(line);
+			}
 
-			public ResourceElement( int fuel, int ammo, int steel, int bauxite, int instantConstruction, int instantRepair, int developmentMaterial, int moddingMaterial, int hqLevel, int hqExp )
-				: this() {
+			public ResourceElement(int fuel, int ammo, int steel, int bauxite, int instantConstruction, int instantRepair, int developmentMaterial, int moddingMaterial, int hqLevel, int hqExp)
+				: this()
+			{
 				Fuel = fuel;
 				Ammo = ammo;
 				Steel = steel;
@@ -95,28 +103,30 @@ namespace ElectronicObserver.Resource.Record {
 				HQExp = hqExp;
 			}
 
-			public override void LoadLine( string line ) {
+			public override void LoadLine(string line)
+			{
 
-				string[] elem = line.Split( ",".ToCharArray() );
-				if ( elem.Length < 11 ) throw new ArgumentException( "要素数が少なすぎます。" );
+				string[] elem = line.Split(",".ToCharArray());
+				if (elem.Length < 11) throw new ArgumentException("要素数が少なすぎます。");
 
-				Date = DateTimeHelper.CSVStringToTime( elem[0] );
-				Fuel = int.Parse( elem[1] );
-				Ammo = int.Parse( elem[2] );
-				Steel = int.Parse( elem[3] );
-				Bauxite = int.Parse( elem[4] );
-				InstantConstruction = int.Parse( elem[5] );
-				InstantRepair = int.Parse( elem[6] );
-				DevelopmentMaterial = int.Parse( elem[7] );
-				ModdingMaterial = int.Parse( elem[8] );
-				HQLevel = int.Parse( elem[9] );
-				HQExp = int.Parse( elem[10] );
+				Date = DateTimeHelper.CSVStringToTime(elem[0]);
+				Fuel = int.Parse(elem[1]);
+				Ammo = int.Parse(elem[2]);
+				Steel = int.Parse(elem[3]);
+				Bauxite = int.Parse(elem[4]);
+				InstantConstruction = int.Parse(elem[5]);
+				InstantRepair = int.Parse(elem[6]);
+				DevelopmentMaterial = int.Parse(elem[7]);
+				ModdingMaterial = int.Parse(elem[8]);
+				HQLevel = int.Parse(elem[9]);
+				HQExp = int.Parse(elem[10]);
 
 			}
 
-			public override string SaveLine() {
-				return string.Format( "{" + string.Join( "},{", Enumerable.Range( 0, 11 ) ) + "}",
-					DateTimeHelper.TimeToCSVString( Date ),
+			public override string SaveLine()
+			{
+				return string.Format("{" + string.Join("},{", Enumerable.Range(0, 11)) + "}",
+					DateTimeHelper.TimeToCSVString(Date),
 					Fuel,
 					Ammo,
 					Steel,
@@ -126,7 +136,7 @@ namespace ElectronicObserver.Resource.Record {
 					DevelopmentMaterial,
 					ModdingMaterial,
 					HQLevel,
-					HQExp );
+					HQExp);
 			}
 
 		}
@@ -139,14 +149,16 @@ namespace ElectronicObserver.Resource.Record {
 
 
 		public ResourceRecord()
-			: base() {
+			: base()
+		{
 
 			Record = new List<ResourceElement>();
 			_prevTime = DateTime.Now;
 			_initialFlag = false;
 		}
 
-		public override void RegisterEvents() {
+		public override void RegisterEvents()
+		{
 			var ao = APIObserver.Instance;
 
 			ao["api_start2"].ResponseReceived += ResourceRecord_Started;
@@ -154,20 +166,23 @@ namespace ElectronicObserver.Resource.Record {
 		}
 
 
-		private void ResourceRecord_Started( string apiname, dynamic data ) {
+		private void ResourceRecord_Started(string apiname, dynamic data)
+		{
 			_initialFlag = true;
 		}
 
 
-		void ResourceRecord_Updated( string apiname, dynamic data ) {
+		void ResourceRecord_Updated(string apiname, dynamic data)
+		{
 
-			if ( _initialFlag || DateTimeHelper.IsCrossedHour( _prevTime ) ) {
+			if (_initialFlag || DateTimeHelper.IsCrossedHour(_prevTime))
+			{
 				_prevTime = DateTime.Now;
 				_initialFlag = false;
 
 				var material = KCDatabase.Instance.Material;
 				var admiral = KCDatabase.Instance.Admiral;
-				Record.Add( new ResourceElement(
+				Record.Add(new ResourceElement(
 					material.Fuel,
 					material.Ammo,
 					material.Steel,
@@ -177,12 +192,13 @@ namespace ElectronicObserver.Resource.Record {
 					material.DevelopmentMaterial,
 					material.ModdingMaterial,
 					admiral.Level,
-					admiral.Exp ) );
+					admiral.Exp));
 			}
 		}
 
 
-		public ResourceElement this[int i] {
+		public ResourceElement this[int i]
+		{
 			get { return Record[i]; }
 			set { Record[i] = value; }
 		}
@@ -191,7 +207,8 @@ namespace ElectronicObserver.Resource.Record {
 		/// <summary>
 		/// 指定した日時以降の最も古い記録を返します。
 		/// </summary>
-		public ResourceElement GetRecord( DateTime target ) {
+		public ResourceElement GetRecord(DateTime target)
+		{
 			if ( Record.Count == 0 || Record.Last().Date < target ) {
 				return null;
 			}
@@ -419,53 +436,51 @@ namespace ElectronicObserver.Resource.Record {
 
 
 
-		protected override void LoadLine( string line ) {
-			Record.Add( new ResourceElement( line ) );
+		protected override void LoadLine(string line)
+		{
+			Record.Add(new ResourceElement(line));
 		}
 
-		protected override string SaveLinesAll() {
+		protected override string SaveLinesAll()
+		{
 			var sb = new StringBuilder();
-			foreach ( var elem in Record.OrderBy( r => r.Date ) ) {
-				sb.AppendLine( elem.SaveLine() );
+			foreach (var elem in Record.OrderBy(r => r.Date))
+			{
+				sb.AppendLine(elem.SaveLine());
 			}
 			return sb.ToString();
 		}
 
-		protected override string SaveLinesPartial() {
+		protected override string SaveLinesPartial()
+		{
 			var sb = new StringBuilder();
-			foreach ( var elem in Record.Skip( LastSavedCount ).OrderBy( r => r.Date ) ) {
-				sb.AppendLine( elem.SaveLine() );
+			foreach (var elem in Record.Skip(LastSavedCount).OrderBy(r => r.Date))
+			{
+				sb.AppendLine(elem.SaveLine());
 			}
 			return sb.ToString();
 		}
 
-		protected override void UpdateLastSavedIndex() {
+		protected override void UpdateLastSavedIndex()
+		{
 			LastSavedCount = Record.Count;
 		}
 
-		public override bool NeedToSave {
-			get { return LastSavedCount < Record.Count; }
-		}
+		public override bool NeedToSave => LastSavedCount < Record.Count;
 
-		public override bool SupportsPartialSave {
-			get { return true; }
-		}
+		public override bool SupportsPartialSave => true;
 
-		protected override void ClearRecord() {
+		protected override void ClearRecord()
+		{
 			Record.Clear();
 			LastSavedCount = 0;
 		}
 
 
 
-		public override string RecordHeader {
-			get { return "日時,燃料,弾薬,鋼材,ボーキ,高速建造材,高速修復材,開発資材,改修資材,司令部Lv,提督Exp"; }
-		}
+		public override string RecordHeader => "日時,燃料,弾薬,鋼材,ボーキ,高速建造材,高速修復材,開発資材,改修資材,司令部Lv,提督Exp";
 
-		public override string FileName {
-			get { return "ResourceRecord.csv"; }
-		}
-
-
+		public override string FileName => "ResourceRecord.csv";
 	}
+
 }

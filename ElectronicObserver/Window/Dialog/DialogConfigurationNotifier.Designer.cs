@@ -1,5 +1,7 @@
-﻿namespace ElectronicObserver.Window.Dialog {
-	partial class DialogConfigurationNotifier {
+﻿namespace ElectronicObserver.Window.Dialog
+{
+	partial class DialogConfigurationNotifier
+	{
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
@@ -9,11 +11,13 @@
 		/// Clean up any resources being used.
 		/// </summary>
 		/// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-		protected override void Dispose( bool disposing ) {
-			if ( disposing && ( components != null ) ) {
+		protected override void Dispose(bool disposing)
+		{
+			if (disposing && (components != null))
+			{
 				components.Dispose();
 			}
-			base.Dispose( disposing );
+			base.Dispose(disposing);
 		}
 
 		#region Windows Form Designer generated code
@@ -22,7 +26,8 @@
 		/// Required method for Designer support - do not modify
 		/// the contents of this method with the code editor.
 		/// </summary>
-		private void InitializeComponent() {
+		private void InitializeComponent()
+		{
 			this.components = new System.ComponentModel.Container();
 			this.ButtonCancel = new System.Windows.Forms.Button();
 			this.ButtonOK = new System.Windows.Forms.Button();
@@ -198,8 +203,8 @@
 			// SoundPath
 			// 
 			this.SoundPath.AllowDrop = true;
-			this.SoundPath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.SoundPath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.SoundPath.Location = new System.Drawing.Point(6, 47);
 			this.SoundPath.Name = "SoundPath";
 			this.SoundPath.Size = new System.Drawing.Size(210, 23);
@@ -266,8 +271,8 @@
 			// ImagePath
 			// 
 			this.ImagePath.AllowDrop = true;
-			this.ImagePath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.ImagePath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.ImagePath.Location = new System.Drawing.Point(6, 47);
 			this.ImagePath.Name = "ImagePath";
 			this.ImagePath.Size = new System.Drawing.Size(248, 23);
@@ -320,13 +325,13 @@
 			this.CloseList.CheckOnClick = true;
 			this.CloseList.FormattingEnabled = true;
 			this.CloseList.Items.AddRange(new object[] {
-            "鼠标左键单击",
-            "鼠标左键双击",
-            "鼠标右键单击",
-            "鼠标右键双击",
-            "鼠标中键单击",
-            "鼠标中键双击",
-            "鼠标悬停"});
+			"鼠标左键单击",
+			"鼠标左键双击",
+			"鼠标右键单击",
+			"鼠标右键双击",
+			"鼠标中键单击",
+			"鼠标中键双击",
+			"鼠标悬停"});
 			this.CloseList.Location = new System.Drawing.Point(476, 35);
 			this.CloseList.Name = "CloseList";
 			this.CloseList.Size = new System.Drawing.Size(120, 130);
@@ -396,10 +401,10 @@
 			// 
 			this.ClosingInterval.Location = new System.Drawing.Point(358, 47);
 			this.ClosingInterval.Maximum = new decimal(new int[] {
-            999,
-            0,
-            0,
-            0});
+			999,
+			0,
+			0,
+			0});
 			this.ClosingInterval.Name = "ClosingInterval";
 			this.ClosingInterval.Size = new System.Drawing.Size(80, 23);
 			this.ClosingInterval.TabIndex = 13;
@@ -474,10 +479,10 @@
 			// 
 			this.AccelInterval.Location = new System.Drawing.Point(358, 18);
 			this.AccelInterval.Maximum = new decimal(new int[] {
-            999,
-            0,
-            0,
-            0});
+			999,
+			0,
+			0,
+			0});
 			this.AccelInterval.Name = "AccelInterval";
 			this.AccelInterval.Size = new System.Drawing.Size(80, 23);
 			this.AccelInterval.TabIndex = 10;
@@ -498,49 +503,49 @@
 			// 
 			this.LocationY.Location = new System.Drawing.Point(141, 76);
 			this.LocationY.Maximum = new decimal(new int[] {
-            99999,
-            0,
-            0,
-            0});
+			99999,
+			0,
+			0,
+			0});
 			this.LocationY.Minimum = new decimal(new int[] {
-            99999,
-            0,
-            0,
-            -2147483648});
+			99999,
+			0,
+			0,
+			-2147483648});
 			this.LocationY.Name = "LocationY";
 			this.LocationY.Size = new System.Drawing.Size(80, 23);
 			this.LocationY.TabIndex = 5;
 			this.LocationY.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			this.ToolTipText.SetToolTip(this.LocationY, "设置「位置」为「手动」时对话框弹出的坐标。");
 			this.LocationY.Value = new decimal(new int[] {
-            99999,
-            0,
-            0,
-            -2147483648});
+			99999,
+			0,
+			0,
+			-2147483648});
 			// 
 			// LocationX
 			// 
 			this.LocationX.Location = new System.Drawing.Point(55, 76);
 			this.LocationX.Maximum = new decimal(new int[] {
-            99999,
-            0,
-            0,
-            0});
+			99999,
+			0,
+			0,
+			0});
 			this.LocationX.Minimum = new decimal(new int[] {
-            99999,
-            0,
-            0,
-            -2147483648});
+			99999,
+			0,
+			0,
+			-2147483648});
 			this.LocationX.Name = "LocationX";
 			this.LocationX.Size = new System.Drawing.Size(80, 23);
 			this.LocationX.TabIndex = 4;
 			this.LocationX.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			this.ToolTipText.SetToolTip(this.LocationX, "设置「位置」为「手动」时对话框弹出的坐标。");
 			this.LocationX.Value = new decimal(new int[] {
-            99999,
-            0,
-            0,
-            -2147483648});
+			99999,
+			0,
+			0,
+			-2147483648});
 			// 
 			// label1
 			// 
@@ -556,18 +561,18 @@
 			this.Alignment.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.Alignment.FormattingEnabled = true;
 			this.Alignment.Items.AddRange(new object[] {
-            "未设定",
-            "左上",
-            "上",
-            "右上",
-            "左",
-            "中央",
-            "右",
-            "左下",
-            "下",
-            "右下",
-            "手动 ( 绝对 )",
-            "手动 ( 相对 )"});
+			"未指定",
+			"左上",
+			"上",
+			"右上",
+			"左",
+			"中央",
+			"右",
+			"左下",
+			"下",
+			"右下",
+			"手动 ( 绝对 )",
+			"手动 ( 相对 )"});
 			this.Alignment.Location = new System.Drawing.Point(55, 47);
 			this.Alignment.Name = "Alignment";
 			this.Alignment.Size = new System.Drawing.Size(121, 23);
@@ -656,25 +661,25 @@
 			// 
 			this.LevelBorder.Location = new System.Drawing.Point(351, 46);
 			this.LevelBorder.Maximum = new decimal(new int[] {
-            150,
-            0,
-            0,
-            0});
+			150,
+			0,
+			0,
+			0});
 			this.LevelBorder.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
+			1,
+			0,
+			0,
+			0});
 			this.LevelBorder.Name = "LevelBorder";
 			this.LevelBorder.Size = new System.Drawing.Size(80, 23);
 			this.LevelBorder.TabIndex = 8;
 			this.LevelBorder.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			this.ToolTipText.SetToolTip(this.LevelBorder, "设定大破通知舰的最低等级。\r\n请注意，调整该值将导致低等级舰大破不被通知。");
 			this.LevelBorder.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
+			1,
+			0,
+			0,
+			0});
 			// 
 			// NotifiesAfter
 			// 
@@ -722,7 +727,7 @@
 			// DialogOpenImage
 			// 
 			this.DialogOpenImage.Filter = "Image|*.bmp;*.div;*.jpg;*.jpeg;*.jpe;*.jfif;*.gif;*.png;*.tif;*.tiff|BMP|*.bmp;*." +
-    "div|JPEG|*.jpg;*.jpeg;*.jpe;*.jfif|GIF|*.gif|PNG|*.png|TIFF|*.tif;*.tiff|File|*";
+	"div|JPEG|*.jpg;*.jpeg;*.jpe;*.jfif|GIF|*.gif|PNG|*.png|TIFF|*.tif;*.tiff|File|*";
 			this.DialogOpenImage.Title = "画像ファイルを開く";
 			// 
 			// ToolTipText
@@ -765,14 +770,14 @@
 			this.AnchorageRepairNotificationLevel.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.AnchorageRepairNotificationLevel.FormattingEnabled = true;
 			this.AnchorageRepairNotificationLevel.Items.AddRange(new object[] {
-            "始终通知",
-            "明石旗舰时通知",
-            "有舰在泊地修理中通知"});
+			"始终通知",
+			"明石旗舰时",
+			"有修理舰时"});
 			this.AnchorageRepairNotificationLevel.Location = new System.Drawing.Point(80, 20);
 			this.AnchorageRepairNotificationLevel.Name = "AnchorageRepairNotificationLevel";
 			this.AnchorageRepairNotificationLevel.Size = new System.Drawing.Size(160, 23);
 			this.AnchorageRepairNotificationLevel.TabIndex = 1;
-			this.ToolTipText.SetToolTip(this.AnchorageRepairNotificationLevel, "始终通知：每 20 分通知。\r\n明石旗舰时通知：满足上述条件，同时明石为旗舰时才通知。\r\n有舰在泊地修理中通知：满足上述条件，同时实际有舰在修理时才通知。");
+			this.ToolTipText.SetToolTip(this.AnchorageRepairNotificationLevel, "始终通知 : 每 20 分钟通知一次。\r\n明石旗舰时：满足上述条件，且有舰队旗舰为明石时通知。\r\n有修理舰时：满足上述条件，且实际进行了修理时通知。");
 			// 
 			// DialogConfigurationNotifier
 			// 

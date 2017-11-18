@@ -6,21 +6,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ElectronicObserver.Utility {
+namespace ElectronicObserver.Utility
+{
 
 
-	public delegate void LogAddedEventHandler( Logger.LogData data );
+	public delegate void LogAddedEventHandler(Logger.LogData data);
 
 
-	public sealed class Logger {
+	public sealed class Logger
+	{
 
 		#region Singleton
 
 		private static readonly Logger instance = new Logger();
 
-		public static Logger Instance {
-			get { return instance; }
-		}
+		public static Logger Instance => instance;
 
 		#endregion
 
@@ -31,7 +31,8 @@ namespace ElectronicObserver.Utility {
 		public event LogAddedEventHandler LogAdded = delegate { };
 
 
-		public class LogData {
+		public class LogData
+		{
 
 			/// <summary>
 			/// 書き込み時刻
@@ -54,7 +55,8 @@ namespace ElectronicObserver.Utility {
 			public readonly string MsgJap3;
 			public readonly string MsgChs3;
 
-			public LogData( DateTime time, int priority, string message, string msgchs1, string msgjap2, string msgchs2, string msgjap3, string msgchs3 ) {
+			public LogData(DateTime time, int priority, string message, string msgchs1, string msgjap2, string msgchs2, string msgjap3, string msgchs3)
+			{
 				Time = time;
 				Priority = priority;
 				Message = message;
@@ -66,9 +68,8 @@ namespace ElectronicObserver.Utility {
 			}
 
 
-			public override string ToString() {
-				return string.Format( "[{0}][{1}] : {2}{3}{4}{5}{6}{7}", DateTimeHelper.TimeToCSVString( Time ), Priority, Message, MsgChs1, MsgJap2, MsgChs2, MsgJap3, MsgChs3 );
-			}
+			public override string ToString() => $"[{DateTimeHelper.TimeToCSVString(Time)}][{Priority}] : {Message}{MsgChs1}{MsgJap2}{MsgChs2}{MsgJap3}{MsgChs3}";
+
 
 		}
 
@@ -79,16 +80,20 @@ namespace ElectronicObserver.Utility {
 		private int lastSavedCount;
 
 
-		private Logger() {
+		private Logger()
+		{
 			log = new List<LogData>();
 			toDebugConsole = true;
 			lastSavedCount = 0;
 		}
 
 
-		public static IReadOnlyList<LogData> Log {
-			get {
-				lock ( Logger.Instance ) {
+		public static IReadOnlyList<LogData> Log
+		{
+			get
+			{
+				lock (Logger.Instance)
+				{
 					return Logger.Instance.log.AsReadOnly();
 				}
 			}
@@ -100,30 +105,36 @@ namespace ElectronicObserver.Utility {
 		/// </summary>
 		/// <param name="priority">優先度。</param>
 		/// <param name="message">ログ内容。</param>
-		public static void Add( int priority, string message, string msgchs1="", string msgjap2="", string msgchs2="", string msgjap3="", string msgchs3="" )
+		public static void Add(int priority, string message, string msgchs1="", string msgjap2="", string msgchs2="", string msgjap3="", string msgchs3="")
 		{
 
-			LogData data = new LogData( DateTime.Now, priority, message, msgchs1, msgjap2, msgchs2, msgjap3, msgchs3 );
+			LogData data = new LogData(DateTime.Now, priority, message, msgchs1, msgjap2, msgchs2, msgjap3, msgchs3);
 
-			lock ( Logger.Instance ) {
-				Logger.Instance.log.Add( data );
+			lock (Logger.Instance)
+			{
+				Logger.Instance.log.Add(data);
 			}
 
-			if ( Configuration.Config.Log.SaveLogFlag && Configuration.Config.Log.SaveLogImmediately )
+			if (Configuration.Config.Log.SaveLogFlag && Configuration.Config.Log.SaveLogImmediately)
 				Save();
 
-			if ( Configuration.Config.Log.LogLevel <= priority ) {
+			if (Configuration.Config.Log.LogLevel <= priority)
+			{
 
-				if ( Logger.Instance.toDebugConsole ) {
-					System.Diagnostics.Debug.WriteLine( data.ToString() );
+				if (Logger.Instance.toDebugConsole)
+				{
+					System.Diagnostics.Debug.WriteLine(data.ToString());
 				}
 
 
-				try {
-					Logger.Instance.LogAdded( data );
+				try
+				{
+					Logger.Instance.LogAdded(data);
 
-				} catch ( Exception ex ) {
-					System.Diagnostics.Debug.WriteLine( ex.Message );
+				}
+				catch (Exception ex)
+				{
+					System.Diagnostics.Debug.WriteLine(ex.Message);
 				}
 
 			}
@@ -132,8 +143,10 @@ namespace ElectronicObserver.Utility {
 		/// <summary>
 		/// ログをすべて消去します。
 		/// </summary>
-		public static void Clear() {
-			lock ( Logger.Instance ) {
+		public static void Clear()
+		{
+			lock (Logger.Instance)
+			{
 				Logger.instance.log.Clear();
 				Logger.instance.lastSavedCount = 0;
 			}
@@ -144,33 +157,41 @@ namespace ElectronicObserver.Utility {
 		public static readonly string DefaultPath = @"eolog.log";
 
 
-		public static void Save() {
-			Save( DefaultPath );
+		public static void Save()
+		{
+			Save(DefaultPath);
 		}
 
 		/// <summary>
 		/// ログを保存します。
 		/// </summary>
 		/// <param name="path">保存先のファイル。</param>
-		public static void Save( string path ) {
+		public static void Save(string path)
+		{
 
-			try {
-				lock ( Logger.Instance ) {
+			try
+			{
+				lock (Logger.Instance)
+				{
 
 					var log = Logger.instance;
 
-					using ( StreamWriter sw = new StreamWriter( path, true, Utility.Configuration.Config.Log.FileEncoding ) ) {
+					using (StreamWriter sw = new StreamWriter(path, true, Utility.Configuration.Config.Log.FileEncoding))
+					{
 
 						int priority = Configuration.Config.Log.LogLevel;
 
-						foreach ( var l in log.log.Skip( log.lastSavedCount ).Where( l => l.Priority >= priority ) ) {
-							sw.WriteLine( l.ToString() );
+						foreach (var l in log.log.Skip(log.lastSavedCount).Where(l => l.Priority >= priority))
+						{
+							sw.WriteLine(l.ToString());
 						}
 
 						log.lastSavedCount = log.log.Count;
 					}
 				}
-			} catch ( Exception ) {
+			}
+			catch (Exception)
+			{
 
 				// に ぎ り つ ぶ す
 			}

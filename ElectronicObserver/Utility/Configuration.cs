@@ -16,17 +16,17 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace ElectronicObserver.Utility {
+namespace ElectronicObserver.Utility
+{
 
 
-	public sealed class Configuration {
+	public sealed class Configuration
+	{
 
 
 		private static readonly Configuration instance = new Configuration();
 
-		public static Configuration Instance {
-			get { return instance; }
-		}
+		public static Configuration Instance => instance;
 
 
 		private const string SaveFileName = @"Settings\Configuration.xml";
@@ -36,10 +36,12 @@ namespace ElectronicObserver.Utility {
 		public event ConfigurationChangedEventHandler ConfigurationChanged = delegate { };
 
 
-		[DataContract( Name = "Configuration" )]
-		public class ConfigurationData : DataStorage {
+		[DataContract(Name = "Configuration")]
+		public sealed class ConfigurationData : DataStorage
+		{
 
-			public class ConfigPartBase {
+			public class ConfigPartBase
+			{
 				//reserved
 			}
 
@@ -47,7 +49,8 @@ namespace ElectronicObserver.Utility {
 			/// <summary>
 			/// 通信の設定を扱います。
 			/// </summary>
-			public class ConfigConnection : ConfigPartBase {
+			public class ConfigConnection : ConfigPartBase
+			{
 
 				/// <summary>
 				/// ポート番号
@@ -133,7 +136,8 @@ namespace ElectronicObserver.Utility {
 				public string SendKancolleOAuth { get; set; }
 
 
-				public ConfigConnection() {
+				public ConfigConnection()
+				{
 
 					Port = 40620;
 					SaveReceivedData = false;
@@ -159,7 +163,8 @@ namespace ElectronicObserver.Utility {
 			public ConfigConnection Connection { get; private set; }
 
 
-			public class ConfigUI : ConfigPartBase {
+			public class ConfigUI : ConfigPartBase
+			{
 
 				/// <summary>
 				/// メインフォント
@@ -451,10 +456,10 @@ namespace ElectronicObserver.Utility {
 
 
 				public ConfigUI() {
-					MainFont = new Font( "Microsoft YaHei", 12, FontStyle.Regular, GraphicsUnit.Pixel );
-					SubFont  = new Font( "Microsoft YaHei", 10, FontStyle.Regular, GraphicsUnit.Pixel );
-					JapFont  = new Font( "Meiryo UI", 12, FontStyle.Regular, GraphicsUnit.Pixel );
-					JapFont2 = new Font( "Meiryo UI", 10, FontStyle.Regular, GraphicsUnit.Pixel );
+					MainFont = new Font("Microsoft YaHei", 12, FontStyle.Regular, GraphicsUnit.Pixel);
+					SubFont  = new Font("Microsoft YaHei", 10, FontStyle.Regular, GraphicsUnit.Pixel);
+					JapFont  = new Font("Meiryo UI", 12, FontStyle.Regular, GraphicsUnit.Pixel);
+					JapFont2 = new Font("Meiryo UI", 10, FontStyle.Regular, GraphicsUnit.Pixel);
 					ThemeID = 0;
 					ShowGrowthInsteadOfNextInHQ = false;
 					MaxAkashiPerHP = 5;
@@ -481,7 +486,8 @@ namespace ElectronicObserver.Utility {
 			/// <summary>
 			/// ログの設定を扱います。
 			/// </summary>
-			public class ConfigLog : ConfigPartBase {
+			public class ConfigLog : ConfigPartBase
+			{
 
 				/// <summary>
 				/// ログのレベル
@@ -507,21 +513,24 @@ namespace ElectronicObserver.Utility {
 				/// ファイル エンコーディング
 				/// </summary>
 				[IgnoreDataMember]
-				public Encoding FileEncoding {
-					get {
-						switch ( FileEncodingID ) {
+				public Encoding FileEncoding
+				{
+					get
+					{
+						switch (FileEncodingID)
+						{
 							case 0:
-								return new System.Text.UTF8Encoding( false );
+								return new System.Text.UTF8Encoding(false);
 							case 1:
-								return new System.Text.UTF8Encoding( true );
+								return new System.Text.UTF8Encoding(true);
 							case 2:
-								return new System.Text.UnicodeEncoding( false, false );
+								return new System.Text.UnicodeEncoding(false, false);
 							case 3:
-								return new System.Text.UnicodeEncoding( false, true );
+								return new System.Text.UnicodeEncoding(false, true);
 							case 4:
-								return Encoding.GetEncoding( 932 );
+								return Encoding.GetEncoding(932);
 							default:
-								return new System.Text.UTF8Encoding( false );
+								return new System.Text.UTF8Encoding(false);
 
 						}
 					}
@@ -553,7 +562,8 @@ namespace ElectronicObserver.Utility {
 				public bool SaveLogImmediately { get; set; }
 
 
-				public ConfigLog() {
+				public ConfigLog()
+				{
 					LogLevel = 2;
 					SaveLogFlag = true;
 					SaveErrorReport = true;
@@ -574,7 +584,8 @@ namespace ElectronicObserver.Utility {
 			/// <summary>
 			/// 動作の設定を扱います。
 			/// </summary>
-			public class ConfigControl : ConfigPartBase {
+			public class ConfigControl : ConfigPartBase
+			{
 
 				/// <summary>
 				/// 疲労度ボーダー
@@ -612,7 +623,8 @@ namespace ElectronicObserver.Utility {
 				/// </summary>
 				public bool ShowSallyAreaAlertDialog { get; set; }
 
-				public ConfigControl() {
+				public ConfigControl()
+				{
 					ConditionBorder = 40;
 					RecordAutoSaving = 1;
 					UseSystemVolume = true;
@@ -630,7 +642,8 @@ namespace ElectronicObserver.Utility {
 			/// <summary>
 			/// デバッグの設定を扱います。
 			/// </summary>
-			public class ConfigDebug : ConfigPartBase {
+			public class ConfigDebug : ConfigPartBase
+			{
 
 				/// <summary>
 				/// デバッグメニューを有効にするか
@@ -652,7 +665,8 @@ namespace ElectronicObserver.Utility {
 				/// </summary>
 				public bool AlertOnError { get; set; }
 
-				public ConfigDebug() {
+				public ConfigDebug()
+				{
 					EnableDebugMenu = false;
 					LoadAPIListOnLoad = false;
 					APIListPath = "";
@@ -667,7 +681,8 @@ namespace ElectronicObserver.Utility {
 			/// <summary>
 			/// 起動と終了の設定を扱います。
 			/// </summary>
-			public class ConfigLife : ConfigPartBase {
+			public class ConfigLife : ConfigPartBase
+			{
 
 				/// <summary>
 				/// 終了時に確認するか
@@ -709,7 +724,8 @@ namespace ElectronicObserver.Utility {
 				/// </summary>
 				public bool CanCloseFloatWindowInLock { get; set; }
 
-				public ConfigLife() {
+				public ConfigLife()
+				{
 					ConfirmOnClosing = true;
 					TopMost = false;
 					LayoutFilePath = @"Settings\WindowLayout.zip";
@@ -728,7 +744,8 @@ namespace ElectronicObserver.Utility {
 			/// <summary>
 			/// [工廠]ウィンドウの設定を扱います。
 			/// </summary>
-			public class ConfigFormArsenal : ConfigPartBase {
+			public class ConfigFormArsenal : ConfigPartBase
+			{
 
 				/// <summary>
 				/// 艦名を表示するか
@@ -745,7 +762,8 @@ namespace ElectronicObserver.Utility {
 				/// </summary>
 				public int MaxShipNameWidth { get; set; }
 
-				public ConfigFormArsenal() {
+				public ConfigFormArsenal()
+				{
 					ShowShipName = true;
 					BlinkAtCompletion = true;
 					MaxShipNameWidth = 60;
@@ -759,7 +777,8 @@ namespace ElectronicObserver.Utility {
 			/// <summary>
 			/// [入渠]ウィンドウの設定を扱います。
 			/// </summary>
-			public class ConfigFormDock : ConfigPartBase {
+			public class ConfigFormDock : ConfigPartBase
+			{
 
 				/// <summary>
 				/// 完了時に点滅させるか
@@ -771,7 +790,8 @@ namespace ElectronicObserver.Utility {
 				/// </summary>
 				public int MaxShipNameWidth { get; set; }
 
-				public ConfigFormDock() {
+				public ConfigFormDock()
+				{
 					BlinkAtCompletion = true;
 					MaxShipNameWidth = 64;
 				}
@@ -784,7 +804,8 @@ namespace ElectronicObserver.Utility {
 			/// <summary>
 			/// [司令部]ウィンドウの設定を扱います。
 			/// </summary>
-			public class ConfigFormHeadquarters : ConfigPartBase {
+			public class ConfigFormHeadquarters : ConfigPartBase
+			{
 
 				/// <summary>
 				/// 艦船/装備が満タンの時点滅するか
@@ -802,10 +823,11 @@ namespace ElectronicObserver.Utility {
 				/// </summary>
 				public int DisplayUseItemID { get; set; }
 
-				public ConfigFormHeadquarters() {
+				public ConfigFormHeadquarters()
+				{
 					BlinkAtMaximum = true;
-					Visibility = null;		// フォーム側で設定します
-					DisplayUseItemID = 68;	// 秋刀魚
+					Visibility = null;      // フォーム側で設定します
+					DisplayUseItemID = 68;  // 秋刀魚
 				}
 			}
 			/// <summary>[司令部]ウィンドウ</summary>
@@ -816,7 +838,8 @@ namespace ElectronicObserver.Utility {
 			/// <summary>
 			/// [艦隊]ウィンドウの設定を扱います。
 			/// </summary>
-			public class ConfigFormFleet : ConfigPartBase {
+			public class ConfigFormFleet : ConfigPartBase
+			{
 
 				/// <summary>
 				/// 艦載機を表示するか
@@ -908,7 +931,8 @@ namespace ElectronicObserver.Utility {
 				/// </summary>
 				public int FleetStateDisplayMode { get; set; }
 
-				public ConfigFormFleet() {
+				public ConfigFormFleet()
+				{
 					ShowAircraft = true;
 					SearchingAbilityMethod = 4;
 					IsScrollable = true;
@@ -937,7 +961,8 @@ namespace ElectronicObserver.Utility {
 			/// <summary>
 			/// [任務]ウィンドウの設定を扱います。
 			/// </summary>
-			public class ConfigFormQuest : ConfigPartBase {
+			public class ConfigFormQuest : ConfigPartBase
+			{
 
 				/// <summary>
 				/// 遂行中の任務のみ表示するか
@@ -993,15 +1018,16 @@ namespace ElectronicObserver.Utility {
 
 				public bool AllowUserToSortRows { get; set; }
 
-				public ConfigFormQuest() {
+				public ConfigFormQuest()
+				{
 					ShowRunningOnly = false;
 					ShowOnce = true;
 					ShowDaily = true;
 					ShowWeekly = true;
 					ShowMonthly = true;
 					ShowOther = true;
-					ColumnFilter = null;		//実際の初期化は FormQuest で行う
-					ColumnWidth = null;			//上に同じ
+					ColumnFilter = null;        //実際の初期化は FormQuest で行う
+					ColumnWidth = null;         //上に同じ
 					SortParameter = 3 << 1 | 0;
 					ProgressAutoSaving = 1;
 					AllowUserToSortRows = true;
@@ -1015,7 +1041,8 @@ namespace ElectronicObserver.Utility {
 			/// <summary>
 			/// [艦船グループ]ウィンドウの設定を扱います。
 			/// </summary>
-			public class ConfigFormShipGroup : ConfigPartBase {
+			public class ConfigFormShipGroup : ConfigPartBase
+			{
 
 				/// <summary>
 				/// 自動更新するか
@@ -1034,7 +1061,8 @@ namespace ElectronicObserver.Utility {
 				/// </summary>
 				public int ShipNameSortMethod { get; set; }
 
-				public ConfigFormShipGroup() {
+				public ConfigFormShipGroup()
+				{
 					AutoUpdate = true;
 					ShowStatusBar = true;
 					ShipNameSortMethod = 0;
@@ -1048,7 +1076,8 @@ namespace ElectronicObserver.Utility {
 			/// <summary>
 			/// [ブラウザ]ウィンドウの設定を扱います。
 			/// </summary>
-			public class ConfigFormBrowser : ConfigPartBase {
+			public class ConfigFormBrowser : ConfigPartBase
+			{
 
 				/// <summary>
 				/// ブラウザの拡大率 10-1000(%)
@@ -1139,7 +1168,8 @@ namespace ElectronicObserver.Utility {
 				public string FlashQuality { get; set; }
 
 
-				public ConfigFormBrowser() {
+				public ConfigFormBrowser()
+				{
 					ZoomRate = 100;
 					ZoomFit = false;
 					LogInPageURL = @"http://www.dmm.com/netgame_s/kancolle/";
@@ -1167,7 +1197,8 @@ namespace ElectronicObserver.Utility {
 			/// <summary>
 			/// [羅針盤]ウィンドウの設定を扱います。
 			/// </summary>
-			public class ConfigFormCompass : ConfigPartBase {
+			public class ConfigFormCompass : ConfigPartBase
+			{
 
 				/// <summary>
 				/// 一度に表示する敵艦隊候補数
@@ -1185,7 +1216,8 @@ namespace ElectronicObserver.Utility {
 				public int MaxShipNameWidth { get; set; }
 
 
-				public ConfigFormCompass() {
+				public ConfigFormCompass()
+				{
 					CandidateDisplayCount = 4;
 					IsScrollable = false;
 					MaxShipNameWidth = 60;
@@ -1199,7 +1231,8 @@ namespace ElectronicObserver.Utility {
 			/// <summary>
 			/// [JSON]ウィンドウの設定を扱います。
 			/// </summary>
-			public class ConfigFormJson : ConfigPartBase {
+			public class ConfigFormJson : ConfigPartBase
+			{
 
 				/// <summary>
 				/// 自動更新するか
@@ -1217,7 +1250,8 @@ namespace ElectronicObserver.Utility {
 				public string AutoUpdateFilter { get; set; }
 
 
-				public ConfigFormJson() {
+				public ConfigFormJson()
+				{
 					AutoUpdate = false;
 					UpdatesTree = true;
 					AutoUpdateFilter = "";
@@ -1231,7 +1265,8 @@ namespace ElectronicObserver.Utility {
 			/// <summary>
 			/// [戦闘]ウィンドウの設定を扱います。
 			/// </summary>
-			public class ConfigFormBattle : ConfigPartBase {
+			public class ConfigFormBattle : ConfigPartBase
+			{
 
 				/// <summary>
 				/// スクロール可能か
@@ -1253,7 +1288,8 @@ namespace ElectronicObserver.Utility {
 				/// </summary>
 				public bool ShowShipTypeInHPBar { get; set; }
 
-				public ConfigFormBattle() {
+				public ConfigFormBattle()
+				{
 					IsScrollable = false;
 					HideDuringBattle = false;
 					ShowHPBar = true;
@@ -1271,14 +1307,16 @@ namespace ElectronicObserver.Utility {
 			/// <summary>
 			/// [基地航空隊]ウィンドウの設定を扱います。
 			/// </summary>
-			public class ConfigFormBaseAirCorps : ConfigPartBase {
+			public class ConfigFormBaseAirCorps : ConfigPartBase
+			{
 
 				/// <summary>
 				/// イベント海域のもののみ表示するか
 				/// </summary>
 				public bool ShowEventMapOnly { get; set; }
 
-				public ConfigFormBaseAirCorps() {
+				public ConfigFormBaseAirCorps()
+				{
 					ShowEventMapOnly = false;
 				}
 			}
@@ -1294,7 +1332,8 @@ namespace ElectronicObserver.Utility {
 			/// <summary>
 			/// 各[通知]ウィンドウの設定を扱います。
 			/// </summary>
-			public class ConfigNotifierBase : ConfigPartBase {
+			public class ConfigNotifierBase : ConfigPartBase
+			{
 
 				public bool IsEnabled { get; set; }
 
@@ -1339,7 +1378,8 @@ namespace ElectronicObserver.Utility {
 				public SerializableColor BackColor { get; set; }
 
 
-				public ConfigNotifierBase() {
+				public ConfigNotifierBase()
+				{
 					IsEnabled = true;
 					IsSilenced = false;
 					ShowsDialog = true;
@@ -1355,7 +1395,7 @@ namespace ElectronicObserver.Utility {
 					CloseOnMouseMove = false;
 					ClickFlag = Notifier.NotifierDialogClickFlags.Left;
 					Alignment = Notifier.NotifierDialogAlignment.BottomRight;
-					Location = new Point( 0, 0 );
+					Location = new Point(0, 0);
 					HasFormBorder = true;
 					TopMost = true;
 					ShowWithActivation = true;
@@ -1369,7 +1409,8 @@ namespace ElectronicObserver.Utility {
 			/// <summary>
 			/// [大破進撃通知]の設定を扱います。
 			/// </summary>
-			public class ConfigNotifierDamage : ConfigNotifierBase {
+			public class ConfigNotifierDamage : ConfigNotifierBase
+			{
 
 				public bool NotifiesBefore { get; set; }
 				public bool NotifiesNow { get; set; }
@@ -1380,7 +1421,8 @@ namespace ElectronicObserver.Utility {
 				public bool ContainsFlagship { get; set; }
 				public bool NotifiesAtEndpoint { get; set; }
 				public ConfigNotifierDamage()
-					: base() {
+					: base()
+				{
 					NotifiesBefore = false;
 					NotifiesNow = true;
 					NotifiesAfter = true;
@@ -1396,12 +1438,14 @@ namespace ElectronicObserver.Utility {
 			/// <summary>
 			/// [泊地修理通知]の設定を扱います。
 			/// </summary>
-			public class ConfigNotifierAnchorageRepair : ConfigNotifierBase {
+			public class ConfigNotifierAnchorageRepair : ConfigNotifierBase
+			{
 
 				public int NotificationLevel { get; set; }
 
 				public ConfigNotifierAnchorageRepair()
-					: base() {
+					: base()
+				{
 					NotificationLevel = 2;
 				}
 			}
@@ -1436,19 +1480,21 @@ namespace ElectronicObserver.Utility {
 			/// <summary>
 			/// SyncBGMPlayer の設定を扱います。
 			/// </summary>
-			public class ConfigBGMPlayer : ConfigPartBase {
+			public class ConfigBGMPlayer : ConfigPartBase
+			{
 
 				public bool Enabled { get; set; }
 				public List<SyncBGMPlayer.SoundHandle> Handles { get; set; }
 				public bool SyncBrowserMute { get; set; }
 
 				public ConfigBGMPlayer()
-					: base() {
+					: base()
+				{
 					// 初期値定義は SyncBGMPlayer 内でも
 					Enabled = false;
 					Handles = new List<SyncBGMPlayer.SoundHandle>();
-					foreach ( SyncBGMPlayer.SoundHandleID id in Enum.GetValues( typeof( SyncBGMPlayer.SoundHandleID ) ) )
-						Handles.Add( new SyncBGMPlayer.SoundHandle( id ) );
+					foreach (SyncBGMPlayer.SoundHandleID id in Enum.GetValues(typeof(SyncBGMPlayer.SoundHandleID)))
+						Handles.Add(new SyncBGMPlayer.SoundHandle(id));
 					SyncBrowserMute = false;
 				}
 			}
@@ -1459,7 +1505,8 @@ namespace ElectronicObserver.Utility {
 			/// <summary>
 			/// 編成画像出力の設定を扱います。
 			/// </summary>
-			public class ConfigFleetImageGenerator : ConfigPartBase {
+			public class ConfigFleetImageGenerator : ConfigPartBase
+			{
 
 				public FleetImageArgument Argument { get; set; }
 				public int ImageType { get; set; }
@@ -1471,7 +1518,8 @@ namespace ElectronicObserver.Utility {
 				public bool SyncronizeTitleAndFileName { get; set; }
 
 				public ConfigFleetImageGenerator()
-					: base() {
+					: base()
+				{
 					Argument = FleetImageArgument.GetDefaultInstance();
 					ImageType = 0;
 					OutputType = 0;
@@ -1487,7 +1535,8 @@ namespace ElectronicObserver.Utility {
 
 
 
-			public class ConfigWhitecap : ConfigPartBase {
+			public class ConfigWhitecap : ConfigPartBase
+			{
 
 				public bool ShowInTaskbar { get; set; }
 				public bool TopMost { get; set; }
@@ -1500,7 +1549,8 @@ namespace ElectronicObserver.Utility {
 				public int AliveRule { get; set; }
 
 				public ConfigWhitecap()
-					: base() {
+					: base()
+				{
 					ShowInTaskbar = true;
 					TopMost = false;
 					BoardWidth = 200;
@@ -1508,8 +1558,8 @@ namespace ElectronicObserver.Utility {
 					ZoomRate = 2;
 					UpdateInterval = 100;
 					ColorTheme = 0;
-					BirthRule = ( 1 << 3 );
-					AliveRule = ( 1 << 2 ) | ( 1 << 3 );
+					BirthRule = (1 << 3);
+					AliveRule = (1 << 2) | (1 << 3);
 				}
 			}
 			[DataMember]
@@ -1518,9 +1568,10 @@ namespace ElectronicObserver.Utility {
 
 
 			[DataMember]
-			public string Version {
+			public string Version
+			{
 				get { return SoftwareInformation.VersionEnglish; }
-				set { }	//readonly
+				set { } //readonly
 			}
 
 
@@ -1528,7 +1579,14 @@ namespace ElectronicObserver.Utility {
 			public string VersionUpdateTime { get; set; }
 
 
-			public override void Initialize() {
+
+			public ConfigurationData()
+			{
+				Initialize();
+			}
+
+			public override void Initialize()
+			{
 
 				Connection = new ConfigConnection();
 				UI = new ConfigUI();
@@ -1560,62 +1618,61 @@ namespace ElectronicObserver.Utility {
 				FleetImageGenerator = new ConfigFleetImageGenerator();
 				Whitecap = new ConfigWhitecap();
 
-				VersionUpdateTime = DateTimeHelper.TimeToCSVString( SoftwareInformation.UpdateTime );
+				VersionUpdateTime = DateTimeHelper.TimeToCSVString(SoftwareInformation.UpdateTime);
 
 			}
 		}
 		private static ConfigurationData _config;
 
-		public static ConfigurationData Config {
-			get { return _config; }
-		}
+		public static ConfigurationData Config => _config;
 
 
 
 		private Configuration()
-			: base() {
+			: base()
+		{
 
 			_config = new ConfigurationData();
 		}
 
 
-		internal void OnConfigurationChanged() {
+		internal void OnConfigurationChanged()
+		{
 			ConfigurationChanged();
 		}
 
 
-		public void Load( Form mainForm ) {
-			var temp = (ConfigurationData)_config.Load( SaveFileName );
-			if ( temp != null ) {
+		public void Load(Form mainForm)
+		{
+			var temp = (ConfigurationData)_config.Load(SaveFileName);
+			if (temp != null)
+			{
 				_config = temp;
-				CheckUpdate( mainForm );
+				CheckUpdate(mainForm);
 				OnConfigurationChanged();
-			} else {
+			}
+			else
+			{
 				MessageBox.Show( "欢迎使用" + SoftwareInformation.SoftwareNameJapanese + " 。\r\n\r\n设置和使用方法请参考 [帮助] - [在线帮助]\r\n使用前敬请阅读。",
 					"初次启动信息", MessageBoxButtons.OK, MessageBoxIcon.Information );
 				MessageBox.Show( "※ 本汉化版启动时浏览器不会自动加载页面 ※\r\n\r\n如有需要请在确保代理设置准确无误后手动通\r\n过 [文件] - [设置] - [子窗口] - [浏览器] 勾选\r\n[启动时自动加载页面] 开启此功能。",
 					"重要提示", MessageBoxButtons.OK, MessageBoxIcon.Information );
 
 				// そのままだと正常に動作しなくなった(らしい)ので、ブラウザバージョンの書き込み
-				Microsoft.Win32.RegistryKey reg = null;
-				try {
+				try
+				{
+					using (var reg = Microsoft.Win32.Registry.CurrentUser.CreateSubKey(DialogConfiguration.RegistryPathMaster + DialogConfiguration.RegistryPathBrowserVersion))
+						reg.SetValue(Window.FormBrowserHost.BrowserExeName, DialogConfiguration.DefaultBrowserVersion, Microsoft.Win32.RegistryValueKind.DWord);
 
-					reg = Microsoft.Win32.Registry.CurrentUser.CreateSubKey( DialogConfiguration.RegistryPathMaster + DialogConfiguration.RegistryPathBrowserVersion );
-					reg.SetValue( Window.FormBrowserHost.BrowserExeName, DialogConfiguration.DefaultBrowserVersion, Microsoft.Win32.RegistryValueKind.DWord );
-					reg.Close();
+					using (var reg = Microsoft.Win32.Registry.CurrentUser.CreateSubKey(DialogConfiguration.RegistryPathMaster + DialogConfiguration.RegistryPathGPURendering))
+						reg.SetValue(Window.FormBrowserHost.BrowserExeName, DialogConfiguration.DefaultGPURendering ? 1 : 0, Microsoft.Win32.RegistryValueKind.DWord);
 
-					reg = Microsoft.Win32.Registry.CurrentUser.CreateSubKey( DialogConfiguration.RegistryPathMaster + DialogConfiguration.RegistryPathGPURendering );
-					reg.SetValue( Window.FormBrowserHost.BrowserExeName, DialogConfiguration.DefaultGPURendering ? 1 : 0, Microsoft.Win32.RegistryValueKind.DWord );
-
-					Utility.Logger.Add(2, "", "已将浏览器版本写入注册表。想要清除的话点击 [设置]-[子窗口]-[浏览器2] 里的 [清除] 按钮。");
+					Utility.Logger.Add(2, "", "已将浏览器版本写入注册表。要清除的话点击 [设置]-[子窗口]-[浏览器2] 里的 [清除] 按钮。");
 
 
-				} catch ( Exception ex ) {
-					Utility.ErrorReporter.SendErrorReport( ex, "ブラウザバージョンをレジストリに書き込めませんでした。" );
+				} catch (Exception ex) {
+					Utility.ErrorReporter.SendErrorReport(ex, "向注册表写入浏览器版本失败。");
 
-				} finally {
-					if ( reg != null )
-						reg.Close();
 				}
 
 			}
@@ -2288,75 +2345,90 @@ namespace ElectronicObserver.Utility {
 			}
 		}
 
-		public void Save() {
-			_config.Save( SaveFileName );
+		public void Save()
+		{
+			_config.Save(SaveFileName);
 		}
 
 
 
-		private void CheckUpdate( Form mainForm ) {
-			DateTime dt = Config.VersionUpdateTime == null ? new DateTime( 0 ) : DateTimeHelper.CSVStringToTime( Config.VersionUpdateTime );
+		private void CheckUpdate(Form mainForm)
+		{
+			DateTime dt = Config.VersionUpdateTime == null ? new DateTime(0) : DateTimeHelper.CSVStringToTime(Config.VersionUpdateTime);
 
 			// version 1.4.6 or earlier
-			if ( dt <= DateTimeHelper.CSVStringToTime( "2015/08/27 21:00:00" ) ) {
+			if (dt <= DateTimeHelper.CSVStringToTime("2015/08/27 21:00:00"))
+			{
 
-				if ( MessageBox.Show(
+				if (MessageBox.Show(
 					"バージョンアップが検出されました。\r\n古いレコードファイルを新しいフォーマットにコンバートします。\r\n(元のファイルは Record_Backup フォルダに残されます。)\r\nよろしいですか？\r\n(コンバートせずに続行した場合、読み込めなくなる可能性があります。)\r\n",
 					"バージョンアップに伴う確認(～1.4.6)",
-					MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1 )
-					 == DialogResult.Yes ) {
+					MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1)
+					 == DialogResult.Yes)
+				{
 
-					try {
+					try
+					{
 
-						Directory.CreateDirectory( "Record_Backup" );
+						Directory.CreateDirectory("Record_Backup");
 
-						if ( File.Exists( RecordManager.Instance.MasterPath + "\\EnemyFleetRecord.csv" ) ) {
-							File.Copy( RecordManager.Instance.MasterPath + "\\EnemyFleetRecord.csv", "Record_Backup\\EnemyFleetRecord.csv", false );
+						if (File.Exists(RecordManager.Instance.MasterPath + "\\EnemyFleetRecord.csv"))
+						{
+							File.Copy(RecordManager.Instance.MasterPath + "\\EnemyFleetRecord.csv", "Record_Backup\\EnemyFleetRecord.csv", false);
 
 							//ヒャッハー！！
-							using ( var writer = new StreamWriter( RecordManager.Instance.MasterPath + "\\EnemyFleetRecord.csv", false, Config.Log.FileEncoding ) ) {
+							using (var writer = new StreamWriter(RecordManager.Instance.MasterPath + "\\EnemyFleetRecord.csv", false, Config.Log.FileEncoding))
+							{
 								writer.WriteLine();
 							}
 						}
 
 
-						if ( File.Exists( RecordManager.Instance.MasterPath + "\\ShipDropRecord.csv" ) ) {
-							File.Copy( RecordManager.Instance.MasterPath + "\\ShipDropRecord.csv", "Record_Backup\\ShipDropRecord.csv", false );
+						if (File.Exists(RecordManager.Instance.MasterPath + "\\ShipDropRecord.csv"))
+						{
+							File.Copy(RecordManager.Instance.MasterPath + "\\ShipDropRecord.csv", "Record_Backup\\ShipDropRecord.csv", false);
 
-							using ( var reader = new StreamReader( "Record_Backup\\ShipDropRecord.csv", Config.Log.FileEncoding ) ) {
-								using ( var writer = new StreamWriter( RecordManager.Instance.MasterPath + "\\ShipDropRecord.csv", false, Config.Log.FileEncoding ) ) {
+							using (var reader = new StreamReader("Record_Backup\\ShipDropRecord.csv", Config.Log.FileEncoding))
+							{
+								using (var writer = new StreamWriter(RecordManager.Instance.MasterPath + "\\ShipDropRecord.csv", false, Config.Log.FileEncoding))
+								{
 
-									while ( !reader.EndOfStream ) {
+									while (!reader.EndOfStream)
+									{
 										string line = reader.ReadLine();
-										var elem = line.Split( ",".ToCharArray() ).ToList();
+										var elem = line.Split(",".ToCharArray()).ToList();
 
-										elem.Insert( 6, Constants.GetDifficulty( -1 ) );	//difficulty
-										elem[8] = "0";		//EnemyFleetID
+										elem.Insert(6, Constants.GetDifficulty(-1));    //difficulty
+										elem[8] = "0";      //EnemyFleetID
 
 
-										writer.WriteLine( string.Join( ",", elem ) );
+										writer.WriteLine(string.Join(",", elem));
 									}
 								}
 							}
 						}
 
 
-						if ( File.Exists( RecordManager.Instance.MasterPath + "\\ShipParameterRecord.csv" ) ) {
-							File.Copy( RecordManager.Instance.MasterPath + "\\ShipParameterRecord.csv", "Record_Backup\\ShipParameterRecord.csv", false );
+						if (File.Exists(RecordManager.Instance.MasterPath + "\\ShipParameterRecord.csv"))
+						{
+							File.Copy(RecordManager.Instance.MasterPath + "\\ShipParameterRecord.csv", "Record_Backup\\ShipParameterRecord.csv", false);
 
-							using ( var reader = new StreamReader( "Record_Backup\\ShipParameterRecord.csv", Config.Log.FileEncoding ) ) {
-								using ( var writer = new StreamWriter( RecordManager.Instance.MasterPath + "\\ShipParameterRecord.csv", false, Config.Log.FileEncoding ) ) {
+							using (var reader = new StreamReader("Record_Backup\\ShipParameterRecord.csv", Config.Log.FileEncoding))
+							{
+								using (var writer = new StreamWriter(RecordManager.Instance.MasterPath + "\\ShipParameterRecord.csv", false, Config.Log.FileEncoding))
+								{
 
-									while ( !reader.EndOfStream ) {
+									while (!reader.EndOfStream)
+									{
 										string line = reader.ReadLine();
-										var elem = line.Split( ",".ToCharArray() ).ToList();
+										var elem = line.Split(",".ToCharArray()).ToList();
 
-										elem.InsertRange( 2, Enumerable.Repeat( "0", 10 ) );
-										elem.InsertRange( 21, Enumerable.Repeat( "0", 3 ) );
-										elem.InsertRange( 29, Enumerable.Repeat( "null", 5 ) );
-										elem.Insert( 34, "null" );
+										elem.InsertRange(2, Enumerable.Repeat("0", 10));
+										elem.InsertRange(21, Enumerable.Repeat("0", 3));
+										elem.InsertRange(29, Enumerable.Repeat("null", 5));
+										elem.Insert(34, "null");
 
-										writer.WriteLine( string.Join( ",", elem ) );
+										writer.WriteLine(string.Join(",", elem));
 									}
 								}
 							}
@@ -2364,38 +2436,44 @@ namespace ElectronicObserver.Utility {
 
 
 
-						if ( File.Exists( RecordManager.Instance.MasterPath + "\\ConstructionRecord.csv" ) ) {
-							File.Copy( RecordManager.Instance.MasterPath + "\\ConstructionRecord.csv", "Record_Backup\\ConstructionRecord.csv", false );
+						if (File.Exists(RecordManager.Instance.MasterPath + "\\ConstructionRecord.csv"))
+						{
+							File.Copy(RecordManager.Instance.MasterPath + "\\ConstructionRecord.csv", "Record_Backup\\ConstructionRecord.csv", false);
 
-							using ( var reader = new StreamReader( "Record_Backup\\ConstructionRecord.csv", Config.Log.FileEncoding ) ) {
-								using ( var writer = new StreamWriter( RecordManager.Instance.MasterPath + "\\ConstructionRecord.csv", false, Config.Log.FileEncoding ) ) {
+							using (var reader = new StreamReader("Record_Backup\\ConstructionRecord.csv", Config.Log.FileEncoding))
+							{
+								using (var writer = new StreamWriter(RecordManager.Instance.MasterPath + "\\ConstructionRecord.csv", false, Config.Log.FileEncoding))
+								{
 
 									string[] prev = null;
 
-									while ( !reader.EndOfStream ) {
+									while (!reader.EndOfStream)
+									{
 										string line = reader.ReadLine();
-										var elem = line.Split( ",".ToCharArray() );
+										var elem = line.Split(",".ToCharArray());
 
 										// 以前のバージョンのバグによる無効行・重複行の削除
-										if ( prev != null ) {
-											if ( elem[0] == "0" || (	//invalid id
-												elem[0] == prev[0] &&	//id
-												elem[1] == prev[1] &&	//name
-												elem[3] == prev[3] &&	//fuel
-												elem[4] == prev[4] &&	//ammo
-												elem[5] == prev[5] &&	//steel
-												elem[6] == prev[6] &&	//bauxite
-												elem[7] == prev[7] &&	//dev.mat
-												elem[8] == prev[8] &&	//islarge
-												elem[9] == prev[9]		//emptydock
-												) ) {
+										if (prev != null)
+										{
+											if (elem[0] == "0" || ( //invalid id
+												elem[0] == prev[0] &&   //id
+												elem[1] == prev[1] &&   //name
+												elem[3] == prev[3] &&   //fuel
+												elem[4] == prev[4] &&   //ammo
+												elem[5] == prev[5] &&   //steel
+												elem[6] == prev[6] &&   //bauxite
+												elem[7] == prev[7] &&   //dev.mat
+												elem[8] == prev[8] &&   //islarge
+												elem[9] == prev[9]      //emptydock
+												))
+											{
 
 												prev = elem;
 												continue;
 											}
 										}
 
-										writer.WriteLine( string.Join( ",", elem ) );
+										writer.WriteLine(string.Join(",", elem));
 										prev = elem;
 									}
 								}
@@ -2404,19 +2482,22 @@ namespace ElectronicObserver.Utility {
 
 
 						// 読み書き方式が変わったので念のため
-						if ( File.Exists( RecordManager.Instance.MasterPath + "\\DevelopmentRecord.csv" ) ) {
-							File.Copy( RecordManager.Instance.MasterPath + "\\DevelopmentRecord.csv", "Record_Backup\\DevelopmentRecord.csv", false );
+						if (File.Exists(RecordManager.Instance.MasterPath + "\\DevelopmentRecord.csv"))
+						{
+							File.Copy(RecordManager.Instance.MasterPath + "\\DevelopmentRecord.csv", "Record_Backup\\DevelopmentRecord.csv", false);
 						}
 
 
-					} catch ( Exception ex ) {
+					}
+					catch (Exception ex)
+					{
 
-						Utility.ErrorReporter.SendErrorReport( ex, "バージョンアップに伴うレコードのコンバートに失敗しました。" );
+						Utility.ErrorReporter.SendErrorReport(ex, "バージョンアップに伴うレコードのコンバートに失敗しました。");
 
-						if ( MessageBox.Show( "コンバートに失敗しました。\r\n" + ex.Message + "\r\n起動処理を続行しますか？\r\n(データが破壊される可能性があります)\r\n",
-							"エラー", MessageBoxButtons.YesNo, MessageBoxIcon.Error, MessageBoxDefaultButton.Button2 )
-							== DialogResult.No )
-							Environment.Exit( -1 );
+						if (MessageBox.Show("コンバートに失敗しました。\r\n" + ex.Message + "\r\n起動処理を続行しますか？\r\n(データが破壊される可能性があります)\r\n",
+							"エラー", MessageBoxButtons.YesNo, MessageBoxIcon.Error, MessageBoxDefaultButton.Button2)
+							== DialogResult.No)
+							Environment.Exit(-1);
 
 					}
 				}
@@ -2425,26 +2506,31 @@ namespace ElectronicObserver.Utility {
 			}
 
 			// version 1.5.0 or earlier
-			if ( dt <= DateTimeHelper.CSVStringToTime( "2015/09/04 21:00:00" ) ) {
+			if (dt <= DateTimeHelper.CSVStringToTime("2015/09/04 21:00:00"))
+			{
 
-				if ( MessageBox.Show(
+				if (MessageBox.Show(
 					"バージョンアップが検出されました。\r\n艦船グループデータの互換性がなくなったため、当該データを初期化します。\r\n(古いファイルは Settings_Backup フォルダに退避されます。)\r\nよろしいですか？\r\n(初期化せずに続行した場合、エラーが発生します。)\r\n",
 					"バージョンアップに伴う確認(～1.5.0)",
-					MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1 )
-					 == DialogResult.Yes ) {
+					MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1)
+					 == DialogResult.Yes)
+				{
 
-					try {
+					try
+					{
 
-						Directory.CreateDirectory( "Settings_Backup" );
-						File.Move( "Settings\\ShipGroups.xml", "Settings_Backup\\ShipGroups.xml" );
+						Directory.CreateDirectory("Settings_Backup");
+						File.Move("Settings\\ShipGroups.xml", "Settings_Backup\\ShipGroups.xml");
 
-					} catch ( Exception ex ) {
+					}
+					catch (Exception ex)
+					{
 
-						Utility.ErrorReporter.SendErrorReport( ex, "バージョンアップに伴うグループデータの削除に失敗しました。" );
+						Utility.ErrorReporter.SendErrorReport(ex, "バージョンアップに伴うグループデータの削除に失敗しました。");
 
 						// エラーが出るだけなのでシャットダウンは不要
-						MessageBox.Show( "削除に失敗しました。\r\n" + ex.Message,
-							"エラー", MessageBoxButtons.OK, MessageBoxIcon.Error );
+						MessageBox.Show("削除に失敗しました。\r\n" + ex.Message,
+							"エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
 					}
 				}
@@ -2452,81 +2538,98 @@ namespace ElectronicObserver.Utility {
 
 
 			// version 1.6.3 or earlier
-			if ( dt <= DateTimeHelper.CSVStringToTime( "2015/10/03 22:00:00" ) ) {
+			if (dt <= DateTimeHelper.CSVStringToTime("2015/10/03 22:00:00"))
+			{
 
-				if ( MessageBox.Show(
+				if (MessageBox.Show(
 					"バージョンアップが検出されました。\r\nアイテムドロップ仕様の変更に伴い、艦船ドロップレコードのフォーマットを変更します。\r\n(古いファイルは Record_Backup フォルダに退避されます。)\r\nよろしいですか？\r\n(初期化せずに続行した場合、エラーが発生します。)\r\n",
 					"バージョンアップに伴う確認(～1.6.3)",
-					MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1 )
-					 == DialogResult.Yes ) {
+					MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1)
+					 == DialogResult.Yes)
+				{
 
-					try {
+					try
+					{
 
-						if ( File.Exists( RecordManager.Instance.MasterPath + "\\ShipDropRecord.csv" ) ) {
+						if (File.Exists(RecordManager.Instance.MasterPath + "\\ShipDropRecord.csv"))
+						{
 
-							Directory.CreateDirectory( "Record_Backup" );
+							Directory.CreateDirectory("Record_Backup");
 
-							if ( File.Exists( "Record_Backup\\ShipDropRecord.csv" ) ) {
-								var result = MessageBox.Show( "バックアップ先に既にファイルが存在します。\r\n上書きしますか？\r\n(キャンセルした場合、コンバート処理を中止します。)",
-									"バックアップの上書き確認", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question );
+							if (File.Exists("Record_Backup\\ShipDropRecord.csv"))
+							{
+								var result = MessageBox.Show("バックアップ先に既にファイルが存在します。\r\n上書きしますか？\r\n(キャンセルした場合、コンバート処理を中止します。)",
+									"バックアップの上書き確認", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
 
-								switch ( result ) {
+								switch (result)
+								{
 									case DialogResult.Yes:
-										File.Copy( RecordManager.Instance.MasterPath + "\\ShipDropRecord.csv", "Record_Backup\\ShipDropRecord.csv", true );
+										File.Copy(RecordManager.Instance.MasterPath + "\\ShipDropRecord.csv", "Record_Backup\\ShipDropRecord.csv", true);
 										break;
 									case DialogResult.No:
 										break;
 									case DialogResult.Cancel:
-										throw new InvalidOperationException( "バックアップ処理がキャンセルされました。" );
+										throw new InvalidOperationException("バックアップ処理がキャンセルされました。");
 								}
-							} else {
-								File.Copy( RecordManager.Instance.MasterPath + "\\ShipDropRecord.csv", "Record_Backup\\ShipDropRecord.csv", false );
+							}
+							else
+							{
+								File.Copy(RecordManager.Instance.MasterPath + "\\ShipDropRecord.csv", "Record_Backup\\ShipDropRecord.csv", false);
 							}
 
 
-							using ( var reader = new StreamReader( "Record_Backup\\ShipDropRecord.csv", Config.Log.FileEncoding ) ) {
-								using ( var writer = new StreamWriter( RecordManager.Instance.MasterPath + "\\ShipDropRecord.csv", false, Config.Log.FileEncoding ) ) {
+							using (var reader = new StreamReader("Record_Backup\\ShipDropRecord.csv", Config.Log.FileEncoding))
+							{
+								using (var writer = new StreamWriter(RecordManager.Instance.MasterPath + "\\ShipDropRecord.csv", false, Config.Log.FileEncoding))
+								{
 
-									while ( !reader.EndOfStream ) {
+									while (!reader.EndOfStream)
+									{
 										string line = reader.ReadLine();
-										var elem = line.Split( ",".ToCharArray() ).ToList();
+										var elem = line.Split(",".ToCharArray()).ToList();
 
 										// 旧IDの変換
-										int oldID;
-										if ( !int.TryParse( elem[0], out oldID ) )
+										if (!int.TryParse(elem[0], out int oldID))
 											oldID = -1;
 
-										if ( oldID > 2000 ) {
+										if (oldID > 2000)
+										{
 											elem[0] = "-1";
 											elem[1] = "(なし)";
-											elem.InsertRange( 2, new string[] { "-1", "(なし)", ( oldID - 2000 ).ToString(), "???" } );
+											elem.InsertRange(2, new string[] { "-1", "(なし)", (oldID - 2000).ToString(), "???" });
 
-										} else if ( oldID > 1000 ) {
+										}
+										else if (oldID > 1000)
+										{
 											elem[0] = "-1";
 											elem[1] = "(なし)";
-											elem.InsertRange( 2, new string[] { ( oldID - 1000 ).ToString(), "???", "-1", "(なし)" } );
+											elem.InsertRange(2, new string[] { (oldID - 1000).ToString(), "???", "-1", "(なし)" });
 
-										} else {
-											elem.InsertRange( 2, new string[] { "-1", "(なし)", "-1", "(なし)" } );
+										}
+										else
+										{
+											elem.InsertRange(2, new string[] { "-1", "(なし)", "-1", "(なし)" });
 
 										}
 
 
-										writer.WriteLine( string.Join( ",", elem ) );
+										writer.WriteLine(string.Join(",", elem));
 									}
 								}
 							}
 						}
 
 
-					} catch ( Exception ex ) {
+					}
+					catch (Exception ex)
+					{
 
-						Utility.ErrorReporter.SendErrorReport( ex, "バージョンアップに伴うレコードのコンバートに失敗しました。" );
+						Utility.ErrorReporter.SendErrorReport(ex, "バージョンアップに伴うレコードのコンバートに失敗しました。");
 
-						if ( MessageBox.Show( "コンバートに失敗しました。\r\n" + ex.Message + "\r\n起動処理を続行しますか？\r\n(データが破壊される可能性があります)\r\n",
-							"エラー", MessageBoxButtons.YesNo, MessageBoxIcon.Error, MessageBoxDefaultButton.Button2 )
-							== DialogResult.No )
-							Environment.Exit( -1 );
+						if (MessageBox.Show("コンバートに失敗しました。\r\n" + ex.Message + "\r\n起動処理を続行しますか？\r\n(データが破壊される可能性があります)\r\n",
+							"エラー", MessageBoxButtons.YesNo, MessageBoxIcon.Error, MessageBoxDefaultButton.Button2)
+							== DialogResult.No)
+							Environment.Exit(-1);
 
 					}
 				}
@@ -2535,11 +2638,13 @@ namespace ElectronicObserver.Utility {
 
 
 			// version RN-2.5.4.1-m1 or earlier
-			if ( dt <= DateTimeHelper.CSVStringToTime( "2017/03/19 16:08:50" ) ) {
+			if (dt <= DateTimeHelper.CSVStringToTime( "2017/03/19 16:08:50"))
+			{
 
-				if ( MessageBox.Show(
-					"由于「艦これ」的更新，需要转换记录文件。\r\n要进行转换吗？\r\n( 若不进行转换，可能导致工作不正常。)\r\n\r\n转换前请备份：\r\nEnemyFleetRecord.csv\r\nShipDropRecord.csv\r\nShipParameterRecord.csv", "由 2.5.4.1-m1-patch1 或更早版本的更新确认",
-					MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1 ) == DialogResult.Yes ) {
+				if (MessageBox.Show("由于「艦これ」的更新，需要转换记录文件。\r\n要进行转换吗？\r\n( 若不进行转换，可能导致工作不正常。)\r\n\r\n" +
+					"转换前请备份：\r\nEnemyFleetRecord.csv\r\nShipDropRecord.csv\r\nShipParameterRecord.csv", "由 2.5.4.1-m1-patch1 或更早版本的更新确认",
+					MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.Yes)
+				{
 
 					// 敵編成レコードの敵編成ID再計算とドロップレコードの敵編成ID振りなおし
 					try {
@@ -2578,75 +2683,85 @@ namespace ElectronicObserver.Utility {
 								enemyFleetRecord.Record.Remove(key);
 							}
 							// 修复掉落记录中的错误项
-							foreach ( var record in shipDropRecord.Record ) {
-								if ( convertPair.ContainsKey( record.EnemyFleetID ) )
+							foreach (var record in shipDropRecord.Record) {
+								if (convertPair.ContainsKey( record.EnemyFleetID))
 									record.EnemyFleetID = convertPair[record.EnemyFleetID];
 							}
 							// 清空转换表
 							convertPair.Clear();
 						}
 
-						foreach ( var record in enemyFleetRecord.Record.Values ) {
+						foreach (var record in enemyFleetRecord.Record.Values)
+						{
 							uint key = record.FleetID;
-							record.FleetMember = record.FleetMember.Select( id => 500 < id && id < 1000 ? id + 1000 : id ).ToArray();
-							convertPair.Add( key, record.FleetID );
+							record.FleetMember = record.FleetMember.Select(id => 500 < id && id < 1000 ? id + 1000 : id).ToArray();
+							convertPair.Add(key, record.FleetID);
 						}
 
-						foreach ( var record in shipDropRecord.Record ) {
-							if ( convertPair.ContainsKey( record.EnemyFleetID ) )
+						foreach (var record in shipDropRecord.Record) {
+							if (convertPair.ContainsKey(record.EnemyFleetID))
 								record.EnemyFleetID = convertPair[record.EnemyFleetID];
 						}
 
-						enemyFleetRecord.SaveAll( RecordManager.Instance.MasterPath );
-						shipDropRecord.SaveAll( RecordManager.Instance.MasterPath );
+						enemyFleetRecord.SaveAll(RecordManager.Instance.MasterPath);
+						shipDropRecord.SaveAll(RecordManager.Instance.MasterPath);
 
-					} catch ( Exception ex ) {
-						ErrorReporter.SendErrorReport( ex, "CheckUpdate: ドロップレコードのID振りなおしに失敗しました。" );
+					}
+					catch (Exception ex)
+					{
+						ErrorReporter.SendErrorReport(ex, "CheckUpdate: ドロップレコードのID振りなおしに失敗しました。");
 					}
 
 
 					// パラメータレコードの移動と破損データのダウンロード
-					try {
+					try
+					{
 
 						var currentRecord = new ShipParameterRecord();
-						currentRecord.Load( RecordManager.Instance.MasterPath );
+						currentRecord.Load(RecordManager.Instance.MasterPath);
 
-						foreach ( var record in currentRecord.Record.Values ) {
-							if ( 500 < record.ShipID && record.ShipID <= 1000 ) {
+						foreach (var record in currentRecord.Record.Values)
+						{
+							if (500 < record.ShipID && record.ShipID <= 1000)
+							{
 								record.ShipID += 1000;
 							}
 						}
 
-						string defaultRecordPath = Path.Combine( Path.GetTempPath(), Path.GetRandomFileName() );
-						while ( Directory.Exists( defaultRecordPath ) )
-							defaultRecordPath = Path.Combine( Path.GetTempPath(), Path.GetRandomFileName() );
+						string defaultRecordPath = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
+						while (Directory.Exists(defaultRecordPath))
+							defaultRecordPath = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
 
-						Directory.CreateDirectory( defaultRecordPath );
+						Directory.CreateDirectory(defaultRecordPath);
 
-						ElectronicObserver.Resource.ResourceManager.CopyDocumentFromArchive( "Record/" + currentRecord.FileName, Path.Combine( defaultRecordPath, currentRecord.FileName ) );
+						ElectronicObserver.Resource.ResourceManager.CopyDocumentFromArchive("Record/" + currentRecord.FileName, Path.Combine(defaultRecordPath, currentRecord.FileName));
 
 						var defaultRecord = new ShipParameterRecord();
-						defaultRecord.Load( defaultRecordPath );
+						defaultRecord.Load(defaultRecordPath);
 						var changed = new List<int>();
 
-						foreach ( var pair in defaultRecord.Record.Keys.GroupJoin( currentRecord.Record.Keys, i => i, i => i, ( id, list ) => new { id, list } ) ) {
-							if ( defaultRecord[pair.id].HPMin > 0 && ( pair.list == null || defaultRecord[pair.id].SaveLine() != currentRecord[pair.id].SaveLine() ) )
-								changed.Add( pair.id );
+						foreach (var pair in defaultRecord.Record.Keys.GroupJoin(currentRecord.Record.Keys, i => i, i => i, (id, list) => new { id, list }))
+						{
+							if (defaultRecord[pair.id].HPMin > 0 && (pair.list == null || defaultRecord[pair.id].SaveLine() != currentRecord[pair.id].SaveLine()))
+								changed.Add(pair.id);
 						}
 
-						foreach ( var id in changed ) {
-							if ( currentRecord[id] == null )
-								currentRecord.Update( new ShipParameterRecord.ShipParameterElement() );
-							currentRecord[id].LoadLine( defaultRecord.Record[id].SaveLine() );
+						foreach (var id in changed)
+						{
+							if (currentRecord[id] == null)
+								currentRecord.Update(new ShipParameterRecord.ShipParameterElement());
+							currentRecord[id].LoadLine(defaultRecord.Record[id].SaveLine());
 						}
 
-						currentRecord.SaveAll( RecordManager.Instance.MasterPath );
+						currentRecord.SaveAll(RecordManager.Instance.MasterPath);
 
-						Directory.Delete( defaultRecordPath, true );
+						Directory.Delete(defaultRecordPath, true);
 
 
-					} catch ( Exception ex ) {
-						ErrorReporter.SendErrorReport( ex, "パラメータレコードの再編に失敗しました。" );
+					}
+					catch (Exception ex)
+					{
+						ErrorReporter.SendErrorReport(ex, "パラメータレコードの再編に失敗しました。");
 					}
 
 				}
@@ -2656,38 +2771,44 @@ namespace ElectronicObserver.Utility {
 
 
 			// version 2.6.2 or earlier
-			if ( dt <= DateTimeHelper.CSVStringToTime( "2017/06/24 17:35:44" ) ) {
+			if (dt <= DateTimeHelper.CSVStringToTime("2017/06/24 17:35:44"))
+			{
 
 				// 開発レコードを重複記録してしまう不具合があったため、重複行の削除を行う
 
-				try {
+				try
+				{
 
 					var dev = new DevelopmentRecord();
 					string path = RecordManager.Instance.MasterPath + "\\" + dev.FileName;
 
 
 					string backupPath = RecordManager.Instance.MasterPath + "\\Backup_" + DateTimeHelper.GetTimeStamp();
-					Directory.CreateDirectory( backupPath );
-					File.Copy( path, backupPath + "\\" + dev.FileName );
+					Directory.CreateDirectory(backupPath);
+					File.Copy(path, backupPath + "\\" + dev.FileName);
 
 
-					if ( File.Exists( path ) ) {
+					if (File.Exists(path))
+					{
 
 						var lines = new List<string>();
-						using ( StreamReader sr = new StreamReader( path, Utility.Configuration.Config.Log.FileEncoding ) ) {
-							sr.ReadLine();		// skip header row
-							while ( !sr.EndOfStream )
-								lines.Add( sr.ReadLine() );
+						using (StreamReader sr = new StreamReader(path, Utility.Configuration.Config.Log.FileEncoding))
+						{
+							sr.ReadLine();      // skip header row
+							while (!sr.EndOfStream)
+								lines.Add(sr.ReadLine());
 						}
 
 						int beforeCount = lines.Count;
 						lines = lines.Distinct().ToList();
 						int afterCount = lines.Count;
 
-						using ( StreamWriter sw = new StreamWriter( path, false, Utility.Configuration.Config.Log.FileEncoding ) ) {
-							sw.WriteLine( dev.RecordHeader );
-							foreach ( var line in lines ) {
-								sw.WriteLine( line );
+						using (StreamWriter sw = new StreamWriter(path, false, Utility.Configuration.Config.Log.FileEncoding))
+						{
+							sw.WriteLine(dev.RecordHeader);
+							foreach (var line in lines)
+							{
+								sw.WriteLine(line);
 							}
 						}
 
@@ -2695,13 +2816,15 @@ namespace ElectronicObserver.Utility {
 
 					}
 
-				} catch ( Exception ex ) {
-					ErrorReporter.SendErrorReport( ex, "<= ver. 2.6.2 開発レコード重複不具合対応: 失敗しました。" );
+				}
+				catch (Exception ex)
+				{
+					ErrorReporter.SendErrorReport(ex, "<= ver. 2.6.2 開発レコード重複不具合対応: 失敗しました。");
 				}
 			}
 
 
-			Config.VersionUpdateTime = DateTimeHelper.TimeToCSVString( SoftwareInformation.UpdateTime );
+			Config.VersionUpdateTime = DateTimeHelper.TimeToCSVString(SoftwareInformation.UpdateTime);
 		}
 
 	}

@@ -450,15 +450,18 @@ api_start2	：艦娘・装備固有データその他
 		api_id			：海域ID
 		api_maparea_id	：海域カテゴリID(ex. 2-3 の 2)
 		api_no			：海域カテゴリ内ID(ex. 2-3 の 3)
+		api_moving_bgm	：海域BGMID　0=通常曲
 		api_map_bgm		：通常戦闘BGMID　[0]=昼戦, [1]=夜戦
 		api_boss_bgm	：ボス戦闘BGMID
 
 	api_mst_mission		：遠征データ
 		api_id			：遠征ID
+		api_disp_no		：表示上の遠征ID ("A1"のような)
 		api_maparea_id	：海域カテゴリID
 		api_name		：遠征名
 		api_details		：遠征詳細
 		api_time		：時間　分単位
+		api_deck_num	：必要隻数
 		api_difficulty	：難易度
 		api_use_fuel	：燃料消費割合
 		api_use_bull	：弾薬消費割合
@@ -510,6 +513,7 @@ api_get_member/require_info	：起動時情報群
 	api_kdock			：工廠ドック状態 kdock と同じ
 	api_useitem			：消費アイテムリスト useitem と同じ　アイテムを1つも保有していない場合は存在しない
 	api_furniture		：家具リスト furniture と同じ
+	api_extra_supply	：臨時補給可否？ [2]
 
 api_get_member/basic		：艦隊司令部情報
 	api_member_id			：提督ID string
@@ -555,7 +559,7 @@ api_port/port		：母港情報
 	
 	api_ship				：所属艦船情報
 		api_id				：艦船固有ID
-		api_sortno			：並び替え順？
+		api_sortno			：図鑑番号
 		api_ship_id			：艦船ID
 		api_lv				：Lv
 		api_exp				：経験値　[0]=累積, [1]=次のレベルまで, [2]=経験値バー割合
@@ -852,11 +856,12 @@ api_get_member/questlist	：任務
 		api_title			：タイトル
 		api_detail			：説明 "<br>"で改行
 		api_lost_badges		：消費勲章数　消費するときのみ存在
-		api_select_rewards	：報酬選択が可能な任務に存在 []
+		api_select_rewards	：報酬選択が可能な任務に存在 [1][]
 			api_no			：ID (1から始まる連番)
 			api_kind		：種別?
 			api_mst_id		：ID?
 			api_count		：個数
+		api_voice_id		：達成時に再生されるボイスのID　再生されるもののみ存在　URLは sound/kc9999/<api_voice_id>.mp3　任務ID + 1000?
 		api_get_material	：獲得資材
 		api_bonus_flag		：1=通常, 2=艦娘
 		api_progress_flag	：進捗　0=空白(達成含む), 1=50%以上達成, 2=80%以上達成
@@ -887,10 +892,10 @@ api_req_quest/clearitemget		：任務達成
 	api_material		：獲得資源量(基本4種)
 	api_bounus_count	：api_bounus の数 *スペルミス注意*
 	api_bounus			：アイテム *スペルミス注意*
-		api_type		：1=資源(バケツその他4種？), 2=艦隊解放, 3=家具箱, 4=大型艦建造解放, 11=艦船, 12=装備, 13=アイテム, 14=家具, 15=機種転換, 16=装備消費, 99=イベント海域解放
+		api_type		：1=資源(バケツその他4種？), 2=艦隊解放, 3=家具箱, 4=大型艦建造解放, 5=基地航空隊開放?, 6=遠征臨時補給開放, 11=艦船, 12=装備, 13=アイテム, 14=家具, 15=機種転換, 16=装備消費, 18=???, 99=イベント海域解放
 		api_count		：取得個数
 		api_item		：アイテム追加情報 一般アイテムはnull イベント海域解放時は api_count = 1 にもかかわらず null
-			(アイテムの場合)
+			(アイテム/装備の場合)
 			api_id		：装備アイテム=ID、家具箱=0
 			api_name	：アイテム名 家具箱系/装備のみ
 			(機種転換の場合)
@@ -1714,11 +1719,20 @@ api_req_battle_midnight/battle		：戦闘(夜戦)
 	api_hougeki			：夜間砲雷撃戦
 		api_at_list			：行動順
 		api_n_mother_list	：空母夜間空撃フラグ 0=それ以外, 1=夜間空撃可能
-		api_df_list			：防御側ID　-1から始まる　連撃とカットイン((主砲|魚雷)/魚雷)は2個, カットイン(主砲/(副砲|主砲))は3個(但し[1], [2]=-1)
+		api_df_list			：防御側ID　-1から始まる　連撃とカットイン(2回攻撃)は2個, カットイン(単発)は3個(但し[1], [2]=-1)
 		api_si_list			：表示装備ID 昼戦のそれに準ずる 非表示は-1
 		api_cl_list			：クリティカルフラグ 0=ミス, 1=命中, 2=クリティカル
-		api_sp_list			：夜戦攻撃種別 0=通常攻撃, 1=連撃, 2=カットイン(主砲/魚雷), 3=カットイン(魚雷/魚雷), 4=カットイン(主砲/副砲), 5=カットイン(主砲/主砲), 6=空母カットイン
-		api_damage			：ダメージ(実ダメージ) 砲撃カットインの場合[1], [2]=-1となるため注意
+		api_sp_list			：夜戦攻撃種別
+								0=通常攻撃
+								1=連続射撃
+								2=カットイン(主砲/魚雷)
+								3=カットイン(魚雷/魚雷)
+								4=カットイン(主砲/副砲)
+								5=カットイン(主砲/主砲)
+								6=空母カットイン
+								7=カットイン(主砲/電探)
+								8=カットイン(見張員/電探)
+		api_damage			：ダメージ(実ダメージ)　単発カットインの場合[1], [2]=-1となるため注意
 
 
 api_req_battle_midnight/sp_midnight		：開幕夜戦
