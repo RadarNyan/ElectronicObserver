@@ -9,7 +9,7 @@ namespace ElectronicObserver.Data.Battle
 {
 
 	/// <summary>
-	/// 敵連合艦隊夜戦
+	/// 通常/連合艦隊 vs 連合艦隊 夜戦
 	/// </summary>
 	public class BattleEnemyCombinedNight : BattleNight
 	{
@@ -18,10 +18,12 @@ namespace ElectronicObserver.Data.Battle
 		{
 			base.LoadFromResponse(apiname, (object)data);
 
-			NightBattle = new PhaseNightBattle(this, "夜战", false);
+			// 支援なし?
+			NightBattle = new PhaseNightBattle(this, "夜战", 0, false);
 
-			NightBattle.EmulateBattle(_resultHPs, _attackDamages);
 
+			foreach (var phase in GetPhases())
+				phase.EmulateBattle(_resultHPs, _attackDamages);
 		}
 
 
@@ -29,7 +31,7 @@ namespace ElectronicObserver.Data.Battle
 
 		public override string BattleName => "对联合舰队 夜战";
 
-		public override BattleData.BattleTypeFlag BattleType => BattleTypeFlag.Night | BattleTypeFlag.EnemyCombined | (NightBattle.IsFriendEscort ? BattleTypeFlag.Combined : 0);
+		public override BattleTypeFlag BattleType => BattleTypeFlag.Night | BattleTypeFlag.EnemyCombined | (NightBattle.IsFriendEscort ? BattleTypeFlag.Combined : 0);
 
 
 		public override IEnumerable<PhaseBase> GetPhases()

@@ -114,6 +114,9 @@ namespace ElectronicObserver.Observer
 				new kcsapi.api_req_combined_battle.each_battle(),
 				new kcsapi.api_req_combined_battle.each_battle_water(),
 				new kcsapi.api_get_member.sortie_conditions(),
+				new kcsapi.api_req_sortie.night_to_day(),
+				new kcsapi.api_req_combined_battle.ec_night_to_day(),
+				new kcsapi.api_req_sortie.goback_port(),
 
 				new kcsapi.api_req_quest.clearitemget(),
 				new kcsapi.api_req_nyukyo.start(),
@@ -396,8 +399,8 @@ namespace ElectronicObserver.Observer
 				}
 
 
-				APIList.OnRequestReceived(shortpath, parsedData);
 				RequestReceived(shortpath, parsedData);
+				APIList.OnRequestReceived(shortpath, parsedData);
 
 			}
 			catch (Exception ex)
@@ -441,20 +444,18 @@ namespace ElectronicObserver.Observer
 
 				if (shortpath == "api_get_member/ship2")
 				{
-					APIList.OnResponseReceived(shortpath, json);
 					ResponseReceived(shortpath, json);
-
+					APIList.OnResponseReceived(shortpath, json);
 				}
 				else if (json.IsDefined("api_data"))
 				{
-					APIList.OnResponseReceived(shortpath, json.api_data);
 					ResponseReceived(shortpath, json.api_data);
-
+					APIList.OnResponseReceived(shortpath, json.api_data);
 				}
 				else
 				{
-					APIList.OnResponseReceived(shortpath, null);
 					ResponseReceived(shortpath, null);
+					APIList.OnResponseReceived(shortpath, null);
 				}
 
 			}

@@ -475,7 +475,7 @@ namespace ElectronicObserver.Window
 				for (int i = 0; i < sq.Length; i++)
 				{
 					if (i > 0)
-						sb.Append("/");
+						sb.Append(", ");
 
 					if (sq[i] == null)
 					{

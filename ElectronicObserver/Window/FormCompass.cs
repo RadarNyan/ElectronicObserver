@@ -410,30 +410,13 @@ namespace ElectronicObserver.Window
 				}
 			}
 
-			/*
-			return string.Format(
-						"{0} {1}{2}\n耐久: {3}\n火力: {4}/{5}\n雷装: {6}/{7}\n対空: {8}/{9}\n装甲: {10}/{11}\n対潜: {12}/{13}\n回避: {14}/{15}\n索敵: {16}/{17}\n運: {18}/{19}\n射程: {20} / 速力: {21}\n(右クリックで図鑑)\n",
-						ship.ShipTypeName, ship.NameWithClass, level < 1 ? "" : string.Format( " Lv. {0}", level ),
-						hp,
-						firepower_c, firepower,
-						torpedo_c, torpedo,
-						aa_c, aa,
-						armor_c, armor,
-						asw_c == -1 ? "???" : asw_c.ToString(), asw,
-						evasion_c == -1 ? "???" : evasion_c.ToString(), evasion,
-						los_c == -1 ? "???" : los_c.ToString(), los,
-						luck_c, luck,
-						Constants.GetRange( range ),
-						Constants.GetSpeed( ship.Speed )
-						);
-			*/
-
+	
 			var sb = new StringBuilder();
 
-			sb.Append(ship.ShipTypeName).Append(" ").Append(ship.NameWithClass);
+			sb.Append(ship.ShipTypeName).Append(" ").AppendLine(ship.NameWithClass);
 			if (level > 0)
-				sb.Append(" Lv. ").Append(level);
-			sb.AppendLine();
+				sb.Append("Lv. ").Append(level.ToString());
+			sb.Append(" (ID: ").Append(shipID).AppendLine(")");
 
 			sb.Append("耐久 : ").Append(hp).AppendLine();
 
@@ -1091,13 +1074,13 @@ namespace ElectronicObserver.Window
 		{
 
 			BattleManager bm = KCDatabase.Instance.Battle;
-			BattleData bd = bm.StartsFromDayBattle ? (BattleData)bm.BattleDay : (BattleData)bm.BattleNight;
+			BattleData bd = bm.FirstBattle;
 
 			int[] enemies = bd.Initial.EnemyMembers;
 			int[][] slots = bd.Initial.EnemySlots;
 			int[] levels = bd.Initial.EnemyLevels;
 			int[][] parameters = bd.Initial.EnemyParameters;
-			int[] hps = bd.Initial.MaxHPs;
+			int[] hps = bd.Initial.EnemyMaxHPs;
 
 
 			_enemyFleetCandidate = null;
@@ -1113,10 +1096,9 @@ namespace ElectronicObserver.Window
 				{
 					TextEnemyFleetName.Text = efrecord.FleetName;
 					TextEnemyFleetName.Font = Utility.Configuration.Config.UI.JapFont;
+					TextEventDetail.Text = "Exp: " + efrecord.ExpShip;
 				}
-				TextEventDetail.Text = "敌舰队 ID: " + efcurrent.FleetID.ToString("x8");
-				TextEventDetail.Font = Utility.Configuration.Config.UI.MainFont;
-				ToolTipInfo.SetToolTip(TextEventDetail, null);
+				ToolTipInfo.SetToolTip(TextEventDetail, "敌舰队 ID: " + efcurrent.FleetID.ToString("x16"));
 			}
 
 			TextFormation.Text = Constants.GetFormationShort((int)bd.Searching.FormationEnemy);
@@ -1138,7 +1120,7 @@ namespace ElectronicObserver.Window
 				ControlMembers[i].Update(shipID, shipID != -1 ? slots[i] : null);
 
 				if (shipID != -1)
-					ControlMembers[i].UpdateEquipmentToolTip(shipID, slots[i], levels[i], hps[i + 6], parameters[i][0], parameters[i][1], parameters[i][2], parameters[i][3]);
+					ControlMembers[i].UpdateEquipmentToolTip(shipID, slots[i], levels[i], hps[i], parameters[i][0], parameters[i][1], parameters[i][2], parameters[i][3]);
 			}
 			TableEnemyMember.ResumeLayout();
 			TableEnemyMember.Visible = true;

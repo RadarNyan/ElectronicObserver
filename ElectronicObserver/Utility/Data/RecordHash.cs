@@ -27,14 +27,10 @@ namespace ElectronicObserver.Utility.Data
 
 			try
 			{
-
 				originalHasher = System.Security.Cryptography.MD5.Create();
-
-
 			}
 			catch (Exception)
 			{
-
 				Utility.Logger.Add(1, "", "RecordHash: 无法调用 System.Security.Cryptography.MD5 。将使用 74EO 自带 MD5 算法实现。");
 
 				k = new uint[64];
@@ -72,7 +68,6 @@ namespace ElectronicObserver.Utility.Data
 
 		public static byte[] ComputeHash(byte[] input)
 		{
-
 			if (originalHasher != null)
 			{
 				return originalHasher.ComputeHash(input);
@@ -163,7 +158,6 @@ namespace ElectronicObserver.Utility.Data
 			var ret = new uint[outLength];
 			for (int i = 0; i < outLength; i++)
 			{
-
 				if (BitConverter.IsLittleEndian)
 					ret[i] = BitConverter.ToUInt32(input, index + i * 4);
 				else
