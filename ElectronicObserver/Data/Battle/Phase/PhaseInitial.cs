@@ -165,8 +165,40 @@ namespace ElectronicObserver.Data.Battle.Phase
 			EnemyLevels = ArraySkip((int[])RawData.api_ship_lv);
 			EnemyLevelsEscort = !RawData.api_ship_lv_combined() ? null : ArraySkip((int[])RawData.api_ship_lv_combined);
 
-			InitialHPs = GetHPArray((int[])RawData.api_nowhps, !RawData.api_nowhps_combined() ? null : (int[])RawData.api_nowhps_combined);
-			MaxHPs = GetHPArray((int[])RawData.api_maxhps, !RawData.api_maxhps_combined() ? null : (int[])RawData.api_maxhps_combined);
+			// TEMP FIX
+			//InitialHPs = GetHPArray((int[])RawData.api_nowhps, !RawData.api_nowhps_combined() ? null : (int[])RawData.api_nowhps_combined);
+			//MaxHPs = GetHPArray((int[])RawData.api_maxhps, !RawData.api_maxhps_combined() ? null : (int[])RawData.api_maxhps_combined);
+			InitialHPs = Enumerable.Repeat(-1, 24).ToArray();
+			    MaxHPs = Enumerable.Repeat(-1, 24).ToArray();
+			var temp_f_nowhps = (int[])RawData.api_f_nowhps;
+			var temp_f_maxhps = (int[])RawData.api_f_maxhps;
+			var temp_e_nowhps = (int[])RawData.api_e_nowhps;
+			var temp_e_maxhps = (int[])RawData.api_e_maxhps;
+			for (int i = 0; i < Math.Min(6, temp_f_nowhps.Length); ++i) {
+				InitialHPs[i] = temp_f_nowhps[i];
+				    MaxHPs[i] = temp_f_maxhps[i];
+			}
+			for (int i = 0; i < Math.Min(6, temp_e_nowhps.Length); ++i) {
+				InitialHPs[i + 6] = temp_e_nowhps[i];
+				    MaxHPs[i + 6] = temp_e_maxhps[i];
+			}
+			if (InitialHPs[12] != -1) {
+				for (int i = 0; i < 6; ++i) {
+					if (temp_f_nowhps.Length <= i + 6)
+						break;
+					InitialHPs[i + 12] = temp_f_nowhps[i + 6];
+					MaxHPs[i + 12] = temp_f_maxhps[i + 6];
+				}
+			}
+			if (InitialHPs[18] != -1) {
+				for (int i = 0; i < 6; ++i) {
+					if (temp_e_nowhps.Length <= i + 6)
+						break;
+					InitialHPs[i + 18] = temp_e_nowhps[i + 6];
+					MaxHPs[i + 18] = temp_e_maxhps[i + 6];
+				}
+			}
+			// TEMP FIX END
 
 			EnemySlots = ((dynamic[])RawData.api_eSlot).Select(d => (int[])d).ToArray();
 			EnemySlotsInstance = EnemySlots.Select(part => part.Select(id => KCDatabase.Instance.MasterEquipments[id]).ToArray()).ToArray();

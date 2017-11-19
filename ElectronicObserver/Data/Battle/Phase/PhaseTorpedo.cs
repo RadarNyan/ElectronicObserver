@@ -33,7 +33,22 @@ namespace ElectronicObserver.Data.Battle.Phase
 
 			Damages = GetConcatArray<double>("api_fdam", "api_edam");
 			AttackDamages = GetConcatArray<int>("api_fydam", "api_eydam");
-			Targets = GetConcatArray<int>("api_frai", "api_erai");
+			// TEMP FIX
+			//Targets = GetConcatArray<int>("api_frai", "api_erai");
+			Targets = new int[24];
+			var temp_friend = (int[])TorpedoData["api_frai"];
+			var temp_enemy = (int[])TorpedoData["api_erai"];
+			for (int i = 0; i < 6; ++i) {
+				if (!IsCombined)
+					Targets[i] = temp_friend[i] + 1;
+				if (true)
+					Targets[i + 6] = temp_enemy[i] + 1;
+				if (temp_friend.Length > i + 6)
+					Targets[i + 12] = temp_friend[i + 6] + 1;
+				if (temp_enemy.Length > i + 6)
+					Targets[i + 18] = temp_enemy[i + 6] + 1;
+			}
+			// TEMP FIX END
 			CriticalFlags = GetConcatArray<int>("api_fcl", "api_ecl");
 
 		}
@@ -122,6 +137,23 @@ namespace ElectronicObserver.Data.Battle.Phase
 
 		private T[] GetConcatArray<T>(string friendName, string enemyName)
 		{
+			// TEMP FIX
+			var temp_result = Enumerable.Repeat(default(T), 24).ToArray();
+			var temp_friend = (T[])TorpedoData[friendName];
+			var temp_enemy = (T[])TorpedoData[enemyName];
+			for (int i = 0; i < 6; ++i) {
+				if (!IsCombined)
+					temp_result[i] = temp_friend[i];
+				if (true)
+					temp_result[i + 6] = temp_enemy[i];
+				if (temp_friend.Length > i + 6)
+					temp_result[i + 12] = temp_friend[i + 6];
+				if (temp_enemy.Length > i + 6)
+					temp_result[i + 18] = temp_enemy[i + 6];
+			}
+			return temp_result;
+			// TEMP FIX END
+
 			var friend = ((T[])TorpedoData[friendName]).Skip(1);
 			var enemy = ((T[])TorpedoData[enemyName]).Skip(1);
 
