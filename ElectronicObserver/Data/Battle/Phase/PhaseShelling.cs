@@ -66,8 +66,6 @@ namespace ElectronicObserver.Data.Battle.Phase
 
 			// "translate"
 
-			// TEMP FIX
-			/*
 			int[] fleetflag = !ShellingData.api_at_eflag() ? null : ((int[])ShellingData.api_at_eflag).Skip(1).ToArray();
 			int[] attackers = ((int[])ShellingData.api_at_list).Skip(1).ToArray();
 			int[] attackTypes = ((int[])ShellingData.api_at_type).Skip(1).ToArray();
@@ -75,21 +73,6 @@ namespace ElectronicObserver.Data.Battle.Phase
 			int[][] attackEquipments = ((dynamic[])ShellingData.api_si_list).Skip(1).Select(elem => ((dynamic[])elem).Select<dynamic, int>(ch => ch is string ? int.Parse(ch) : (int)ch).ToArray()).ToArray();
 			int[][] criticalFlags = ((dynamic[])ShellingData.api_cl_list).Skip(1).Select(elem => (int[])elem).ToArray();
 			double[][] rawDamages = ((dynamic[])ShellingData.api_damage).Skip(1).Select(elem => ((double[])elem).Select(p => Math.Max(p, 0)).ToArray()).ToArray();
-			*/
-			int[] fleetflag = !ShellingData.api_at_eflag() ? null : ((int[])ShellingData.api_at_eflag).ToArray();
-			int[] attackers = ((int[])ShellingData.api_at_list).ToArray();
-			int[] attackTypes = ((int[])ShellingData.api_at_type).ToArray();
-			int[][] defenders = ((dynamic[])ShellingData.api_df_list).Select(elem => (int[])elem).ToArray();
-			int[][] attackEquipments = ((dynamic[])ShellingData.api_si_list).Select(elem => ((dynamic[])elem).Select<dynamic, int>(ch => ch is string ? int.Parse(ch) : (int)ch).ToArray()).ToArray();
-			int[][] criticalFlags = ((dynamic[])ShellingData.api_cl_list).Select(elem => (int[])elem).ToArray();
-			double[][] rawDamages = ((dynamic[])ShellingData.api_damage).Select(elem => ((double[])elem).Select(p => Math.Max(p, 0)).ToArray()).ToArray();
-			for (int i = 0; i < attackers.Length; ++i) {
-				++attackers[i];
-				for (int j = 0; j < defenders[i].Length; ++j) {
-					++defenders[i][j];
-				}
-			}
-			// TEMP FIX END
 
 			Attacks = new List<PhaseShellingAttack>();
 

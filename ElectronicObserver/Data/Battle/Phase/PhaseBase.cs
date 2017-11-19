@@ -32,9 +32,6 @@ namespace ElectronicObserver.Data.Battle.Phase
 
 		protected int[] ArraySkip(int[] array, int skipCount = 1)
 		{
-			// TEMP FIX
-			return array.Concat(Enumerable.Repeat(-1, 6 - array.Count())).ToArray();
-			// TEMP FIX END
 			return array.Skip(skipCount).ToArray();
 		}
 

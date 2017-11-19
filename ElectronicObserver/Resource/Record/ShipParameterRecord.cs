@@ -915,12 +915,8 @@ namespace ElectronicObserver.Resource.Record
 		private void BattleStart(string apiname, dynamic data)
 		{
 
-			// TEMP FIX
-			// int[] efleet = (int[])data.api_ship_ke;
-			// int[] hpMax = (int[])data.api_maxhps;
-			int[] efleet = Enumerable.Repeat(-1, 1).Concat((int[])data.api_ship_ke).ToArray();
-			int[] hpMax = Enumerable.Repeat(-1, 7).Concat((int[])data.api_e_maxhps).ToArray();
-			// TEMP FIX END
+			int[] efleet = (int[])data.api_ship_ke;
+			int[] hpMax = (int[])data.api_maxhps;
 
 			//[0]はダミー(-1)
 			for (int i = 1; i < efleet.Length; i++)

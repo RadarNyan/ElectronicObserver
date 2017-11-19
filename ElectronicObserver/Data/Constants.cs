@@ -455,8 +455,6 @@ namespace ElectronicObserver.Data
 					return "梯形陣";
 				case 5:
 					return "単横陣";
-				case 6:
-					return "警戒陣";
 				case 11:
 					return "第一警戒航行序列";
 				case 12:
@@ -487,8 +485,6 @@ namespace ElectronicObserver.Data
 					return 4;
 				case "単横陣":
 					return 5;
-				case "警戒陣":
-					return 6;
 				case "第一警戒航行序列":
 					return 11;
 				case "第二警戒航行序列":
@@ -519,8 +515,6 @@ namespace ElectronicObserver.Data
 					return "梯形阵";
 				case 5:
 					return "单横阵";
-				case 6:
-					return "警戒阵";
 				case 11:
 					return "第一警戒";
 				case 12:

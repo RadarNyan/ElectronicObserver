@@ -89,11 +89,6 @@ namespace ElectronicObserver.Data.Battle.Phase
 			var planes = (dynamic[])data;
 			if (planes.Length > index)
 			{
-				// TEMP FIX
-				if (planes[index] == null)
-					return new int[0];
-				// TEMP FIX END
-
 				return ((int[])planes[index]).Where(i => i > 0).Select(i => i - 1).ToArray();
 			}
 
@@ -220,37 +215,6 @@ namespace ElectronicObserver.Data.Battle.Phase
 
 			T[] ret = new T[24];
 			Func<T, T> toPositive = (a) => a.CompareTo(default(T)) >= 0 ? a : default(T);       // => Math.Max( a, 0 );
-
-			// TEMP FIX
-			if (IsStage3Available) {
-				T[] temp_friend = AirBattleData.api_stage3.IsDefined(friendName) ? (T[])AirBattleData.api_stage3[friendName] : new T[6];
-				T[] temp_enemy = AirBattleData.api_stage3.IsDefined(enemyName) ? (T[])AirBattleData.api_stage3[enemyName] : new T[6];
-				for (int i = 0; i < 6; ++i) {
-					if (temp_friend.Length > i)
-						ret[i] = toPositive(temp_friend[i]);
-					if (temp_enemy.Length > i)
-						ret[i + 6] = toPositive(temp_enemy[i]);
-				}
-				if (IsStage3CombinedAvailable) {
-					T[] temp_friendescort = AirBattleData.api_stage3_combined.IsDefined(friendName) ? (T[])AirBattleData.api_stage3_combined[friendName] : new T[6];
-					T[] temp_enemyescort = AirBattleData.api_stage3_combined.IsDefined(enemyName) ? (T[])AirBattleData.api_stage3_combined[enemyName] : new T[6];
-					for (int i = 0; i < 6; ++i) {
-						if (temp_friendescort.Length > i)
-							ret[i + 12] = temp_friendescort[i];
-						if (temp_enemyescort.Length > i)
-							ret[i + 18] = temp_friendescort[i];
-					}
-				} else {
-					for (int i = 0; i < 6; ++i) {
-						if (temp_friend.Length > i + 6)
-							ret[i + 12] = temp_friend[i + 6];
-						if (temp_enemy.Length > i + 6)
-							ret[i + 18] = temp_enemy[i + 6];
-					}
-				}
-			}
-			return ret;
-			// TEMP FIX END
 
 			if (IsStage3CombinedAvailable)
 			{

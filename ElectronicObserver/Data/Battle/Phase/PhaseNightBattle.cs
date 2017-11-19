@@ -26,8 +26,6 @@ namespace ElectronicObserver.Data.Battle.Phase
 				return;
 
 
-			// TEMP FIX
-			/*
 			int[] attackers = ((int[])ShellingData.api_at_list).Skip(1).ToArray();
 			int[] nightAirAttackFlags = ((int[])ShellingData.api_n_mother_list).Skip(1).ToArray();
 			int[] attackTypes = ((int[])ShellingData.api_sp_list).Skip(1).ToArray();
@@ -35,47 +33,6 @@ namespace ElectronicObserver.Data.Battle.Phase
 			int[][] attackEquipments = ((dynamic[])ShellingData.api_si_list).Skip(1).Select(elem => ((dynamic[])elem).Select<dynamic, int>(ch => ch is string ? int.Parse(ch) : (int)ch).ToArray()).ToArray();
 			int[][] criticals = ((dynamic[])ShellingData.api_cl_list).Skip(1).Select(elem => ((int[])elem).Where(e => e != -1).ToArray()).ToArray();
 			double[][] rawDamages = ((dynamic[])ShellingData.api_damage).Skip(1).Select(elem => ((double[])elem).Where(e => e != -1).ToArray()).ToArray();
-			*/
-			int[] attackers = ((int[])ShellingData.api_at_list).ToArray();
-			int[] nightAirAttackFlags = ((int[])ShellingData.api_n_mother_list).ToArray();
-			int[] attackTypes = ((int[])ShellingData.api_sp_list).ToArray();
-			int[][] defenders = ((dynamic[])ShellingData.api_df_list).Select(elem => ((int[])elem).Where(e => e != -1).ToArray()).ToArray();
-			int[][] attackEquipments = ((dynamic[])ShellingData.api_si_list).Select(elem => ((dynamic[])elem).Select<dynamic, int>(ch => ch is string ? int.Parse(ch) : (int)ch).ToArray()).ToArray();
-			int[][] criticals = ((dynamic[])ShellingData.api_cl_list).Select(elem => ((int[])elem).Where(e => e != -1).ToArray()).ToArray();
-			double[][] rawDamages = ((dynamic[])ShellingData.api_damage).Select(elem => ((double[])elem).Where(e => e != -1).ToArray()).ToArray();
-
-			int[] temp_fleetflag = !ShellingData.api_at_eflag() ? null : ((int[])ShellingData.api_at_eflag).ToArray();
-			int temp_f_shipcount = ((int[])RawData.api_f_nowhps).Length;
-
-			for (int i = 0; i < attackers.Length; ++i) {
-				switch (temp_fleetflag[i]) {
-					case 0: // 我方攻击
-						if (attackers[i] == 6) // 第 7 艘
-							attackers[i] += 6;
-						break;
-					case 1: // 敌方攻击
-						if (attackers[i] == 6) // 第 7 艘
-							attackers[i] += 6;
-						attackers[i] += 6;
-						break;
-				}
-				++attackers[i];
-				for (int j = 0; j < defenders[i].Length; ++j) {
-					switch (temp_fleetflag[i]) {
-						case 1: // 敌方攻击 ( 我方防御 )
-							if (defenders[i][j] == 6) // 第 7 艘
-								defenders[i][j] += 6;
-							break;
-						case 0: // 我方攻击 ( 敌方防御 )
-							if (defenders[i][j] == 6) // 第 7 艘
-								defenders[i][j] += 6;
-							defenders[i][j] += 6;
-							break;
-					}
-					++defenders[i][j];
-				}
-			}
-			// TEMP FIX END
 
 			Attacks = new List<PhaseNightBattleAttack>();
 
