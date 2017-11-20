@@ -6,48 +6,46 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ElectronicObserver.Data.Battle {
+namespace ElectronicObserver.Data.Battle
+{
 
 	/// <summary>
-	/// 連合艦隊(機動部隊)昼戦
+	/// 機動部隊 vs 通常艦隊 昼戦
 	/// </summary>
-	public class BattleCombinedNormalDay : BattleDay {
+	public class BattleCombinedNormalDay : BattleDay
+	{
 
-		public override void LoadFromResponse( string apiname, dynamic data ) {
-			base.LoadFromResponse( apiname, (object)data );
+		public override void LoadFromResponse(string apiname, dynamic data)
+		{
+			base.LoadFromResponse(apiname, (object)data);
 
-			JetBaseAirAttack = new PhaseJetBaseAirAttack( this, "喷式基地航空队攻击" );
-			JetAirBattle = new PhaseJetAirBattle( this, "喷式航空战" );
-			BaseAirAttack = new PhaseBaseAirAttack( this, "基地航空队攻击" );
-			AirBattle = new PhaseAirBattle( this, "航空战" );
-			Support = new PhaseSupport( this, "支援攻击" );
-			OpeningASW = new PhaseOpeningASW( this, "先制对潜", true );
-			OpeningTorpedo = new PhaseTorpedo( this, "开幕雷击", 0 );
-			Shelling1 = new PhaseShelling( this, "第一次炮击战", 1, "1", true );
-			Torpedo = new PhaseTorpedo( this, "雷击战", 2 );
-			Shelling2 = new PhaseShelling( this, "第二次炮击战", 3, "2", false );
-			Shelling3 = new PhaseShelling( this, "第三次炮击战", 4, "3", false );
+			JetBaseAirAttack = new PhaseJetBaseAirAttack(this, "喷式基地航空队攻击");
+			JetAirBattle = new PhaseJetAirBattle(this, "喷式航空战");
+			BaseAirAttack = new PhaseBaseAirAttack(this, "基地航空队攻击");
+			AirBattle = new PhaseAirBattle(this, "航空战");
+			Support = new PhaseSupport(this, "支援攻击");
+			OpeningASW = new PhaseOpeningASW(this, "先制对潜", true);
+			OpeningTorpedo = new PhaseTorpedo(this, "开幕雷击", 0);
+			Shelling1 = new PhaseShelling(this, "第一次炮击战", 1, "1", true);
+			Torpedo = new PhaseTorpedo(this, "雷击战", 2);
+			Shelling2 = new PhaseShelling(this, "第二次炮击战", 3, "2", false);
+			Shelling3 = new PhaseShelling(this, "第三次炮击战", 4, "3", false);
 
-			foreach ( var phase in GetPhases() )
-				phase.EmulateBattle( _resultHPs, _attackDamages );
+			foreach (var phase in GetPhases())
+				phase.EmulateBattle(_resultHPs, _attackDamages);
 
 		}
 
 
-		public override string APIName {
-			get { return "api_req_combined_battle/battle"; }
-		}
+		public override string APIName => "api_req_combined_battle/battle";
 
-		public override string BattleName {
-			get { return "联合舰队-机动部队 昼战"; }
-		}
+		public override string BattleName => "联合舰队-机动部队 昼战";
 
-		public override BattleData.BattleTypeFlag BattleType {
-			get { return BattleTypeFlag.Day | BattleTypeFlag.Combined; }
-		}
+		public override BattleData.BattleTypeFlag BattleType => BattleTypeFlag.Day | BattleTypeFlag.Combined;
 
 
-		public override IEnumerable<PhaseBase> GetPhases() {
+		public override IEnumerable<PhaseBase> GetPhases()
+		{
 			yield return Initial;
 			yield return Searching;
 			yield return JetBaseAirAttack;

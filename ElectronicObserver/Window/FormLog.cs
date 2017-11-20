@@ -10,32 +10,39 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using WeifenLuo.WinFormsUI.Docking;
 
-namespace ElectronicObserver.Window {
+namespace ElectronicObserver.Window
+{
 
-	public partial class FormLog : DockContent {
+	public partial class FormLog : DockContent
+	{
 
 
-		public FormLog( FormMain parent ) {
+		public FormLog(FormMain parent)
+		{
 			InitializeComponent();
 			ConfigurationChanged();
 		}
-		
-		private void FormLog_Load( object sender, EventArgs e ) {
 
-			Utility.Logger.Instance.LogAdded += new Utility.LogAddedEventHandler( ( Utility.Logger.LogData data ) => {
-				if ( InvokeRequired ) {
+		private void FormLog_Load(object sender, EventArgs e)
+		{
+
+			Utility.Logger.Instance.LogAdded += new Utility.LogAddedEventHandler((Utility.Logger.LogData data) => {
+				if (InvokeRequired)
+				{
 					// Invokeはメッセージキューにジョブを投げて待つので、別のBeginInvokeされたジョブが既にキューにあると、
 					// それを実行してしまい、BeginInvokeされたジョブの順番が保てなくなる
 					// GUIスレッドによる処理は、順番が重要なことがあるので、GUIスレッドからInvokeを呼び出してはいけない
-					Invoke( new Utility.LogAddedEventHandler( Logger_LogAdded ), data );
-				} else {
-					Logger_LogAdded( data );
+					Invoke(new Utility.LogAddedEventHandler(Logger_LogAdded), data);
 				}
-			} );
+				else
+				{
+					Logger_LogAdded(data);
+				}
+			});
 
 			Utility.Configuration.Instance.ConfigurationChanged += ConfigurationChanged;
 
-			Icon = ResourceManager.ImageToIcon( ResourceManager.Instance.Icons.Images[(int)ResourceManager.IconContent.FormLog] );
+			Icon = ResourceManager.ImageToIcon(ResourceManager.Instance.Icons.Images[(int)ResourceManager.IconContent.FormLog]);
 
 			if (LogTextBox.Text == "")
 				ReloadLog();
