@@ -47,7 +47,7 @@ namespace ElectronicObserver.Utility
 		/// <summary>
 		/// 更新日時
 		/// </summary>
-		public static DateTime UpdateTime => DateTimeHelper.CSVStringToTime("2017/11/21 03:08:10");
+		public static DateTime UpdateTime => DateTimeHelper.CSVStringToTime("2017/11/21 03:41:42");
 
 
 
