@@ -998,7 +998,7 @@ namespace ElectronicObserver.Window
 				TimeSpan elapsedTime = DateTime.Now - KCDatabase.Instance.Fleet.AnchorageRepairingTimer;
 				int elapsedMinutes = (int)elapsedTime.TotalMinutes;
 
-				if (elapsedMinutes >= 20 && elapsedMinutes != KCDatabase.Instance.Fleet.AnchorageRepairingLastElapsedMinutes && AnchorageRepairBound > 0) {
+				if (elapsedMinutes >= 20 && AnchorageRepairBound > 0) {
 
 					for (int i = 0; i < AnchorageRepairBound; i++) {
 						ShipData ship = fleet.MembersInstance[i];
@@ -1006,6 +1006,9 @@ namespace ElectronicObserver.Window
 							continue;
 
 						var hpbar = ControlMember[i].HP;
+
+						if (hpbar.Value != hpbar.PrevValue && elapsedMinutes != KCDatabase.Instance.Fleet.AnchorageRepairingLastElapsedMinutes)
+							continue;
 
 						double dockingSeconds = hpbar.Tag as double? ?? 0.0;
 
