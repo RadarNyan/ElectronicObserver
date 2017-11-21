@@ -859,7 +859,7 @@ namespace ElectronicObserver.Window
 
 			TableMember.Visible = false;
 			TableMember.SuspendLayout();
-			ControlMember = new TableMemberControl[6];
+			ControlMember = new TableMemberControl[7];
 			for (int i = 0; i < ControlMember.Length; i++)
 			{
 				ControlMember[i] = new TableMemberControl(this, TableMember, i);
@@ -954,7 +954,7 @@ namespace ElectronicObserver.Window
 			TableMember.RowCount = fleet.Members.Count(id => id > 0);
 			for (int i = 0; i < ControlMember.Length; i++)
 			{
-				ControlMember[i].Update(fleet.Members[i]);
+				ControlMember[i].Update(i < fleet.Members.Count ? fleet.Members[i] : -1);
 			}
 
 			if (fleet.Members[0] == -1) {
@@ -998,7 +998,7 @@ namespace ElectronicObserver.Window
 				TimeSpan elapsedTime = DateTime.Now - KCDatabase.Instance.Fleet.AnchorageRepairingTimer;
 				int elapsedMinutes = (int)elapsedTime.TotalMinutes;
 
-				if (elapsedMinutes >= 20 && elapsedMinutes != KCDatabase.Instance.Fleet.AnchorageRepairingLastElapsedMinutes && AnchorageRepairBound > 0) {
+				if (elapsedMinutes >= 20 && AnchorageRepairBound > 0) {
 
 					for (int i = 0; i < AnchorageRepairBound; i++) {
 						ShipData ship = fleet.MembersInstance[i];
@@ -1006,6 +1006,9 @@ namespace ElectronicObserver.Window
 							continue;
 
 						var hpbar = ControlMember[i].HP;
+
+						if (hpbar.Value != hpbar.PrevValue && elapsedMinutes != KCDatabase.Instance.Fleet.AnchorageRepairingLastElapsedMinutes)
+							continue;
 
 						double dockingSeconds = hpbar.Tag as double? ?? 0.0;
 

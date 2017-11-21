@@ -507,6 +507,10 @@ namespace ElectronicObserver.Window
 
 			int[] targetFleet = KCDatabase.Instance.Fleet.CombinedFlag != 0 ? new int[] { 1, 2 } : new int[] { 1 };
 
+			// 第三艦隊に７番艦がいる
+			if (KCDatabase.Instance.Fleet[3].Members.Count() > 6 && KCDatabase.Instance.Fleet[3].Members[6] != -1)
+				targetFleet = new int[] { 3 };
+
 			var targetShips = targetFleet
 				.Select(f => KCDatabase.Instance.Fleet[f])
 				.SelectMany(f => f.MembersInstance)
