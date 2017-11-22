@@ -1192,7 +1192,7 @@ namespace ElectronicObserver.Window
 			{
 				FleetFriendEscort.Visible = true;
 
-				for (int i = 0; i < initial.FriendInitialHPsEscort.Length; i++)
+				for (int i = 0; i < Math.Min(initial.FriendInitialHPsEscort.Length, 6); i++)
 				{
 					int refindex = BattleIndex.Get(BattleSides.FriendEscort, i);
 
