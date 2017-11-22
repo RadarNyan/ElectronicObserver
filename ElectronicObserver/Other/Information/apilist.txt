@@ -1482,7 +1482,7 @@ api_req_map/next		：進撃
 		api_air_base_attack
 			api_stage_flag
 			api_plane_from		：[2][]　[0][]には防空状態の基地のインデックス(1から)が入る
-			api_squadron_plane	：[1+航空隊保有数] -1から始まる　
+			api_map_squadron_plane	：[1+航空隊保有数] -1から始まる　
 				[]				：防空状態の基地の場合　[参加した中隊数]
 					api_mst_id	：装備ID
 					api_count	：参加機数
