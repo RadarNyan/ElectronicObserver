@@ -72,7 +72,7 @@ namespace ElectronicObserver.Data.Battle.Detail
 		{
 
 			var sbmaster = new StringBuilder();
-			bool isBaseAirRaid = (battle.BattleType & BattleData.BattleTypeFlag.BaseAirRaid) != 0;
+			bool isBaseAirRaid = battle.IsBaseAirRaid;
 
 
 			foreach (var phase in battle.GetPhases())
@@ -85,7 +85,7 @@ namespace ElectronicObserver.Data.Battle.Detail
 					var p = phase as PhaseBaseAirRaid;
 
 					sb.AppendLine("己方基地航空队 参加中队 :");
-					sb.Append("　").AppendLine(string.Join(", ", p.Squadrons.Where(sq => sq.EquipmentInstance != null).Select(sq => sq.ToString())));
+					sb.Append("　").AppendLine(string.Join(", ", p.Squadrons.Where(sq => sq.EquipmentInstance != null).Select(sq => sq.ToString()).DefaultIfEmpty("( 无 )")));
 
 					GetBattleDetailPhaseAirBattle(sb, p);
 

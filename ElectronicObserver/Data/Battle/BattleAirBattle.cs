@@ -36,8 +36,8 @@ namespace ElectronicObserver.Data.Battle
 
 		public override string BattleName => "通常舰队 航空战";
 
-		public override BattleData.BattleTypeFlag BattleType => BattleTypeFlag.Day;
 
+		
 
 		public override IEnumerable<PhaseBase> GetPhases()
 		{
