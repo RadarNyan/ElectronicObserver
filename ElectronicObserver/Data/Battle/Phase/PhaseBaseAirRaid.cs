@@ -22,8 +22,7 @@ namespace ElectronicObserver.Data.Battle.Phase
 
 		private IEnumerable<BattleBaseAirCorpsSquadron> GetSquadrons()
 		{
-			var api_map_squadron_plane = AirBattleData.api_map_squadron_plane ?? Enumerable.Empty<int>();
-			foreach (dynamic d in api_map_squadron_plane)
+			foreach (dynamic d in AirBattleData.api_squadron_plane)
 			{
 				if (!(d is Codeplex.Data.DynamicJson))
 					continue;
