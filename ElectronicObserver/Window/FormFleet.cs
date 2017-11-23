@@ -177,10 +177,20 @@ namespace ElectronicObserver.Window
 
 
 					ToolTipInfo.SetToolTip(Name, string.Format(
-						"Lv 合计 : {0} / 平均 : {1:0.00}\r\n{2} 舰队\r\n载有运输桶 : {3} 个 ( {4} 舰 )\r\n载有大发动艇 : {5} 个 ( {6} 舰, +{7:p1} )\r\n运输量 (TP): S {8} / A {9}\r\n总搭载 : 油 {10} / 弹 {11}\r\n( 每战消耗 : 油 {12} / 弹 {13} )",
+						"Lv 合计 : {0} / 平均 : {1:0.00}\r\n" +
+						"{2}舰队\r\n" +
+						"合计对空 {3} / 对潜 {4} / 索敌 {5}\r\n" +
+						"载有运输桶 : {6} 个 ( {7} 舰 )\r\n" +
+						"载有大发动艇: {8} 个 ( {9} 舰 , +{10:p1} )\r\n" +
+						"运输量 (TP): S {11} / A {12}\r\n" +
+						"总搭载 : 油 {13} / 弹 {14}\r\n" +
+						"( 每战消耗 油 {15} / 弹 {16} )",
 						levelSum,
 						(double)levelSum / Math.Max(fleet.Members.Count(id => id != -1), 1),
 						Constants.GetSpeed(speed),
+						members.Sum(s => s.AATotal),
+						members.Sum(s => s.ASWTotal),
+						members.Sum(s => s.LOSTotal),
 						transport.Sum(),
 						transport.Count(i => i > 0),
 						landing.Sum(),
@@ -886,32 +896,32 @@ namespace ElectronicObserver.Window
 
 			APIObserver o = APIObserver.Instance;
 
-			o.APIList["api_req_nyukyo/start"].RequestReceived += Updated;
-			o.APIList["api_req_nyukyo/speedchange"].RequestReceived += Updated;
-			o.APIList["api_req_hensei/change"].RequestReceived += Updated;
-			o.APIList["api_req_kousyou/destroyship"].RequestReceived += Updated;
-			o.APIList["api_req_member/updatedeckname"].RequestReceived += Updated;
-			o.APIList["api_req_kaisou/remodeling"].RequestReceived += Updated;
-			o.APIList["api_req_map/start"].RequestReceived += Updated;
-			o.APIList["api_req_hensei/combined"].RequestReceived += Updated;
+			o["api_req_nyukyo/start"].RequestReceived += Updated;
+			o["api_req_nyukyo/speedchange"].RequestReceived += Updated;
+			o["api_req_hensei/change"].RequestReceived += Updated;
+			o["api_req_kousyou/destroyship"].RequestReceived += Updated;
+			o["api_req_member/updatedeckname"].RequestReceived += Updated;
+			o["api_req_kaisou/remodeling"].RequestReceived += Updated;
+			o["api_req_map/start"].RequestReceived += Updated;
+			o["api_req_hensei/combined"].RequestReceived += Updated;
 
-			o.APIList["api_port/port"].ResponseReceived += Updated;
-			o.APIList["api_get_member/ship2"].ResponseReceived += Updated;
-			o.APIList["api_get_member/ndock"].ResponseReceived += Updated;
-			o.APIList["api_req_kousyou/getship"].ResponseReceived += Updated;
-			o.APIList["api_req_hokyu/charge"].ResponseReceived += Updated;
-			o.APIList["api_req_kousyou/destroyship"].ResponseReceived += Updated;
-			o.APIList["api_get_member/ship3"].ResponseReceived += Updated;
-			o.APIList["api_req_kaisou/powerup"].ResponseReceived += Updated;        //requestのほうは面倒なのでこちらでまとめてやる
-			o.APIList["api_get_member/deck"].ResponseReceived += Updated;
-			o.APIList["api_get_member/slot_item"].ResponseReceived += Updated;
-			o.APIList["api_req_map/start"].ResponseReceived += Updated;
-			o.APIList["api_req_map/next"].ResponseReceived += Updated;
-			o.APIList["api_get_member/ship_deck"].ResponseReceived += Updated;
-			o.APIList["api_req_hensei/preset_select"].ResponseReceived += Updated;
-			o.APIList["api_req_kaisou/slot_exchange_index"].ResponseReceived += Updated;
-			o.APIList["api_get_member/require_info"].ResponseReceived += Updated;
-			o.APIList["api_req_kaisou/slot_deprive"].ResponseReceived += Updated;
+			o["api_port/port"].ResponseReceived += Updated;
+			o["api_get_member/ship2"].ResponseReceived += Updated;
+			o["api_get_member/ndock"].ResponseReceived += Updated;
+			o["api_req_kousyou/getship"].ResponseReceived += Updated;
+			o["api_req_hokyu/charge"].ResponseReceived += Updated;
+			o["api_req_kousyou/destroyship"].ResponseReceived += Updated;
+			o["api_get_member/ship3"].ResponseReceived += Updated;
+			o["api_req_kaisou/powerup"].ResponseReceived += Updated;        //requestのほうは面倒なのでこちらでまとめてやる
+			o["api_get_member/deck"].ResponseReceived += Updated;
+			o["api_get_member/slot_item"].ResponseReceived += Updated;
+			o["api_req_map/start"].ResponseReceived += Updated;
+			o["api_req_map/next"].ResponseReceived += Updated;
+			o["api_get_member/ship_deck"].ResponseReceived += Updated;
+			o["api_req_hensei/preset_select"].ResponseReceived += Updated;
+			o["api_req_kaisou/slot_exchange_index"].ResponseReceived += Updated;
+			o["api_get_member/require_info"].ResponseReceived += Updated;
+			o["api_req_kaisou/slot_deprive"].ResponseReceived += Updated;
 
 
 			//追加するときは FormFleetOverview にも同様に追加してください

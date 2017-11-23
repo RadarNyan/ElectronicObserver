@@ -20,11 +20,11 @@ namespace ElectronicObserver.Data.Battle
 
 			JetAirBattle = new PhaseJetAirBattle(this, "喷式航空战");
 			AirBattle = new PhaseAirBattle(this, "航空战");
-			OpeningASW = new PhaseOpeningASW(this, "先制对潜", false);
+			OpeningASW = new PhaseOpeningASW(this, "先制对潜");
 			OpeningTorpedo = new PhaseTorpedo(this, "开幕雷击", 0);
-			Shelling1 = new PhaseShelling(this, "第一次炮击战", 1, "1", false);
-			Shelling2 = new PhaseShelling(this, "第二次炮击战", 2, "2", false);
-			Shelling3 = new PhaseShelling(this, "第三次炮击战", 3, "3", false);
+			Shelling1 = new PhaseShelling(this, "第一次炮击战", 1, "1");
+			Shelling2 = new PhaseShelling(this, "第二次炮击战", 2, "2");
+			Shelling3 = new PhaseShelling(this, "第三次炮击战", 3, "3");
 			Torpedo = new PhaseTorpedo(this, "雷击战", 4);
 
 
@@ -38,7 +38,7 @@ namespace ElectronicObserver.Data.Battle
 
 		public override string BattleName => "演习 昼战";
 
-		public override BattleTypeFlag BattleType => BattleTypeFlag.Day | BattleTypeFlag.Practice;
+		public override bool IsPractice => true;
 
 
 		public override IEnumerable<PhaseBase> GetPhases()

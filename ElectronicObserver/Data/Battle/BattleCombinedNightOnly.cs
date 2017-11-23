@@ -33,8 +33,6 @@ namespace ElectronicObserver.Data.Battle
 
 		public override string BattleName => "联合舰队 开幕夜战";
 
-		public override BattleData.BattleTypeFlag BattleType => BattleTypeFlag.Night | BattleTypeFlag.Combined;
-
 
 		public override IEnumerable<PhaseBase> GetPhases()
 		{

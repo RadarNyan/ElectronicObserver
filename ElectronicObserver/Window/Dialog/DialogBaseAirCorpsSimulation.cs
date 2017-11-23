@@ -459,6 +459,7 @@ namespace ElectronicObserver.Window.Dialog
 				TitleTotal.Font = Utility.Configuration.Config.UI.MainFont;
 				DuplicateCheck.TextAlign = ContentAlignment.MiddleLeft;
 				DuplicateCheck.ForeColor = Color.Red;
+				DuplicateCheck.Font = Utility.Configuration.Config.UI.MainFont;
 
 				Parent = parent;
 				ToolTipInternal = parent.ToolTipInfo;
@@ -937,7 +938,7 @@ namespace ElectronicObserver.Window.Dialog
 
 				if (dupelist.Any())
 				{
-					ui.DuplicateCheck.Text = "重複あり " + string.Join(", ", dupelist.Select(d => "#" + (d + 1)));
+					ui.DuplicateCheck.Text = "存在重复 " + string.Join(", ", dupelist.Select(d => "#" + (d + 1)));
 				}
 				else
 				{

@@ -339,8 +339,8 @@ namespace ElectronicObserver.Data.Battle
 			if (IsPractice)
 			{
 
-				Utility.Logger.Add(2, "", "同", string.Format("「{0}」{1}", EnemyAdmiralName, EnemyAdmiralRank),
-					" 的舰队", string.Format("「{0}」", Result.EnemyFleetName),
+				Utility.Logger.Add(2, "", "同", string.Format("「{0}」[{1}]", EnemyAdmiralName, EnemyAdmiralRank),
+					"的舰队", string.Format("「{0}」", Result.EnemyFleetName),
 					string.Format("进行了演习。( 结果 : {0}, 提督经验 +{1}, 舰娘经验 +{2} )",
 						Result.Rank, Result.AdmiralExp, Result.BaseExp));
 			}

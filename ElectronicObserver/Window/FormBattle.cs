@@ -1066,10 +1066,10 @@ namespace ElectronicObserver.Window
 		{
 
 			KCDatabase db = KCDatabase.Instance;
-			bool isPractice = (bd.BattleType & BattleData.BattleTypeFlag.Practice) != 0;
-			bool isCombined = (bd.BattleType & BattleData.BattleTypeFlag.Combined) != 0;
-			bool isEnemyCombined = (bd.BattleType & BattleData.BattleTypeFlag.EnemyCombined) != 0;
-			bool isBaseAirRaid = (bd.BattleType & BattleData.BattleTypeFlag.BaseAirRaid) != 0;
+			bool isPractice = bd.IsPractice;
+			bool isCombined = bd.IsFriendCombined;
+			bool isEnemyCombined = bd.IsEnemyCombined;
+			bool isBaseAirRaid = bd.IsBaseAirRaid;
 
 			var initial = bd.Initial;
 			var resultHPs = bd.ResultHPs;
@@ -1192,7 +1192,7 @@ namespace ElectronicObserver.Window
 			{
 				FleetFriendEscort.Visible = true;
 
-				for (int i = 0; i < Math.Min(initial.FriendInitialHPsEscort.Length, 6); i++)
+				for (int i = 0; i < initial.FriendInitialHPsEscort.Length; i++)
 				{
 					int refindex = BattleIndex.Get(BattleSides.FriendEscort, i);
 
