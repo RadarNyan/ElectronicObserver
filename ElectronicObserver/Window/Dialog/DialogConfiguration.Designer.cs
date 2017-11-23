@@ -2086,7 +2086,7 @@
 			this.FormBrowser_IsDMMreloadDialogDestroyable.Name = "FormBrowser_IsDMMreloadDialogDestroyable";
 			this.FormBrowser_IsDMMreloadDialogDestroyable.Size = new System.Drawing.Size(254, 19);
 			this.FormBrowser_IsDMMreloadDialogDestroyable.TabIndex = 12;
-			this.FormBrowser_IsDMMreloadDialogDestroyable.Text = "屏蔽 DMM 的刷新提示对话框。";
+			this.FormBrowser_IsDMMreloadDialogDestroyable.Text = "屏蔽 DMM 的刷新提示对话框";
 			this.ToolTipInfo.SetToolTip(this.FormBrowser_IsDMMreloadDialogDestroyable, "让 DMM 的「エラーが発生したため、ページ更新します。」对话框不再弹出。( 译注：不推荐使用。)");
 			this.FormBrowser_IsDMMreloadDialogDestroyable.UseVisualStyleBackColor = true;
 			// 
