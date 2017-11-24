@@ -654,6 +654,7 @@ namespace ElectronicObserver.Window
 						return Utility.Configuration.Config.UI.ForeColor;
 					case 2:
 					case 3:     //夜戦・夜昼戦
+					case 7:     //敵連合夜昼戦
 						return Utility.Configuration.Config.UI.Compass_ColorTextEventKind3;
 					case 4:     //航空戦
 					case 6:     //長距離空襲戦
