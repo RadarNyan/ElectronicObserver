@@ -869,7 +869,7 @@ namespace ElectronicObserver.Window
 									eventkind = "安静的海洋";
 									break;
 								case 7:
-									eventkind = "向多佛尔海峡推进中";
+									eventkind = "向苏里高海峡推进中";
 									break;
 							}
 							if (compass.RouteChoices != null) {
