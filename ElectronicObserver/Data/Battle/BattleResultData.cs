@@ -228,7 +228,7 @@ namespace ElectronicObserver.Data.Battle
 				}
 				else
 				{
-					return new int[2] { (int)RawData.api_escape.api_escape_idx[0], (int)RawData.api_escape.api_tow_idx[0] }.AsEnumerable();
+					return new int[2] { (int)RawData.api_escape.api_escape_idx[0], RawData.api_escape.api_tow_idx() ? (int)RawData.api_escape.api_tow_idx[0] : 0 }.AsEnumerable();
 				}
 
 			}
