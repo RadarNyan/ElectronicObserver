@@ -1297,7 +1297,7 @@ namespace ElectronicObserver.Window
 
 
 
-			if ((isFriendCombined || hasFriend7thShip) && isEnemyCombined)
+			if ((isFriendCombined/* || hasFriend7thShip*/) && isEnemyCombined)
 			{
 				foreach (var bar in HPBars)
 				{
