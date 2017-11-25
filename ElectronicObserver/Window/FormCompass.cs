@@ -654,7 +654,6 @@ namespace ElectronicObserver.Window
 						return Utility.Configuration.Config.UI.ForeColor;
 					case 2:
 					case 3:     //夜戦・夜昼戦
-					case 7:     //敵連合夜昼戦
 						return Utility.Configuration.Config.UI.Compass_ColorTextEventKind3;
 					case 4:     //航空戦
 					case 6:     //長距離空襲戦
@@ -870,13 +869,7 @@ namespace ElectronicObserver.Window
 									eventkind = "安静的海洋";
 									break;
 								case 7:
-									eventkind = "我游击部队奋勇进击中。\r\n当海域不见敌影。"; //"我が遊撃部隊は堂々と進撃中。現海域に敵影なし。";
-									break;
-								case 8:
-									eventkind = "舰队对潜警戒进击中。\r\n保持警惕，继续进行对潜对空警戒。"; //"艦隊は対潜警戒進撃中。引き続き、対潜対空警戒を厳とせよ。";
-									break;
-								case 9:
-									eventkind = "栗田舰队即刻起突入战斗海域。\r\n「天佑ヲ確信シ、全軍突撃セヨ」"; //"栗田艦隊はこれより戦闘海域に突入する。天佑を確信し、全軍突撃せよ。";
+									eventkind = "向苏里高海峡推进中";
 									break;
 							}
 							if (compass.RouteChoices != null) {

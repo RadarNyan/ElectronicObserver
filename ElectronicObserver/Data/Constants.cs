@@ -341,8 +341,6 @@ namespace ElectronicObserver.Data
 					return "敌联合";
 				case 6:
 					return "空袭战";
-				case 7:
-					return "敌联合夜昼战";
 				default:
 					return "不明";
 			}

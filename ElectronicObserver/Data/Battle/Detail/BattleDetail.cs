@@ -101,8 +101,6 @@ namespace ElectronicObserver.Data.Battle.Detail
 				}
 			}
 
-			if (bd.IsBaseAirRaid)
-				return;
 
 			switch (DefenderIndex.Side)
 			{

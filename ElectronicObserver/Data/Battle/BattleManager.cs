@@ -77,7 +77,7 @@ namespace ElectronicObserver.Data.Battle
 			get
 			{
 				var phase = BattleMode & BattleModes.BattlePhaseMask;
-				return phase == BattleModes.NightOnly; // || phase == BattleModes.NightDay ;
+				return phase == BattleModes.NightOnly || phase == BattleModes.NightDay;
 			}
 		}
 
