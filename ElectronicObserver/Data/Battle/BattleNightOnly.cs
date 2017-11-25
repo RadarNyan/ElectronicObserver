@@ -18,7 +18,7 @@ namespace ElectronicObserver.Data.Battle
 		{
 			base.LoadFromResponse(apiname, (object)data);
 
-			Support = new PhaseSupport(this, "支援攻击", false);
+			Support = new PhaseSupport(this, "夜间支援攻击", true);
 			NightBattle = new PhaseNightBattle(this, "夜战", 0, false);
 			
 

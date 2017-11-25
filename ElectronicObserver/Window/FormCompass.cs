@@ -660,6 +660,8 @@ namespace ElectronicObserver.Window
 						return Utility.Configuration.Config.UI.Compass_ColorTextEventKind6;
 					case 5:     // 敵連合
 						return Utility.Configuration.Config.UI.Compass_ColorTextEventKind5;
+					case 7:		// 夜昼戦(対連合艦隊)
+						return Utility.Configuration.Config.UI.Compass_ColorTextEventKind3;
 				}
 			};
 
@@ -869,7 +871,13 @@ namespace ElectronicObserver.Window
 									eventkind = "安静的海洋";
 									break;
 								case 7:
-									eventkind = "向苏里高海峡推进中";
+									eventkind = "游击部队进击中";
+									break;
+								case 8:
+									eventkind = "对潜警戒进击中";
+									break;
+								case 9:
+									eventkind = "栗田舰队突入";
 									break;
 							}
 							if (compass.RouteChoices != null) {
