@@ -235,16 +235,16 @@ namespace ElectronicObserver.Window
 				case "api_req_sortie/night_to_day":
 					{
 						// 暫定
-						var battle = bm.BattleDay as BattleDayFromNight;
+						var battle = bm.BattleNight as BattleDayFromNight;
 
 						SetFormation(bm);
-						SetNightBattleEvent(battle.NightBattle1);
+						SetNightBattleEvent(battle.NightBattle);
 
 						if (battle.NextToDay)
 						{
-							SetSearchingResult(bm.BattleDay);
-							SetBaseAirAttack(bm.BattleDay.BaseAirAttack);
-							SetAerialWarfare(bm.BattleDay.JetAirBattle, bm.BattleDay.AirBattle);
+							SetSearchingResult(battle);
+							SetBaseAirAttack(battle.BaseAirAttack);
+							SetAerialWarfare(battle.JetAirBattle, battle.AirBattle);
 						}
 
 						SetHPBar(bm.BattleDay);
@@ -317,19 +317,19 @@ namespace ElectronicObserver.Window
 				case "api_req_combined_battle/ec_night_to_day":
 					{
 						// 暫定
-						var battle = bm.BattleDay as BattleEnemyCombinedDayFromNight;
+						var battle = bm.BattleNight as BattleDayFromNight;
 
 						SetFormation(bm);
-						SetNightBattleEvent(battle.NightBattle1);
+						SetNightBattleEvent(battle.NightBattle);
 
 						if (battle.NextToDay)
 						{
-							SetSearchingResult(bm.BattleDay);
-							SetBaseAirAttack(bm.BattleDay.BaseAirAttack);
-							SetAerialWarfare(bm.BattleDay.JetAirBattle, bm.BattleDay.AirBattle);
+							SetSearchingResult(battle);
+							SetBaseAirAttack(battle.BaseAirAttack);
+							SetAerialWarfare(battle.JetAirBattle, battle.AirBattle);
 						}
 
-						SetHPBar(bm.BattleDay);
+						SetHPBar(battle);
 						SetDamageRate(bm);
 
 						BaseLayoutPanel.Visible = !hideDuringBattle;
@@ -1067,9 +1067,10 @@ namespace ElectronicObserver.Window
 
 			KCDatabase db = KCDatabase.Instance;
 			bool isPractice = bd.IsPractice;
-			bool isCombined = bd.IsFriendCombined;
+			bool isFriendCombined = bd.IsFriendCombined;
 			bool isEnemyCombined = bd.IsEnemyCombined;
 			bool isBaseAirRaid = bd.IsBaseAirRaid;
+			bool hasFriend7thShip = bd.Initial.FriendMaxHPs.Count(hp => hp > 0) == 7;
 
 			var initial = bd.Initial;
 			var resultHPs = bd.ResultHPs;
@@ -1188,7 +1189,7 @@ namespace ElectronicObserver.Window
 
 
 			// friend escort
-			if (isCombined)
+			if (isFriendCombined)
 			{
 				FleetFriendEscort.Visible = true;
 
@@ -1232,6 +1233,8 @@ namespace ElectronicObserver.Window
 					}
 				}
 
+				MoveHPBar(true);
+
 			}
 			else
 			{
@@ -1239,6 +1242,9 @@ namespace ElectronicObserver.Window
 
 				foreach (var i in BattleIndex.FriendEscort.Skip(Math.Max(bd.Initial.FriendFleet.Members.Count - 6, 0)))
 					DisableHPBar(i);
+
+				MoveHPBar(false, bd.Initial.FriendFleet.Members.Count);
+
 			}
 
 
@@ -1291,7 +1297,7 @@ namespace ElectronicObserver.Window
 
 
 
-			if (isCombined && isEnemyCombined)
+			if ((isFriendCombined/* || hasFriend7thShip*/) && isEnemyCombined)
 			{
 				foreach (var bar in HPBars)
 				{
@@ -1314,10 +1320,20 @@ namespace ElectronicObserver.Window
 
 
 			{   // support
-				if (bd.Support?.IsAvailable ?? false)
+				PhaseSupport support = null;
+
+				if (bd is BattleDayFromNight bddn)
+				{
+					if (bddn.NightSupport?.IsAvailable ?? false)
+						support = bddn.NightSupport;
+				}
+				if (support == null)
+					support = bd.Support;
+
+				if (support?.IsAvailable ?? false)
 				{
 
-					switch (bd.Support.SupportFlag)
+					switch (support.SupportFlag)
 					{
 						case 1:
 							FleetFriend.ImageIndex = (int)ResourceManager.EquipmentContent.CarrierBasedTorpedo;
@@ -1337,9 +1353,9 @@ namespace ElectronicObserver.Window
 					}
 
 					FleetFriend.ImageAlign = ContentAlignment.MiddleLeft;
-					ToolTipInfo.SetToolTip(FleetFriend, "支援攻击\r\n" + bd.Support.GetBattleDetail());
+					ToolTipInfo.SetToolTip(FleetFriend, "支援攻击\r\n" + support.GetBattleDetail());
 
-					if (isCombined && isEnemyCombined)
+					if ((isFriendCombined || hasFriend7thShip) && isEnemyCombined)
 						FleetFriend.Text = "自军";
 					else
 						FleetFriend.Text = "自军舰队";
@@ -1369,7 +1385,7 @@ namespace ElectronicObserver.Window
 					HPBars[BattleIndex.Get(BattleSides.FriendMain, i)].RepaintHPtext();
 				}
 
-				if (isCombined)
+				if (isFriendCombined)
 				{
 					foreach (int i in bd.MVPShipCombinedIndexes)
 					{
@@ -1383,6 +1399,30 @@ namespace ElectronicObserver.Window
 				bar.ResumeUpdate();
 		}
 
+
+		private bool _hpBarMoved = false;
+		/// <summary>
+		/// 味方遊撃部隊７人目のHPゲージ（通常時は連合艦隊第二艦隊旗艦のHPゲージ）を移動します。
+		/// </summary>
+		private void MoveHPBar(bool isFriendCombind, int friendFleetMembersCount = 0)
+		{
+			if (!isFriendCombind && friendFleetMembersCount == 7) {
+				if (_hpBarMoved)
+					return;
+				TableBottom.SetCellPosition(HPBars[BattleIndex.FriendEscort.First()], new TableLayoutPanelCellPosition(0, 7));
+				bool fixSize = Utility.Configuration.Config.UI.IsLayoutFixed;
+				bool showHPBar = Utility.Configuration.Config.FormBattle.ShowHPBar;
+				ControlHelper.SetTableRowStyle(TableBottom, 7, fixSize ? new RowStyle(SizeType.Absolute, showHPBar ? 21 : 16) : new RowStyle(SizeType.AutoSize));
+				_hpBarMoved = true;
+			} else {
+				if (!_hpBarMoved)
+					return;
+				TableBottom.SetCellPosition(HPBars[BattleIndex.FriendEscort.First()], new TableLayoutPanelCellPosition(1, 1));
+				ControlHelper.SetTableRowStyle(TableBottom, 7, new RowStyle(SizeType.Absolute, 0));
+				_hpBarMoved = false;
+			}
+
+		}
 
 
 		/// <summary>
@@ -1650,7 +1690,7 @@ namespace ElectronicObserver.Window
 				ControlHelper.SetTableRowStyle(TableBottom, 0, new RowStyle(SizeType.Absolute, 21));
 				for (int i = 1; i <= 6; i++)
 					ControlHelper.SetTableRowStyle(TableBottom, i, new RowStyle(SizeType.Absolute, showHPBar ? 21 : 16));
-				ControlHelper.SetTableRowStyle(TableBottom, 7, new RowStyle(SizeType.Absolute, 21));
+				ControlHelper.SetTableRowStyle(TableBottom, 8, new RowStyle(SizeType.Absolute, 21));
 			}
 			else
 			{
@@ -1713,7 +1753,7 @@ namespace ElectronicObserver.Window
 
 		private void TableBottom_CellPaint(object sender, TableLayoutCellPaintEventArgs e)
 		{
-			if (e.Row == 7)
+			if (e.Row == 8)
 				e.Graphics.DrawLine(Utility.Configuration.Config.UI.SubBackColorPen, e.CellBounds.X, e.CellBounds.Bottom - 1, e.CellBounds.Right - 1, e.CellBounds.Bottom - 1);
 		}
 

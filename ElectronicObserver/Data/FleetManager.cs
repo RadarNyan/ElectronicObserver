@@ -75,19 +75,19 @@ namespace ElectronicObserver.Data
 			switch (apiname)
 			{
 				case "api_req_sortie/goback_port":
-					{
-						int fleetInSortie = KCDatabase.Instance.Fleet.Fleets.Values
-							.Where(f => f != null && f.IsInSortie).Select(f => f.FleetID).FirstOrDefault();
-
-						if(fleetInSortie != 0)
-							Fleets[fleetInSortie].Escape(KCDatabase.Instance.Battle.Result.EscapingShipIndex.ToArray()[0] - 1);
-					}
-					break;
-
 				case "api_req_combined_battle/goback_port":
-					foreach (int index in KCDatabase.Instance.Battle.Result.EscapingShipIndex)
 					{
-						Fleets[(index - 1) < 6 ? 1 : 2].Escape((index - 1) % 6);
+						var battle = KCDatabase.Instance.Battle;
+
+						foreach (int ii in battle.Result.EscapingShipIndex)
+						{
+							int index = ii - 1;
+
+							if (index < battle.FirstBattle.Initial.FriendFleet.Members.Count)
+								battle.FirstBattle.Initial.FriendFleet.Escape(index);
+							else
+								battle.FirstBattle.Initial.FriendFleetEscort.Escape(index - 6);
+						}
 					}
 					break;
 

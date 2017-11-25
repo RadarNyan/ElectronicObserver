@@ -334,13 +334,15 @@ namespace ElectronicObserver.Data
 				case 2:
 					return "夜战";
 				case 3:
-					return "夜昼战";
+					return "夜昼战";		// 対通常?
 				case 4:
 					return "航空战";
 				case 5:
 					return "敌联合";
 				case 6:
 					return "空袭战";
+				case 7:
+					return "夜昼战";		// 対連合
 				default:
 					return "不明";
 			}
