@@ -129,8 +129,6 @@ namespace ElectronicObserver.Window
 			private int SearchingAbilityNew33BranchWeight = 1; // can only be 1, 4, 3
 
 			private void SearchingAbility_Click(object sender, EventArgs e, int fleetID) {
-				if (Utility.Configuration.Config.FormFleet.SearchingAbilityMethod != 4)
-					return;
 				switch (SearchingAbilityNew33BranchWeight) {
 					case 1:
 						SearchingAbilityNew33BranchWeight = 4;
