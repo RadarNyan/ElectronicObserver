@@ -402,15 +402,15 @@ namespace ElectronicObserver.Data
 			switch (value)
 			{
 				case 1:
-					return "发生空袭 - 资源受损";
+					return "资源受损";
 				case 2:
-					return "发生空袭 - 资源、航空队受损";
+					return "资源・航空队受损";
 				case 3:
-					return "发生空袭 - 航空队受损";
+					return "航空队受损";
 				case 4:
-					return "发生空袭 - 未受损";
+					return "未受损";
 				default:
-					return "未发生空袭";
+					return "未发生";
 			}
 		}
 
