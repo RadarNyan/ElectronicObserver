@@ -38,6 +38,8 @@ namespace ElectronicObserver.Window
 			public ImageLabel AntiAirPower;
 			public ToolTip ToolTipInfo;
 
+			public int BranchWeight { get; private set; } = 1;
+
 			public TableFleetControl(FormFleet parent)
 			{
 
@@ -126,18 +128,18 @@ namespace ElectronicObserver.Window
 
 			}
 
-			private int SearchingAbilityNew33BranchWeight = 1; // can only be 1, 4, 3
-
-			private void SearchingAbility_Click(object sender, EventArgs e, int fleetID) {
-				switch (SearchingAbilityNew33BranchWeight) {
+			private void SearchingAbility_Click(object sender, EventArgs e, int fleetID)
+			{
+				switch (BranchWeight)
+				{
 					case 1:
-						SearchingAbilityNew33BranchWeight = 4;
+						BranchWeight = 4;
 						break;
 					case 4:
-						SearchingAbilityNew33BranchWeight = 3;
+						BranchWeight = 3;
 						break;
 					case 3:
-						SearchingAbilityNew33BranchWeight = 1;
+						BranchWeight = 1;
 						break;
 				}
 				Update(KCDatabase.Instance.Fleet[fleetID]);
@@ -225,24 +227,22 @@ namespace ElectronicObserver.Window
 
 
 				//索敵能力計算
+				SearchingAbility.Text = fleet.GetSearchingAbilityString(BranchWeight);
 				{
 					StringBuilder sb = new StringBuilder();
 					double probStart = fleet.GetContactProbability();
 					var probSelect = fleet.GetContactSelectionProbability();
 
-					switch (SearchingAbilityNew33BranchWeight) {
+					switch (BranchWeight) {
 						case 1:
-							SearchingAbility.Text = String.Format("{0:f2}", Math.Floor(Calculator.GetSearchingAbility_New33(fleet, SearchingAbilityNew33BranchWeight) * 100) / 100);
 							sb.Append("分歧点系数 1 ( 点击切换 4 / 3 )\r\n");
 							sb.Append("　2-5-H->BOSS	31 / 33\r\n");
 							break;
 						case 4:
-							SearchingAbility.Text = String.Format("(4) {0:f2}", Math.Floor(Calculator.GetSearchingAbility_New33(fleet, SearchingAbilityNew33BranchWeight) * 100) / 100);
 							sb.Append("分歧点系数 4 ( 点击切换 3 / 1 )\r\n");
 							sb.Append("　3-5-G->BOSS	23 / 28\r\n　6-1-E->F	12 / 16 (大鯨)\r\n　6-1-F->K	20 / 25 (大鯨) / 36\r\n");
 							break;
 						case 3:
-							SearchingAbility.Text = String.Format("(3) {0:f2}", Math.Floor(Calculator.GetSearchingAbility_New33(fleet, SearchingAbilityNew33BranchWeight) * 100) / 100);
 							sb.Append("分歧点系数 3 ( 点击切换 1 / 4 )\r\n");
 							sb.Append("　1-6-M->J	? / 30\r\n　6-2-F->I	43 / 50\r\n　6-2-H->BOSS	? / 40\r\n　6-3-H->BOSS	36 / 38\r\n　6-5-G->BOSS	? / 50\r\n");
 							break;
@@ -1055,7 +1055,7 @@ namespace ElectronicObserver.Window
 			FleetData fleet = db.Fleet[FleetID];
 			if (fleet == null) return;
 
-			sb.AppendFormat("{0}\t制空战力 {1} / 索敌能力 {2} / 运输能力 {3}\r\n", fleet.Name, fleet.GetAirSuperiority(), fleet.GetSearchingAbilityString(), Calculator.GetTPDamage(fleet));
+			sb.AppendFormat("{0}\t制空战力 {1} / 索敌能力 {2} / 运输能力 {3}\r\n", fleet.Name, fleet.GetAirSuperiority(), fleet.GetSearchingAbilityString(ControlFleet.BranchWeight), Calculator.GetTPDamage(fleet));
 			for (int i = 0; i < fleet.Members.Count; i++)
 			{
 				if (fleet[i] == -1)
