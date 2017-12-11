@@ -41,13 +41,13 @@ namespace ElectronicObserver.Utility
 		/// <summary>
 		/// 汉化版版本号
 		/// </summary>
-		public static string VersionRN => "m1";
+		public static string VersionRN => "m2";
 
 
 		/// <summary>
 		/// 更新日時
 		/// </summary>
-		public static DateTime UpdateTime => DateTimeHelper.CSVStringToTime("2017/12/06 05:18:58");
+		public static DateTime UpdateTime => DateTimeHelper.CSVStringToTime("2017/12/12 08:50:09");
 
 
 

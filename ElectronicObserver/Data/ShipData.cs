@@ -1549,15 +1549,16 @@ namespace ElectronicObserver.Data
 			switch (apiname)
 			{
 				case "api_req_kousyou/destroyship":
-					{
-						for (int i = 0; i < Slot.Count; i++)
-						{
-							if (Slot[i] == -1)
-								continue;
-
-							db.Equipments.Remove(Slot[i]);
+					if (int.Parse(data["api_slot_dest_flag"]) == 1) {
+						for (int i = 0; i < Slot.Count; i++) {
+							if (Slot[i] != -1)
+								db.Equipments.Remove(Slot[i]);
 						}
+						Utility.Logger.Add(2, "", "已解体 : ", NameWithLevel, " ( 废弃装备 )");
+					} else {
+						Utility.Logger.Add(2, "", "已解体 : ", NameWithLevel, " ( 保留装备 )");
 					}
+					db.Ships.Remove(ID);
 					break;
 
 				case "api_req_kaisou/open_exslot":

@@ -17,25 +17,13 @@ namespace ElectronicObserver.Observer.kcsapi.api_req_kousyou
 
 			KCDatabase db = KCDatabase.Instance;
 
+			int[] shipIDs = data["api_ship_id"].Split(',').Select(id => int.Parse(id)).ToArray();
 
-			//todo: ここに処理を書くのはみょんな感があるので、可能なら移動する
-
-			int shipID = int.Parse(data["api_ship_id"]);
-
-			db.Fleet.LoadFromRequest(APIName, data);
-
-			ShipData ship = db.Ships[shipID];
-
-			Utility.Logger.Add(2, "", "已解体 : ", ship.NameWithLevel);
-
-			for (int i = 0; i < ship.Slot.Count; i++)
-			{
-				if (ship.Slot[i] != -1)
-					db.Equipments.Remove(ship.Slot[i]);
+			foreach (int shipID in shipIDs) {
+				db.Ships[shipID].LoadFromRequest(APIName, data);
 			}
 
-			db.Ships.Remove(shipID);
-
+			db.Fleet.LoadFromRequest(APIName, data);
 
 			base.OnRequestReceived(data);
 		}
