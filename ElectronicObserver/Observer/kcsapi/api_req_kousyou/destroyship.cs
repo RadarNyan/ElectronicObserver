@@ -18,7 +18,7 @@ namespace ElectronicObserver.Observer.kcsapi.api_req_kousyou
 			KCDatabase db = KCDatabase.Instance;
 
 			bool destroyEquipments = int.Parse(data["api_slot_dest_flag"]) == 1;
-			int[] shipIDs = data["api_ship_id"].Split(',').Select(id => int.Parse(id)).ToArray();
+			var shipIDs = data["api_ship_id"].Split(',').Select(id => int.Parse(id));
 
 			Dictionary<string, int> shipsToDestroy = new Dictionary<string, int>();
 
@@ -44,7 +44,6 @@ namespace ElectronicObserver.Observer.kcsapi.api_req_kousyou
 
 		public override void OnResponseReceived(dynamic data)
 		{
-
 			KCDatabase.Instance.Material.LoadFromResponse(APIName, data.api_material);
 
 			base.OnResponseReceived((object)data);
