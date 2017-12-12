@@ -1554,9 +1554,6 @@ namespace ElectronicObserver.Data
 							if (Slot[i] != -1)
 								db.Equipments.Remove(Slot[i]);
 						}
-						Utility.Logger.Add(2, "", "已解体 : ", NameWithLevel, " ( 废弃装备 )");
-					} else {
-						Utility.Logger.Add(2, "", "已解体 : ", NameWithLevel, " ( 保留装备 )");
 					}
 					db.Ships.Remove(ID);
 					break;
