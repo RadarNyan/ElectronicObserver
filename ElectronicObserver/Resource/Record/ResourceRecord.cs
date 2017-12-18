@@ -309,7 +309,8 @@ namespace ElectronicObserver.Resource.Record
 				ends = new DateTime(date.Year, date.Month, date.Day, 14, 0, 0);
 			} else {
 				// 判断年末战果黑洞
-				if (date.Year == 2013) { return 0; }
+				if (date.Year == 2013)
+					return -2013;
 				begins = date;
 				if (date.Day == DateTime.DaysInMonth(date.Year, date.Month)) {
 					// 月末下午：14:00 ~ 22:00 (8h)
@@ -321,23 +322,22 @@ namespace ElectronicObserver.Resource.Record
 			}
 			rankingMonth = date.Month;
 			// 修正时区
-			begins += timeZoneOffset; ends += timeZoneOffset;
+			begins += timeZoneOffset;
+			ends += timeZoneOffset;
+			// 生成起止时间
+			if (begins.Date == ends.Date) {
+				RankingPeriodString = string.Format("{0} ~ {1}", begins.ToString("M'/'d HH':'mm"), ends.ToString("HH':'mm"));
+			} else {
+				RankingPeriodString = string.Format("{0} ~ {1}", begins.ToString("M'/'d HH':'mm"), ends.ToString("M'/'d HH':'mm"));
+			}
 			// 返回记录值
 			var recordBegins = GetRecord(begins);
 			var recordEnds = GetRecord(ends);
-			if (recordBegins != null) {
-				if (begins.Date == ends.Date) {
-					RankingPeriodString = string.Format("{0} ~ {1}", begins.ToString("M'/'d HH':'mm"), ends.ToString("HH':'mm"));
-				} else {
-					RankingPeriodString = string.Format("{0} ~ {1}", begins.ToString("M'/'d HH':'mm"), ends.ToString("M'/'d HH':'mm"));
-				}
-				if (previous && recordEnds != null) {
-					return recordEnds.HQExp - recordBegins.HQExp;
-				} else {
-					return recordBegins.HQExp;
-				}
-			}
-			return -1;
+			if (recordBegins == null)
+				return -1;
+			if (recordEnds == null)
+				return KCDatabase.Instance.Admiral.Exp - recordBegins.HQExp;
+			return recordEnds.HQExp - recordBegins.HQExp;
 		}
 
 		/// <summary>
@@ -376,23 +376,22 @@ namespace ElectronicObserver.Resource.Record
 				}
 			}
 			// 修正时区
-			begins += timeZoneOffset; ends += timeZoneOffset;
+			begins += timeZoneOffset;
+			ends += timeZoneOffset;
+			// 生成起止时间
+			if (begins.Date == ends.Date) {
+				RankingPeriodString = string.Format("{0} ~ {1}", begins.ToString("M'/'d HH':'mm"), ends.ToString("HH':'mm"));
+			} else {
+				RankingPeriodString = string.Format("{0} ~ {1}", begins.ToString("M'/'d HH':'mm"), ends.ToString("M'/'d HH':'mm"));
+			}
 			// 返回记录值
 			var recordBegins = GetRecord(begins);
 			var recordEnds = GetRecord(ends);
-			if (recordBegins != null) {
-				if (begins.Date == ends.Date) {
-					RankingPeriodString = string.Format("{0} ~ {1}", begins.ToString("M'/'d HH':'mm"), ends.ToString("HH':'mm"));
-				} else {
-					RankingPeriodString = string.Format("{0} ~ {1}", begins.ToString("M'/'d HH':'mm"), ends.ToString("M'/'d HH':'mm"));
-				}
-				if (previous && recordEnds != null) {
-					return recordEnds.HQExp - recordBegins.HQExp;
-				} else {
-					return recordBegins.HQExp;
-				}
-			}
-			return -1;
+			if (recordBegins == null)
+				return -1;
+			if (recordEnds == null)
+				return KCDatabase.Instance.Admiral.Exp - recordBegins.HQExp;
+			return recordEnds.HQExp - recordBegins.HQExp;
 		}
 
 		/// <summary>
@@ -418,19 +417,18 @@ namespace ElectronicObserver.Resource.Record
 				ends   = new DateTime(date.Year, date.Month, DateTime.DaysInMonth(date.Year, date.Month), 22, 0, 0);
 			}
 			// 修正时区
-			begins += timeZoneOffset; ends += timeZoneOffset;
+			begins += timeZoneOffset;
+			ends += timeZoneOffset;
+			// 生成起止时间
+			RankingPeriodString = string.Format("{0} ~ {1}", begins.ToString("M'/'d HH':'mm"), ends.ToString("M'/'d HH':'mm"));
 			// 返回记录值
 			var recordBegins = GetRecord(begins);
 			var recordEnds = GetRecord(ends);
-			if (recordBegins != null) {
-				RankingPeriodString = string.Format("{0} ~ {1}", begins.ToString("M'/'d HH':'mm"), ends.ToString("M'/'d HH':'mm"));
-				if (previous && recordEnds != null) {
-					return recordEnds.HQExp - recordBegins.HQExp;
-				} else {
-					return recordBegins.HQExp;
-				}
-			}
-			return -1;
+			if (recordBegins == null)
+				return -1;
+			if (recordEnds == null)
+				return KCDatabase.Instance.Admiral.Exp - recordBegins.HQExp;
+			return recordEnds.HQExp - recordBegins.HQExp;
 		}
 
 
