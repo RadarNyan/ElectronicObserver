@@ -225,6 +225,24 @@ namespace ElectronicObserver.Resource.Record
 		/// </summary>
 		public string RankingPeriodString { get; private set; }
 
+		private void SetRankingPeriodString(DateTime begins, DateTime ends)
+		{
+			string beginsFormat = "M'/'d HH':'mm";
+			string endsFormat = "HH':'mm";
+			if (begins.Year != DateTime.Now.Year) {
+				beginsFormat = "yyyy'/" + beginsFormat;
+			}
+			if (ends.Date != begins.Date) {
+				if (ends.Year == begins.Year) {
+					endsFormat = "M'/'d " + endsFormat;
+				} else {
+					endsFormat = "yyyy'/'M'/'d " + endsFormat;
+				}
+			}
+
+			RankingPeriodString = string.Format("{0} ~ {1}", begins.ToString(beginsFormat), ends.ToString(endsFormat));
+		}
+
 		/// <summary>
 		/// 每月战果作战名 (e.g. "五月作战")
 		/// </summary>
@@ -263,7 +281,7 @@ namespace ElectronicObserver.Resource.Record
 		private TimeSpan timeZoneOffset = DateTimeOffset.Now.Offset - new TimeSpan(9, 0, 0);
 
 		/// <summary>
-		/// 半日提督经验 ( previous = true 时返回上次结算总经验，否则返回上次结算时经验值 )
+		/// 半日提督经验
 		/// </summary>
 		public int GetExpHalfDay(DateTime now, bool previous = false) {
 			// 确定日期 ( date 的时间仅以 02:00 / 14:00 表示上午 / 下午，并不一定是记录的起始时间 )
@@ -291,8 +309,12 @@ namespace ElectronicObserver.Resource.Record
 					date = previous ? new DateTime(now.Year, now.Month, now.Day, 2, 0, 0) : new DateTime(now.Year, now.Month, now.Day, 14, 0, 0);
 				}
 			}
+			// 判断年末战果黑洞
+			if (date.Year == 2013)
+				return -2013;
 			// 确定记录范围
-			DateTime begins; DateTime ends;
+			DateTime begins;
+			DateTime ends;
 			if (date.Hour < 14) {
 				if (date.Day == 1) {
 					if (date.DayOfYear == 1) {
@@ -308,9 +330,6 @@ namespace ElectronicObserver.Resource.Record
 				}
 				ends = new DateTime(date.Year, date.Month, date.Day, 14, 0, 0);
 			} else {
-				// 判断年末战果黑洞
-				if (date.Year == 2013)
-					return -2013;
 				begins = date;
 				if (date.Day == DateTime.DaysInMonth(date.Year, date.Month)) {
 					// 月末下午：14:00 ~ 22:00 (8h)
@@ -325,11 +344,7 @@ namespace ElectronicObserver.Resource.Record
 			begins += timeZoneOffset;
 			ends += timeZoneOffset;
 			// 生成起止时间
-			if (begins.Date == ends.Date) {
-				RankingPeriodString = string.Format("{0} ~ {1}", begins.ToString("M'/'d HH':'mm"), ends.ToString("HH':'mm"));
-			} else {
-				RankingPeriodString = string.Format("{0} ~ {1}", begins.ToString("M'/'d HH':'mm"), ends.ToString("M'/'d HH':'mm"));
-			}
+			SetRankingPeriodString(begins, ends);
 			// 返回记录值
 			var recordBegins = GetRecord(begins);
 			var recordEnds = GetRecord(ends);
@@ -341,7 +356,7 @@ namespace ElectronicObserver.Resource.Record
 		}
 
 		/// <summary>
-		/// 单日提督经验 ( previous = true 时返回昨日总经验，否则返回本日初经验值 )
+		/// 单日提督经验
 		/// </summary>
 		public int GetExpDay(DateTime now, bool previous = false) {
 			// 确定日期
@@ -354,7 +369,8 @@ namespace ElectronicObserver.Resource.Record
 				date = previous ? now.AddDays(-1) : now;
 			}
 			// 确定记录范围
-			DateTime begins; DateTime ends;
+			DateTime begins;
+			DateTime ends;
 			if (date.Day == 1) {
 				if (date.DayOfYear == 1) {
 					// 年初：1/1 00:00 ~ 1/2 02:00 (26h)
@@ -379,11 +395,7 @@ namespace ElectronicObserver.Resource.Record
 			begins += timeZoneOffset;
 			ends += timeZoneOffset;
 			// 生成起止时间
-			if (begins.Date == ends.Date) {
-				RankingPeriodString = string.Format("{0} ~ {1}", begins.ToString("M'/'d HH':'mm"), ends.ToString("HH':'mm"));
-			} else {
-				RankingPeriodString = string.Format("{0} ~ {1}", begins.ToString("M'/'d HH':'mm"), ends.ToString("M'/'d HH':'mm"));
-			}
+			SetRankingPeriodString(begins, ends);
 			// 返回记录值
 			var recordBegins = GetRecord(begins);
 			var recordEnds = GetRecord(ends);
@@ -395,7 +407,7 @@ namespace ElectronicObserver.Resource.Record
 		}
 
 		/// <summary>
-		/// 单月提督经验 ( previous = true 时返回上月总经验，否则返回本月初经验值 )
+		/// 单月提督经验
 		/// </summary>
 		public int GetExpMonth(DateTime now, bool previous = false) {
 			// 确定月份
@@ -406,7 +418,8 @@ namespace ElectronicObserver.Resource.Record
 				date = previous ? now.AddDays(1).AddMonths(-1) : now.AddDays(1);
 			}
 			// 确定记录范围
-			DateTime begins; DateTime ends;
+			DateTime begins;
+			DateTime ends;
 			if (date.Month == 1) {
 				// 一月：1/1 00:00 ~ 1/31 22:00
 				begins = new DateTime(date.Year, 1, 1, 0, 0, 0);
@@ -420,7 +433,26 @@ namespace ElectronicObserver.Resource.Record
 			begins += timeZoneOffset;
 			ends += timeZoneOffset;
 			// 生成起止时间
-			RankingPeriodString = string.Format("{0} ~ {1}", begins.ToString("M'/'d HH':'mm"), ends.ToString("M'/'d HH':'mm"));
+			SetRankingPeriodString(begins, ends);
+			// 返回记录值
+			var recordBegins = GetRecord(begins);
+			var recordEnds = GetRecord(ends);
+			if (recordBegins == null)
+				return -1;
+			if (recordEnds == null)
+				return KCDatabase.Instance.Admiral.Exp - recordBegins.HQExp;
+			return recordEnds.HQExp - recordBegins.HQExp;
+		}
+
+		/// <summary>
+		/// 一年提督经验
+		/// </summary>
+		public int GetExpYear(int year) {
+			// 确定记录范围
+			DateTime begins = new DateTime(year, 1, 1, 0, 0, 0) + timeZoneOffset;
+			DateTime ends = new DateTime(year, 12, 31, 22, 0, 0) + timeZoneOffset;
+			// 生成起止时间
+			SetRankingPeriodString(begins, ends);
 			// 返回记录值
 			var recordBegins = GetRecord(begins);
 			var recordEnds = GetRecord(ends);
