@@ -690,6 +690,14 @@ namespace ElectronicObserver.Data
 		public override string ToString() => $"[{ShipID}] {NameWithClass}";
 
 
+		public int LevelToCurrentState => RemodelBeforeShip == null ? 0 : RemodelBeforeShip.RemodelAfterLevel;
+
+
+		public string LevelToCurrentStateAppendString => LevelToCurrentState == 0 ? "" : $" ( Lv. {RemodelBeforeShip.RemodelAfterLevel} )";
+
+
+		public string NameWithClassWithLevelToCurrentState => $"{NameWithClass}{LevelToCurrentStateAppendString}";
+
 	}
 
 }

@@ -310,7 +310,8 @@ namespace ElectronicObserver.Window.Dialog
 			//default equipment
 			DefaultSlots.BeginUpdate();
 			DefaultSlots.Items.Clear();
-			foreach (var ship in KCDatabase.Instance.MasterShips.Values)
+			DefaultSlots.DisplayMember = "NameWithClassWithLevelToCurrentState";
+			foreach (var ship in KCDatabase.Instance.MasterShips.Values.OrderBy(s => s.LevelToCurrentState))
 			{
 				if (ship.DefaultSlot != null && ship.DefaultSlot.Contains(equipmentID))
 				{
@@ -700,10 +701,12 @@ namespace ElectronicObserver.Window.Dialog
 			var sb = new StringBuilder();
 
 			foreach (var ship in KCDatabase.Instance.MasterShips.Values
-				.Where(s => s.DefaultSlot != null && s.DefaultSlot.Contains(equipmentID)))
+				.Where(s => s.DefaultSlot != null && s.DefaultSlot.Contains(equipmentID)).OrderBy(s => s.LevelToCurrentState))
 			{
-				sb.AppendLine(ship.NameWithClass);
+				sb.AppendFormat("{0}{1}\r\n", ship.NameWithClass, ship.LevelToCurrentStateAppendString);
 			}
+
+			string recipeTitle = "\r\n开发配方 :\r\n";
 
 			foreach (var record in RecordManager.Instance.Development.Record
 				.Where(r => r.EquipmentID == equipmentID)
@@ -721,8 +724,10 @@ namespace ElectronicObserver.Window.Dialog
 				.ThenBy(r => r.Bauxite)
 				)
 			{
-				sb.AppendFormat("开发配方 {0} / {1} / {2} / {3}\r\n",
+				sb.Append(recipeTitle);
+				sb.AppendFormat("{0} / {1} / {2} / {3}\r\n",
 					record.Fuel, record.Ammo, record.Steel, record.Bauxite);
+				recipeTitle = "";
 			}
 
 			return sb.ToString();
@@ -747,7 +752,7 @@ namespace ElectronicObserver.Window.Dialog
 				result = eq.Name + " 的初期装备舰、开发配方不明。";
 			}
 
-			MessageBox.Show(result, "获取方式", MessageBoxButtons.OK, MessageBoxIcon.Information);
+			MessageBox.Show(result, "获取方式");
 		}
 
 
