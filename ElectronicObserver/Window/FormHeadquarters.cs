@@ -232,13 +232,12 @@ namespace ElectronicObserver.Window
 				if (Utility.Configuration.Config.UI.ShowGrowthInsteadOfNextInHQ) {
 					HQLevel.TextNext = "Growth:";
 					int exp1 = RecordManager.Instance.Resource.GetExpHalfDay(nowJST);
-					int exp2;
-					if (exp1 == -2013) { // 战果黑洞期，显示上次
-						exp1 = RecordManager.Instance.Resource.GetExpHalfDay(nowJST, true);
-						exp2 = RecordManager.Instance.Resource.GetExpDay(nowJST, true);
-					} else {
-						exp2 = RecordManager.Instance.Resource.GetExpDay(nowJST);
+					if (exp1 == -2013) { // 年末战果黑洞期，显示全年
+						HQLevel.TextNext = string.Format("{0} :", nowJST.Year);
+						HQLevel.TextValueNext = String.Format("{0:n2}", RecordManager.Instance.Resource.GetExpYear(nowJST.Year) * 7 / 10000.0);
+						goto BuildToolTip;
 					}
+					int exp2 = RecordManager.Instance.Resource.GetExpDay(nowJST);
 					if (exp1 >= 0 && exp2 >= 0) {
 						HQLevel.TextValueNext = String.Format(
 							"{0:n2} / {1:n2}",
@@ -263,6 +262,7 @@ namespace ElectronicObserver.Window
 				}
 
 				//戦果ツールチップ
+				BuildToolTip:
 				StringBuilder tooltipAppend = new StringBuilder();
 
 				tooltip.AppendFormat("提督经验 : {0:n0}\r\n", db.Admiral.Exp);
@@ -276,36 +276,39 @@ namespace ElectronicObserver.Window
 				}
 
 				if (showRankingPointsTooltip) {
-					tooltipAppend.Append("\r\n上次结算战果\r\n");
 					int diff = RecordManager.Instance.Resource.GetExpHalfDay(nowJST, true);
 					double rankingPointsPreviousHalfDay = diff * 7 / 10000.0;
-					tooltipAppend.AppendFormat("半日 : {0:0.00}\t( {1} )\r\n", rankingPointsPreviousHalfDay, RecordManager.Instance.Resource.RankingPeriodString);
+					tooltipAppend.AppendFormat("半日 : {0:n2}\t( {1} )\r\n", rankingPointsPreviousHalfDay, RecordManager.Instance.Resource.RankingPeriodString);
 					diff = RecordManager.Instance.Resource.GetExpDay(nowJST, true);
 					double rankingPointsPreviousDay = diff * 7 / 10000.0;
-					tooltipAppend.AppendFormat("单日 : {0:0.00}\t( {1} )\r\n", rankingPointsPreviousDay, RecordManager.Instance.Resource.RankingPeriodString);
+					tooltipAppend.AppendFormat("单日 : {0:n2}\t( {1} )\r\n", rankingPointsPreviousDay, RecordManager.Instance.Resource.RankingPeriodString);
 					diff = RecordManager.Instance.Resource.GetExpMonth(nowJST, true);
 					double rankingPointsPreviousMonth = diff * 7 / 10000.0;
-					tooltipAppend.AppendFormat("单月 : {0:0.00}\t( {1} )\r\n", rankingPointsPreviousMonth, RecordManager.Instance.Resource.RankingPeriodString);
+					tooltipAppend.AppendFormat("单月 : {0:n2}\t( {1} )\r\n", rankingPointsPreviousMonth, RecordManager.Instance.Resource.RankingPeriodString);
 
+					diff = RecordManager.Instance.Resource.GetExpHalfDay(nowJST);
 					if (diff == -2013) {
-						DateTime now = DateTime.Now;
 						TimeSpan timeZoneOffset = DateTimeOffset.Now.Offset - new TimeSpan(9, 0, 0);
-						DateTime begins = new DateTime(now.Year, now.Month, now.Day, 22, 0, 0) + timeZoneOffset;
-						DateTime ends = new DateTime(now.Year, now.Month, now.Day, 0, 0, 0).AddDays(1) + timeZoneOffset;
-						tooltip.AppendFormat("\r\n年末战果黑洞期\r\n( {0} ~ {1} )\r\n", begins.ToString("yyyy'/'M'/'d HH':'mm"), ends.ToString("yyyy'/'M'/'d HH':'mm"));
+						DateTime ends = new DateTime(nowJST.Year, 12, 31, 0, 0, 0).AddDays(1) + timeZoneOffset;
+						tooltip.AppendFormat("\r\n{0} 年末战果黑洞期 ( ~ {1} )\r\n", nowJST.Year, ends.ToString("yyyy'/'M'/'d HH':'mm"));
+						tooltip.Append(tooltipAppend.ToString());
+						diff = RecordManager.Instance.Resource.GetExpYear(nowJST.Year);
+						double rankingPointsYear = diff * 7 / 10000.0;
+						tooltip.AppendFormat("全年 : {0:n2}\t( {1} )\r\n", rankingPointsYear, RecordManager.Instance.Resource.RankingPeriodString);
 					} else {
 						tooltip.AppendFormat("\r\n{0}\r\n", RecordManager.Instance.Resource.MonthString);
-						diff = RecordManager.Instance.Resource.GetExpHalfDay(nowJST);
 						double rankingPointsHalfDay = diff * 7 / 10000.0;
-						tooltip.AppendFormat("半日 : {0:0.00}\t( {1} )\r\n", rankingPointsHalfDay, RecordManager.Instance.Resource.RankingPeriodString, rankingPointsHalfDay - rankingPointsPreviousHalfDay);
+						tooltip.AppendFormat("半日 : {0:n2}\t( {1} )\r\n", rankingPointsHalfDay, RecordManager.Instance.Resource.RankingPeriodString, rankingPointsHalfDay - rankingPointsPreviousHalfDay);
 						diff = RecordManager.Instance.Resource.GetExpDay(nowJST);
 						double rankingPointsDay = diff * 7 / 10000.0;
-						tooltip.AppendFormat("单日 : {0:0.00}\t( {1} )\r\n", rankingPointsDay, RecordManager.Instance.Resource.RankingPeriodString, rankingPointsDay - rankingPointsPreviousDay);
+						tooltip.AppendFormat("今日 : {0:n2}\t( {1} )\r\n", rankingPointsDay, RecordManager.Instance.Resource.RankingPeriodString, rankingPointsDay - rankingPointsPreviousDay);
 						diff = RecordManager.Instance.Resource.GetExpMonth(nowJST);
 						double rankingPointsMonth = diff * 7 / 10000.0;
-						tooltip.AppendFormat("单月 : {0:0.00}\t( {1} )\r\n", rankingPointsMonth, RecordManager.Instance.Resource.RankingPeriodString, rankingPointsMonth - rankingPointsPreviousMonth);
+						tooltip.AppendFormat("本月 : {0:n2}\t( {1} )\r\n", rankingPointsMonth, RecordManager.Instance.Resource.RankingPeriodString, rankingPointsMonth - rankingPointsPreviousMonth);
+
+						tooltip.Append("\r\n上次结算战果\r\n");
+						tooltip.Append(tooltipAppend.ToString());
 					}
-					tooltip.Append(tooltipAppend.ToString());
 				}
 
 				ToolTipInfo.SetToolTip(HQLevel, tooltip.ToString());

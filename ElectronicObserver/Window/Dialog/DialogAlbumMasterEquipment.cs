@@ -310,7 +310,8 @@ namespace ElectronicObserver.Window.Dialog
 			//default equipment
 			DefaultSlots.BeginUpdate();
 			DefaultSlots.Items.Clear();
-			foreach (var ship in KCDatabase.Instance.MasterShips.Values)
+			DefaultSlots.DisplayMember = "NameWithClassWithLevelToCurrentState";
+			foreach (var ship in KCDatabase.Instance.MasterShips.Values.OrderBy(s => s.LevelToCurrentState))
 			{
 				if (ship.DefaultSlot != null && ship.DefaultSlot.Contains(equipmentID))
 				{
@@ -699,13 +700,45 @@ namespace ElectronicObserver.Window.Dialog
 		{
 			var sb = new StringBuilder();
 
-			foreach (var ship in KCDatabase.Instance.MasterShips.Values
-				.Where(s => s.DefaultSlot != null && s.DefaultSlot.Contains(equipmentID)))
-			{
-				sb.AppendLine(ship.NameWithClass);
+			int itemCount = 0;
+
+			var ships = KCDatabase.Instance.MasterShips.Values
+				.Where(s => s.DefaultSlot != null && s.DefaultSlot.Contains(equipmentID))
+				.OrderBy(s => s.LevelToCurrentState);
+
+			if (ships.Count() > 3) {
+				var font = new Font("Meiryo UI", 12, FontStyle.Regular, GraphicsUnit.Pixel);
+				var referenceSize1 = TextRenderer.MeasureText("岛风 ( Lv. 00 )", font).Width;
+				var referenceSize2 = TextRenderer.MeasureText("岛风改二丙 ( Lv. 99 )", font).Width;
+
+				foreach (var ship in ships) {
+					string shipString = ship.NameWithClass + ship.LevelToCurrentStateAppendString;
+					if (itemCount % 2 == 0) {
+						var stringSize = TextRenderer.MeasureText(shipString, font).Width;
+						if (stringSize < referenceSize1) {
+							sb.Append(shipString + "\t\t");
+						} else if (stringSize <= referenceSize2) {
+							sb.Append(shipString + "\t");
+						} else { // stringSize > referenceSize2
+							sb.Append(shipString + "\r\n");
+							itemCount++;
+						}
+					} else {
+						sb.Append(shipString + "\r\n");
+					}
+					++itemCount;
+				}
+
+				if (itemCount % 2 != 0) {
+					sb.Append("\r\n");
+				}
+			} else if (ships.Count() > 0) {
+				foreach (var ship in ships) {
+					sb.AppendLine(ship.NameWithClass + ship.LevelToCurrentStateAppendString);
+				}
 			}
 
-			foreach (var record in RecordManager.Instance.Development.Record
+			var records = RecordManager.Instance.Development.Record
 				.Where(r => r.EquipmentID == equipmentID)
 				.Select(r => new
 				{
@@ -718,11 +751,24 @@ namespace ElectronicObserver.Window.Dialog
 				.OrderBy(r => r.Fuel)
 				.ThenBy(r => r.Ammo)
 				.ThenBy(r => r.Steel)
-				.ThenBy(r => r.Bauxite)
-				)
-			{
-				sb.AppendFormat("开发配方 {0} / {1} / {2} / {3}\r\n",
-					record.Fuel, record.Ammo, record.Steel, record.Bauxite);
+				.ThenBy(r => r.Bauxite);
+
+			if (records.Count() > 3) {
+				sb.Append("\r\n开发配方 :\r\n");
+				itemCount = 0;
+				foreach (var record in records) {
+					sb.AppendFormat(
+						itemCount % 2 == 0 ? "{0} / {1} / {2} / {3}\t" : "{0} / {1} / {2} / {3}\r\n",
+						record.Fuel, record.Ammo, record.Steel, record.Bauxite);
+					++itemCount;
+				}
+			} else if (records.Count() > 0) {
+				sb.Append("\r\n开发配方 :\r\n");
+				foreach (var record in records) {
+					sb.AppendFormat(
+						"{0} / {1} / {2} / {3}\r\n",
+						record.Fuel, record.Ammo, record.Steel, record.Bauxite);
+				}
 			}
 
 			return sb.ToString();
@@ -747,7 +793,7 @@ namespace ElectronicObserver.Window.Dialog
 				result = eq.Name + " 的初期装备舰、开发配方不明。";
 			}
 
-			MessageBox.Show(result, "获取方式", MessageBoxButtons.OK, MessageBoxIcon.Information);
+			MessageBox.Show(result, "获取方式");
 		}
 
 
