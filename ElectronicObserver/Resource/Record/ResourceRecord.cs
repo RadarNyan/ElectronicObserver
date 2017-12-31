@@ -230,7 +230,7 @@ namespace ElectronicObserver.Resource.Record
 			string beginsFormat = "M'/'d HH':'mm";
 			string endsFormat = "HH':'mm";
 			if (begins.Year != DateTime.Now.Year) {
-				beginsFormat = "yyyy'/" + beginsFormat;
+				beginsFormat = "yyyy'/'" + beginsFormat;
 			}
 			if (ends.Date != begins.Date) {
 				if (ends.Year == begins.Year) {
