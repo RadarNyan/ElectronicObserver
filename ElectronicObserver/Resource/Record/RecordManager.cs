@@ -29,6 +29,8 @@ namespace ElectronicObserver.Resource.Record
 		public ShipDropRecord ShipDrop { get; private set; }
 		public DevelopmentRecord Development { get; private set; }
 		public ResourceRecord Resource { get; private set; }
+		public ResourceConsumptionRecord ResourceConsumption { get; private set; }
+		public ResourcePreConsumptionRecord ResourcePreConsumption { get; private set; }
 
 		private IEnumerable<RecordBase> Records
 		{
@@ -40,6 +42,8 @@ namespace ElectronicObserver.Resource.Record
 				yield return ShipDrop;
 				yield return Development;
 				yield return Resource;
+				yield return ResourceConsumption;
+				yield return ResourcePreConsumption;
 			}
 		}
 
@@ -56,6 +60,8 @@ namespace ElectronicObserver.Resource.Record
 			ShipDrop = new ShipDropRecord();
 			Development = new DevelopmentRecord();
 			Resource = new ResourceRecord();
+			ResourceConsumption = new ResourceConsumptionRecord();
+			ResourcePreConsumption = new ResourcePreConsumptionRecord();
 
 			foreach (var r in Records)
 				r.RegisterEvents();

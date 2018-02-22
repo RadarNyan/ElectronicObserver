@@ -198,6 +198,9 @@ namespace ElectronicObserver.Utility
 				// 日志窗口反向滚动 ( 新日志在顶端 )
 				public bool InvertedLogWindow { get; set; }
 
+				// 资源消耗记录：记录修复桶时跳过 1-1
+				public bool RCR_BucketSkip1_1 { get; set; }
+
 
 				// 司令部各资源储量过低警告值
 				// -1: 自然恢复上限 ( 桶无效 ) | 3000: 小于 3000
@@ -452,6 +455,7 @@ namespace ElectronicObserver.Utility
 					ShowGrowthInsteadOfNextInHQ = false;
 					MaxAkashiPerHP = 5;
 					DockingUnitTimeOffset = 30;
+					RCR_BucketSkip1_1 = true;
 					UseOldAircraftLevelIcons = true;
 					TextWrapInLogWindow = false;
 					CompactModeLogWindow = false;

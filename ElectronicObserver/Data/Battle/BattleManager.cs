@@ -169,6 +169,12 @@ namespace ElectronicObserver.Data.Battle
 						BattleDay.LoadFromResponse(apiname, Compass.AirRaidData);
 						BattleFinished();
 					}
+
+					RecordManager.Instance.ResourcePreConsumption.UpdateDestination(
+						$"{Compass.MapAreaID}-{Compass.MapInfoID}",
+						Compass.Destination,
+						Compass.EventID == 5 ? "-BOSS" : Compass.IsEndPoint ? "-END" : "");
+
 					break;
 
 				case "api_req_sortie/battle":

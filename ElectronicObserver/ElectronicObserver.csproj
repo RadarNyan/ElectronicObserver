@@ -230,6 +230,8 @@
     <Compile Include="Observer\kcsapi\api_req_sortie\goback_port.cs" />
     <Compile Include="Observer\kcsapi\api_req_sortie\ld_airbattle.cs" />
     <Compile Include="Observer\kcsapi\api_req_sortie\night_to_day.cs" />
+    <Compile Include="Resource\Record\ResourcePreConsumptionRecord.cs" />
+    <Compile Include="Resource\Record\ResourceConsumptionRecord.cs" />
     <Compile Include="Resource\Record\ResourceRecord.cs" />
     <Compile Include="Resource\SwfHelper.cs" />
     <Compile Include="Utility\Data\RecordHash.cs" />

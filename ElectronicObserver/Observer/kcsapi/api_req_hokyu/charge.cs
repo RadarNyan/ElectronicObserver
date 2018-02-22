@@ -11,6 +11,11 @@ namespace ElectronicObserver.Observer.kcsapi.api_req_hokyu
 	public class charge : APIBase
 	{
 
+		public override bool IsRequestSupported { get { return true; } }
+
+		public override void OnRequestReceived( Dictionary<string, string> data ) {
+			base.OnRequestReceived( data );
+		}
 
 		public override void OnResponseReceived(dynamic data)
 		{

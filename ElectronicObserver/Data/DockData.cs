@@ -31,6 +31,11 @@ namespace ElectronicObserver.Data
 		public int ShipID { get; internal set; }
 
 		/// <summary>
+		/// 直前入渠中の艦船のID（入渠後高速修復材の使用を記録用）
+		/// </summary>
+		public int PreviousShipID { get; internal set; }
+
+		/// <summary>
 		/// 入渠完了日時
 		/// </summary>
 		public DateTime CompletionTime { get; internal set; }
@@ -47,6 +52,7 @@ namespace ElectronicObserver.Data
 				case "api_req_nyukyo/speedchange":
 					if (State == 1 && ShipID != 0)
 					{
+						PreviousShipID = ShipID;
 						KCDatabase.Instance.Ships[ShipID].Repair();
 
 						State = 0;
