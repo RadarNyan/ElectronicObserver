@@ -596,6 +596,96 @@ namespace ElectronicObserver.Data
 
 
 		/// <summary>
+		/// 艦型・番号順
+		/// </summary>
+		public int ShipClassNumberOrder
+		{
+			get {
+				int index;
+
+				var ship = this;
+				while (ship.RemodelBeforeShip != null) {
+					ship = ship.RemodelBeforeShip;
+				}
+
+				ShipTypes shipType = ship.ShipType;
+
+				switch (shipType) {
+					case ShipTypes.Escort:
+						index = Array.IndexOf(ShipOrders.Escort, ship.Name);
+						break;
+
+					case ShipTypes.Destroyer:
+						index = Array.IndexOf(ShipOrders.Destoryer, ship.Name);
+						break;
+
+					case ShipTypes.LightCruiser:
+					case ShipTypes.TrainingCruiser:
+						shipType = ShipTypes.LightCruiser;
+						index = Array.IndexOf(ShipOrders.LightCruiser, ship.Name);
+						break;
+
+					case ShipTypes.HeavyCruiser:
+						index = Array.IndexOf(ShipOrders.HeavyCruiser, ship.Name);
+						break;
+
+					case ShipTypes.Battlecruiser:
+					case ShipTypes.Battleship:
+					case ShipTypes.AviationBattleship:
+						shipType = ShipTypes.Battleship;
+						index = Array.IndexOf(ShipOrders.Battleship, ship.Name);
+						break;
+
+					case ShipTypes.LightAircraftCarrier:
+					case ShipTypes.AircraftCarrier:
+					case ShipTypes.ArmoredAircraftCarrier:
+						shipType = ShipTypes.AircraftCarrier;
+						index = Array.IndexOf(ShipOrders.AircraftCarrier, ship.Name);
+						break;
+
+					case ShipTypes.SeaplaneTender:
+						index = Array.IndexOf(ShipOrders.SeaplaneTender, ship.Name);
+						break;
+
+					case ShipTypes.FleetOiler:
+						index = Array.IndexOf(ShipOrders.FleetOiler, ship.Name);
+						break;
+
+					case ShipTypes.Submarine:
+					case ShipTypes.SubmarineAircraftCarrier:
+						shipType = ShipTypes.Submarine;
+						index = Array.IndexOf(ShipOrders.Submarine, ship.Name);
+						break;
+
+					case ShipTypes.SubmarineTender:
+						index = Array.IndexOf(ShipOrders.SubmarineTender, ship.Name);
+						break;
+
+					case ShipTypes.RepairShip:
+						index = Array.IndexOf(ShipOrders.RepairShip, ship.Name);
+						break;
+
+					case ShipTypes.AmphibiousAssaultShip:
+						index = Array.IndexOf(ShipOrders.AmphibiousAssaultShip, ship.Name);
+						break;
+
+					default:
+						index = ship.ShipID;
+						Utility.Logger.Add(3, $"艦型・番号順取得失敗。艦名 {ship.Name} 、艦種 {shipType}");
+						break;
+				}
+
+				if (index == -1) {
+					index = ship.ShipID;
+					Utility.Logger.Add(3, $"艦型・番号順取得失敗 : 艦名 {ship.Name} ( ShipOrders.{shipType} 記録なし )");
+				}
+
+				return (int)shipType * 10000 + index;
+			}
+		}
+
+
+		/// <summary>
 		/// 潜水艦系か (潜水艦/潜水空母)
 		/// </summary>
 		public bool IsSubmarine => ShipType == ShipTypes.Submarine || ShipType == ShipTypes.SubmarineAircraftCarrier;

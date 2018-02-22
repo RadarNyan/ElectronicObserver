@@ -182,6 +182,7 @@
     <Compile Include="Data\ShipGroup\ExpressionData.cs" />
     <Compile Include="Data\ShipGroup\ExpressionList.cs" />
     <Compile Include="Data\ShipGroup\ExpressionManager.cs" />
+    <Compile Include="Data\ShipOrders.cs" />
     <Compile Include="Data\ShipTypes.cs" />
     <Compile Include="Data\UseItem.cs" />
     <Compile Include="Data\UseItemMaster.cs" />

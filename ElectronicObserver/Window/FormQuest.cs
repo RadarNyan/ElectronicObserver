@@ -20,7 +20,7 @@ namespace ElectronicObserver.Window
 	public partial class FormQuest : DockContent
 	{
 
-		private DataGridViewCellStyle CSDefaultLeft, CSDefaultCenter;
+		private DataGridViewCellStyle CSDefaultLeft, CSDefaultCenter, CSDefaultLeftJpn, CSHeaderLeft, CSHeaderCenter;
 		private DataGridViewCellStyle[] CSCategories;
 		private bool IsLoaded = false;
 
@@ -35,10 +35,21 @@ namespace ElectronicObserver.Window
 
 			#region set cellstyle
 
+			if (Utility.Configuration.Config.UI.RemoveBarShadow) { // 暂时借用这个属性
+				QuestView.ColumnHeadersHeight = 21;
+				QuestView.EnableHeadersVisualStyles = false;
+				QuestView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
+				QuestView.ColumnHeadersDefaultCellStyle.ForeColor = Utility.Configuration.Config.UI.ForeColor;
+				QuestView.ColumnHeadersDefaultCellStyle.BackColor = Utility.Configuration.Config.UI.SubBackColor;
+				QuestView.GridColor = Utility.Configuration.Config.UI.SubBackColor;
+				QuestView.BackgroundColor = Utility.Configuration.Config.UI.BackColor;
+			}
+
 			CSDefaultLeft = new DataGridViewCellStyle
 			{
 				Alignment = DataGridViewContentAlignment.MiddleLeft
 			};
+			CSDefaultLeft.Font = Utility.Configuration.Config.UI.MainFont;
 			CSDefaultLeft.BackColor =
 			CSDefaultLeft.SelectionBackColor = Utility.Configuration.Config.UI.BackColor;
 			CSDefaultLeft.ForeColor = Utility.Configuration.Config.UI.ForeColor;
@@ -49,6 +60,23 @@ namespace ElectronicObserver.Window
 			{
 				Alignment = DataGridViewContentAlignment.MiddleCenter
 			};
+
+			CSDefaultLeftJpn = new DataGridViewCellStyle(CSDefaultLeft)
+			{
+				Font = Utility.Configuration.Config.UI.JapFont
+			};
+
+			CSHeaderLeft = new DataGridViewCellStyle(QuestView.ColumnHeadersDefaultCellStyle)
+			{
+				Alignment = DataGridViewContentAlignment.MiddleLeft
+			};
+
+			CSHeaderCenter = new DataGridViewCellStyle(CSHeaderLeft)
+			{
+				Alignment = DataGridViewContentAlignment.MiddleCenter
+			};
+
+
 
 			CSCategories = new DataGridViewCellStyle[9];
 			for (int i = 0; i < CSCategories.Length; i++)
@@ -95,22 +123,14 @@ namespace ElectronicObserver.Window
 			}
 
 			QuestView.DefaultCellStyle = CSDefaultCenter;
+			QuestView.ColumnHeadersDefaultCellStyle = CSHeaderCenter;
 			QuestView_Category.DefaultCellStyle = CSCategories[CSCategories.Length - 1];
-			QuestView_Name.DefaultCellStyle = CSDefaultLeft;
-			QuestView_Name.DefaultCellStyle.Font = Utility.Configuration.Config.UI.JapFont;
+			QuestView_Name.DefaultCellStyle = CSDefaultLeftJpn;
+			QuestView_Name.HeaderCell.Style = CSHeaderLeft;
 			QuestView_Progress.DefaultCellStyle = CSDefaultLeft;
+			QuestView_Progress.HeaderCell.Style = CSHeaderLeft;
 
 			#endregion
-
-			if (Utility.Configuration.Config.UI.RemoveBarShadow) { // 暂时借用这个属性
-				QuestView.ColumnHeadersHeight = 21;
-				QuestView.EnableHeadersVisualStyles = false;
-				QuestView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
-				QuestView.ColumnHeadersDefaultCellStyle.ForeColor = Utility.Configuration.Config.UI.ForeColor;
-				QuestView.ColumnHeadersDefaultCellStyle.BackColor = Utility.Configuration.Config.UI.SubBackColor;
-				QuestView.GridColor = Utility.Configuration.Config.UI.SubBackColor;
-				QuestView.BackgroundColor = Utility.Configuration.Config.UI.BackColor;
-			}
 
 			SystemEvents.SystemShuttingDown += SystemEvents_SystemShuttingDown;
 		}

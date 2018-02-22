@@ -1986,8 +1986,9 @@
 			this.FormShipGroup_ShipNameSortMethod.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.FormShipGroup_ShipNameSortMethod.FormattingEnabled = true;
 			this.FormShipGroup_ShipNameSortMethod.Items.AddRange(new object[] {
-            "按图鉴编号排序",
-            "按假名顺序排序 ( あいうえお順 )"});
+			"按图鉴编号排序",
+			"按假名顺序排序 ( あいうえお順 )",
+			"按舰型番号排序 ( XX 级 X 番舰 )"});
 			this.FormShipGroup_ShipNameSortMethod.Location = new System.Drawing.Point(116, 56);
 			this.FormShipGroup_ShipNameSortMethod.Name = "FormShipGroup_ShipNameSortMethod";
 			this.FormShipGroup_ShipNameSortMethod.Size = new System.Drawing.Size(121, 23);
