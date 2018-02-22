@@ -528,10 +528,6 @@ namespace ElectronicObserver.Window.Dialog
 				setSilencioConfig(issilenced);
 			}
 
-			//[データベース]
-			Database_SendDataToKancolleDB.Checked = config.Connection.SendDataToKancolleDB;
-			Database_SendKancolleOAuth.Text = config.Connection.SendKancolleOAuth;
-
 			//[BGM]
 			BGMPlayer_Enabled.Checked = config.BGMPlayer.Enabled;
 			BGMHandles = config.BGMPlayer.Handles.ToDictionary(h => h.HandleID);
@@ -752,10 +748,6 @@ namespace ElectronicObserver.Window.Dialog
 
 			//[通知]
 			setSilencioConfig(Notification_Silencio.Checked);
-
-			//[データベース]
-			config.Connection.SendDataToKancolleDB = Database_SendDataToKancolleDB.Checked;
-			config.Connection.SendKancolleOAuth = Database_SendKancolleOAuth.Text;
 
 			//[BGM]
 			config.BGMPlayer.Enabled = BGMPlayer_Enabled.Checked;
