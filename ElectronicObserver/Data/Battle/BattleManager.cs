@@ -407,9 +407,21 @@ namespace ElectronicObserver.Data.Battle
 				int eqID = Result.DroppedEquipmentID;
 				bool showLog = Utility.Configuration.Config.Log.ShowSpoiler;
 
+				if (itemID != -1) {
+
+					if (!DroppedItemCount.ContainsKey(itemID))
+						DroppedItemCount.Add(itemID, 0);
+					DroppedItemCount[itemID]++;
+
+					if (showLog && shipID == -1) {
+						var item = KCDatabase.Instance.UseItems[itemID];
+						var itemmaster = KCDatabase.Instance.MasterUseItems[itemID];
+						Utility.Logger.Add(2, "", "获得了", string.Format("「{0}」。", itemmaster?.Name ?? ("不明なアイテム - ID:" + itemID)), string.Format("( 合计 : {0} 个 )", (item?.Count ?? 0) + DroppedItemCount[itemID]));
+					}
+				}
+
 				if (shipID != -1)
 				{
-
 					ShipDataMaster ship = KCDatabase.Instance.MasterShips[shipID];
 					DroppedShipCount++;
 
@@ -417,22 +429,14 @@ namespace ElectronicObserver.Data.Battle
 					if (defaultSlot != null)
 						DroppedEquipmentCount += defaultSlot.Count(id => id != -1);
 
-					if (showLog)
-						Utility.Logger.Add(2, string.Format("{0}「{1}」", ship.ShipTypeName, ship.NameWithClass), "加入了队伍。");
-				}
-
-				if (itemID != -1)
-				{
-
-					if (!DroppedItemCount.ContainsKey(itemID))
-						DroppedItemCount.Add(itemID, 0);
-					DroppedItemCount[itemID]++;
-
-					if (showLog)
-					{
-						var item = KCDatabase.Instance.UseItems[itemID];
-						var itemmaster = KCDatabase.Instance.MasterUseItems[itemID];
-						Utility.Logger.Add(2, "", "获得了", string.Format("「{0}」。", itemmaster?.Name ?? ("不明なアイテム - ID:" + itemID), string.Format("( 合计 : {1} 个 )", (item?.Count ?? 0) + DroppedItemCount[itemID])));
+					if (showLog) {
+						if (itemID != -1) {
+							var item = KCDatabase.Instance.UseItems[itemID];
+							var itemmaster = KCDatabase.Instance.MasterUseItems[itemID];
+							Utility.Logger.Add(2, string.Format("{0}「{1}」", ship.ShipTypeName, ship.NameWithClass), "加入了队伍。获得了", string.Format("「{0}」。", itemmaster?.Name ?? ("不明なアイテム - ID:" + itemID)), string.Format("( 合计 : {0} 个 )", (item?.Count ?? 0) + DroppedItemCount[itemID]));
+						} else {
+							Utility.Logger.Add(2, string.Format("{0}「{1}」", ship.ShipTypeName, ship.NameWithClass), "加入了队伍。");
+						}
 					}
 				}
 

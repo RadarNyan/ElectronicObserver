@@ -39,6 +39,7 @@ namespace ElectronicObserver.Window
 			public ToolTip ToolTipInfo;
 
 			public int BranchWeight { get; private set; } = 1;
+			public string AirSuperiorityExamples { get; private set; } = "Hidden";
 
 			public TableFleetControl(FormFleet parent)
 			{
@@ -76,6 +77,7 @@ namespace ElectronicObserver.Window
 					Margin = new Padding(2, 0, 2, 0),
 					AutoSize = true
 				};
+				AirSuperiority.Click += (sender, e) => AirSuperiority_Click(sender, e, parent.FleetID);
 
 				SearchingAbility = new ImageLabel
 				{
@@ -140,6 +142,23 @@ namespace ElectronicObserver.Window
 						break;
 					case 3:
 						BranchWeight = 1;
+						break;
+				}
+				Update(KCDatabase.Instance.Fleet[fleetID]);
+			}
+
+			private void AirSuperiority_Click(object sender, EventArgs e, int fleetID)
+			{
+				switch (AirSuperiorityExamples)
+				{
+					case "Hidden":
+						AirSuperiorityExamples = "Weekly";
+						break;
+					case "Weekly":
+						AirSuperiorityExamples = "EO";
+						break;
+					case "EO":
+						AirSuperiorityExamples = "Hidden";
 						break;
 				}
 				Update(KCDatabase.Instance.Fleet[fleetID]);
@@ -215,14 +234,50 @@ namespace ElectronicObserver.Window
 					int airSuperiority = fleet.GetAirSuperiority();
 					bool includeLevel = Utility.Configuration.Config.FormFleet.AirSuperiorityMethod == 1;
 					AirSuperiority.Text = fleet.GetAirSuperiorityString();
+
+					var airSuperiorityExamples = new StringBuilder();
+					switch (AirSuperiorityExamples) {
+						case "Weekly":
+							airSuperiorityExamples.Append("\r\n\r\n" +
+								"3-3\t119 / 237\r\n" +	// 敵北方艦隊主力を撃滅せよ！
+								"4-2\t113 / 225\r\n" +	// 敵東方艦隊を撃滅せよ！
+								"4-4\t156 / 312\r\n" +	// 敵東方中枢艦隊を撃破せよ！
+								"5-2\t146 / 291\r\n");	// 南方海域珊瑚諸島沖の制空権を握れ！
+							break;
+						case "EO":
+							airSuperiorityExamples.Append("\r\n\r\n" +
+								"2-5\t35 / 69 ( 下路 )\r\n\r\n" +
+
+								"3-5\t35 / 69 ( 下路 最终形态 )\r\n" +
+								"3-5\t134 / 201 / 402 ( 上路北方 随机双要塞阵容 )\r\n" +
+								"3-5\t221 / 332 / 663 ( 上路北方 随机五要塞阵容 )\r\n" +
+								"3-5\t254 / 381 / 762 ( 上路北方 最终形态 )\r\n\r\n" +
+
+								"4-5\t207 / 414 ( BOSS )\r\n" +
+								"4-5\t123 / 246 ( BOSS 最终形态 随机单要塞阵容 )\r\n" +
+								"4-5\t167 / 333 ( BOSS 最终形态 随机双要塞阵容 )\r\n\r\n" +
+
+								"5-5\t210 / 420 ( 出门 )\r\n" +
+								"5-5\t257 / 513 ( ヲ改 随机三轻母阵容 )\r\n" +
+								"5-5\t237 / 356 / 711 ( BOSS )\r\n" +
+								"5-5\t251 / 377 / 753 ( BOSS 最终形态 )\r\n\r\n" +
+
+								"6-5\t209? / 314? / 627? ( BOSS & 上路空袭 随机单ヲ配置 )\r\n" +
+								"6-5\t312? / 468? / 936? ( BOSS & 上路空袭 随机双ヲ配置 最终形态固定 )");
+							break;
+						default:
+							break;
+					}
+
 					ToolTipInfo.SetToolTip(AirSuperiority,
-						string.Format("确保 : {0}\r\n优势 : {1}\r\n均衡 : {2}\r\n劣势 : {3}\r\n({4} : {5})\r\n",
+						string.Format("确保 : {0}\r\n优势 : {1}\r\n均衡 : {2}\r\n劣势 : {3}\r\n({4} : {5}){6}",
 						(int)(airSuperiority / 3.0),
 						(int)(airSuperiority / 1.5),
 						Math.Max((int)(airSuperiority * 1.5 - 1), 0),
 						Math.Max((int)(airSuperiority * 3.0 - 1), 0),
 						includeLevel ? "不计熟练度" : "计熟练度",
-						includeLevel ? Calculator.GetAirSuperiorityIgnoreLevel(fleet) : Calculator.GetAirSuperiority(fleet)));
+						includeLevel ? Calculator.GetAirSuperiorityIgnoreLevel(fleet) : Calculator.GetAirSuperiority(fleet),
+						airSuperiorityExamples));
 				}
 
 
@@ -236,15 +291,21 @@ namespace ElectronicObserver.Window
 					switch (BranchWeight) {
 						case 1:
 							sb.Append("分歧点系数 1 ( 点击切换 4 / 3 )\r\n");
-							sb.Append("　2-5-H->BOSS	31 / 33\r\n");
+							sb.Append("　2-5-H->BOSS\t31 / 33\r\n");
 							break;
 						case 4:
 							sb.Append("分歧点系数 4 ( 点击切换 3 / 1 )\r\n");
-							sb.Append("　3-5-G->BOSS	23 / 28\r\n　6-1-E->F	12 / 16 (大鯨)\r\n　6-1-F->K	20 / 25 (大鯨) / 36\r\n");
+							sb.Append("　3-5-G->BOSS\t23 / 28\r\n");
+							sb.Append("　6-1-E->F\t12 / 16 (大鯨)\r\n");
+							sb.Append("　6-1-F->K\t20 / 25 (大鯨) / 36\r\n");
 							break;
 						case 3:
 							sb.Append("分歧点系数 3 ( 点击切换 1 / 4 )\r\n");
-							sb.Append("　1-6-M->J	? / 30\r\n　6-2-F->I	43 / 50\r\n　6-2-H->BOSS	? / 40\r\n　6-3-H->BOSS	36 / 38\r\n　6-5-G->BOSS	? / 50\r\n");
+							sb.Append("　1-6-M->J\t? / 30\r\n");
+							sb.Append("　6-2-F->I\t43 / 50\r\n");
+							sb.Append("　6-2-H->BOSS\t? / 40\r\n");
+							sb.Append("　6-3-H->BOSS\t36 / 38\r\n");
+							sb.Append("　6-5-G->BOSS\t? / 50\r\n");
 							break;
 					}
 					sb.AppendFormat( "\r\n触接开始率 : \r\n　确保 {0:p1} / 优势 {1:p1}\r\n", probStart, probStart * 0.6);

@@ -50,6 +50,41 @@ namespace ElectronicObserver.Data
 		/// </summary>
 		public string Description => ((string)RawData.api_detail).Replace("<br>", "\r\n");
 
+		/// <summary>
+		/// 報酬
+		/// </summary>
+		public string Reward
+		{
+			get
+			{
+				int[] materials = RawData.api_get_material;
+
+				var materialsReward = new List<string>();
+				if (materials[0] != 0)
+					materialsReward.Add($"油 x {materials[0]}");
+				if (materials[1] != 0)
+					materialsReward.Add($"弹 x {materials[1]}");
+				if (materials[2] != 0)
+					materialsReward.Add($"钢 x {materials[2]}");
+				if (materials[3] != 0)
+					materialsReward.Add($"铝 x {materials[3]}");
+
+				string result;
+				string otherReward = QuestRewards.GetReward(QuestID);
+				if (otherReward == "") {
+					result = string.Join(", ", materialsReward);
+				} else {
+					result = $"{string.Join(", ", materialsReward)}, {otherReward}";
+				}
+
+				if (result == "") {
+					return "";
+				} else {
+					return $"\r\n报酬 : {result}";
+				}
+			}
+		}
+
 		//undone:api_bonus_flag
 
 		/// <summary>

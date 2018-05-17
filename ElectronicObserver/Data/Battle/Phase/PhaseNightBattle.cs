@@ -205,7 +205,7 @@ namespace ElectronicObserver.Data.Battle.Phase
 			get
 			{
 				int index = (int)RawData.api_flare_pos[0];
-				return index != -1 ? index - 1 : -1;
+				return index > 5 ? index - 6 : index;
 			}
 		}
 
@@ -217,7 +217,7 @@ namespace ElectronicObserver.Data.Battle.Phase
 			get
 			{
 				int index = (int)RawData.api_flare_pos[1];
-				return index != -1 ? index - 1 : -1;
+				return index > 5 ? index - 6 : index;
 			}
 		}
 

@@ -79,8 +79,16 @@ namespace ElectronicObserver.Window.Dialog
 			dataGridView1.ClearSelection();
 
 			ClientSize = new Size(
-				dataGridView1.Columns.GetColumnsWidth(DataGridViewElementStates.Visible) + 3,
-				Math.Min(dataGridView1.Rows.GetRowsHeight(DataGridViewElementStates.Visible) + 24, 465));
+				dataGridView1.Columns.GetColumnsWidth(DataGridViewElementStates.Visible),
+				Math.Min(
+					dataGridView1.Rows.GetRowsHeight(DataGridViewElementStates.Visible),
+					dataGridView1.RowTemplate.Height * 20
+					) + dataGridView1.ColumnHeadersHeight
+				);
+
+			if (dataGridView1.RowCount > 1) {
+				this.Height += 2; // workaround
+			}
 
 			if (dataGridView1.Controls.OfType<VScrollBar>().First().Visible) {
 				this.Width += SystemInformation.VerticalScrollBarWidth;

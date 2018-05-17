@@ -170,6 +170,7 @@
     <Compile Include="Data\Quest\ProgressImprovement.cs" />
     <Compile Include="Data\Quest\ProgressModernization.cs" />
     <Compile Include="Data\Quest\ProgressMultiBattle.cs" />
+    <Compile Include="Data\Quest\ProgressMultiDiscard.cs" />
     <Compile Include="Data\Quest\ProgressPractice.cs" />
     <Compile Include="Data\Quest\ProgressSlaughter.cs" />
     <Compile Include="Data\Quest\ProgressSupply.cs" />
@@ -182,6 +183,8 @@
     <Compile Include="Data\ShipGroup\ExpressionData.cs" />
     <Compile Include="Data\ShipGroup\ExpressionList.cs" />
     <Compile Include="Data\ShipGroup\ExpressionManager.cs" />
+    <Compile Include="Data\QuestRewards.cs" />
+    <Compile Include="Data\ShipOrders.cs" />
     <Compile Include="Data\ShipTypes.cs" />
     <Compile Include="Data\UseItem.cs" />
     <Compile Include="Data\UseItemMaster.cs" />
@@ -194,7 +197,6 @@
     <Compile Include="Notifier\NotifierRepair.cs" />
     <Compile Include="Notifier\NotifierExpedition.cs" />
     <Compile Include="Notifier\NotifierManager.cs" />
-    <Compile Include="Observer\APIKancolleDB.cs" />
     <Compile Include="Observer\kcsapi\api_get_member\base_air_corps.cs" />
     <Compile Include="Observer\kcsapi\api_get_member\material.cs" />
     <Compile Include="Observer\kcsapi\api_get_member\payitem.cs" />

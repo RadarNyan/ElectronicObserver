@@ -332,7 +332,6 @@
 			this.ShipView_Slot1.HeaderText = "装备1";
 			this.ShipView_Slot1.Name = "ShipView_Slot1";
 			this.ShipView_Slot1.ReadOnly = true;
-			this.ShipView_Slot1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
 			this.ShipView_Slot1.Width = 150;
 			// 
 			// ShipView_Slot2
@@ -342,7 +341,6 @@
 			this.ShipView_Slot2.HeaderText = "装备2";
 			this.ShipView_Slot2.Name = "ShipView_Slot2";
 			this.ShipView_Slot2.ReadOnly = true;
-			this.ShipView_Slot2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
 			this.ShipView_Slot2.Width = 150;
 			// 
 			// ShipView_Slot3
@@ -352,7 +350,6 @@
 			this.ShipView_Slot3.HeaderText = "装备3";
 			this.ShipView_Slot3.Name = "ShipView_Slot3";
 			this.ShipView_Slot3.ReadOnly = true;
-			this.ShipView_Slot3.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
 			this.ShipView_Slot3.Width = 150;
 			// 
 			// ShipView_Slot4
@@ -362,7 +359,6 @@
 			this.ShipView_Slot4.HeaderText = "装备4";
 			this.ShipView_Slot4.Name = "ShipView_Slot4";
 			this.ShipView_Slot4.ReadOnly = true;
-			this.ShipView_Slot4.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
 			this.ShipView_Slot4.Width = 150;
 			// 
 			// ShipView_Slot5
@@ -372,7 +368,6 @@
 			this.ShipView_Slot5.HeaderText = "装备5";
 			this.ShipView_Slot5.Name = "ShipView_Slot5";
 			this.ShipView_Slot5.ReadOnly = true;
-			this.ShipView_Slot5.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
 			this.ShipView_Slot5.Width = 150;
 			// 
 			// ShipView_ExpansionSlot
@@ -380,7 +375,6 @@
 			this.ShipView_ExpansionSlot.HeaderText = "补强装备";
 			this.ShipView_ExpansionSlot.Name = "ShipView_ExpansionSlot";
 			this.ShipView_ExpansionSlot.ReadOnly = true;
-			this.ShipView_ExpansionSlot.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
 			this.ShipView_ExpansionSlot.Width = 150;
 			// 
 			// ShipView_Aircraft1
@@ -497,7 +491,7 @@
 			// 
 			// ShipView_FirepowerAndTorpedoBase
 			// 
-			this.ShipView_FirepowerAndTorpedoBase.HeaderText = "基本火雷";
+			this.ShipView_FirepowerAndTorpedoBase.HeaderText = "火雷";
 			this.ShipView_FirepowerAndTorpedoBase.Name = "ShipView_FirepowerAndTorpedoBase";
 			this.ShipView_FirepowerAndTorpedoBase.ReadOnly = true;
 			this.ShipView_FirepowerAndTorpedoBase.Width = 40;

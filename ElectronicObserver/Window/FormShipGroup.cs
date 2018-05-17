@@ -819,6 +819,10 @@ namespace ElectronicObserver.Window
 						if (e.SortResult == 0)
 							e.SortResult = ship1.Name.CompareTo(ship2.Name);
 						break;
+
+					case 2:     // 艦型・番号順
+						e.SortResult = ship1.ShipClassNumberOrder - ship2.ShipClassNumberOrder;
+						break;
 				}
 
 			}
@@ -889,6 +893,13 @@ namespace ElectronicObserver.Window
 						e.SortResult = ((string)e.CellValue1).CompareTo(e.CellValue2);
 				}
 
+			} else if (e.Column.Index == ShipView_Slot1.Index ||
+			           e.Column.Index == ShipView_Slot2.Index ||
+			           e.Column.Index == ShipView_Slot3.Index ||
+			           e.Column.Index == ShipView_Slot4.Index ||
+					   e.Column.Index == ShipView_Slot5.Index ||
+					   e.Column.Index == ShipView_ExpansionSlot.Index) {
+				e.SortResult = ((string)e.CellValue1).CompareTo(e.CellValue2);
 			}
 			else
 			{
