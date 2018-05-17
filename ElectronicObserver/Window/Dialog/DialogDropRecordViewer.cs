@@ -38,7 +38,7 @@ namespace ElectronicObserver.Window.Dialog
 			public int MapAreaID;
 			public int MapInfoID;
 			public int MapCellID;
-			public int MapDifficulty;
+			public string MapDifficulty;
 			public CheckState IsBossOnly;
 			public bool RankS;
 			public bool RankA;
@@ -192,12 +192,16 @@ namespace ElectronicObserver.Window.Dialog
 			{
 				DataTable dt = dtbase.Clone();
 				dt.Rows.Add(0, MapAny);
+				foreach (int diff in new[] { -1, 1, 2, 3, 4 }) {
+					dt.Rows.Add(diff, Constants.GetDifficulty(diff, 41));
+				}
 				foreach (var diff in _record.Record
+					.Where(r => r.MapAreaID > 41)
 					.Select(r => r.Difficulty)
 					.Distinct()
-					.Except(new[] { 0 })
+					.Except(new[] { -1, 0, 1, 2, 3, 4 })
 					.OrderBy(i => i))
-					dt.Rows.Add(diff, Constants.GetDifficulty(diff));
+					dt.Rows.Add(diff, Constants.GetDifficulty(diff, 41));
 				dt.AcceptChanges();
 				MapDifficulty.DisplayMember = "Display";
 				MapDifficulty.ValueMember = "Value";
@@ -341,7 +345,7 @@ namespace ElectronicObserver.Window.Dialog
 			sb.Append("-");
 			sb.Append(mapinfo);
 			if (difficulty != -1)
-				sb.AppendFormat("[{0}]", Constants.GetDifficulty(difficulty));
+				sb.AppendFormat("[{0}]", Constants.GetDifficulty(difficulty, maparea));
 			if (cell != -1)
 			{
 				sb.Append("-");
@@ -429,7 +433,7 @@ namespace ElectronicObserver.Window.Dialog
 				MapAreaID = (int)MapAreaID.SelectedValue,
 				MapInfoID = (int)MapInfoID.SelectedValue,
 				MapCellID = (int)MapCellID.SelectedValue,
-				MapDifficulty = (int)MapDifficulty.SelectedValue,
+				MapDifficulty = (string)MapDifficulty.GetItemText(MapDifficulty.SelectedItem),
 				IsBossOnly = IsBossOnly.CheckState,
 				RankS = RankS.Checked,
 				RankA = RankA.Checked,
@@ -545,7 +549,7 @@ namespace ElectronicObserver.Window.Dialog
 								continue;
 							break;
 					}
-					if (args.MapDifficulty != 0 && args.MapDifficulty != r.Difficulty)
+					if (args.MapDifficulty != MapAny && args.MapDifficulty != Constants.GetDifficulty(r.Difficulty, args.MapAreaID))
 						continue;
 
 
@@ -556,7 +560,7 @@ namespace ElectronicObserver.Window.Dialog
 
 						if (priorityContent == 2)
 						{
-							key = GetMapSerialID(r.MapAreaID, r.MapInfoID, r.CellID, r.IsBossNode, args.MapDifficulty == 0 ? -1 : r.Difficulty).ToString("X8");
+							key = GetMapSerialID(r.MapAreaID, r.MapInfoID, r.CellID, r.IsBossNode, args.MapDifficulty == MapAny ? -1 : r.Difficulty).ToString("X8");
 
 						}
 						else
@@ -675,7 +679,7 @@ namespace ElectronicObserver.Window.Dialog
 
 						if (priorityContent == 2)
 						{
-							key = GetMapSerialID(r.MapAreaID, r.MapInfoID, r.CellID, r.IsBossNode, args.MapDifficulty == 0 ? -1 : r.Difficulty).ToString("X8");
+							key = GetMapSerialID(r.MapAreaID, r.MapInfoID, r.CellID, r.IsBossNode, args.MapDifficulty == MapAny ? -1 : r.Difficulty).ToString("X8");
 
 						}
 						else

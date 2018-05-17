@@ -402,7 +402,7 @@ namespace ElectronicObserver.Window
 						string difficulty = "";
 						if (elem.api_eventmap.api_selected_rank())
 						{
-							difficulty = "[" + Constants.GetDifficulty((int)elem.api_eventmap.api_selected_rank) + "] ";
+							difficulty = "[" + Constants.GetDifficulty((int)elem.api_eventmap.api_selected_rank, map.MapAreaID) + "] ";
 						}
 
 						sb.AppendFormat("{0}-{1} {2}: {3}{4} {5}/{6}\r\n",

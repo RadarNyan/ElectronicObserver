@@ -121,7 +121,7 @@ namespace ElectronicObserver.Resource.Record
 				MapAreaID = int.Parse(elem[2]);
 				MapInfoID = int.Parse(elem[3]);
 				CellID = int.Parse(elem[4]);
-				Difficulty = Constants.GetDifficulty(elem[5]);
+				Difficulty = Constants.GetDifficulty(elem[5], MapAreaID);
 				Formation = Constants.GetFormation(elem[6]);
 				ExpShip = int.Parse(elem[7]);
 
@@ -148,7 +148,7 @@ namespace ElectronicObserver.Resource.Record
 					MapAreaID,
 					MapInfoID,
 					CellID,
-					Constants.GetDifficulty(Difficulty),
+					Constants.GetDifficulty(Difficulty, MapAreaID),
 					Constants.GetFormation(Formation),
 					ExpShip,
 					string.Join(",", FleetMember),

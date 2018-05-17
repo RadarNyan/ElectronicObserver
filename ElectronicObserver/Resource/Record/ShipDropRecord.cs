@@ -174,7 +174,7 @@ namespace ElectronicObserver.Resource.Record
 				MapAreaID = int.Parse(elem[7]);
 				MapInfoID = int.Parse(elem[8]);
 				CellID = int.Parse(elem[9]);
-				Difficulty = Constants.GetDifficulty(elem[10]);
+				Difficulty = Constants.GetDifficulty(elem[10], MapAreaID);
 				IsBossNode = string.Compare(elem[11], "ボス") == 0;
 				EnemyFleetID = Convert.ToUInt64(elem[12], 16);
 				Rank = elem[13];
@@ -196,7 +196,7 @@ namespace ElectronicObserver.Resource.Record
 					MapAreaID,
 					MapInfoID,
 					CellID,
-					Constants.GetDifficulty(Difficulty),
+					Constants.GetDifficulty(Difficulty, MapAreaID),
 					IsBossNode ? "ボス" : "-",
 					EnemyFleetID.ToString("x16"),
 					Rank,

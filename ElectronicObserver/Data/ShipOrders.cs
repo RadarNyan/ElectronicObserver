@@ -228,6 +228,9 @@ namespace ElectronicObserver.Data
 
 			// [ソ連] 20号計画型
 			"Ташкент",
+
+			// [アメリカ] ジョン・C・バトラー級護衛駆逐艦
+			"Samuel B.Roberts",
 		};
 
 		/// <summary>軽巡洋艦・練習巡洋艦</summary>

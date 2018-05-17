@@ -1463,7 +1463,7 @@ namespace ElectronicObserver.Window.Dialog
 					)
 				{
 					sb.AppendFormat("{0}-{1}-{2}{3} ({4})\r\n",
-						record.MapAreaID, record.MapInfoID, record.CellID, record.Difficulty > 0 ? " [" + Constants.GetDifficulty(record.Difficulty) + "]" : "", record.EnemyFleetName);
+						record.MapAreaID, record.MapInfoID, record.CellID, record.Difficulty > 0 ? " [" + Constants.GetDifficulty(record.Difficulty, record.MapAreaID) + "]" : "", record.EnemyFleetName);
 				}
 
 				foreach (var record in RecordManager.Instance.Construction.Record
@@ -1510,7 +1510,7 @@ namespace ElectronicObserver.Window.Dialog
 					)
 				{
 					sb.AppendFormat("{0}-{1}-{2}{3} ({4})\r\n",
-						record.MapAreaID, record.MapInfoID, record.CellID, record.Difficulty > 0 ? " [" + Constants.GetDifficulty(record.Difficulty) + "]" : "", record.EnemyFleetName);
+						record.MapAreaID, record.MapInfoID, record.CellID, record.Difficulty > 0 ? " [" + Constants.GetDifficulty(record.Difficulty, record.MapAreaID) + "]" : "", record.EnemyFleetName);
 				}
 
 			}

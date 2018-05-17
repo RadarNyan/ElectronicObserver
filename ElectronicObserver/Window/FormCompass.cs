@@ -710,7 +710,7 @@ namespace ElectronicObserver.Window
 
 
 				TextMapArea.Text = string.Format("出击海域 : {0}-{1}{2}", compass.MapAreaID, compass.MapInfoID,
-					compass.MapInfo.EventDifficulty > 0 ? " [" + Constants.GetDifficulty(compass.MapInfo.EventDifficulty) + "]" : "");
+					compass.MapInfo.EventDifficulty > 0 ? " [" + Constants.GetDifficulty(compass.MapInfo.EventDifficulty, compass.MapAreaID) + "]" : "");
 				{
 					var mapinfo = compass.MapInfo;
 

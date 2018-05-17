@@ -444,7 +444,7 @@ namespace ElectronicObserver.Data
 		/// <summary>
 		/// 海域難易度を表す文字列を取得します。
 		/// </summary>
-		public static string GetDifficulty(int value)
+		public static string GetDifficulty(int value, int mapAreaID)
 		{
 
 			switch (value)
@@ -454,10 +454,18 @@ namespace ElectronicObserver.Data
 				case 0:
 					return "未选择";
 				case 1:
+					if (mapAreaID >= 41)
+						return "丁";
 					return "丙";
 				case 2:
+					if (mapAreaID >= 41)
+						return "丙";
 					return "乙";
 				case 3:
+					if (mapAreaID >= 41)
+						return "乙";
+					return "甲";
+				case 4:
 					return "甲";
 				default:
 					return "不明";
@@ -467,19 +475,31 @@ namespace ElectronicObserver.Data
 		/// <summary>
 		/// 海域難易度を表す数値を取得します。
 		/// </summary>
-		public static int GetDifficulty(string value)
+		public static int GetDifficulty(string value, int mapAreaID)
 		{
 
 			switch (value)
 			{
 				case "未選択":
 					return 0;
+				case "丁":
+					return 1;
 				case "丙":
+					if (mapAreaID >= 41)
+						return 2;
 					return 1;
 				case "乙":
+					if (mapAreaID >= 41)
+						return 3;
 					return 2;
 				case "甲":
+					if (mapAreaID >= 41)
+						return 4;
 					return 3;
+				case "不明":
+					if (mapAreaID == 41)
+						return 4;
+					return -1;
 				default:
 					return -1;
 			}

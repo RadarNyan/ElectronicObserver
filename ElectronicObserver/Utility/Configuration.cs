@@ -2352,6 +2352,68 @@ namespace ElectronicObserver.Utility
 			DateTime dt = Config.VersionUpdateTime == null ? new DateTime(0) : DateTimeHelper.CSVStringToTime(Config.VersionUpdateTime);
 
 
+			// version RN-2.7.0-m1 or earlier
+			if (dt <= DateTimeHelper.CSVStringToTime("2018/02/22 16:46:20")) {
+				if (MessageBox.Show(
+					"由于「艦これ」18 冬活难度系统的更新，需要转换掉落记录。\r\n" +
+					"要进行转换吗？\r\n" +
+					"( 如果还没有进入过 18 冬活地图可以选择否。 )\r\n" +
+					"\r\n" +
+					"转换前请备份：\r\n" +
+					"ShipDropRecord.csv",
+					"由 2.7.0-m1 或更早版本的更新确认", MessageBoxButtons.YesNo, MessageBoxIcon.Question,
+					MessageBoxDefaultButton.Button1) == DialogResult.Yes) {
+
+					try {
+
+						bool has_run_dev18022401 = dt == DateTimeHelper.CSVStringToTime("2018/02/22 16:46:20");
+						DateTime time_dev18022401 = new DateTime(2018, 2, 23, 17, 16, 00).ToLocalTime();
+
+						var shipDropRecord = new ShipDropRecord();
+						shipDropRecord.Load(RecordManager.Instance.MasterPath);
+
+						foreach (var record in shipDropRecord.Record) {
+							if (record.MapAreaID != 41)
+								continue;
+
+							switch (record.Difficulty) {
+								case 1:
+									continue;
+								case 2:
+									if (!has_run_dev18022401 || record.Date < time_dev18022401) {
+										record.Difficulty = 1;
+									}
+									continue;
+								case 3:
+									if (!has_run_dev18022401 || record.Date < time_dev18022401) {
+										record.Difficulty = 2;
+									}
+									continue;
+								case 4:
+									if (!has_run_dev18022401 || record.Date < time_dev18022401) {
+										record.Difficulty = 3;
+									}
+									continue;
+								case -1:
+								default:
+									if (!has_run_dev18022401 || record.Date < time_dev18022401) {
+										record.Difficulty = 4;
+									}
+									continue;
+							}
+						}
+
+						shipDropRecord.SaveAll(RecordManager.Instance.MasterPath);
+
+					} catch (Exception ex) {
+						ErrorReporter.SendErrorReport(ex, "转换掉落记录时发生异常。");
+					}
+
+				}
+
+			}
+
+
 			// version RN-2.5.4.1-m1 or earlier
 			if (dt <= DateTimeHelper.CSVStringToTime( "2017/03/19 16:08:50"))
 			{
