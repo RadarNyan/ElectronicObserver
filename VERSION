@@ -1,14 +1,12 @@
-﻿2018/05/17 11:17:45
-3.0.7-m2
-本汉化版将于近期重构，本更新为对应18春迷你活动的临时发布
+2018/08/18 07:16:00
+3.0.7-m3
+合并原版临时二期更新对应
+原版 3.0.7 以后的更新内容暂未合并
 
-修复掉落物品（“米”等）时报错
-合并原版、汉化版 develop 分支修改
+可尝试搭配此 Chromium 核心浏览器使用
+https://github.com/RadarNyan/CefEOBrowser
 
 PS:
 Google Chrome 可能把 AppVeyor 托管编译的文件判定为
 危险文件，不信任 Appveyor 的用户请自行于 GitHub 下载
 源代码使用 VS2017 编译 ( v3.0.0 后低版本 VS 会报错 )
-
-v3.0.3-m1 开始于 GitHub Release 页提供由我本机编译的版本
-https://github.com/RadarNyan/ElectronicObserver/releases
