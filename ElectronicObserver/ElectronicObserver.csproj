@@ -877,6 +877,7 @@
     <ProjectReference Include="..\BrowserLib\BrowserLib.csproj">
       <Project>{8bb3e37d-09fb-40b9-958a-8cdcd18ef1f5}</Project>
       <Name>BrowserLib</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\DockPanelSuite\WinFormsUI\ThemeVS2012.csproj">
       <Project>{a965d7bb-5cda-4531-ab67-58d4fa10aa6d}</Project>
@@ -894,7 +895,17 @@
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy "$(TargetDir)." "$(ProjectDir)..\output" /E</PostBuildEvent>
+    <PostBuildEvent>xcopy "$(TargetDir)." "$(ProjectDir)..\output" /E
+del $(ProjectDir)..\output\license.txt
+xcopy $(ProjectDir)..\Licenses $(ProjectDir)..\output\Licenses
+copy $(ProjectDir)..\LICENSE $(ProjectDir)..\output\License.txt
+move $(ProjectDir)..\output\*.pdb $(ProjectDir)..\output-pdb\</PostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PreBuildEvent>rd /s /q "$(ProjectDir)..\output"
+rd /s /q "$(ProjectDir)..\output-pdb"
+md "$(ProjectDir)..\output\Licenses"
+md "$(ProjectDir)..\output-pdb"</PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
