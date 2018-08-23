@@ -109,14 +109,15 @@ namespace ElectronicObserver.Window
 			try
 			{
 				// プロセス起動
+				string arguments = $"{ServerUri} zh {ColorTranslator.ToHtml(BackColor)}";
 
 				if (System.IO.File.Exists(BrowserExeName))
-					BrowserProcess = Process.Start(BrowserExeName, ServerUri);
+					BrowserProcess = Process.Start(BrowserExeName, arguments);
 
 				else    //デバッグ環境用 作業フォルダにかかわらず自分と同じフォルダのを参照する
 					BrowserProcess = Process.Start(
 						System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + "\\" + BrowserExeName,
-						ServerUri);
+						arguments);
 
 				// 残りはサーバに接続してきたブラウザプロセスがドライブする
 
@@ -209,9 +210,9 @@ namespace ElectronicObserver.Window
 			Utility.ErrorReporter.SendErrorReport(new Exception(exceptionName), message);
 		}
 
-		public void AddLog(int priority, string message, string msgchs1="", string msgjap2="", string msgchs2="", string msgjap3="", string msgchs3="")
+		public void AddLog(int priority, string message)
 		{
-			Utility.Logger.Add(priority, message, msgchs1, msgjap2, msgchs2, msgjap3, msgchs3);
+			Utility.Logger.Add(priority, message);
 		}
 
 
@@ -237,7 +238,6 @@ namespace ElectronicObserver.Window
 				config.ToolMenuDockStyle = (int)c.ToolMenuDockStyle;
 				config.IsToolMenuVisible = c.IsToolMenuVisible;
 				config.ConfirmAtRefresh = c.ConfirmAtRefresh;
-				config.BackColor = this.BackColor.ToArgb();
 
 				return config;
 			}

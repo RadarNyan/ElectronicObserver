@@ -50,7 +50,7 @@ namespace BrowserLib
 		/// ログ追加
 		/// </summary>
 		[OperationContract]
-		void AddLog(int priority, string message, string msgchs1="", string msgjap2="", string msgchs2="", string msgjap3="", string msgchs3="");
+		void AddLog(int priority, string message);
 
 		[OperationContract]
 		void ConfigurationUpdated(BrowserConfiguration config);
@@ -174,8 +174,5 @@ namespace BrowserLib
 		/// </summary>
 		[DataMember]
 		public bool IsMute { get; set; }
-
-		[DataMember]
-		public int BackColor { get; set; }
 	}
 }
