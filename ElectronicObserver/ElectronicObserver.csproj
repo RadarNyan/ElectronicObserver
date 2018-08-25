@@ -877,7 +877,7 @@
     <ProjectReference Include="..\BrowserLib\BrowserLib.csproj">
       <Project>{8bb3e37d-09fb-40b9-958a-8cdcd18ef1f5}</Project>
       <Name>BrowserLib</Name>
-      <Private>False</Private>
+      <Private>True</Private>
     </ProjectReference>
     <ProjectReference Include="..\DockPanelSuite\WinFormsUI\ThemeVS2012.csproj">
       <Project>{a965d7bb-5cda-4531-ab67-58d4fa10aa6d}</Project>
