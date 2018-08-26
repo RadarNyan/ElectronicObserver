@@ -99,6 +99,13 @@ namespace ElectronicObserver.Window
 			LaunchBrowserProcess();
 		}
 
+		public void ReLaunchBrowserProcess()
+		{
+			if (!BrowserProcess.HasExited)
+				BrowserProcess.Kill();
+			Browser.Close();
+			LaunchBrowserProcess();
+		}
 
 		private void LaunchBrowserProcess()
 		{

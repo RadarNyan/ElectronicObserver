@@ -115,6 +115,9 @@
 			this.StripStatus_Clock = new System.Windows.Forms.ToolStripStatusLabel();
 			this.UIUpdateTimer = new System.Windows.Forms.Timer(this.components);
 			this.MainDockPanel = new WeifenLuo.WinFormsUI.Docking.DockPanel();
+			this.StripMenu_RN_RestartEOBrowser = new System.Windows.Forms.ToolStripMenuItem();
+			this.StripMenu_RN_HideMenuBar = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator12 = new System.Windows.Forms.ToolStripSeparator();
 			this.StripMenu_File_Notification = new System.Windows.Forms.ToolStripMenuItem();
 			this.StripMenu_File_Notification_MuteAll = new System.Windows.Forms.ToolStripMenuItem();
 			this.StripMenu.SuspendLayout();
@@ -672,8 +675,11 @@
 			// StripMenu_RN
 			// 
 			this.StripMenu_RN.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.StripMenu_RN_Config,
-            this.StripMenu_RN_Version});
+			this.StripMenu_RN_Config,
+			this.StripMenu_RN_Version,
+			this.toolStripSeparator12,
+			this.StripMenu_RN_HideMenuBar,
+			this.StripMenu_RN_RestartEOBrowser});
 			this.StripMenu_RN.Name = "StripMenu_RN";
 			this.StripMenu_RN.Size = new System.Drawing.Size(64, 20);
 			this.StripMenu_RN.Text = "〄";
@@ -778,6 +784,26 @@
 			this.MainDockPanel.ShowDocumentIcon = true;
 			this.MainDockPanel.Size = new System.Drawing.Size(640, 434);
 			this.MainDockPanel.TabIndex = 0;
+ 			// 
+			// StripMenu_RN_RestartEOBrowser
+			// 
+			this.StripMenu_RN_RestartEOBrowser.Name = "StripMenu_RN_RestartEOBrowser";
+			this.StripMenu_RN_RestartEOBrowser.Size = new System.Drawing.Size(191, 22);
+			this.StripMenu_RN_RestartEOBrowser.Text = "重启 EOBrowser";
+			this.StripMenu_RN_RestartEOBrowser.Click += new System.EventHandler(this.StripMenu_RN_RestartEOBrowser_Click);
+			// 
+			// StripMenu_RN_HideMenuBar
+			// 
+			this.StripMenu_RN_HideMenuBar.Name = "StripMenu_RN_HideMenuBar";
+			this.StripMenu_RN_HideMenuBar.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Shift | System.Windows.Forms.Keys.F11)));
+			this.StripMenu_RN_HideMenuBar.Size = new System.Drawing.Size(191, 22);
+			this.StripMenu_RN_HideMenuBar.Text = "隐藏菜单栏";
+			this.StripMenu_RN_HideMenuBar.Click += new System.EventHandler(this.StripMenu_RN_HideMenuBar_Click);
+			// 
+			// toolStripSeparator12
+			// 
+			this.toolStripSeparator12.Name = "toolStripSeparator12";
+			this.toolStripSeparator12.Size = new System.Drawing.Size(188, 6);
 			// 
 			// StripMenu_File_Notification
 			// 
@@ -910,5 +936,8 @@
 		private System.Windows.Forms.ToolStripMenuItem StripMenu_Tool_BaseAirCorpsSimulation;
 		private System.Windows.Forms.ToolStripMenuItem StripMenu_File_Notification;
 		private System.Windows.Forms.ToolStripMenuItem StripMenu_File_Notification_MuteAll;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator12;
+		private System.Windows.Forms.ToolStripMenuItem StripMenu_RN_HideMenuBar;
+		private System.Windows.Forms.ToolStripMenuItem StripMenu_RN_RestartEOBrowser;
 	}
 }
