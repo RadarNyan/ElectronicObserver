@@ -43,7 +43,10 @@
 			this.ShipView_ShipType = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.ShipView_Name = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.ShipView_Level = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.ShipView_LvSortIndex = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.ShipView_LvSortIndex2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.ShipView_TypeSortIndex = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.ShipView_TypeSortIndex2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.ShipView_KaisouSortIndex = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.ShipView_Exp = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.ShipView_Next = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -149,7 +152,10 @@
 			this.ShipView_ShipType,
 			this.ShipView_Name,
 			this.ShipView_Level,
+			this.ShipView_LvSortIndex,
+			this.ShipView_LvSortIndex2,
 			this.ShipView_TypeSortIndex,
+			this.ShipView_TypeSortIndex2,
 			this.ShipView_KaisouSortIndex,
 			this.ShipView_Exp,
 			this.ShipView_Next,
@@ -262,12 +268,33 @@
 			this.ShipView_Level.ReadOnly = true;
 			this.ShipView_Level.Width = 40;
 			// 
+			// ShipView_LvSortIndex
+			// 
+			this.ShipView_LvSortIndex.HeaderText = "Lv序";
+			this.ShipView_LvSortIndex.Name = "ShipView_LvSortIndex";
+			this.ShipView_LvSortIndex.ReadOnly = true;
+			this.ShipView_LvSortIndex.Width = 60;
+			// 
+			// ShipView_LvSortIndex2
+			// 
+			this.ShipView_LvSortIndex2.HeaderText = "Lv序(单舰种)";
+			this.ShipView_LvSortIndex2.Name = "ShipView_LvSortIndex2";
+			this.ShipView_LvSortIndex2.ReadOnly = true;
+			this.ShipView_LvSortIndex2.Width = 60;
+			// 
 			// ShipView_TypeSortIndex
 			// 
-			this.ShipView_TypeSortIndex.HeaderText = "编成序";
+			this.ShipView_TypeSortIndex.HeaderText = "舰种序";
 			this.ShipView_TypeSortIndex.Name = "ShipView_TypeSortIndex";
 			this.ShipView_TypeSortIndex.ReadOnly = true;
 			this.ShipView_TypeSortIndex.Width = 60;
+			// 
+			// ShipView_TypeSortIndex2
+			// 
+			this.ShipView_TypeSortIndex2.HeaderText = "舰种序(单舰种)";
+			this.ShipView_TypeSortIndex2.Name = "ShipView_TypeSortIndex2";
+			this.ShipView_TypeSortIndex2.ReadOnly = true;
+			this.ShipView_TypeSortIndex2.Width = 60;
 			// 
 			// ShipView_KaisouSortIndex
 			// 
@@ -945,7 +972,10 @@
 		private System.Windows.Forms.DataGridViewTextBoxColumn ShipView_ShipType;
 		private System.Windows.Forms.DataGridViewTextBoxColumn ShipView_Name;
 		private System.Windows.Forms.DataGridViewTextBoxColumn ShipView_Level;
+		private System.Windows.Forms.DataGridViewTextBoxColumn ShipView_LvSortIndex;
+		private System.Windows.Forms.DataGridViewTextBoxColumn ShipView_LvSortIndex2;
 		private System.Windows.Forms.DataGridViewTextBoxColumn ShipView_TypeSortIndex;
+		private System.Windows.Forms.DataGridViewTextBoxColumn ShipView_TypeSortIndex2;
 		private System.Windows.Forms.DataGridViewTextBoxColumn ShipView_KaisouSortIndex;
 		private System.Windows.Forms.DataGridViewTextBoxColumn ShipView_Exp;
 		private System.Windows.Forms.DataGridViewTextBoxColumn ShipView_Next;

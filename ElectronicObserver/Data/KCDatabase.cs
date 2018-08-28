@@ -54,7 +54,7 @@ namespace ElectronicObserver.Data
 		public IDDictionary<ShipData> Ships { get; private set; }
 
 		/// <summary>
-		/// 舰娘排序 | TKey: MasterID, [ 舰种序, Lv 序, 改装「他」序 ]
+		/// 舰娘排序 | TKey: MasterID, [ Lv 序, Lv 序 (单舰种）, 舰种序, 舰种序 (单舰种） , 改装「他」序 ]
 		/// </summary>
 		public Dictionary<int, int[]> ShipsOrder { get; private set; }
 
@@ -229,8 +229,18 @@ namespace ElectronicObserver.Data
 				*/
 				int index = 1;
 				foreach (var ship in ShipsTypeSorted) {
-					ShipsOrder.Add(ship.MasterID, new int[] { index, 0, 0 });
+					ShipsOrder.Add(ship.MasterID, new int[] { 0, 0, index, 0, 0 });
 					index++;
+				}
+				// 舰种序（单舰种）
+				foreach (ShipTypes shipType in Enum.GetValues(typeof(ShipTypes))) {
+					var ShipsTypeSorted2 = Ships.Values.Where(s => s.MasterShip.ShipType == shipType)
+						.OrderBy(s => s.MasterShip.SortID);
+					index = 1;
+					foreach (var ship in ShipsTypeSorted2) {
+						ShipsOrder[ship.MasterID][3] = index;
+						index++;
+					}
 				}
 
 				// Lv 序 & 改装「他」序
@@ -254,11 +264,23 @@ namespace ElectronicObserver.Data
 				//ShipsInFleet.RemoveAll(s => s == -1);
 				int count = Ships.Values.Count() - ShipsInFleet.Count;
 				foreach (var ship in ShipsLvSorted) {
-					ShipsOrder[ship.MasterID][1] = index;
+					ShipsOrder[ship.MasterID][0] = index;
 					index++;
 					if (!ShipsInFleet.Contains(ship.MasterID)) {
-						ShipsOrder[ship.MasterID][2] = count;
+						ShipsOrder[ship.MasterID][4] = count;
 						count--;
+					}
+				}
+
+				// Lv序（单舰种）
+				foreach (ShipTypes shipType in Enum.GetValues(typeof(ShipTypes))) {
+					var ShipsLvSorted2 = Ships.Values.Where(s => s.MasterShip.ShipType == shipType)
+						.OrderByDescending(s => s.Level)
+						.ThenBy(s => s.MasterShip.SortID);
+					index = 1;
+					foreach (var ship in ShipsLvSorted2) {
+						ShipsOrder[ship.MasterID][1] = index;
+						index++;
 					}
 				}
 			}

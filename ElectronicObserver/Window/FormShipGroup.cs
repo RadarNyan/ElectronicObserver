@@ -347,7 +347,10 @@ namespace ElectronicObserver.Window
 				ship.MasterShip.ShipType,
 				ship.MasterShip.Name,
 				ship.Level,
+				ship.LvSortIndex,
+				ship.LvSortIndex2,
 				ship.TypeSortIndex,
+				ship.TypeSortIndex2,
 				ship.KaisouSortIndex,
 				ship.ExpTotal,
 				ship.ExpNext,
@@ -832,7 +835,10 @@ namespace ElectronicObserver.Window
 				if (e.SortResult == 0)  //for Lv.99-100
 					e.SortResult = (int)ShipView[ShipView_Level.Index, e.RowIndex1].Value - (int)ShipView[ShipView_Level.Index, e.RowIndex2].Value;
 			} else if (
+				e.Column.Index == ShipView_LvSortIndex.Index ||
+				e.Column.Index == ShipView_LvSortIndex2.Index ||
 				e.Column.Index == ShipView_TypeSortIndex.Index ||
+				e.Column.Index == ShipView_TypeSortIndex2.Index ||
 				e.Column.Index == ShipView_KaisouSortIndex.Index) {
 				string s1 = (string)e.CellValue1;
 				string s2 = (string)e.CellValue2;
@@ -842,11 +848,19 @@ namespace ElectronicObserver.Window
 					if (s2 == "") {
 						e.SortResult = 0;
 					} else {
-						e.SortResult = 1;
+						if (ShipView.SortOrder == SortOrder.Ascending) {
+							e.SortResult = 1;
+						} else {
+							e.SortResult = -1;
+						}
 					}
 				} else {
 					if (s2 == "") {
-						e.SortResult = -1;
+						if (ShipView.SortOrder == SortOrder.Ascending) {
+							e.SortResult = -1;
+						} else {
+							e.SortResult = 1;
+						}
 					} else {
 						int num1 = int.Parse(s1.Replace("_", ""));
 						int num2 = int.Parse(s2.Replace("_", ""));
@@ -1372,7 +1386,10 @@ namespace ElectronicObserver.Window
 				dialog.DataAdd(
 					row.Cells[ShipView_Name.Index].Value.ToString(),
 					row.Cells[ShipView_Level.Index].Value.ToString(),
+					row.Cells[ShipView_LvSortIndex.Index].Value.ToString(),
+					row.Cells[ShipView_LvSortIndex2.Index].Value.ToString(),
 					row.Cells[ShipView_TypeSortIndex.Index].Value.ToString(),
+					row.Cells[ShipView_TypeSortIndex2.Index].Value.ToString(),
 					row.Cells[ShipView_KaisouSortIndex.Index].Value.ToString()
 				);
 			}

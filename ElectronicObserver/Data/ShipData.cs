@@ -552,6 +552,36 @@ namespace ElectronicObserver.Data
 		}
 
 		/// <summary>
+		/// 以等级排序时的位置
+		/// </summary>
+		public string LvSortIndex
+		{
+			get {
+				int[] indexes;
+				if (KCDatabase.Instance.ShipsOrder.TryGetValue(this.MasterID, out indexes)) {
+					return GetIndexString(indexes[0]);
+				} else {
+					return "";
+				}
+			}
+		}
+
+		/// <summary>
+		/// 以等级排序时的位置（单舰种）
+		/// </summary>
+		public string LvSortIndex2
+		{
+			get {
+				int[] indexes;
+				if (KCDatabase.Instance.ShipsOrder.TryGetValue(this.MasterID, out indexes)) {
+					return GetIndexString(indexes[1]);
+				} else {
+					return "";
+				}
+			}
+		}
+
+		/// <summary>
 		/// 以舰种排序时的位置
 		/// </summary>
 		public string TypeSortIndex
@@ -559,7 +589,22 @@ namespace ElectronicObserver.Data
 			get {
 				int[] indexes;
 				if (KCDatabase.Instance.ShipsOrder.TryGetValue(this.MasterID, out indexes)) {
-					return GetIndexString(indexes[0]);
+					return GetIndexString(indexes[2]);
+				} else {
+					return "";
+				}
+			}
+		}
+
+		/// <summary>
+		/// 以舰种排序时的位置（单舰种）
+		/// </summary>
+		public string TypeSortIndex2
+		{
+			get {
+				int[] indexes;
+				if (KCDatabase.Instance.ShipsOrder.TryGetValue(this.MasterID, out indexes)) {
+					return GetIndexString(indexes[3]);
 				} else {
 					return "";
 				}
@@ -574,7 +619,7 @@ namespace ElectronicObserver.Data
 			get {
 				int[] indexes;
 				if (KCDatabase.Instance.ShipsOrder.TryGetValue(this.MasterID, out indexes)) {
-					return GetIndexString(indexes[2]);
+					return GetIndexString(indexes[4]);
 				} else {
 					return "";
 				}

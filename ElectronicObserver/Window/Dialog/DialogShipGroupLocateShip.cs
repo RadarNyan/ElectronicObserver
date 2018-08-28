@@ -8,13 +8,16 @@ namespace ElectronicObserver.Window.Dialog
 {
 	public partial class DialogShipGroupLocateShip : Form {
 
-		public void DataAdd(string ship, string shipLevel, string index1, string index2) {
+		public void DataAdd(string ship, string shipLevel, string index1, string index2, string index3, string index4, string index5) {
 			DataGridViewRow row = new DataGridViewRow();
 			row.CreateCells(dataGridView1);
 			row.Cells[0].Value = string.Format("{0} Lv.{1}", ship, shipLevel);
 			row.Cells[0].Style.Font = Utility.Configuration.Config.UI.JapFont;
 			row.Cells[1].Value = index1;
 			row.Cells[2].Value = index2;
+			row.Cells[3].Value = index3;
+			row.Cells[4].Value = index4;
+			row.Cells[5].Value = index5;
 			dataGridView1.Rows.Add(row);
 		}
 
@@ -36,26 +39,31 @@ namespace ElectronicObserver.Window.Dialog
 		private void dataGridView1_SortCompare(object sender, DataGridViewSortCompareEventArgs e)
 		{
 			if (e.Column.Index == ShipName.Index) {
-				/*
 				string s1 = (string)e.CellValue1;
 				string s2 = (string)e.CellValue2;
-				int num1 = int.Parse(s1.Split(new [] {"Lv."}, StringSplitOptions.None)[1]);
-				int num2 = int.Parse(s2.Split(new [] {"Lv."}, StringSplitOptions.None)[1]);
+				int num1 = int.Parse(s1.Split(new[] { "Lv." }, StringSplitOptions.None)[1]);
+				int num2 = int.Parse(s2.Split(new[] { "Lv." }, StringSplitOptions.None)[1]);
 				e.SortResult = num1 - num2;
-				*/
-				e.SortResult = e.CellValue1.ToString().CompareTo(e.CellValue2.ToString());
-			} else if (e.Column.Index == SortIndex1.Index || e.Column.Index == SortIndex2.Index) {
+			} else {
 				string s1 = (string)e.CellValue1;
 				string s2 = (string)e.CellValue2;
 				if (s1 == "") {
 					if (s2 == "") {
 						e.SortResult = 0;
 					} else {
-						e.SortResult = 1;
+						if (dataGridView1.SortOrder == SortOrder.Ascending) {
+							e.SortResult = 1;
+						} else {
+							e.SortResult = -1;
+						}
 					}
 				} else {
 					if (s2 == "") {
-						e.SortResult = -1;
+						if (dataGridView1.SortOrder == SortOrder.Ascending) {
+							e.SortResult = -1;
+						} else {
+							e.SortResult = 1;
+						}
 					} else {
 						int num1 = int.Parse(s1.Replace("_", ""));
 						int num2 = int.Parse(s2.Replace("_", ""));
