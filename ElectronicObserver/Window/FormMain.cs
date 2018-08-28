@@ -1591,6 +1591,14 @@ namespace ElectronicObserver.Window
 
 		#endregion
 
+		private void StripMenu_RN_HideMenuBar_Click(object sender, EventArgs e)
+		{
+			StripMenu.Visible = !StripMenu.Visible;
+		}
 
+		private void StripMenu_RN_RestartEOBrowser_Click(object sender, EventArgs e)
+		{
+			fBrowser.ReLaunchBrowserProcess();
+		}
 	}
 }

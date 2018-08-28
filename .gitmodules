@@ -5,3 +5,6 @@
 [submodule "SwfExtractor"]
 	path = SwfExtractor
 	url = https://github.com/andanteyk/SwfExtractor.git
+[submodule "CefEOBrowser"]
+	path = CefEOBrowser
+	url = https://github.com/RadarNyan/CefEOBrowser

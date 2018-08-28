@@ -29,7 +29,7 @@ namespace ElectronicObserver.Utility
 		/// <summary>
 		/// バージョン(日本語, ソフトウェア名を含みます)
 		/// </summary>
-		public static string VersionJapanese => SoftwareNameJapanese + "三〇型改七（战时改修）";
+		public static string VersionJapanese => SoftwareNameJapanese + "三〇型改七（三〇型最终版）";
 
 
 		/// <summary>
@@ -41,13 +41,13 @@ namespace ElectronicObserver.Utility
 		/// <summary>
 		/// 汉化版版本号
 		/// </summary>
-		public static string VersionRN => "m3";
+		public static string VersionRN => "m5";
 
 
 		/// <summary>
 		/// 更新日時
 		/// </summary>
-		public static DateTime UpdateTime => DateTimeHelper.CSVStringToTime("2018/08/18 07:16:00");
+		public static DateTime UpdateTime => DateTimeHelper.CSVStringToTime("2018/08/28 18:57:00");
 
 
 
