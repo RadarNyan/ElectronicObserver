@@ -1380,18 +1380,11 @@ namespace ElectronicObserver.Window
 				MessageBox.Show(tempForm, sb.ToString(), "定位舰娘", MessageBoxButtons.OK);
 			}}){ IsBackground = true }.Start();
 			*/
-			var dialog = new Dialog.DialogShipGroupLocateShip();
+			KCDatabase.Instance.UpdateSortShips();
+			var dialog = new DialogShipGroupLocateShip();
 			dialog.DataClear();
 			foreach (var row in ShipView.SelectedRows.Cast<DataGridViewRow>().OrderBy(r => r.Index)) {
-				dialog.DataAdd(
-					row.Cells[ShipView_Name.Index].Value.ToString(),
-					row.Cells[ShipView_Level.Index].Value.ToString(),
-					row.Cells[ShipView_LvSortIndex.Index].Value.ToString(),
-					row.Cells[ShipView_LvSortIndex2.Index].Value.ToString(),
-					row.Cells[ShipView_TypeSortIndex.Index].Value.ToString(),
-					row.Cells[ShipView_TypeSortIndex2.Index].Value.ToString(),
-					row.Cells[ShipView_KaisouSortIndex.Index].Value.ToString()
-				);
+				dialog.DataAdd((int)row.Cells[ShipView_ID.Index].Value);
 			}
 			dialog.Location = MenuMember.Location;
 			dialog.Show( this );

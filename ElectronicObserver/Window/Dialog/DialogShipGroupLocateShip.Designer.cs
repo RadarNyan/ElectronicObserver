@@ -37,7 +37,6 @@
 			// 
 			this.dataGridView1.AllowUserToAddRows = false;
 			this.dataGridView1.AllowUserToDeleteRows = false;
-			this.dataGridView1.AllowUserToOrderColumns = true;
 			this.dataGridView1.AllowUserToResizeRows = false;
 			this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
 			this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -76,10 +75,10 @@
 			// SortIndex2
 			// 
 			this.SortIndex2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-			this.SortIndex2.HeaderText = "单";
+			this.SortIndex2.HeaderText = "(种)";
 			this.SortIndex2.Name = "SortIndex2";
 			this.SortIndex2.ReadOnly = true;
-			this.SortIndex2.Width = 44;
+			this.SortIndex2.Width = 54;
 			// 
 			// SortIndex3
 			// 
@@ -92,10 +91,10 @@
 			// SortIndex4
 			// 
 			this.SortIndex4.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-			this.SortIndex4.HeaderText = "单";
+			this.SortIndex4.HeaderText = "(种)";
 			this.SortIndex4.Name = "SortIndex4";
 			this.SortIndex4.ReadOnly = true;
-			this.SortIndex4.Width = 44;
+			this.SortIndex4.Width = 54;
 			// 
 			// SortIndex5
 			// 

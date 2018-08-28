@@ -1,4 +1,5 @@
-﻿using ElectronicObserver.Resource;
+﻿using ElectronicObserver.Data;
+using ElectronicObserver.Resource;
 using System;
 using System.Drawing;
 using System.Linq;
@@ -8,17 +9,31 @@ namespace ElectronicObserver.Window.Dialog
 {
 	public partial class DialogShipGroupLocateShip : Form {
 
-		public void DataAdd(string ship, string shipLevel, string index1, string index2, string index3, string index4, string index5) {
+		public void DataAdd(int masterID)
+		{
+			var ship = KCDatabase.Instance.Ships[masterID];
+			var shipOrders = KCDatabase.Instance.ShipsOrder;
 			DataGridViewRow row = new DataGridViewRow();
 			row.CreateCells(dataGridView1);
-			row.Cells[0].Value = string.Format("{0} Lv.{1}", ship, shipLevel);
+			row.Cells[0].Value = $"{ship.Name} Lv.{ship.Level}";
 			row.Cells[0].Style.Font = Utility.Configuration.Config.UI.JapFont;
-			row.Cells[1].Value = index1;
-			row.Cells[2].Value = index2;
-			row.Cells[3].Value = index3;
-			row.Cells[4].Value = index4;
-			row.Cells[5].Value = index5;
+			row.Cells[1].Value = GetIndexString(shipOrders[masterID][0]);
+			row.Cells[2].Value = GetIndexString(shipOrders[masterID][1]);
+			row.Cells[3].Value = GetIndexString(shipOrders[masterID][2]);
+			row.Cells[4].Value = GetIndexString(shipOrders[masterID][3]);
+			row.Cells[5].Value = GetIndexString(shipOrders[masterID][4]);
 			dataGridView1.Rows.Add(row);
+		}
+
+		private string GetIndexString(int index)
+		{
+			if (index == 0)
+				return "";
+			int p = index / 10;
+			int n = index % 10;
+			return string.Format("{0}_{1:D2}",
+				n == 0 ? p : p + 1,
+				n == 0 ? 10 : n);
 		}
 
 		public void DataClear() {
