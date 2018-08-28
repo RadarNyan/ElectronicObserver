@@ -24,6 +24,11 @@ namespace ElectronicObserver.Data
 		public int ShipID => (int)RawData.api_id;
 
 		/// <summary>
+		/// 並び順
+		/// </summary>
+		public int SortID => (int)RawData.api_sort_id;
+
+		/// <summary>
 		/// 図鑑番号
 		/// </summary>
 		public int AlbumNo => !RawData.api_sortno() ? 0 : (int)RawData.api_sortno;

@@ -220,10 +220,13 @@ namespace ElectronicObserver.Data
 				ShipsOrder.Clear();
 
 				// 舰种序
+				var ShipsTypeSorted = Ships.Values.OrderBy(s => s.MasterShip.SortID);
+				/*
 				var ShipsTypeSorted = Ships.Values.OrderByDescending(s => s.MasterShip.ShipType)
 					.ThenBy(s => s.SortID)
 					.ThenByDescending(s => s.Level)
 					.ThenBy(s => s.MasterID);
+				*/
 				int index = 1;
 				foreach (var ship in ShipsTypeSorted) {
 					ShipsOrder.Add(ship.MasterID, new int[] { index, 0, 0 });
@@ -232,8 +235,11 @@ namespace ElectronicObserver.Data
 
 				// Lv 序 & 改装「他」序
 				var ShipsLvSorted = Ships.Values.OrderByDescending(s => s.Level)
+					.ThenBy(s => s.MasterShip.SortID);
+					/*
 					.ThenBy(s => s.SortID)
 					.ThenBy(s => s.MasterID);
+					*/
 				index = 1;
 				// 寻找已在舰队中的舰娘
 				List<int> ShipsInFleet = new List<int>();
