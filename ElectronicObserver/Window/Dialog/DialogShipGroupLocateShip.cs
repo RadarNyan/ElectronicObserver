@@ -9,7 +9,7 @@ namespace ElectronicObserver.Window.Dialog
 {
 	public partial class DialogShipGroupLocateShip : Form {
 
-		public void DataAdd(int masterID)
+		public void DataAdd(int masterID, bool r1, bool r2, bool r3, bool r4, bool r5)
 		{
 			var ship = KCDatabase.Instance.Ships[masterID];
 			var shipOrders = KCDatabase.Instance.ShipsOrder;
@@ -23,6 +23,24 @@ namespace ElectronicObserver.Window.Dialog
 			row.Cells[4].Value = GetIndexString(shipOrders[masterID][3]);
 			row.Cells[5].Value = GetIndexString(shipOrders[masterID][4]);
 			dataGridView1.Rows.Add(row);
+
+			SortIndex1.Visible = r1;
+			SortIndex2.Visible = r2;
+			SortIndex3.Visible = r3;
+			SortIndex4.Visible = r4;
+			SortIndex5.Visible = r5;
+
+			if (!SortIndex1.Visible &&
+				!SortIndex2.Visible &&
+				!SortIndex3.Visible &&
+				!SortIndex4.Visible &&
+				!SortIndex5.Visible)
+				SortIndex2.Visible = true;
+
+			if (!SortIndex1.Visible && SortIndex2.Visible)
+				SortIndex2.HeaderText = SortIndex1.HeaderText;
+			if (!SortIndex3.Visible && SortIndex4.Visible)
+				SortIndex4.HeaderText = SortIndex3.HeaderText;
 		}
 
 		private string GetIndexString(int index)

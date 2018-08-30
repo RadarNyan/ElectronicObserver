@@ -1384,7 +1384,12 @@ namespace ElectronicObserver.Window
 			var dialog = new DialogShipGroupLocateShip();
 			dialog.DataClear();
 			foreach (var row in ShipView.SelectedRows.Cast<DataGridViewRow>().OrderBy(r => r.Index)) {
-				dialog.DataAdd((int)row.Cells[ShipView_ID.Index].Value);
+				dialog.DataAdd((int)row.Cells[ShipView_ID.Index].Value,
+					row.Cells[ShipView_LvSortIndex.Index].Visible,
+					row.Cells[ShipView_LvSortIndex2.Index].Visible,
+					row.Cells[ShipView_TypeSortIndex.Index].Visible,
+					row.Cells[ShipView_TypeSortIndex2.Index].Visible,
+					row.Cells[ShipView_KaisouSortIndex.Index].Visible);
 			}
 			dialog.Location = MenuMember.Location;
 			dialog.Show( this );

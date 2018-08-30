@@ -83,7 +83,7 @@
 			// SortIndex3
 			// 
 			this.SortIndex3.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-			this.SortIndex3.HeaderText = "编成";
+			this.SortIndex3.HeaderText = "舰种";
 			this.SortIndex3.Name = "SortIndex3";
 			this.SortIndex3.ReadOnly = true;
 			this.SortIndex3.Width = 56;

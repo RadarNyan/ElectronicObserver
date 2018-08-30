@@ -209,6 +209,71 @@ namespace ElectronicObserver.Data
 			QuestProgress.Save();
 		}
 
+		private string[] shipGroups = new string[] {
+			"BB/BC",
+			"CV/CVL",
+			"CA",
+			"CL",
+			"DD",
+			"DE",
+			"SS",
+			"AV/AO/AS..."
+		};
+
+		private bool IsSameGroup(string shipGroup, ShipTypes shipType) {
+			switch (shipGroup) {
+				case "BB/BC":
+					if (shipType == Data.ShipTypes.Battlecruiser ||
+						shipType == Data.ShipTypes.Battleship ||
+						shipType == Data.ShipTypes.AviationBattleship ||
+						shipType == Data.ShipTypes.SuperDreadnoughts)
+						return true;
+					break;
+				case "CV/CVL":
+					if (shipType == Data.ShipTypes.LightAircraftCarrier ||
+						shipType == Data.ShipTypes.AircraftCarrier ||
+						shipType == Data.ShipTypes.ArmoredAircraftCarrier)
+						return true;
+					break;
+				case "CA":
+					if (shipType == Data.ShipTypes.HeavyCruiser ||
+						shipType == Data.ShipTypes.AviationCruiser)
+						return true;
+					break;
+				case "CL":
+					if (shipType == Data.ShipTypes.LightCruiser ||
+						shipType == Data.ShipTypes.TorpedoCruiser ||
+						shipType == Data.ShipTypes.TrainingCruiser)
+						return true;
+					break;
+				case "DD":
+					if (shipType == Data.ShipTypes.Destroyer)
+						return true;
+					break;
+				case "DE":
+					if (shipType == Data.ShipTypes.Escort)
+						return true;
+					break;
+				case "SS":
+					if (shipType == Data.ShipTypes.Submarine ||
+						shipType == Data.ShipTypes.SubmarineAircraftCarrier)
+						return true;
+					break;
+				case "AV/AO/AS...":
+					if (shipType == Data.ShipTypes.Transport ||
+						shipType == Data.ShipTypes.SeaplaneTender ||
+						shipType == Data.ShipTypes.AmphibiousAssaultShip ||
+						shipType == Data.ShipTypes.RepairShip ||
+						shipType == Data.ShipTypes.SubmarineTender ||
+						shipType == Data.ShipTypes.FleetOiler)
+						return true;
+					break;
+				default:
+					break;
+			}
+			return false;
+		}
+
 		public void UpdateSortShips()
 		{
 			if (Utility.Configuration.Config.UI.AllowSortIndexing) {
@@ -216,25 +281,19 @@ namespace ElectronicObserver.Data
 				// 几种不同的 ID
 				// s.MasterID				获取时的 ID ( 每个舰娘独立，作为 KEY 使用 )
 				// s.ShipID					舰娘 ID ( 每种改装状态独立，以下排序未使用 )
-				// s.SortID					排序 ID ( 图鉴 ID )
+				// s.MasterShip.SortID		排序 ID ( 二期新增 )
 				ShipsOrder.Clear();
 
 				// 舰种序
 				var ShipsTypeSorted = Ships.Values.OrderBy(s => s.MasterShip.SortID);
-				/*
-				var ShipsTypeSorted = Ships.Values.OrderByDescending(s => s.MasterShip.ShipType)
-					.ThenBy(s => s.SortID)
-					.ThenByDescending(s => s.Level)
-					.ThenBy(s => s.MasterID);
-				*/
 				int index = 1;
 				foreach (var ship in ShipsTypeSorted) {
 					ShipsOrder.Add(ship.MasterID, new int[] { 0, 0, index, 0, 0 });
 					index++;
 				}
 				// 舰种序（单舰种）
-				foreach (ShipTypes shipType in Enum.GetValues(typeof(ShipTypes))) {
-					var ShipsTypeSorted2 = Ships.Values.Where(s => s.MasterShip.ShipType == shipType)
+				foreach (string shipGroup in shipGroups) {
+					var ShipsTypeSorted2 = Ships.Values.Where(s => IsSameGroup(shipGroup, s.MasterShip.ShipType))
 						.OrderBy(s => s.MasterShip.SortID);
 					index = 1;
 					foreach (var ship in ShipsTypeSorted2) {
@@ -246,10 +305,6 @@ namespace ElectronicObserver.Data
 				// Lv 序 & 改装「他」序
 				var ShipsLvSorted = Ships.Values.OrderByDescending(s => s.Level)
 					.ThenBy(s => s.MasterShip.SortID);
-					/*
-					.ThenBy(s => s.SortID)
-					.ThenBy(s => s.MasterID);
-					*/
 				index = 1;
 				// 寻找已在舰队中的舰娘
 				List<int> ShipsInFleet = new List<int>();
@@ -259,9 +314,7 @@ namespace ElectronicObserver.Data
 						if (s != -1)
 							ShipsInFleet.Add(s);
 					}
-					//ShipsInFleet.AddRange(f.Members);
 				}
-				//ShipsInFleet.RemoveAll(s => s == -1);
 				int count = Ships.Values.Count() - ShipsInFleet.Count;
 				foreach (var ship in ShipsLvSorted) {
 					ShipsOrder[ship.MasterID][0] = index;
@@ -271,10 +324,9 @@ namespace ElectronicObserver.Data
 						count--;
 					}
 				}
-
 				// Lv序（单舰种）
-				foreach (ShipTypes shipType in Enum.GetValues(typeof(ShipTypes))) {
-					var ShipsLvSorted2 = Ships.Values.Where(s => s.MasterShip.ShipType == shipType)
+				foreach (string shipGroup in shipGroups) {
+					var ShipsLvSorted2 = Ships.Values.Where(s => IsSameGroup(shipGroup, s.MasterShip.ShipType))
 						.OrderByDescending(s => s.Level)
 						.ThenBy(s => s.MasterShip.SortID);
 					index = 1;
@@ -283,6 +335,7 @@ namespace ElectronicObserver.Data
 						index++;
 					}
 				}
+
 			}
 		}
 
